@@ -239,8 +239,9 @@ function closeNav() {
             e = parseInt(e);
             document.getElementById('vsar').value = e;
             vsar = e;   
-	    if ('clicks' === 'NaN') {
+	    if ('e' === 'NaN') {
   		e = 0;
+		clicks = 0;
 	    }
             upg = localStorage.getItem('auto');
             upg = parseInt(upg);
@@ -248,6 +249,7 @@ function closeNav() {
             document.getElementById('upgrade').value = upg;
 	    if ('auto' === 'NaN') {
   		upg = 0;
+		auto = 0;
 	    }
             upg2 = localStorage.getItem("ultra");
             upg2 = parseInt(upg2);
@@ -255,6 +257,7 @@ function closeNav() {
             document.getElementById('ultra').value = upg2;
 	    if ('ultra' === 'NaN') {
   		upg2 = 0;
+		ultra = 0;
 	    }
             upg3 = localStorage.getItem("omega");
             upg3 = parseInt(upg3);
@@ -262,12 +265,14 @@ function closeNav() {
             document.getElementById('omega').value = upg3;
 	    if ('omega' === 'NaN') {
   	       upg3 = 0;
+		omega = 0;
 	    }
             upg4 = localStorage.getItem("button");
             upg4 = parseInt(upg4);
             document.getElementById('buttonupgrade').value = upg4
 	    if ('button' === 'NaN') {
   		upg4 = 0;
+		button = 0;
 	    }
             upg5 = localStorage.getItem("hyper");
             upg5 = parseInt(upg5);
@@ -275,7 +280,7 @@ function closeNav() {
             document.getElementById('hype').value = upg5;
 	    if ('hyper' === 'NaN') {
   		upg5 = 0;
-		
+		hyper = 0;
 	    }
             upg6 = localStorage.getItem("nuke");
             upg6 = parseInt(upg6);
@@ -283,6 +288,7 @@ function closeNav() {
             document.getElementById('nukee').value = upg6;
 	    if ('nuke' === 'NaN') {
   		upg6 = 0;
+		nuke = 0;
 	    }
             updac();
           }
