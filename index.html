@@ -8,8 +8,6 @@
 
     <title>Clicker Game - v2.1.3</title>
 
-    <link href="style.css" rel="stylesheet" type="text/css" />
-
     <link
       rel="icon"
       type="image/png"
@@ -172,28 +170,30 @@ function closeNav() {
             vsar = e;   
             upg = localStorage.getItem('auto');
             upg = parseInt(upg);
+            clickval = upg;
             document.getElementById('upgrade').value = upg;
             upg2 = localStorage.getItem("ultra");
             upg2 = parseInt(upg2);
+            clickval1 = upg2;
             document.getElementById('ultra').value = upg2;
             upg3 = localStorage.getItem("omega");
             upg3 = parseInt(upg3);
+            clickval3 = upg3;
             document.getElementById('omega').value = upg3;
             upg4 = localStorage.getItem("button");
             upg4 = parseInt(upg4);
             document.getElementById('buttonupgrade').value = upg4;
             upg5 = localStorage.getItem("hyper");
             upg5 = parseInt(upg5);
+            clickval4 = upg5;
             document.getElementById('hype').value = upg5;
             upg6 = localStorage.getItem("nuke");
             upg6 = parseInt(upg6);
+            clickval6 = 2*upg6;
             document.getElementById('nukee').value = upg6;
-            
-            
             updac();
           }
         </script>
-      </center>
 
       <h1 style="font-size: 30px">Upgrades!</h1>
 
@@ -205,7 +205,7 @@ function closeNav() {
 
       <div id="cost">Cost: 10</div>
 
-      <div id="desc">Auto Clickers click once every 1 second.</div>
+      <div id="desc">Auto Clickers click once every 2 seconds.</div>
 
       <br />
 
@@ -227,7 +227,7 @@ function closeNav() {
         <button class="sellbox inline" onclick="sellupgrade1()">SELL</button>
 
         <div id="cost2">Cost: 100</div>
-
+        <div id="desc">Ultra Clickers once every 1 second.</div>
         <br />
       </div>
 
@@ -390,7 +390,7 @@ hide.style.visibility = 'hidden';
  
 setInterval(checks, 1);
  
- 
+ F
  
  
  
@@ -542,6 +542,11 @@ function checks() {
           document.getElementById('omega').innerHTML = 'Omega Clickers: ' + upg3;
           document.getElementById('hype').innerHTML = 'Hyper Clickers: ' + upg5;
           document.getElementById('nukee').innerHTML = 'Nuclear Clickers: ' + upg6;
+          clickval
+          clickval1
+          clickval3
+          clickval4
+          clickval6
           /*IMPORTANT ISSUE!! I need to fix it so that you actually get the value clicks of each upg, and not just a number on screen*/
         }
 
