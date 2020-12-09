@@ -8,7 +8,7 @@
 
 	<meta name="viewport" content="width=device-width, user-scalable=no" />
 
-	<title>Clicker Game - v2.1.3</title>
+	<title>Clicker Game - v2.1.4</title>
 
 	<link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
 </head>
@@ -16,7 +16,7 @@
 <body>
 	<center>
 		<div onclick="codeinput()" style="font-size: 20px" class="codebox">
-			v2.1.3
+			v2.1.4
 		</div>
 
 		<div class="testy">
@@ -239,29 +239,51 @@ function closeNav() {
             e = parseInt(e);
             document.getElementById('vsar').value = e;
             vsar = e;   
+	    if ('clicks' === 'NaN') {
+  		e = 0;
+	    }
             upg = localStorage.getItem('auto');
             upg = parseInt(upg);
             clickval = upg;
             document.getElementById('upgrade').value = upg;
+	    if ('auto' === 'NaN') {
+  		upg = 0;
+	    }
             upg2 = localStorage.getItem("ultra");
             upg2 = parseInt(upg2);
             clickval1 = upg2;
             document.getElementById('ultra').value = upg2;
+	    if ('ultra' === 'NaN') {
+  		upg2 = 0;
+	    }
             upg3 = localStorage.getItem("omega");
             upg3 = parseInt(upg3);
             clickval3 = upg3;
             document.getElementById('omega').value = upg3;
+	    if ('omega' === 'NaN') {
+  	       upg3 = 0;
+	    }
             upg4 = localStorage.getItem("button");
             upg4 = parseInt(upg4);
-            document.getElementById('buttonupgrade').value = upg4;
+            document.getElementById('buttonupgrade').value = upg4
+	    if ('button' === 'NaN') {
+  		upg4 = 0;
+	    }
             upg5 = localStorage.getItem("hyper");
             upg5 = parseInt(upg5);
             clickval4 = upg5;
             document.getElementById('hype').value = upg5;
+	    if ('hyper' === 'NaN') {
+  		upg5 = 0;
+		
+	    }
             upg6 = localStorage.getItem("nuke");
             upg6 = parseInt(upg6);
             clickval6 = 2*upg6;
             document.getElementById('nukee').value = upg6;
+	    if ('nuke' === 'NaN') {
+  		upg6 = 0;
+	    }
             updac();
           }
 				var e = 0;
