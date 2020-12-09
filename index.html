@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <html>
@@ -174,20 +173,23 @@ function closeNav() {
             upg = localStorage.getItem('auto');
             upg = parseInt(upg);
             document.getElementById('upgrade').value = upg;
-                        
-            /* Once I figure out how to import these local storage items, I'll add them:
-
- 
-   upg2 = localStorage.getItem("ultra");
-   upg2 = parseInt(upg2);
- 
-   upg3 = localStorage.getItem("omega");
-   upg3 = parseInt(upg3);
- 
-   upg4 = localStorage.getItem("button");
-   upg4 = parseInt(upg4);
-   var buton = upg4
-*/
+            upg2 = localStorage.getItem("ultra");
+            upg2 = parseInt(upg2);
+            document.getElementById('ultra').value = upg2;
+            upg3 = localStorage.getItem("omega");
+            upg3 = parseInt(upg3);
+            document.getElementById('omega').value = upg3;
+            upg4 = localStorage.getItem("button");
+            upg4 = parseInt(upg4);
+            document.getElementById('buttonupgrade').value = upg4;
+            upg5 = localStorage.getItem("hyper");
+            upg5 = parseInt(upg5);
+            document.getElementById('hype').value = upg5;
+            upg6 = localStorage.getItem("nuke");
+            upg6 = parseInt(upg6);
+            document.getElementById('nukee').value = upg6;
+            
+            
             updac();
           }
         </script>
