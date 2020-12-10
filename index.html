@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 
 <html>
@@ -301,7 +302,11 @@ function closeNav() {
           }
 
 		function reset() {
-			e = 0;
+
+          avariable = prompt('Are you sure you want to reset? [y/n]:');
+
+          if (avengeme === 'y') {
+           e = 0;
 			upg = 0;
 			upg2 = 0;
 			upg3 = 0;
@@ -315,7 +320,10 @@ function closeNav() {
 			clickval6 = 0;
 			updac();
 			save();
-	   }
+    } else {
+            alert("Ok then...");
+          }
+        }
 					var e = 0;
 
         var upg = 0;
