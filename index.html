@@ -143,7 +143,8 @@ function closeNav() {
 				<button id="clicker" class="box" onclick="myfunction()"></button>
 				<br />
 				<button class="extras" onclick="load()">Load</button>&nbsp;
-				<button class="extras" onclick="save()">Save</button>
+				<button class="extras" onclick="save()">Save</button>&nbsp;
+				<button class="extras" onclick="reset()">Reset</button>
 
 				<h1 style="font-size: 30px">Upgrades!</h1>
 
@@ -240,6 +241,21 @@ function closeNav() {
   		e = 0;
 		save();
 	    }
+	   function reset() {
+		e = 0
+		upg = 0
+		upg2 = 0
+		upg3 = 0
+		upg4 = 0
+		upg5 = 0
+		upg6 = 0
+		clickval = 0
+		clickval1 = 0
+		clickval3 = 0
+		clickval4 = 0
+		clickval6 = 0
+		save();
+	   }
             upg = localStorage.getItem('auto');
             upg = parseInt(upg);
             clickval = upg;
@@ -247,7 +263,6 @@ function closeNav() {
 	    if (localStorage.getItem('auto') === 'NaN') {
   		upg = 0;
 		save();
-		
 	    }
             upg2 = localStorage.getItem("ultra");
             upg2 = parseInt(upg2);
