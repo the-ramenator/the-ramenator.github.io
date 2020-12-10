@@ -239,9 +239,67 @@ function closeNav() {
             document.getElementById('vsar').value = e;
 	    if (localStorage.getItem('clicks') === 'NaN') {
   		e = 0;
+		    updac();
+		save();
+		
+	    }
+	   
+            upg = localStorage.getItem('auto');
+            upg = parseInt(upg);
+            clickval = upg;
+            document.getElementById('upgrade').value = upg;
+	    if (localStorage.getItem('auto') === 'NaN') {
+  		upg = 0;
+		    updac();
 		save();
 	    }
-	   function reset() {
+            upg2 = localStorage.getItem("ultra");
+            upg2 = parseInt(upg2);
+            clickval1 = upg2;
+            document.getElementById('ultra').value = upg2;
+	    if (localStorage.getItem("ultra") === 'NaN') {
+  		upg2 = 0;
+		    updac();
+		save();
+	    }
+            upg3 = localStorage.getItem("omega");
+            upg3 = parseInt(upg3);
+            clickval3 = upg3;
+            document.getElementById('omega').value = upg3;
+	    if (localStorage.getItem("omega") === 'NaN') {
+  	       upg3 = 0;
+		    updac();
+		save();
+	    }
+            upg4 = localStorage.getItem("button");
+            upg4 = parseInt(upg4);
+            document.getElementById('buttonupgrade').value = upg4
+	    if (localStorage.getItem("button") === 'NaN') {
+  		upg4 = 0;
+		    updac();
+		save();
+	    }
+            upg5 = localStorage.getItem("hyper");
+            upg5 = parseInt(upg5);
+            clickval4 = upg5;
+            document.getElementById('hype').value = upg5;
+	    if (localStorage.getItem("hyper") === 'NaN') {
+  		upg5 = 0;
+		    updac();
+		save();
+	    }
+            upg6 = localStorage.getItem("nuke");
+            upg6 = parseInt(upg6);
+            clickval6 = 2*upg6;
+            document.getElementById('nukee').value = upg6;
+	    if (localStorage.getItem("nuke") === 'NaN') {
+  		upg6 = 0;
+		    updac();
+		save();
+	    }
+            updac();
+          }
+		function reset() {
 		e = 0
 		upg = 0
 		upg2 = 0
@@ -254,58 +312,10 @@ function closeNav() {
 		clickval3 = 0
 		clickval4 = 0
 		clickval6 = 0
+			updac();
 		save();
 	   }
-            upg = localStorage.getItem('auto');
-            upg = parseInt(upg);
-            clickval = upg;
-            document.getElementById('upgrade').value = upg;
-	    if (localStorage.getItem('auto') === 'NaN') {
-  		upg = 0;
-		save();
-	    }
-            upg2 = localStorage.getItem("ultra");
-            upg2 = parseInt(upg2);
-            clickval1 = upg2;
-            document.getElementById('ultra').value = upg2;
-	    if (localStorage.getItem("ultra") === 'NaN') {
-  		upg2 = 0;
-		save();
-	    }
-            upg3 = localStorage.getItem("omega");
-            upg3 = parseInt(upg3);
-            clickval3 = upg3;
-            document.getElementById('omega').value = upg3;
-	    if (localStorage.getItem("omega") === 'NaN') {
-  	       upg3 = 0;
-		save();
-	    }
-            upg4 = localStorage.getItem("button");
-            upg4 = parseInt(upg4);
-            document.getElementById('buttonupgrade').value = upg4
-	    if (localStorage.getItem("button") === 'NaN') {
-  		upg4 = 0;
-		save();
-	    }
-            upg5 = localStorage.getItem("hyper");
-            upg5 = parseInt(upg5);
-            clickval4 = upg5;
-            document.getElementById('hype').value = upg5;
-	    if (localStorage.getItem("hyper") === 'NaN') {
-  		upg5 = 0;
-		save();
-	    }
-            upg6 = localStorage.getItem("nuke");
-            upg6 = parseInt(upg6);
-            clickval6 = 2*upg6;
-            document.getElementById('nukee').value = upg6;
-	    if (localStorage.getItem("nuke") === 'NaN') {
-  		upg6 = 0;
-		save();
-	    }
-            updac();
-          }
-				var e = 0;
+					var e = 0;
 
         var upg = 0;
 
