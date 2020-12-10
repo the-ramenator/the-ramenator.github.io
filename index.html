@@ -144,7 +144,7 @@ function closeNav() {
 				<br />
 				<button class="extras" onclick="load()">Load</button>&nbsp;
 				<button class="extras" onclick="save()">Save</button>&nbsp;
-				<button class="extras" onclick="reallyreset()">Reset</button>
+				<button class="extras" onclick="reset()">Reset</button>
 
 				<h1 style="font-size: 30px">Upgrades!</h1>
 
@@ -299,18 +299,12 @@ function closeNav() {
 	    }
             updac();
           }
-			function reallyreset(){
-				
+
+		function reset() {
 		bvariable = prompt('Do really want to do this??');
 
           if (avariable === 'yes' or bvariable === 'Yes') {
-            reset();
-            updac();
-          } else {
-	    save();
-          }
-        }
-		function reset() {
+            
 		e = 0
 		upg = 0
 		upg2 = 0
@@ -326,6 +320,9 @@ function closeNav() {
 		updac();
 		save();
 	   }
+	else {
+		save();
+	}
 					var e = 0;
 
         var upg = 0;
