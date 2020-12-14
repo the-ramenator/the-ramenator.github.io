@@ -1,13 +1,9 @@
-
- 
 <!--I M P O R T A N T!  I M P O R T A N T!!!
 var button = document.getElementById('clicker');
 setInterval(function(){
 	button.click()
 },1) 
-Don't forget to add this button:
-            id="clicker"
-to the html object behind the first button tag of what you want to click! And paste this code in C O N S O L E.
+And paste this code in C O N S O L E.
 THAT IS THE CLICKER!!-->
 
 <!DOCTYPE html>
@@ -241,6 +237,7 @@ function closeNav() {
             localStorage.setItem('button', upg4);
             localStorage.setItem('hyper', upg5);
             localStorage.setItem('nuke', upg6);
+            localStorage.setItem('doubleused', doubleused)
           }
 
           function load() {
@@ -252,17 +249,17 @@ function closeNav() {
   		        e = 0;
 		          updac();
 		          save();
-		
 	    }
-	   
+	          doubleused = localStorage.getItem('doubleused')
+            
             upg = localStorage.getItem('auto');
             upg = parseInt(upg);
             clickval = upg;
             document.getElementById('upgrade').value = upg;
 	    if (localStorage.getItem('auto') === 'NaN') {
-  		upg = 0;
+  		  upg = 0;
 		    updac();
-		save();
+		    save();
 	    }
             upg2 = localStorage.getItem("ultra");
             upg2 = parseInt(upg2);
@@ -328,16 +325,18 @@ function closeNav() {
 		clickval3 = 0;
 		clickval4 = 0;
 		clickval6 = 0;
+    doubleused = false;
 		updac();
 		save();
    	   } 
 	   else {
             alert("Ok then...");
            }
-         };
-					
-	var e = 0;
+         };				
+      	var e = 0;
 
+        var doubleused = false;
+	
         var upg = 0;
 
         var upg2 = 0;
@@ -958,10 +957,18 @@ function checks() {
         }
 
         function bruh() {
-          document.getElementById('myBtn').disabled = true;
-          e = e * 2;
-
-          updac();
+          doubleused = true
+          if (doubleused === true) {
+            document.getElementById('myBtn').disabled = true;
+            localStorage.setItem('doubleused', doubleused);
+          }
+          else {
+            document.getElementById('myBtn').disabled = true;
+            doubleused = true;
+            localStorage.setItem('doubleused', doubleused);
+            e = e * 2;
+            updac();
+          }
         }
 
         window.onload = autoSave();
