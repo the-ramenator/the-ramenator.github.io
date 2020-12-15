@@ -7,7 +7,6 @@ Don't forget to add this button:
             id="clicker"
 to the html object behind the first button tag of what you want to click! And paste this code in C O N S O L E.
 THAT IS THE CLICKER!!-->
-
 <!DOCTYPE html>
 
 <html>
@@ -35,7 +34,7 @@ THAT IS THE CLICKER!!-->
 
 		<div class="name">
 			<a href="https://www.youtube.com/watch?v=DLzxrzFCyOs"
-" target="blank" class="ahrefs">Clicker!</a>
+ target="blank" style="font-size:45px" class="ahrefs">Clicker!<br></a>
 		</div>
 
 		<div class="version"></div>
@@ -65,7 +64,7 @@ THAT IS THE CLICKER!!-->
 				</div>
 
 			</div>
-
+      <p id="ranko">Nothing</p>
 
 			<span onclick="openNav()"><button class="extras">Directions</button><script>/* Open when someone clicks on the span element */
 function openNav() {
@@ -245,7 +244,6 @@ function closeNav() {
             localStorage.setItem('button', upg4);
             localStorage.setItem('hyper', upg5);
             localStorage.setItem('nuke', upg6);
-	    localStorage.setItem('rank', rank);
           }
 
           function load() {
@@ -437,7 +435,7 @@ function closeNav() {
 
         var tps = "You can't sell any more ";
 	
-	var rank = "Nothing";
+	      var rank = "Nothing";
 
 
         /*if (e >= 10) {
@@ -620,6 +618,7 @@ function checks() {
           clickval3 = upg3
           clickval4 = upg5
           clickval6 = upg6*2
+          document.getElementById('ranko').innerHTML = 'Rank: '+rank;
           separateNumber();
           /*IMPORTANT ISSUE!! I need to fix it so that you actually get the value clicks of each upg, and not just a number on screen*/
         }
