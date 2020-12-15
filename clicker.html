@@ -431,6 +431,8 @@ function closeNav() {
         var mtl = "You don't have enough clicks to buy the item ";
 
         var tps = "You can't sell any more ";
+	
+	var rank = "Nothing";
 
 
         /*if (e >= 10) {
@@ -561,24 +563,25 @@ function checks() {
 
           if (e === 10) {
             alert('You have achieved the rank: Baby Steps');
-
+	    rank = "Baby Steps";
             updac();
           }
 
           if (e === 10000) {
             alert('You have achieved the rank: Hardcore Clicker');
-
+	    rank = "Hardcore Clicker";
             updac();
           }
 
           if (e === 100000) {
             alert('You have achieved the rank: Machine');
+	    rank = "Machine";
             updac();
           }
 
           if (e === 1000000) {
             alert('You have achieved the rank: Master Clicker');
-
+	    rank = "Master Clicker";
             updac();
           }
 
@@ -586,6 +589,7 @@ function checks() {
             alert(
               'You have achieved the rank: G A L A C T I C   C L I C K E R'
             );
+	    rank = "G A L A C T I C   C L I C K E R";
             updac();
           }
 
@@ -593,7 +597,7 @@ function checks() {
             alert(
               'You have achieved the rank: U N I V E R S A L   C L I C K E R'
             );
-
+	    rank = "U N I V E R S A L   C L I C K E R"
             updac();
           }
         }
