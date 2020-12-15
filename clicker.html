@@ -244,6 +244,7 @@ function closeNav() {
             localStorage.setItem('button', upg4);
             localStorage.setItem('hyper', upg5);
             localStorage.setItem('nuke', upg6);
+            localStorage.setItem('rank', rank);
           }
 
           function load() {
@@ -256,6 +257,12 @@ function closeNav() {
 		          updac();
 		          save();
 	    }
+      rank = localStorage.getItem('rank');
+      if (rank === 'null') {
+        rank = 'Nothing';
+        save();
+      }
+      updac();
             
             upg = localStorage.getItem('auto');
             upg = parseInt(upg);
