@@ -1,4 +1,3 @@
-
 <!--I M P O R T A N T!  I M P O R T A N T!!!
 var button = document.getElementById('clicker');
 setInterval(function(){
@@ -234,6 +233,10 @@ function closeNav() {
 
 	<button class="extras"><a class="nonahrefs" href="index.html">Go Back To Main Website</a></button>
 				<script>
+        function separateNumber() {  
+            nfObject = new Intl.NumberFormat('en-US'); 
+            document.getElementById('vsar').innerHTML = 'Clicks: ' + nfObject.format(e);
+        } 
           function save() {
             localStorage.setItem('clicks', e);
             localStorage.setItem('auto', upg);
@@ -534,10 +537,9 @@ function checks() {
 
         function myfunction() {
           e = e + buttonvalue;
-
           document.title = e + ' Clicks';
           updac();
-          document.getElementById('vsar').innerHTML = 'Clicks: ' + e;
+          separateNumber();
 
           if (e >= 75) {
             hide.style.visibility = 'visible';
@@ -617,6 +619,7 @@ function checks() {
           clickval3 = upg3
           clickval4 = upg5
           clickval6 = upg6*2
+          separateNumber();
           /*IMPORTANT ISSUE!! I need to fix it so that you actually get the value clicks of each upg, and not just a number on screen*/
         }
 
