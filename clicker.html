@@ -56,7 +56,7 @@ THAT IS THE CLICKER!!-->
 
 
 				<div class="overlay-content">
-					<li class="directions">If everything shows NaN, don't worry. Just hit reset and press y. Then everything should reset back to 0. This NaN problem should only happen on your first time opening the site.</li>
+          <li class="directions">If everything shows NaN, don't worry. Just hit reset and press y. Then everything should reset back to 0. This NaN problem should only happen on your first time opening the site.</li>
 					<li class="directions">To start, click the red button (even though people in movies say not to press
 						the red button).</li>
 					<li class="directions">Then, you can buy upgrades as you get more clicks.</li>
@@ -260,6 +260,30 @@ function closeNav() {
        function separateNumbernukee() {  
             nfObject = new Intl.NumberFormat('en-US'); 
             document.getElementById('nukee').innerHTML = 'Nuclear Clickers: ' + nfObject.format(upg6);
+        } 
+        function separateNumbercost() {  
+            nfObject = new Intl.NumberFormat('en-US'); 
+            document.getElementById('cost').innerHTML = 'Cost: ' + nfObject.format(cost);
+        } 
+        function separateNumbercost4() {  
+            nfObject = new Intl.NumberFormat('en-US'); 
+            document.getElementById('cost4').innerHTML = 'Cost: ' + nfObject.format(cost4);
+        } 
+        function separateNumbercost2() {  
+            nfObject = new Intl.NumberFormat('en-US'); 
+            document.getElementById('cost2').innerHTML = 'Cost: ' + nfObject.format(cost2);
+        } 
+        function separateNumbercost3() {  
+            nfObject = new Intl.NumberFormat('en-US'); 
+            document.getElementById('cost3').innerHTML = 'Cost: ' + nfObject.format(cost3);
+        } 
+        function separateNumbercost5() {  
+            nfObject = new Intl.NumberFormat('en-US'); 
+            document.getElementById('cost5').innerHTML = 'Cost: ' + nfObject.format(cost5);
+        } 
+        function separateNumbercost6() {  
+            nfObject = new Intl.NumberFormat('en-US'); 
+            document.getElementById('cost6').innerHTML = 'Cost: ' + nfObject.format(cost6);
         } 
           function save() {
             localStorage.setItem('clicks', e);
@@ -577,6 +601,12 @@ function checks() {
           separateNumbernukee();
           separateNumberhype();
           separateNumberultra();
+          separateNumbercost();
+          separateNumbercost2();
+          separateNumbercost3();
+          separateNumbercost4();
+          separateNumbercost5();
+          separateNumbercost6();
           if (e >= 75) {
             hide.style.visibility = 'visible';
           }
@@ -664,6 +694,12 @@ function checks() {
           separateNumbernukee();
           separateNumberhype();
           separateNumberultra();
+          separateNumbercost();
+          separateNumbercost2();
+          separateNumbercost3();
+          separateNumbercost4();
+          separateNumbercost5();
+          separateNumbercost6();
           /*IMPORTANT ISSUE!! I need to fix it so that you actually get the value clicks of each upg, and not just a number on screen*/
         }
 
