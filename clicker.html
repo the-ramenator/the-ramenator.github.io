@@ -236,6 +236,30 @@ function closeNav() {
             nfObject = new Intl.NumberFormat('en-US'); 
             document.getElementById('vsar').innerHTML = 'Clicks: ' + nfObject.format(e);
         } 
+        function separateNumberauto() {  
+            nfObject = new Intl.NumberFormat('en-US'); 
+            document.getElementById('upgrade').innerHTML = 'Auto Clickers: ' + nfObject.format(upg);
+        } 
+       function separateNumberultra() {  
+            nfObject = new Intl.NumberFormat('en-US'); 
+            document.getElementById('ultra').innerHTML = 'Ultra Clickers: ' + nfObject.format(upg2);
+        } 
+       function separateNumberomega() {  
+            nfObject = new Intl.NumberFormat('en-US'); 
+            document.getElementById('omega').innerHTML = 'Omega Clickers: ' + nfObject.format(upg3);
+        } 
+       function separateNumberhype() {  
+            nfObject = new Intl.NumberFormat('en-US'); 
+            document.getElementById('hype').innerHTML = 'Hyper Clickers: ' + nfObject.format(upg5);
+        } 
+       function separateNumberbuttonupgrade() {  
+            nfObject = new Intl.NumberFormat('en-US'); 
+            document.getElementById('buttonupgrade').innerHTML = 'Button Upgrades: ' + nfObject.format(upg4);
+        } 
+       function separateNumbernukee() {  
+            nfObject = new Intl.NumberFormat('en-US'); 
+            document.getElementById('nukee').innerHTML = 'Nuclear Clickers: ' + nfObject.format(upg6);
+        } 
           function save() {
             localStorage.setItem('clicks', e);
             localStorage.setItem('auto', upg);
@@ -380,9 +404,9 @@ function closeNav() {
 
         var cost4 = 75;
 
-        var cost5 = 5000;
+        var cost5 = 50000;
 
-        var cost6 = 10000;
+        var cost6 = 1000000;
 
         var buttonvalue = 1;
 
@@ -546,7 +570,12 @@ function checks() {
           document.title = e + ' Clicks';
           updac();
           separateNumber();
-
+          separateNumberauto();
+          separateNumberbuttonupgrade();
+          separateNumberomega();
+          separateNumbernukee();
+          separateNumberhype();
+          separateNumberultra();
           if (e >= 75) {
             hide.style.visibility = 'visible';
           }
@@ -621,13 +650,19 @@ function checks() {
           document.getElementById('omega').innerHTML = 'Omega Clickers: ' + upg3;
           document.getElementById('hype').innerHTML = 'Hyper Clickers: ' + upg5;
           document.getElementById('nukee').innerHTML = 'Nuclear Clickers: ' + upg6;
-          clickval = upg
-          clickval1 = upg2
-          clickval3 = upg3
-          clickval4 = upg5
-          clickval6 = upg6*2
+          clickval = upg;
+          clickval1 = upg2;
+          clickval3 = upg3;
+          clickval4 = upg5;
+          clickval6 = upg6*2;
           document.getElementById('ranko').innerHTML = 'Rank: '+rank;
           separateNumber();
+          separateNumberauto();
+          separateNumberbuttonupgrade();
+          separateNumberomega();
+          separateNumbernukee();
+          separateNumberhype();
+          separateNumberultra();
           /*IMPORTANT ISSUE!! I need to fix it so that you actually get the value clicks of each upg, and not just a number on screen*/
         }
 
