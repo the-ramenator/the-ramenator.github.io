@@ -17,7 +17,6 @@ THAT IS THE CLICKER!!-->
 	<meta name="viewport" content="width=device-width, user-scalable=no" />
 
 	<title>Clicker Game - v2.1.5</title>
-
 	<link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
 </head>
 
@@ -66,7 +65,6 @@ THAT IS THE CLICKER!!-->
 
 			</div>
       <p id="ranko">Nothing</p>
-
 			<span onclick="openNav()"><button class="extras">Directions</button><script>/* Open when someone clicks on the span element */
 function openNav() {
   document.getElementById("myNav").style.width = "100%";
@@ -316,16 +314,19 @@ function closeNav() {
             upg = localStorage.getItem('auto');
             upg = parseInt(upg);
             clickval = upg;
+            setInterval(click1, 2000)
             document.getElementById('upgrade').value = upg;
 	    if (localStorage.getItem('auto') === 'NaN') {
   		  upg = 0;
 		    updac();
 		    save();
+        
 	    }
             upg2 = localStorage.getItem("ultra");
             upg2 = parseInt(upg2);
             clickval1 = upg2;
             document.getElementById('ultra').value = upg2;
+            setInterval(click, 1000)
 	    if (localStorage.getItem("ultra") === 'NaN') {
   		upg2 = 0;
 		    updac();
@@ -334,6 +335,7 @@ function closeNav() {
             upg3 = localStorage.getItem("omega");
             upg3 = parseInt(upg3);
             clickval3 = upg3;
+            setInterval(click3, 100)
             document.getElementById('omega').value = upg3;
 	    if (localStorage.getItem("omega") === 'NaN') {
   	       upg3 = 0;
@@ -351,6 +353,7 @@ function closeNav() {
             upg5 = localStorage.getItem("hyper");
             upg5 = parseInt(upg5);
             clickval4 = upg5;
+            setInterval(click4, 10)
             document.getElementById('hype').value = upg5;
 	    if (localStorage.getItem("hyper") === 'NaN') {
   		upg5 = 0;
@@ -361,6 +364,7 @@ function closeNav() {
             upg6 = parseInt(upg6);
             clickval6 = 2*upg6;
             document.getElementById('nukee').value = upg6;
+            setInterval(click6, 0.1)
 	    if (localStorage.getItem("nuke") === 'NaN') {
   		upg6 = 0;
 		    updac();
@@ -690,6 +694,11 @@ function checks() {
           document.getElementById('omega').innerHTML = 'Omega Clickers: ' + upg3;
           document.getElementById('hype').innerHTML = 'Hyper Clickers: ' + upg5;
           document.getElementById('nukee').innerHTML = 'Nuclear Clickers: ' + upg6;
+          clickval = upg;
+          clickval1 = upg2;
+          clickval3 = upg3;
+          clickval4 = upg5;
+          clickval6 = upg6*2;
           document.getElementById('ranko').innerHTML = 'Rank: '+rank;
           separateNumber();
           separateNumberauto();
@@ -717,7 +726,7 @@ function checks() {
           }
         
           if (upg4 >=1 && cost4 === 75) {
-            cost4 = (upg4*27)+75
+            cost2 = (upg2*27)+75
           }
         
           if (upg5 >=1 && cost5 === 50000) {
