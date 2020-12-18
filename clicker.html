@@ -164,6 +164,10 @@ THAT IS THE CLICKER!!-->
 						color: black;
 						text-decoration: none;
 					}
+					.whiteahrefs {
+						color: white;
+						text-decoration: none;
+					}
           .dark-mode {
   background-color: black;
   color: white;
@@ -178,7 +182,7 @@ THAT IS THE CLICKER!!-->
 		</div>
 
 		<div class="testy">
-			<p>Made by: neildaniel00 on Github<br />The password may or may not be around <a class="nonahrefs" href="password.html"
+			<p>Made by: neildaniel00 on Github<br />The password may or may not be around <a class="whiteahrefs" href="password.html"
 													    target="_blank">here</a> somewhere...</p>
 			
       </div>
@@ -216,14 +220,13 @@ THAT IS THE CLICKER!!-->
 				</div>
 
 			</div>
-      <button onclick="darkmode()">Toggle dark mode</button>
 
-<script>
+<p id="ranko">Nothing</p> <button class="extras" onclick="darkmode()">Toggle dark mode</button><script>
 function darkmode() {
    var element = document.body;
    element.classList.toggle("dark-mode");
 }
-</script><p id="ranko">Nothing</p>
+</script>
 			<span onclick="openNav()"><button class="extras">Directions</button><script>/* Open when someone clicks on the span element */
 function openNav() {
   document.getElementById("myNav").style.width = "100%";
