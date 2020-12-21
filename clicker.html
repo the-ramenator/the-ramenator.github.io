@@ -1,4 +1,5 @@
 
+
 <!--I M P O R T A N T!  I M P O R T A N T!!!
 var button = document.getElementById('clicker');
 setInterval(function(){
@@ -182,7 +183,7 @@ THAT IS THE CLICKER!!-->
 		</div>
 
 		<div class="testy">
-			<p>Made by: neildaniel00 on Github<br />The password may or may not be around <a class="ahrefs" href="password.html"
+			<p>Made by: neildaniel00 on Github<br />The password may or may not be around <a class="nonahrefs" href="password.html"
 													    target="_blank">here</a> somewhere...</p>
 			
       </div>
@@ -211,7 +212,7 @@ THAT IS THE CLICKER!!-->
 
 
 				<div class="overlay-content">
-          <li class="directions">If everything shows NaN, don't worry. Just hit reset and press y. Then everything should reset back to 0. This NaN problem should only happen on your first time opening the site.</li>
+          <li class="directions">If everything shows NaN, don't worry. Reload, and everything should reset back to 0. This NaN problem should only happen on your first time opening the site.</li>
 					<li class="directions">To start, click the red button (even though people in movies say not to press
 						the red button).</li>
 					<li class="directions">Then, you can buy upgrades as you get more clicks.</li>
@@ -462,13 +463,16 @@ function closeNav() {
             e = parseInt(e);
             document.getElementById('vsar').value = e;
 	          if (localStorage.getItem('clicks') === 'NaN') {
-  		        e = 0;
+  		        nanreset();
 		          updac();
 		          save();
 	    }
       rank = localStorage.getItem('rank');
+      document.getElementById('ranko').value = "Rank" + rank;
       if (rank === 'null') {
-        rank = 'Nothing';
+        rank = "Nothing";
+        nanreset();
+        updac();
         save();
       }
       updac();
@@ -479,9 +483,9 @@ function closeNav() {
             setInterval(click1, 2000)
             document.getElementById('upgrade').value = upg;
 	    if (localStorage.getItem('auto') === 'NaN') {
-  		  upg = 0;
-		    updac();
-		    save();
+        nanreset();
+        updac();
+        save();
         
 	    }
             upg2 = localStorage.getItem("ultra");
@@ -490,9 +494,9 @@ function closeNav() {
             document.getElementById('ultra').value = upg2;
             setInterval(click, 1000)
 	    if (localStorage.getItem("ultra") === 'NaN') {
-  		upg2 = 0;
-		    updac();
-		save();
+        nanreset();
+        updac();
+        save();
 	    }
             upg3 = localStorage.getItem("omega");
             upg3 = parseInt(upg3);
@@ -500,17 +504,17 @@ function closeNav() {
             setInterval(click3, 100)
             document.getElementById('omega').value = upg3;
 	    if (localStorage.getItem("omega") === 'NaN') {
-  	       upg3 = 0;
-		    updac();
-		save();
+         nanreset();
+        updac();
+        save();
 	    }
             upg4 = localStorage.getItem("button");
             upg4 = parseInt(upg4);
             document.getElementById('buttonupgrade').value = upg4
 	    if (localStorage.getItem("button") === 'NaN') {
-  		upg4 = 0;
-		    updac();
-		save();
+        nanreset();
+        updac();
+        save();
 	    }
             upg5 = localStorage.getItem("hyper");
             upg5 = parseInt(upg5);
@@ -518,9 +522,9 @@ function closeNav() {
             setInterval(click4, 10)
             document.getElementById('hype').value = upg5;
 	    if (localStorage.getItem("hyper") === 'NaN') {
-  		upg5 = 0;
-		    updac();
-		save();
+        nanreset();
+        updac();
+        save();
 	    }
             upg6 = localStorage.getItem("nuke");
             upg6 = parseInt(upg6);
@@ -528,32 +532,49 @@ function closeNav() {
             document.getElementById('nukee').value = upg6;
             setInterval(click6, 0.1)
 	    if (localStorage.getItem("nuke") === 'NaN') {
-  		upg6 = 0;
-		    updac();
-		save();
+        nanreset();
+        updac();
+        save();
 	    }
             updac();
           }
+    function nanreset() {
+      e = 0;
+      upg = 0;
+		  upg2 = 0;
+		  upg3 = 0;
+		  upg4 = 0;
+		  upg5 = 0;
+		  upg6 = 0;
+	  	clickval = 0;
+		  clickval1 = 0;
+	  	clickval3 = 0;
+	  	clickval4 = 0;
+		  clickval6 = 0;
+	  	updac();
+		  save();
+    }
+
 
 		function reset() {
 
           avengeme = prompt('Are you sure you want to reset? [y/n]:');
 
           if (avengeme === 'y') {
-           	e = 0;
-		upg = 0;
-		upg2 = 0;
-		upg3 = 0;
-		upg4 = 0;
-		upg5 = 0;
-		upg6 = 0;
-		clickval = 0;
-		clickval1 = 0;
-		clickval3 = 0;
-		clickval4 = 0;
-		clickval6 = 0;
-		updac();
-		save();
+            e = 0;
+		        upg = 0;
+		        upg2 = 0;
+		        upg3 = 0;
+		        upg4 = 0;
+		        upg5 = 0;
+		        upg6 = 0;
+		        clickval = 0;
+		        clickval1 = 0;
+		        clickval3 = 0;
+		        clickval4 = 0;
+		        clickval6 = 0;
+		        updac();
+		        save();
    	   } 
 	   else {
             alert("Ok then...");
@@ -1327,6 +1348,7 @@ function checks() {
         function autoSave() {
           setInterval(save, 3000)
         }
+        
 				</script>
 
 			</center>
