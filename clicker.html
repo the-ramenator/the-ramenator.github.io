@@ -225,12 +225,15 @@ THAT IS THE CLICKER!!-->
 
 			</div>
 
-<p id="ranko">Nothing</p> <button class="extras" onclick="darkmode()">Toggle dark mode</button><script>
+<p id="ranko">Nothing</p> 
+<div id="hide5">
+<button class="extras" onclick="darkmode()">Toggle dark mode</button><script>
 function darkmode() {
    var element = document.body;
    element.classList.toggle("dark-mode");
 }
 </script>
+</div>
 			<span onclick="openNav()"><button class="extras">Directions</button><script>/* Open when someone clicks on the span element */
 function openNav() {
   document.getElementById("myNav").style.width = "100%";
@@ -651,6 +654,8 @@ function closeNav() {
 
         var hide4 = document.getElementById('hide4');
 
+        var hide5 = document.getElementById('hide5');
+
         var nukc = document.getElementById('nukee');
 
         var cst6 = document.getElementById('cost6');
@@ -748,6 +753,8 @@ function checks() {
 
         hide4.style.visibility = 'hidden';
 
+        hide5.style.visibility = 'hidden';
+
         function click() {
           e = e + clickval1;
 
@@ -817,6 +824,9 @@ function checks() {
           }
           if (upg6 >= 1) {
             hide4.style.visibility = 'visible';
+          }
+          if (e >= 1000) {
+            hide5.style.visibility = 'visible';
           }
           if (e >= 500000) {
             hide4.style.visibility = 'visible';
@@ -923,6 +933,9 @@ function checks() {
           }
           if (upg6 >= 1) {
             hide4.style.visibility = 'visible';
+          }
+          if (e >= 1000) {
+            hide5.style.visibility = 'visible';
           }
           if (e >= 500000) {
             hide4.style.visibility = 'visible';
