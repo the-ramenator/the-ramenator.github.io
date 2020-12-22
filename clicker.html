@@ -1,5 +1,6 @@
 
 
+
 <!--I M P O R T A N T!  I M P O R T A N T!!!
 var button = document.getElementById('clicker');
 setInterval(function(){
@@ -173,6 +174,90 @@ THAT IS THE CLICKER!!-->
   background-color: black;
   color: white;
 }
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+
+
+input {
+  color: white;
+  border: none;
+  background: transparent;
+  border-bottom: 1px solid #00ff00; }
+  input:focus {
+    outline: none; }
+
+
+select {
+  border: none;
+  border-bottom: 1px solid #00ff00;
+  background: transparent;
+  color: white;
+  border-radius: 0; }
+  select:focus {
+    outline: none; }
+
+.blurred {
+  filter: blur(1px); }
+
+.settings_row {
+  display: grid;
+  grid-template-columns: 80px 1fr 60px;
+  grid-gap: 1em;
+  margin: 1em; }
+
+.color_selector {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  align-items: center; }
+  .color_selector .color_block {
+    width: 20px;
+    height: 20px;
+    cursor: pointer; }
+ .theme_border_color {
+  border-color: #000000; }
+
+.theme_bg_color {
+  background: #00ff00; }
+
 				</style>
 </head>
 
@@ -234,7 +319,75 @@ function darkmode() {
 }
 </script>
 </div>
-			<span onclick="openNav()"><button class="extras">Directions</button><script>/* Open when someone clicks on the span element */
+			<!-- Trigger/Open The Modal -->
+<button class="extras" id="modal">Settings</button>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+            <div><h2>Settings</h2></div>
+        <div class="settings_row">
+            <div>Color</div>
+            <div class="color_selector">
+                <div class="color_block" style="background:#00ff00" onclick="chooseColor('#00ff00')"></div>
+                <div class="color_block" style="background:#ff0000" onclick="chooseColor('#ff0000')"></div>
+                <div class="color_block" style="background:#0000ff" onclick="chooseColor('#0000ff')"></div>
+                <div class="color_block" style="background:#9a00ff" onclick="chooseColor('#9a00ff')"></div>
+                <div class="color_block" style="background:#ffff00" onclick="chooseColor('#ffff00')"></div>
+                <div class="color_block" style="background:#ffa500" onclick="chooseColor('#ffa500')"></div>
+            </div>
+            <input id="theme_color_input" class="theme_border_color" type="text" value="#000000"/>
+        </div>
+  </div>
+<script>
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("modal");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+<script>
+function chooseColor(a){
+theme_color_input.value=a,setThemeColor(a)
+}
+
+function setThemeColor(a){
+document.body.style.backgroundColor=a;
+for(const b of document.querySelectorAll(".theme_border_color"))b.style.borderColor=a;
+for(const b of document.querySelectorAll(".theme_color"))b.style.color=a;
+for(const b of document.querySelectorAll(".theme_bg_color"))b.style.background=a;
+for(const b of document.querySelectorAll(".theme_fill_color"))b.style.fill=a;
+setStore("color",a)
+}
+
+
+function showModal(a){hideOverlay(),showOverlay(),a.style.display="block"}
+
+</script>
+</div><span onclick="openNav()"><button class="extras">Directions</button><script>/* Open when someone clicks on the span element */
 function openNav() {
   document.getElementById("myNav").style.width = "100%";
 }
