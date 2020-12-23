@@ -18,6 +18,26 @@ THAT IS THE CLICKER!!-->
 	<meta charset="utf-8" />
 
 	<meta name="viewport" content="width=device-width, user-scalable=no" />
+  <script>
+      let keysDown = {};
+window.onkeydown = function(keyboardshortcuts) {
+  keysDown[keyboardshortcuts.key] = true;
+
+  if (keysDown["Control"] && keysDown["c"]) {
+    //do what you want when control and a is pressed for example
+    console.log("Game Saved!");
+    save();
+  }
+  else if( keysDown["Control"] && keysDown["v"] ){
+    console.log("Game Loaded!");
+    load();
+  }
+}
+
+window.onkeyup = function(keyboardshortcuts) {
+  keysDown[keyboardshortcuts.key] = false;
+}
+    </script>
 
 	<title>Clicker Game - v1.3.5</title>
 	<link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"/>
@@ -301,7 +321,7 @@ select {
 					<li class="directions">To start, click the red button (even though people in movies say not to press
 						the red button).</li>
 					<li class="directions">Then, you can buy upgrades as you get more clicks.</li>
-					<li class="directions">Main Problems: Even though the number displays on screen, the buildings don't work after you load.</li>
+					<li class="directions">You can also press Control+C to save and Control+V to load.</li>
 					<li class="directions">I will update this game as I get more ideas.</li>
           <br>
           <br>
@@ -1515,7 +1535,7 @@ function checks() {
         window.onload = autoSave();
         window.onload = load();
         function autoSave() {
-          setInterval(save, 3000)
+          setInterval(save, 60000)
         }
         
 				</script>
