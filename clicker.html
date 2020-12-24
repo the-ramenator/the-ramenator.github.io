@@ -1,6 +1,7 @@
 
 
 
+
 <!--I M P O R T A N T!  I M P O R T A N T!!!
 var button = document.getElementById('clicker');
 setInterval(function(){
@@ -297,7 +298,7 @@ select {
 			<a href="https://www.youtube.com/watch?v=DLzxrzFCyOs"
  target="blank" style="font-size:45px" class="ahrefs">Clicker!<br></a>
 		</div>
-
+    <audio id="audio" src="/sounds/tick.wav" autostart="false" ></audio>
 		<div class="version"></div>
 
 		<center>
@@ -811,6 +812,8 @@ function closeNav() {
 
         var cst3 = document.getElementById('cost3');
 
+        var sound = document.getElementById("audio");
+
         var omgc = document.getElementById('omega');
 
         var cst4 = document.getElementById('cost4');
@@ -961,6 +964,7 @@ function checks() {
         hide.style.visibility = 'hidden';
 
         function myfunction() {
+          sound.play()
           e = e + buttonvalue;
           document.title = e + ' Clicks';
           updac();
