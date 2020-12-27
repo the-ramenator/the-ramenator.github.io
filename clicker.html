@@ -1,3 +1,4 @@
+
 <!--I M P O R T A N T!  I M P O R T A N T!!!
 var button = document.getElementById('clicker');
 setInterval(function(){
@@ -318,51 +319,6 @@ select {
 
 
 
-#ach10b1, #ach25b1, #ach50b1{
-	width: 40px;
-	height: 40px;
-	border: 2px black dashed;
-	float: left;
-	visibility: hidden;
-	margin-top: 10px;
-	margin-left: 9px;
-	margin-right: 9px;
-	cursor: default;
-}
-
-#ach10b1, #ach25b1, #ach50b1 {
-	background-color: #FCA3FF;
-}
-
-/* Tooltip CSS from James Pautz, http://jamespautz.com/web/css-tooltips-no-javascript-or-jquery/ */
-
-.tooltipAch {
-	color: #000000; 
-	outline: none;
-    text-decoration: none;
-	position: relative;
-}
-
-.tooltipAch span {
-	margin-left: -999em;
-	position: absolute;
-}
-
-.tooltipAch:hover span {
-	left: 16.25em;
-	bottom: 0em;
-	margin-left: 0;
-	width: 130px;
-	font-size: 0.6em;
-	color:black;
-}
-
-.tooltipAchStyle {
-	padding: 0.8em 0.5em;
-	background: #919191; 
-	border: 1px solid #595959;
-}
-
 				</style>
 </head>
 
@@ -505,40 +461,16 @@ function showModal(a){hideOverlay(),showOverlay(),a.style.display="block"}
   <div class="modal2-content">
     <span class="close2">&times;</span>
             <div><h2>Achievements</h2></div>
-            <!--
+            
             			<div id="achContainer">
 				<div id="achTitle">Achievements (<span id="achTotal">0</span>/3)</div>
         
 				<div class="spacer2"></div>
 				<div id="achievements">
-					<a class="tooltipAch"><div id="ach10b1"><span class="tooltipAchStyle">Bought 10 auto clickers<br></span>10 AC</div></a>
-					<a class="tooltipAch"><div id="ach25b1"><span class="tooltipAchStyle">Bought 25 auto clickers<br></span>25 AC</div></a>
-					<a class="tooltipAch"><div id="ach50b1">
-            <span class="tooltipAchStyle">Bought 50 auto clickers<br></span>50 AC</a></div>
-          <script>
-            var achTotal = document.getElementById("achTotal");
-            
-            
-            document.getElementById('ach10b1').style.visibility = 'hidden';
-            if (upg >= 10) {
-              document.getElementById('ach10b1').style.visibility = 'visible';
-              achtotal = achtotal+1;
-            }
-            
-            document.getElementById('ach25b1').style.visibility = 'hidden';
-            if (upg >= 25) {
-              document.getElementById('ach25b1').style.visibility = 'visible';
-              achtotal = achtotal+1;
-            }
-         
-            document.getElementById('ach50b1').style.visibility = 'hidden';
-            if (upg >= 50) {
-              document.getElementById('ach50b1').style.visibility = 'visible';
-              achtotal = achtotal+1;
-            }
-          </script>
+					<div id="ach10b1">Bought 10 auto clickers<br></div>
+					<div id="ach25b1">Bought 25 auto clickers<br></div>
+				  <div id="ach50b1">Bought 50 auto clickers<br></div>
 				</div>
-        -->
 			</div>
             
 
@@ -1709,7 +1641,40 @@ function checks() {
         }
         
 				</script>
-
+        <script>
+                      document.getElementById('ach10b1').style.visibility = 'hidden';
+            document.getElementById('ach25b1').style.visibility = 'hidden';
+            document.getElementById('ach50b1').style.visibility = 'hidden';
+          </script>
+<script>
+            
+            
+            if (upg >= 10) {
+              document.getElementById('ach10b1').style.visibility = 'visible';
+            }
+            if (upg >= 10) {
+              document.getElementById("achTotal").innerHTML = "1";
+            }
+            
+            
+            
+            if (upg >= 25) {
+              document.getElementById('ach25b1').style.visibility = 'visible';
+            }
+            if (upg >= 25) {
+              document.getElementById("achTotal").innerHTML = "2";
+            }
+            
+         
+            
+            if (upg >= 50) {
+              document.getElementById('ach50b1').style.visibility = 'visible';
+            }
+            if (upg >= 50) {
+              document.getElementById("achTotal").innerHTML = "3";
+            }
+            
+          </script>
 			</center>
 </body>
 
