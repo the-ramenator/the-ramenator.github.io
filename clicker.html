@@ -1,4 +1,5 @@
 
+
 <!--I M P O R T A N T!  I M P O R T A N T!!!
 var button = document.getElementById('clicker');
 setInterval(function(){
@@ -1176,6 +1177,7 @@ function checks() {
           clickval4 = upg5;
           clickval6 = upg6*2;
           document.getElementById('ranko').innerHTML = 'Rank: '+rank;
+          achievements();
           separateNumber();
           separateNumberauto();
           separateNumberbuttonupgrade();
@@ -1648,7 +1650,7 @@ function checks() {
           </script>
 <script>
             
-            
+function achievements() {
             if (upg >= 10) {
               document.getElementById('ach10b1').style.visibility = 'visible';
             }
@@ -1673,7 +1675,7 @@ function checks() {
             if (upg >= 50) {
               document.getElementById("achTotal").innerHTML = "3";
             }
-            
+}
           </script>
 			</center>
 </body>
