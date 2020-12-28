@@ -1,3 +1,4 @@
+
 <!--I M P O R T A N T!  I M P O R T A N T!!!
 var button = document.getElementById('clicker');
 setInterval(function(){
@@ -1016,7 +1017,7 @@ function checks() {
               "Seriously? You can't even type in a random 15 digit passcode?"
             );
             alert('Well, there is a way to bypass the password...');
-            alert('Though you might have to View Source Code');
+            alert('Though you might have to start clicking on things you didn\'t were buttons at all.');
           }
         }
 
@@ -1188,6 +1189,40 @@ function checks() {
           separateNumbercost4();
           separateNumbercost5();
           separateNumbercost6();
+          
+          	          if (document.getElementById('vsar') === 'Clicks: NaN') {
+  		        save();
+		          load();
+	    }
+            	    if (localStorage.getItem('auto') === 'NaN') {
+        save();
+        load();
+	    }
+      	    if (localStorage.getItem("ultra") === 'NaN') {
+        save();
+        load();
+	    }
+                if (rank === 'null') {
+        rank = "Nothing";
+        save();
+        load();
+      }
+      	    if (localStorage.getItem("omega") === 'NaN') {
+         save();
+        load();
+	    }
+      	    if (localStorage.getItem("button") === 'NaN') {
+        save();
+        load();
+	    }
+      	    if (localStorage.getItem("hyper") === 'NaN') {
+        save();
+        load();
+	    }
+      	    if (localStorage.getItem("nuke") === 'NaN') {
+        save();
+        load();
+	    }
           if (upg2 >= 1) {
             hide.style.visibility = 'visible';
           }
@@ -1636,7 +1671,7 @@ function checks() {
         window.onload = autoSave();
         window.onload = load();
         function autoSave() {
-          setInterval(save, 60000)
+          setInterval(save, 3000)
         }
         
                       document.getElementById('ach10b1').style.visibility = 'hidden';
