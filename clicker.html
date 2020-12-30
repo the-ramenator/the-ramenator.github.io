@@ -1,3 +1,6 @@
+
+
+
 <!--I M P O R T A N T!  I M P O R T A N T!!!
 var button = document.getElementById('clicker');
 setInterval(function(){
@@ -801,9 +804,7 @@ function closeNav() {
 	    }
             upg4 = localStorage.getItem("button");
             upg4 = parseInt(upg4);
-	    upg4 = buttonvalue;
-	    buttonvalue = parseInt(buttonvalue);
-            document.getElementById('buttonupgrade').value = buttonvalue;
+            document.getElementById('buttonupgrade').value = upg4
 	    if (localStorage.getItem("button") === 'NaN') {
         nanreset();
         updac();
@@ -1690,7 +1691,7 @@ function checks() {
         window.onload = autoSave();
         window.onload = load();
         function autoSave() {
-          setInterval(save, 2000)
+          setInterval(save, 3000)
         }
         
             document.getElementById('ach10b1').style.visibility = 'hidden';
