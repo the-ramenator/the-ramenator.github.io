@@ -799,9 +799,9 @@ function closeNav() {
         updac();
         save();
 	    }
-            upg4 = localStorage.getItem("button");
-            upg4 = parseInt(upg4);
-            document.getElementById('buttonupgrade').value = upg4
+            buttonvalue = localStorage.getItem("button");
+            buttonvalue = parseInt(buttonvalue);
+            document.getElementById('buttonupgrade').value = buttonvalue;
 	    if (localStorage.getItem("button") === 'NaN') {
         nanreset();
         updac();
