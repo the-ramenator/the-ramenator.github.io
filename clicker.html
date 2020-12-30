@@ -742,7 +742,7 @@ function closeNav() {
             localStorage.setItem('auto', upg);
             localStorage.setItem('ultra', upg2);
             localStorage.setItem('omega', upg3);
-            localStorage.setItem('button', buttonvalue);
+            localStorage.setItem('button', upg4);
             localStorage.setItem('hyper', upg5);
             localStorage.setItem('nuke', upg6);
             localStorage.setItem('rank', rank);
@@ -799,8 +799,10 @@ function closeNav() {
         updac();
         save();
 	    }
-            buttonvalue = localStorage.getItem("button");
-            buttonvalue = parseInt(buttonvalue);
+            upg4 = localStorage.getItem("button");
+            upg4 = parseInt(upg4);
+	    upg4 = buttonvalue;
+	    buttonvalue = parseInt(buttonvalue);
             document.getElementById('buttonupgrade').value = buttonvalue;
 	    if (localStorage.getItem("button") === 'NaN') {
         nanreset();
@@ -1688,7 +1690,7 @@ function checks() {
         window.onload = autoSave();
         window.onload = load();
         function autoSave() {
-          setInterval(save, 3000)
+          setInterval(save, 2000)
         }
         
             document.getElementById('ach10b1').style.visibility = 'hidden';
