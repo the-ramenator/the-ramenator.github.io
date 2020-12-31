@@ -1,6 +1,3 @@
-
-
-
 <!--I M P O R T A N T!  I M P O R T A N T!!!
 var button = document.getElementById('clicker');
 setInterval(function(){
@@ -686,7 +683,7 @@ function closeNav() {
 
 
 
-	<button class="extras"><a class="nonahrefs" href="index.html">Go Back To Main Website</a></button>
+	<button class="extras"><a class="nonahrefs" target="_blank" href="index.html">Go Back To Main Website</a></button>
 				<script>
         function separateNumber() {  
             nfObject = new Intl.NumberFormat('en-US'); 
@@ -851,10 +848,11 @@ function closeNav() {
 
 
 		function reset() {
+          reset1 = confirm ('Are you sure you want to reset? [cancel/ok]:')
+          if (reset1 === true) {
+          avengeme = confirm('Once you do this, there will be no going back:');
 
-          avengeme = prompt('Are you sure you want to reset? [y/n]:');
-
-          if (avengeme === 'y' || avengeme === 'Y' || avengeme === 'Yes' || avengeme === 'yes') {
+          if (avengeme === true) {
             e = 0;
 		        upg = 0;
 		        upg2 = 0;
@@ -874,14 +872,17 @@ function closeNav() {
 		        updac();
 		        save();
 		  	console.log('Game successfully resetted!')
+          }
    	   } 
 	   else {
-            alert("Ok then...");
+            alert("You made the right choice. Who would wanna reset?");
            }
          };			
 
 
       	var e = 0;
+
+        var achTotal = 0;
 	
         var upg = 0;
 
@@ -1693,7 +1694,6 @@ function checks() {
         function autoSave() {
           setInterval(save, 3000)
         }
-        
             document.getElementById('ach10b1').style.visibility = 'hidden';
             document.getElementById('ach25b1').style.visibility = 'hidden';
             document.getElementById('ach50b1').style.visibility = 'hidden';
@@ -1717,20 +1717,23 @@ function achievements() {
             if (upg >= 10) {
               document.getElementById('ach10b1').style.visibility = 'visible';
             }
-            if (upg >= 10) {
-              document.getElementById("achTotal").innerHTML = "1";
+            if (upg == 10) {
+              achTotal = achTotal+1;
+              document.getElementById("achTotal").innerHTML = achTotal;
             }
             if (upg >= 25) {
               document.getElementById('ach25b1').style.visibility = 'visible';
             }
-            if (upg >= 25) {
-              document.getElementById("achTotal").innerHTML = "2";
+            if (upg == 25) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
             }
             if (upg >= 50) {
               document.getElementById('ach50b1').style.visibility = 'visible';
             }
-            if (upg >= 50) {
-              document.getElementById("achTotal").innerHTML = "3";
+            if (upg == 50) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
             }
 
 
@@ -1739,20 +1742,23 @@ function achievements() {
             if (upg2 >= 10) {
               document.getElementById('ultra10').style.visibility = 'visible';
             }
-            if (upg2 >= 10) {
-              document.getElementById("achTotal").innerHTML = "4";
+            if (upg2 == 10) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
             }
             if (upg2 >= 25) {
               document.getElementById('ultra25').style.visibility = 'visible';
             }
-            if (upg2 >= 25) {
-              document.getElementById("achTotal").innerHTML = "5";
+            if (upg2 == 25) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
             }
             if (upg2 >= 50) {
               document.getElementById('ultra50').style.visibility = 'visible';
             }
-            if (upg2 >= 50) {
-              document.getElementById("achTotal").innerHTML = "6";
+            if (upg2 == 50) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
             }
 
 
@@ -1761,20 +1767,23 @@ function achievements() {
             if (upg3 >= 10) {
               document.getElementById('omega10').style.visibility = 'visible';
             }
-            if (upg3 >= 10) {
-              document.getElementById("achTotal").innerHTML = "7";
+            if (upg3 == 10) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
             }
             if (upg3 >= 25) {
               document.getElementById('omega25').style.visibility = 'visible';
             }
-            if (upg3 >= 25) {
-              document.getElementById("achTotal").innerHTML = "8";
+            if (upg3 == 25) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
             }
             if (upg3 >= 50) {
               document.getElementById('omega50').style.visibility = 'visible';
             }
-            if (upg3 >= 50) {
-              document.getElementById("achTotal").innerHTML = "9";
+            if (upg3 == 50) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
             }
 
 
@@ -1782,20 +1791,23 @@ function achievements() {
             if (upg4 >= 10) {
               document.getElementById('button10').style.visibility = 'visible';
             }
-            if (upg4 >= 10) {
-              document.getElementById("achTotal").innerHTML = "10";
+            if (upg4 == 10) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
             }
             if (upg4 >= 25) {
               document.getElementById('button25').style.visibility = 'visible';
             }
-            if (upg4 >= 25) {
-              document.getElementById("achTotal").innerHTML = "11";
+            if (upg4 == 25) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
             }
             if (upg4 >= 50) {
               document.getElementById('button50').style.visibility = 'visible';
             }
-            if (upg4 >= 50) {
-              document.getElementById("achTotal").innerHTML = "12";
+            if (upg4 == 50) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
             }
 
 
@@ -1803,20 +1815,23 @@ function achievements() {
             if (upg5 >= 10) {
               document.getElementById('hyper10').style.visibility = 'visible';
             }
-            if (upg5 >= 10) {
-              document.getElementById("achTotal").innerHTML = "13";
+            if (upg5 == 10) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
             }
             if (upg5 >= 25) {
               document.getElementById('hyper25').style.visibility = 'visible';
             }
-            if (upg5 >= 25) {
-              document.getElementById("achTotal").innerHTML = "14";
+            if (upg5 == 25) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
             }
             if (upg5 >= 50) {
               document.getElementById('hyper50').style.visibility = 'visible';
             }
-            if (upg5 >= 50) {
-              document.getElementById("achTotal").innerHTML = "15";
+            if (upg5 == 50) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
             }
 
 
@@ -1824,21 +1839,26 @@ function achievements() {
             if (upg6 >= 10) {
               document.getElementById('nuke10').style.visibility = 'visible';
             }
-            if (upg6 >= 10) {
-              document.getElementById("achTotal").innerHTML = "16";
+            if (upg6 == 10) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = 
+              achTotal;
             }
             if (upg6 >= 25) {
               document.getElementById('nuke25').style.visibility = 'visible';
             }
-            if (upg6 >= 25) {
-              document.getElementById("achTotal").innerHTML = "17";
+            if (upg6 == 25) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
             }
             if (upg6 >= 50) {
               document.getElementById('nuke50').style.visibility = 'visible';
             }
-            if (upg6 >= 50) {
-              document.getElementById("achTotal").innerHTML = "18";
+            if (upg6 == 50) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
             }
+            
 }
           </script>
 			</center>
