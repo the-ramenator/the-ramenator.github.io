@@ -982,7 +982,25 @@ function closeNav() {
 
         var tps = "You can't sell any more ";
 	
-	      var rank = "Nothing";
+	var rank = "Nothing";
+            document.getElementById('ach10b1').style.visibility = 'hidden';
+            document.getElementById('ach25b1').style.visibility = 'hidden';
+            document.getElementById('ach50b1').style.visibility = 'hidden';
+            document.getElementById('ultra10').style.visibility = 'hidden';
+            document.getElementById('ultra25').style.visibility = 'hidden';
+            document.getElementById('ultra50').style.visibility = 'hidden';
+            document.getElementById('omega10').style.visibility = 'hidden';
+            document.getElementById('omega25').style.visibility = 'hidden';
+            document.getElementById('omega50').style.visibility = 'hidden';
+            document.getElementById('button10').style.visibility = 'hidden';
+            document.getElementById('button25').style.visibility = 'hidden';
+            document.getElementById('button50').style.visibility = 'hidden';
+            document.getElementById('hyper10').style.visibility = 'hidden';
+            document.getElementById('hyper25').style.visibility = 'hidden';
+            document.getElementById('hyper50').style.visibility = 'hidden';
+            document.getElementById('nuke10').style.visibility = 'hidden';
+            document.getElementById('nuke25').style.visibility = 'hidden';
+            document.getElementById('nuke50').style.visibility = 'hidden';
 
 
         /*if (e >= 10) {
@@ -1196,7 +1214,6 @@ function checks() {
           clickval4 = upg5;
           clickval6 = upg6*2;
           document.getElementById('ranko').innerHTML = 'Rank: '+rank;
-          achievements();
           separateNumber();
           separateNumberauto();
           separateNumberbuttonupgrade();
@@ -1344,10 +1361,31 @@ function checks() {
             
 		  save();
           }
-          /*IMPORTANT ISSUE!! I need to fix it so that you actually get the value clicks of each upg, and not just a number on screen*/
+          /*IMPORTANT ISSUE!! I need to fix it so that you actually get the value button of upg4, and not just a number on screen*/
         }
 
         function buyupgrade() {
+		            if (upg >= 10) {
+              document.getElementById('ach10b1').style.visibility = 'visible';
+            }
+            if (upg == 10) {
+              achTotal = achTotal+1;
+              document.getElementById("achTotal").innerHTML = achTotal;
+            }
+            if (upg >= 25) {
+              document.getElementById('ach25b1').style.visibility = 'visible';
+            }
+            if (upg == 25) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
+            }
+            if (upg >= 50) {
+              document.getElementById('ach50b1').style.visibility = 'visible';
+            }
+            if (upg == 50) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
+            }
           if (e >= cost) {
             upg = upg + 1;
 
@@ -1410,6 +1448,28 @@ function checks() {
         }
 
         function buyupgrade1() {
+		            if (upg2 >= 10) {
+              document.getElementById('ultra10').style.visibility = 'visible';
+            }
+            if (upg2 == 10) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
+            }
+            if (upg2 >= 25) {
+              document.getElementById('ultra25').style.visibility = 'visible';
+            }
+            if (upg2 == 25) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
+            }
+            if (upg2 >= 50) {
+              document.getElementById('ultra50').style.visibility = 'visible';
+            }
+            if (upg2 == 50) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
+            }
+
           if (e >= cost2) {
             upg2 = upg2 + 1;
 
@@ -1470,6 +1530,28 @@ function checks() {
         }
 
         function buyupgrade3() {
+		
+            if (upg3 >= 10) {
+              document.getElementById('omega10').style.visibility = 'visible';
+            }
+            if (upg3 == 10) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
+            }
+            if (upg3 >= 25) {
+              document.getElementById('omega25').style.visibility = 'visible';
+            }
+            if (upg3 == 25) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
+            }
+            if (upg3 >= 50) {
+              document.getElementById('omega50').style.visibility = 'visible';
+            }
+            if (upg3 == 50) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
+            }
           if (e >= cost3) {
             upg3 = upg3 + 1;
 
@@ -1530,6 +1612,27 @@ function checks() {
         }
 
         function upgradeclick() {
+	            if (upg4 >= 10) {
+              document.getElementById('button10').style.visibility = 'visible';
+            }
+            if (upg4 == 10) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
+            }
+            if (upg4 >= 25) {
+              document.getElementById('button25').style.visibility = 'visible';
+            }
+            if (upg4 == 25) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
+            }
+            if (upg4 >= 50) {
+              document.getElementById('button50').style.visibility = 'visible';
+            }
+            if (upg4 == 50) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
+            }
           if (e >= cost4) {
             e = e - cost4;
 
@@ -1570,6 +1673,27 @@ function checks() {
         }
 
         function buyupgrade4() {
+	    if (upg5 >= 10) {
+              document.getElementById('hyper10').style.visibility = 'visible';
+            }
+            if (upg5 == 10) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
+            }
+            if (upg5 >= 25) {
+              document.getElementById('hyper25').style.visibility = 'visible';
+            }
+            if (upg5 == 25) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
+            }
+            if (upg5 >= 50) {
+              document.getElementById('hyper50').style.visibility = 'visible';
+            }
+            if (upg5 == 50) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
+            }
           if (e >= cost5) {
             e -= cost5;
 
@@ -1633,6 +1757,31 @@ function checks() {
           if (e >= cost6) {
             e -= cost6;
 
+		  
+
+            if (upg6 >= 10) {
+              document.getElementById('nuke10').style.visibility = 'visible';
+            }
+            if (upg6 == 10) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = 
+              achTotal;
+            }
+            if (upg6 >= 25) {
+              document.getElementById('nuke25').style.visibility = 'visible';
+            }
+            if (upg6 == 25) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
+            }
+            if (upg6 >= 50) {
+              document.getElementById('nuke50').style.visibility = 'visible';
+            }
+            if (upg6 == 50) {
+              achTotal++;
+              document.getElementById("achTotal").innerHTML = achTotal;
+            }
+		  
             upg6 += 1;
 
             cost6 += 1500000;
@@ -1694,172 +1843,6 @@ function checks() {
         function autoSave() {
           setInterval(save, 3000)
         }
-            document.getElementById('ach10b1').style.visibility = 'hidden';
-            document.getElementById('ach25b1').style.visibility = 'hidden';
-            document.getElementById('ach50b1').style.visibility = 'hidden';
-            document.getElementById('ultra10').style.visibility = 'hidden';
-            document.getElementById('ultra25').style.visibility = 'hidden';
-            document.getElementById('ultra50').style.visibility = 'hidden';
-            document.getElementById('omega10').style.visibility = 'hidden';
-            document.getElementById('omega25').style.visibility = 'hidden';
-            document.getElementById('omega50').style.visibility = 'hidden';
-            document.getElementById('button10').style.visibility = 'hidden';
-            document.getElementById('button25').style.visibility = 'hidden';
-            document.getElementById('button50').style.visibility = 'hidden';
-            document.getElementById('hyper10').style.visibility = 'hidden';
-            document.getElementById('hyper25').style.visibility = 'hidden';
-            document.getElementById('hyper50').style.visibility = 'hidden';
-            document.getElementById('nuke10').style.visibility = 'hidden';
-            document.getElementById('nuke25').style.visibility = 'hidden';
-            document.getElementById('nuke50').style.visibility = 'hidden';
-            
-function achievements() {
-            if (upg >= 10) {
-              document.getElementById('ach10b1').style.visibility = 'visible';
-            }
-            if (upg == 10) {
-              achTotal = achTotal+1;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-            if (upg >= 25) {
-              document.getElementById('ach25b1').style.visibility = 'visible';
-            }
-            if (upg == 25) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-            if (upg >= 50) {
-              document.getElementById('ach50b1').style.visibility = 'visible';
-            }
-            if (upg == 50) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-
-
-
-
-            if (upg2 >= 10) {
-              document.getElementById('ultra10').style.visibility = 'visible';
-            }
-            if (upg2 == 10) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-            if (upg2 >= 25) {
-              document.getElementById('ultra25').style.visibility = 'visible';
-            }
-            if (upg2 == 25) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-            if (upg2 >= 50) {
-              document.getElementById('ultra50').style.visibility = 'visible';
-            }
-            if (upg2 == 50) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-
-
-
-
-            if (upg3 >= 10) {
-              document.getElementById('omega10').style.visibility = 'visible';
-            }
-            if (upg3 == 10) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-            if (upg3 >= 25) {
-              document.getElementById('omega25').style.visibility = 'visible';
-            }
-            if (upg3 == 25) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-            if (upg3 >= 50) {
-              document.getElementById('omega50').style.visibility = 'visible';
-            }
-            if (upg3 == 50) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-
-
-
-            if (upg4 >= 10) {
-              document.getElementById('button10').style.visibility = 'visible';
-            }
-            if (upg4 == 10) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-            if (upg4 >= 25) {
-              document.getElementById('button25').style.visibility = 'visible';
-            }
-            if (upg4 == 25) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-            if (upg4 >= 50) {
-              document.getElementById('button50').style.visibility = 'visible';
-            }
-            if (upg4 == 50) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-
-
-
-            if (upg5 >= 10) {
-              document.getElementById('hyper10').style.visibility = 'visible';
-            }
-            if (upg5 == 10) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-            if (upg5 >= 25) {
-              document.getElementById('hyper25').style.visibility = 'visible';
-            }
-            if (upg5 == 25) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-            if (upg5 >= 50) {
-              document.getElementById('hyper50').style.visibility = 'visible';
-            }
-            if (upg5 == 50) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-
-
-
-            if (upg6 >= 10) {
-              document.getElementById('nuke10').style.visibility = 'visible';
-            }
-            if (upg6 == 10) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = 
-              achTotal;
-            }
-            if (upg6 >= 25) {
-              document.getElementById('nuke25').style.visibility = 'visible';
-            }
-            if (upg6 == 25) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-            if (upg6 >= 50) {
-              document.getElementById('nuke50').style.visibility = 'visible';
-            }
-            if (upg6 == 50) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-            
-}
           </script>
 			</center>
 </body>
