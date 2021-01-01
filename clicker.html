@@ -1,3 +1,4 @@
+
 <!--I M P O R T A N T!  I M P O R T A N T!!!
 var button = document.getElementById('clicker');
 setInterval(function(){
@@ -461,7 +462,7 @@ function showModal(a){hideOverlay(),showOverlay(),a.style.display="block"}
     <span class="close2">&times;</span>
             
             			<div id="achContainer">
-				<div id="achTitle"><h2>Achievements (<span id="achTotal">0</span>/18)</h2></div>
+				<div id="achTitle"><h2>Achievements</h2>
         
 				<div class="spacer2"></div>
 				<div id="achievements">
@@ -766,7 +767,6 @@ function closeNav() {
         updac();
         save();
       }
-      updac();
             
             upg = localStorage.getItem('auto');
             upg = parseInt(upg);
@@ -801,7 +801,8 @@ function closeNav() {
 	    }
             upg4 = localStorage.getItem("button");
             upg4 = parseInt(upg4);
-            document.getElementById('buttonupgrade').value = upg4
+            document.getElementById('buttonupgrade').value = upg4;
+            buttonvalue = upg4;
 	    if (localStorage.getItem("button") === 'NaN') {
         nanreset();
         updac();
@@ -873,6 +874,9 @@ function closeNav() {
 		        save();
 		  	console.log('Game successfully resetted!')
           }
+          else {
+            alert("You made the right choice. Who would wanna reset?");
+          }
    	   } 
 	   else {
             alert("You made the right choice. Who would wanna reset?");
@@ -881,8 +885,6 @@ function closeNav() {
 
 
       	var e = 0;
-
-        var achTotal = 0;
 	
         var upg = 0;
 
@@ -982,7 +984,7 @@ function closeNav() {
 
         var tps = "You can't sell any more ";
 	
-	var rank = "Nothing";
+	      var rank = "Nothing";
             document.getElementById('ach10b1').style.visibility = 'hidden';
             document.getElementById('ach25b1').style.visibility = 'hidden';
             document.getElementById('ach50b1').style.visibility = 'hidden';
@@ -1301,7 +1303,7 @@ function checks() {
           }
         
           if (upg4 >=1 && cost4 === 75) {
-            cost4 = (upg2*27)+75
+            cost4 = (upg4*27)+75
           }
         
           if (upg5 >=1 && cost5 === 50000) {
@@ -1365,26 +1367,15 @@ function checks() {
         }
 
         function buyupgrade() {
-		            if (upg >= 10) {
+		            if (upg >= 9) {
               document.getElementById('ach10b1').style.visibility = 'visible';
-            }
-            if (upg == 10) {
-              achTotal = achTotal+1;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-            if (upg >= 25) {
+                }
+            if (upg >= 24) {
               document.getElementById('ach25b1').style.visibility = 'visible';
             }
-            if (upg == 25) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-            if (upg >= 50) {
+          
+            if (upg >= 49) {
               document.getElementById('ach50b1').style.visibility = 'visible';
-            }
-            if (upg == 50) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
             }
           if (e >= cost) {
             upg = upg + 1;
@@ -1448,26 +1439,14 @@ function checks() {
         }
 
         function buyupgrade1() {
-		            if (upg2 >= 10) {
+		            if (upg2 >= 9) {
               document.getElementById('ultra10').style.visibility = 'visible';
             }
-            if (upg2 == 10) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-            if (upg2 >= 25) {
+            if (upg2 >= 24) {
               document.getElementById('ultra25').style.visibility = 'visible';
             }
-            if (upg2 == 25) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-            if (upg2 >= 50) {
+            if (upg2 >= 49) {
               document.getElementById('ultra50').style.visibility = 'visible';
-            }
-            if (upg2 == 50) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
             }
 
           if (e >= cost2) {
@@ -1531,27 +1510,16 @@ function checks() {
 
         function buyupgrade3() {
 		
-            if (upg3 >= 10) {
+            if (upg3 >= 9) {
               document.getElementById('omega10').style.visibility = 'visible';
             }
-            if (upg3 == 10) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-            if (upg3 >= 25) {
+            if (upg3 >= 24) {
               document.getElementById('omega25').style.visibility = 'visible';
             }
-            if (upg3 == 25) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-            if (upg3 >= 50) {
+            if (upg3 >= 49) {
               document.getElementById('omega50').style.visibility = 'visible';
             }
-            if (upg3 == 50) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
+
           if (e >= cost3) {
             upg3 = upg3 + 1;
 
@@ -1612,26 +1580,14 @@ function checks() {
         }
 
         function upgradeclick() {
-	            if (upg4 >= 10) {
+	            if (upg4 >= 9) {
               document.getElementById('button10').style.visibility = 'visible';
             }
-            if (upg4 == 10) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-            if (upg4 >= 25) {
+            if (upg4 >= 24) {
               document.getElementById('button25').style.visibility = 'visible';
             }
-            if (upg4 == 25) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-            if (upg4 >= 50) {
+            if (upg4 >= 49) {
               document.getElementById('button50').style.visibility = 'visible';
-            }
-            if (upg4 == 50) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
             }
           if (e >= cost4) {
             e = e - cost4;
@@ -1673,26 +1629,14 @@ function checks() {
         }
 
         function buyupgrade4() {
-	    if (upg5 >= 10) {
+	    if (upg5 >= 9) {
               document.getElementById('hyper10').style.visibility = 'visible';
             }
-            if (upg5 == 10) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-            if (upg5 >= 25) {
+            if (upg5 >= 24) {
               document.getElementById('hyper25').style.visibility = 'visible';
             }
-            if (upg5 == 25) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-            if (upg5 >= 50) {
+            if (upg5 >= 49) {
               document.getElementById('hyper50').style.visibility = 'visible';
-            }
-            if (upg5 == 50) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
             }
           if (e >= cost5) {
             e -= cost5;
@@ -1759,27 +1703,14 @@ function checks() {
 
 		  
 
-            if (upg6 >= 10) {
+            if (upg6 >= 9) {
               document.getElementById('nuke10').style.visibility = 'visible';
             }
-            if (upg6 == 10) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = 
-              achTotal;
-            }
-            if (upg6 >= 25) {
+            if (upg6 >= 24) {
               document.getElementById('nuke25').style.visibility = 'visible';
             }
-            if (upg6 == 25) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
-            }
-            if (upg6 >= 50) {
+            if (upg6 >= 49) {
               document.getElementById('nuke50').style.visibility = 'visible';
-            }
-            if (upg6 == 50) {
-              achTotal++;
-              document.getElementById("achTotal").innerHTML = achTotal;
             }
 		  
             upg6 += 1;
