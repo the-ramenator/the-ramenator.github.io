@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      data-require="bootstrap-css@3.3.6"
+      data-semver="3.3.6"
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css"
+    />
+    <script
+      data-require="angular.js@1.5.0"
+      data-semver="1.5.0"
+      src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"
+    ></script>
+  </head>
+
+  <body>
+    <div class="container" ng-app="app" ng-controller="pageCtrl as page">
+      <div class="well well-sm">
+        <center>
+          <p>Type in your answer and press Show Result</p>
+        </center>
+      </div>
+      <div class="row">
+        <div class="col-xs-2 text-center">
+          <h1>{{page.num1}}</h1>
+        </div>
+        <div class="col-xs-1 text-center">
+          <h1>&times;</h1>
+        </div>
+        <div class="col-xs-2 text-center">
+          <h1>{{page.num2}}</h1>
+        </div>
+        <div class="col-xs-1 text-center">
+          <h1>=</h1>
+        </div>
+        <div class="col-xs-6">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control text-left"
+              style="width: 96px; height: 72px; font-size: 36px"
+              ng-model="page.guess"
+            />
+          </div>
+        </div>
+        <div class="col-xs-12" ng-if="page.calculated">
+          <h1 class="text-danger" ng-if="!page.correct">WRONG!</h1>
+          <h1 class="text-success" ng-if="page.correct">CORRECT!</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <h1 ng-if="page.calculated">
+            {{page.num1}} x {{page.num2}} is
+            <span class="text-primary">{{page.num3}}</span>.
+          </h1>
+
+          <button
+            type="button"
+            class="btn btn-primary"
+            ng-click="page.calculateResult()"
+            ng-if="!page.calculated"
+          >
+            Show Result
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            ng-click="page.reset()"
+            ng-if="page.calculated"
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+    </div>
+    <script>
+      (function () {
+        'use strict';
+
+        //from MDN
+        function getRandomIntInclusive(min, max) {
+          return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function say(text) {
+          var msg = new SpeechSynthesisUtterance(text);
+          speechSynthesis.speak(msg);
+        }
+
+        angular.module('app', []);
+
+        angular.module('app').controller('pageCtrl', pageCtrl);
+
+        pageCtrl.$inject = ['$scope'];
+        function pageCtrl($scope) {
+          //jshint validthis: true
+          var self = this;
+
+          self.num1 = 0;
+          self.num2 = 0;
+          self.num3 = '';
+          self.correct = false;
+
+          self.calculateResult = calculateResult;
+          self.reset = reset;
+
+          activate();
+
+          function calculateResult() {
+            self.recognizer.abort();
+
+            self.num3 = self.num1 * self.num2;
+            self.calculated = true;
+            self.correct = parseInt(self.guess, 10) === self.num3;
+
+            if (self.correct) {
+              say('You are correct!');
+              say(self.num1 + ' times ' + self.num2 + ' is ' + self.num3);
+            } else {
+              say('That is incorrect!  The correct answer is ' + self.num3);
+            }
+          }
+
+          function reset() {
+            self.num1 = getRandomIntInclusive(1, 12);
+            self.num2 = getRandomIntInclusive(1, 12);
+            self.num3 = '';
+            self.guess = '';
+            self.calculated = false;
+
+            say('What is ' + self.num1 + ' times ' + self.num2 + '?');
+
+            self.recognizer.start();
+          }
+
+          function activate() {
+            self.recognizer = new webkitSpeechRecognition();
+            self.recognizer.onresult = function (e) {
+              self.guess = e.results[0][0].transcript;
+
+              say('You said, "' + self.guess + '"');
+
+              self.calculateResult();
+              $scope.$digest();
+            };
+
+            self.reset();
+          }
+        }
+      })();
+      let keysDown = {};
+      window.onkeydown = function (keyboardshortcuts) {
+        keysDown[keyboardshortcuts.key] = true;
+
+        if (keysDown['Enter']) {
+          page.calculateResult();
+        }
+      };
+
+      window.onkeyup = function (keyboardshortcuts) {
+        keysDown[keyboardshortcuts.key] = false;
+      };
+    </script>
+  </body>
+</html>
