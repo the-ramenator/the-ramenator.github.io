@@ -839,6 +839,12 @@ function closeNav() {
 	  	clickval3 = 0;
 	  	clickval4 = 0;
 		  clickval6 = 0;
+	    		  cost = 10;
+		  cost2 = 100;
+		  cost3 = 1000;
+		  cost4 = 75;
+		  cost5 = 50000;
+		  cost6 = 1000000;
 	  	updac();
 		  save();
     }
@@ -862,6 +868,12 @@ function closeNav() {
 		        clickval3 = 0;
 		        clickval4 = 0;
 		        clickval6 = 0;
+		  cost = 10;
+		  cost2 = 100;
+		  cost3 = 1000;
+		  cost4 = 75;
+		  cost5 = 50000;
+		  cost6 = 1000000;
             hide.style.visibility = 'hidden';
             hide2.style.visibility = 'hidden';
             hide3.style.visibility = 'hidden';
@@ -912,7 +924,7 @@ function closeNav() {
 
         var cost3 = 1000;
 
-        var cost4 = 48;
+        var cost4 = 75;
 
         var cost5 = 50000;
 
@@ -1298,8 +1310,8 @@ function checks() {
             cost3 = (upg3*2000)+1000
           }
         
-          if (upg4 >=1 && cost4 === 48) {
-            cost4 = (upg4*27)+75
+          if (upg4 >=1 && cost4 === 75) {
+            cost4 = (upg4*25)+75-25
           }
         
           if (upg5 >=1 && cost5 === 50000) {
@@ -1592,7 +1604,7 @@ function checks() {
 
             buttonvalue = buttonvalue + 1;
 
-            cost4 = cost4 + 27;
+            cost4 = cost4 + 25;
 
             updac();
 
@@ -1612,7 +1624,7 @@ function checks() {
 
             buttonvalue = buttonvalue - 1;
 
-            cost4 = cost4 + 27;
+            cost4 = cost4 + 25;
 
             updac();
 
