@@ -107,7 +107,7 @@ var check1=document.getElementById("input").value == "X2";
 var clickcheck = localStorage.getItem('clicks');
 clickcheck = parseInt(clickcheck);
 if (check || check1){
-    document.getElementById("output").innerHTML = "Fine. I'll give you 2 times your current clicks extra clicks.";
+    document.getElementById("output").innerHTML = "Fine. I'll give you 2 times your current clicks. Don't know how to import these into the game? Figure it out yourself.";
     clickcheck = clickcheck*2
     localStorage.setItem('cheated clicks', clickcheck)
 }
