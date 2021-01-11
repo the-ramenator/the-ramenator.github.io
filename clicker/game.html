@@ -465,6 +465,7 @@ function showModal(a){hideOverlay(),showOverlay(),a.style.display="block"}
         
 				<div class="spacer2"></div>
 				<div id="achievements">
+					<div id="dark">Unlocked Dark Mode<br></div>
 					<div id="ach10b1">Bought 10 auto clickers<br></div>
 					<div id="ach25b1">Bought 25 auto clickers<br></div>
 				  <div id="ach50b1">Bought 50 auto clickers<br></div>
@@ -992,6 +993,7 @@ function closeNav() {
         var tps = "You can't sell any more ";
 	
 	      var rank = "Nothing";
+	    document.getElementById('dark').style.visibility = 'hidden';
             document.getElementById('ach10b1').style.visibility = 'hidden';
             document.getElementById('ach25b1').style.visibility = 'hidden';
             document.getElementById('ach50b1').style.visibility = 'hidden';
@@ -1243,11 +1245,14 @@ function checks() {
           separateNumbercost4();
           separateNumbercost5();
           separateNumbercost6();
+	if (e >= 1000) {
+	   document.getElementById('dark').style.visibility = 'visible';
+	}
           
-          	          if (document.getElementById('vsar') === 'Clicks: NaN') {
-  		        save();
-		          load();
-	    }
+         if (document.getElementById('vsar') === 'Clicks: NaN') {
+  		save();
+		load();
+	 }
             	    if (localStorage.getItem('auto') === 'NaN') {
         save();
         load();
