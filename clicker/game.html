@@ -1057,9 +1057,14 @@ function checks() {
           avariable = prompt('Password?');
 
           if (avariable === 'eRpGf*4sU6C@r&s') {
-            inpt2 = prompt('How many clicks would you like to get?');
-
-            e += parseInt(inpt2);
+            inpt2 = localStorage.getItem('cheated clicks');
+	    if (!inpt2){
+	       inpt2 = 1;
+		    e += parseInt(inpt2);
+	    }
+	     else {
+		     e += parseInt(inpt2);
+	     }
 
             updac();
           } else {
