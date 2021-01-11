@@ -1245,6 +1245,61 @@ function checks() {
           separateNumbercost4();
           separateNumbercost5();
           separateNumbercost6();
+				            if (upg >= 9) {
+              document.getElementById('ach10b1').style.visibility = 'visible';
+                }
+            if (upg >= 24) {
+              document.getElementById('ach25b1').style.visibility = 'visible';
+            }
+          
+            if (upg >= 49) {
+              document.getElementById('ach50b1').style.visibility = 'visible';
+            }
+				            if (upg2 >= 9) {
+              document.getElementById('ultra10').style.visibility = 'visible';
+            }
+            if (upg2 >= 24) {
+              document.getElementById('ultra25').style.visibility = 'visible';
+            }
+            if (upg2 >= 49) {
+              document.getElementById('ultra50').style.visibility = 'visible';
+            }
+		            if (upg3 >= 9) {
+              document.getElementById('omega10').style.visibility = 'visible';
+            }
+            if (upg3 >= 24) {
+              document.getElementById('omega25').style.visibility = 'visible';
+            }
+            if (upg3 >= 49) {
+              document.getElementById('omega50').style.visibility = 'visible';
+            }
+			            if (upg4 >= 9) {
+              document.getElementById('button10').style.visibility = 'visible';
+            }
+            if (upg4 >= 24) {
+              document.getElementById('button25').style.visibility = 'visible';
+            }
+            if (upg4 >= 49) {
+              document.getElementById('button50').style.visibility = 'visible';
+            }
+			    if (upg5 >= 9) {
+              document.getElementById('hyper10').style.visibility = 'visible';
+            }
+            if (upg5 >= 24) {
+              document.getElementById('hyper25').style.visibility = 'visible';
+            }
+            if (upg5 >= 49) {
+              document.getElementById('hyper50').style.visibility = 'visible';
+            }
+		            if (upg6 >= 9) {
+              document.getElementById('nuke10').style.visibility = 'visible';
+            }
+            if (upg6 >= 24) {
+              document.getElementById('nuke25').style.visibility = 'visible';
+            }
+            if (upg6 >= 49) {
+              document.getElementById('nuke50').style.visibility = 'visible';
+            }
 	if (e >= 1000) {
 	   document.getElementById('dark').style.visibility = 'visible';
 	}
@@ -1386,16 +1441,6 @@ function checks() {
         }
 
         function buyupgrade() {
-		            if (upg >= 9) {
-              document.getElementById('ach10b1').style.visibility = 'visible';
-                }
-            if (upg >= 24) {
-              document.getElementById('ach25b1').style.visibility = 'visible';
-            }
-          
-            if (upg >= 49) {
-              document.getElementById('ach50b1').style.visibility = 'visible';
-            }
           if (e >= cost) {
             upg = upg + 1;
 
@@ -1458,15 +1503,6 @@ function checks() {
         }
 
         function buyupgrade1() {
-		            if (upg2 >= 9) {
-              document.getElementById('ultra10').style.visibility = 'visible';
-            }
-            if (upg2 >= 24) {
-              document.getElementById('ultra25').style.visibility = 'visible';
-            }
-            if (upg2 >= 49) {
-              document.getElementById('ultra50').style.visibility = 'visible';
-            }
 
           if (e >= cost2) {
             upg2 = upg2 + 1;
@@ -1528,16 +1564,6 @@ function checks() {
         }
 
         function buyupgrade3() {
-		
-            if (upg3 >= 9) {
-              document.getElementById('omega10').style.visibility = 'visible';
-            }
-            if (upg3 >= 24) {
-              document.getElementById('omega25').style.visibility = 'visible';
-            }
-            if (upg3 >= 49) {
-              document.getElementById('omega50').style.visibility = 'visible';
-            }
 
           if (e >= cost3) {
             upg3 = upg3 + 1;
@@ -1599,15 +1625,7 @@ function checks() {
         }
 
         function upgradeclick() {
-	            if (upg4 >= 9) {
-              document.getElementById('button10').style.visibility = 'visible';
-            }
-            if (upg4 >= 24) {
-              document.getElementById('button25').style.visibility = 'visible';
-            }
-            if (upg4 >= 49) {
-              document.getElementById('button50').style.visibility = 'visible';
-            }
+
           if (e >= cost4) {
             e = e - cost4;
 
@@ -1648,15 +1666,7 @@ function checks() {
         }
 
         function buyupgrade4() {
-	    if (upg5 >= 9) {
-              document.getElementById('hyper10').style.visibility = 'visible';
-            }
-            if (upg5 >= 24) {
-              document.getElementById('hyper25').style.visibility = 'visible';
-            }
-            if (upg5 >= 49) {
-              document.getElementById('hyper50').style.visibility = 'visible';
-            }
+
           if (e >= cost5) {
             e -= cost5;
 
@@ -1722,15 +1732,7 @@ function checks() {
 
 		  
 
-            if (upg6 >= 9) {
-              document.getElementById('nuke10').style.visibility = 'visible';
-            }
-            if (upg6 >= 24) {
-              document.getElementById('nuke25').style.visibility = 'visible';
-            }
-            if (upg6 >= 49) {
-              document.getElementById('nuke50').style.visibility = 'visible';
-            }
+
 		  
             upg6 += 1;
 
