@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+<style>
+   h1, h2, h3, h4, h5, h6, {
+          text-shadow:5px 5px 10px black;
+          font-family: 'Cabin Sketch', cursive;
+                    background: rgb(0,255,246);
+background: linear-gradient(90deg, rgba(0,255,246,1) 0%, rgba(72,252,70,1) 100%);
+        }
+
+.h1{          text-shadow:5px 5px 10px black;
+          font-family: 'Cabin Sketch', cursive;
+                    background: rgb(0,255,246);
+background: linear-gradient(90deg, rgba(0,255,246,1) 0%, rgba(72,252,70,1) 100%);
+        }
+        
+                input{  text-shadow:5px 5px 10px black;
+          font-family: 'Cabin Sketch', cursive;
+                    color: grey;
+                    border-radius: 5%;
+                    width: 125px;}
+        p {
+          font-family: 'Cabin Sketch', cursive;
+          font-size: 1.1rem;
+          text-shadow:5px 5px 10px black;
+        }
+body, html {
+          background: rgb(0,255,246);
+background: linear-gradient(90deg, rgba(0,255,246,1) 0%, rgba(72,252,70,1) 100%);
+        }
+
+   input,span, label, p{
+      font-size: 20px;
+   }
+</style>
+<title>Neildaniel00 - Elliptical Converter</title>
+<link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+</head>
+<body><center>
+<h1 class="h1">Elliptical Converter</h1>
+<p>Type your resistance and time in minutes to convert it into the distance you would have covered on flat ground (miles).</p>
+<p><br>
+ <input type="text" onkeypress="myFunction()"  onkeyup="myFunction()" onclick="myFunction()" onmousemove="myFunction()" class="form-control" placeholder="Resistance " id="res" name="credit">
+
+ <input type="text" onkeypress="myFunction()" onkeyup="myFunction()" onclick="myFunction()" onmousemove="myFunction()" class="form-control" placeholder="Time" id="time" name="limit">
+</p><br>
+<p id="result">0</p>
+<script>
+function myFunction() {
+document.getElementById('result').innerHTML = ((-0.0018*document.getElementById('res').value+0.0743)/2) * document.getElementById('time').value;
+if (!document.getElementById('result').innerHTML) {
+  document.getElementById('result').innerHTML = 0;
+}
+}
+</script>
+</center>
+</body>
+</html>
