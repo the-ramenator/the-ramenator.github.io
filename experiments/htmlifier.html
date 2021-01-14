@@ -1,0 +1,27 @@
+
+<!doctype html>
+
+<html>
+  <head>
+    <title>Simple HTMLifier</title>
+  </head>
+
+  <body>
+    <center>
+<textarea rows="10" cols="60" id="output" class="outputty" type="text" placeholder="This Will Be Filled When You Press The Button Below"></textarea><br><br><br>
+  <button type="button" class="box" onclick="myFunction()">Generate Embed Code</button><br><br>
+    </center>
+
+
+            <script>
+function myFunction() {
+  //var idk = document.getElementById("input").innerHTML;
+  var linkid = prompt('Link id (ex: 1Zrq8FiKS6A)');
+  var link = "https://www.youtube.com/embed/"+linkid;
+  var height = prompt('Height');
+  var width = prompt('Width');
+document.getElementById("output").innerHTML = "&ltiframe width=\""+width+"\"height=\""+height+"\" src=\""+link+"\" frameborder=\""+0+"\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen&gt;&ltiframe&gt;";
+}
+</script>
+  </body>
+</html>
