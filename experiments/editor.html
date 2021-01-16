@@ -5,6 +5,10 @@
 <title>neildaniel00 HTML Editor</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+<style>
+
+  </style>
 <script type="text/javascript">
 
 var editboxHTML = 
@@ -51,7 +55,10 @@ function init()
   window.editbox.document.f.ta.value = defaultStuff;
   update();
 }
-
+function changeview() {   
+var element = document.body;   
+element.classList.toggle(".size");
+}
 function update()
 {
   var textarea = window.editbox.document.f.ta;
@@ -70,11 +77,15 @@ function update()
 }
 
 </script>
+<style>
+  .size {
+    rows: 50%;
+    cols: 100%;
+  }
+  </style>
 </head>
-
-<frameset resizable="yes" rows="50%,*" onload="init();">
+<frameset resizable="yes" rows="100%,*" cols="50%,*" onload="init();">
   <frame name="editbox" src="javascript:'';">
-  <frame name="dynamicframe" src="javascript:'';">
+  <frame resizable="yes" name="dynamicframe" src="javascript:'';">
 </frameset>
-
 </html>
