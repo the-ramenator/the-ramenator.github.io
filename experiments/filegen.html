@@ -1,0 +1,80 @@
+<!doctype html>
+
+<html>
+  <head>
+  <title>File Generator-  HTML & TXT - neildaniel00</title>
+  <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+  </head>
+
+  <body>
+    <center>
+    <h1>Download txt</h1><br>
+    <textarea id="text-val" rows="4">Input what you want to download here.</textarea><br/>
+<input type="button" id="dwn-btn" value="Download your text file"/>
+<script>
+  function download(filename, text) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+}
+
+// Start file download.
+document.getElementById("dwn-btn").addEventListener("click", function(){
+    // Generate download of neildaniel00.txt file with some content
+    var text = document.getElementById("text-val").value;
+    var filename = "neildaniel00.txt";
+    
+    download(filename, text);
+}, false);
+</script>
+<br><br><br>
+<h1>Download HTML</h1><br>
+   <textarea id="html-val" rows="25" cols="100">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>No Title Yet</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="https://insert-favicon-image-link-here.com"/>
+</head>
+<body>
+<h1>Nothing Here Yet</h1>
+</body>
+</html>
+<!--To use JavaScript, use the <script> tag.-->
+<!--To use CascadingStyleSheets, use the <style> tag.--></textarea><br/>
+<input type="button" id="dwn-btn1" value="Download your HTML file"/>
+<script>
+  function download1(filename, text) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+}
+
+// Start file download.
+document.getElementById("dwn-btn1").addEventListener("click", function(){
+    // Generate download of neildaniel00.txt file with some content
+    var text = document.getElementById("html-val").value;
+    var filename = "neildaniel00.html";
+    
+    download(filename, text);
+}, false);
+</script>
+</center>
+  </body>
+</html>
