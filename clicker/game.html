@@ -1,3 +1,4 @@
+
 <!--I M P O R T A N T!  I M P O R T A N T!!!
 var button = document.getElementById('clicker');
 setInterval(function(){
@@ -827,26 +828,32 @@ function closeNav() {
             updac();
           }
     function nanreset() {
-      e = 0;
-      upg = 0;
-		  upg2 = 0;
-		  upg3 = 0;
-		  upg4 = 1;
-		  upg5 = 0;
-		  upg6 = 0;
-	  	clickval = 0;
-		  clickval1 = 0;
-	  	clickval3 = 0;
-	  	clickval4 = 0;
-		  clickval6 = 0;
-	    		  cost = 10;
+ e = 0;
+		        upg = 0;
+		        upg2 = 0;
+		        upg3 = 0;
+		        upg4 = 1;
+		        upg5 = 0;
+		        upg6 = 0;
+		        clickval = 0;
+		        clickval1 = 0;
+		        clickval3 = 0;
+		        clickval4 = 0;
+		        clickval6 = 0;
+		  cost = 10;
 		  cost2 = 100;
 		  cost3 = 1000;
 		  cost4 = 75;
 		  cost5 = 50000;
 		  cost6 = 1000000;
-	  	updac();
-		  save();
+            hide5.style.visibility = 'hidden';
+            hide.style.visibility = 'hidden';
+            hide2.style.visibility = 'hidden';
+            hide3.style.visibility = 'hidden';
+            hide4.style.visibility = 'hidden';
+		        updac();
+		        save();
+		  	console.log('Game successfully resetted!')
     }
 
 
@@ -1795,6 +1802,12 @@ function checks() {
         window.onload = load();
         function autoSave() {
           setInterval(save, 3000)
+        }
+        //Cheat script
+        function clickearn() {
+          console.log('You attempted to cheat. You forfiet all your clicks and buildings.');
+          nanreset();
+          updac();
         }
           </script>
 			</center>
