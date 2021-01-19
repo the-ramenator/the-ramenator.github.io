@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Loading Animation</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="loading">
+      <div class="percent">100%</div>
+       <label class="text">Complete!</label>
+      <div class="progress-bar">
+        
+        <div class="progress"></div>
+              <center><br><br>
+      <label style="color: white;">Loading The Progress Bar</label>
+      </div>
+      </center>
+    </div>
+    <script>
+    function progress(){
+  var percent = document.querySelector('.percent');
+  var progress = document.querySelector('.progress');
+  var text = document.querySelector('.text');
+  var count = 4;
+  var per = 16;
+  var loading = setInterval(animate, 30);
+  function animate(){
+    if(count == 100 && per == 400){
+      percent.classList.add("text-blink");
+      text.style.display = "block";
+      clearInterval(loading);
+    }else{
+      per = per + 4;
+      count = count + 1;
+      progress.style.width = per + 'px';
+      percent.textContent = count + '%';
+    }
+  }
+}
+progress();
+    </script>
+    <style>
+    @import url("https://fonts.googleapis.com/css?family=Roboto:400,900italic,900,700italic,700,500italic,500,400italic,300italic,300,100italic,100");
+*{
+  margin: 0;
+  padding: 0;
+}
+body{
+  font-family: 'Roboto';
+  background: #151515;
+}
+.loading{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.percent{
+  color: #999;
+  font-size: 100px;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 42px;
+}
+.progress-bar{
+  width: 406px;
+  height: 36px;
+  background: #111;
+  border-radius: 13px;
+  padding: 3px;
+  box-sizing: border-box;
+}
+.progress{
+  width: 10px;
+  height: 36px;
+  background: #f60d54;
+  border-radius: 13px;
+}
+.text{
+  position: absolute;
+  left: 160px;
+  color: #fdb5ca;
+  font-size: 15px;
+  letter-spacing: 1px;
+  line-height: 40px;
+  display: none;
+}
+.text-blink{
+  animation: animate .7s ease-in-out .1s;
+}
+@keyframes animate {
+  0%{
+    opacity: 1;
+  }
+  50%{
+    opacity: 0.2;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
+    </style>
+  </body>
+</html>
