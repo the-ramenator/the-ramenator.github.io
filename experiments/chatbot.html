@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chatbot - neildanie00</title>
+  <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+  </head>
+  <body>
 <div id='bodybox'>
   <div id='chatborder'>
     <p id="chatlog7" class="chatlog">&nbsp;</p>
@@ -14,12 +21,16 @@
   </center>
 </div>
 <script>
-
 var messages = [], //array that hold the record of each string in chat
   lastUserMessage = "", //keeps track of the most recent input string from the user
   botMessage = "", //var keeps track of what the chatbot is going to say
   botName = 'Norbert'; //name of the chatbot
-  urName = 'Neilio';//prompt('What\'s your name?')
+  urName = localStorage.getItem('urname');
+  localStorage.setItem('urname', urName);
+  if (urName === 'null') {
+    urName = 'Neilio';//prompt('What\'s your name?')
+    urName = localStorage.getItem('urname');
+  }
   talking = true; //when false the speach function doesn't work
 //edit this function to change what the chatbot says
 function chatbotResponse() {
@@ -34,7 +45,7 @@ function chatbotResponse() {
     const udoing = ['Good! Thanks for asking!','Good!','Good, thanks!']
     botMessage = udoing[Math.floor(Math.random()*(udoing.length))];;
   }
-  if (lastUserMessage === '!name') {
+  if (lastUserMessage === 'n! name') {
     botMessage = 'My name is ' + botName;
   }
 }
@@ -152,3 +163,5 @@ pre {
   margin-left: 20px;
 }
 </style>
+  </body>
+</html>
