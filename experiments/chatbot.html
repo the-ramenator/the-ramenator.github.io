@@ -14,10 +14,10 @@
     <p id="chatlog3" class="chatlog">&nbsp;</p>
     <p id="chatlog2" class="chatlog">&nbsp;</p>
     <p id="chatlog1" class="chatlog">&nbsp;</p>
-    <input type="text" name="chat" id="chatbox" placeholder="Hi there! Type here to talk to me." onfocus="placeHolder()">
+    <input type="text" name="chat" id="chatbox" placeholder="Type something already." onfocus="placeHolder()">
   </div>
   <center>
-    The prefix for this chatbot is n!. An example would be n! kill
+    The prefix for this chatbot is n!. Type n! help for more commands.
   </center>
 </div>
 <script>
@@ -25,13 +25,13 @@ var messages = [], //array that hold the record of each string in chat
   lastUserMessage = "", //keeps track of the most recent input string from the user
   botMessage = "", //var keeps track of what the chatbot is going to say
   botName = 'Norbert'; //name of the chatbot
-  urName = localStorage.getItem('urname');
+/*  urName = localStorage.getItem('urname');
   localStorage.setItem('urname', urName);
   if (urName === 'null') {
-    urName = 'Neilio';//prompt('What\'s your name?')
+    urName = 'Neilio';//prompt('What\'s your name?');
     urName = localStorage.getItem('urname');
-  }
-  talking = true; //when false the speach function doesn't work
+  }*/
+  talking = true; //when false the speech function doesn't work
 //edit this function to change what the chatbot says
 function chatbotResponse() {
   talking = true;
@@ -42,11 +42,15 @@ function chatbotResponse() {
     botMessage = kill[Math.floor(Math.random()*(kill.length))];;
   }
   if (lastUserMessage === 'n! help') {
-    const udoing = ['Good! Thanks for asking!','Good!','Good, thanks!']
-    botMessage = udoing[Math.floor(Math.random()*(udoing.length))];;
+    const udoing = ['List of commands: n! help; n! kill; n! name; n! link']
+    botMessage = udoing[Math.floor(Math.random()*(udoing.length))];
   }
   if (lastUserMessage === 'n! name') {
     botMessage = 'My name is ' + botName;
+  }
+  if (lastUserMessage === 'n! link') {
+    const links = ['https://neildaniel00.github.io/', 'https://neildaniel00.github.io/clicker/game.html', 'https://neildaniel00.github.io/experiments.html', 'https://neildaniel00.github.io/rainbowshruggie.html', 'https://neildaniel00.github.io/scratch/projects.html', 'https://neildaniel00.github.io/python/projects.html', 'https://neildaniel00.github.io/chromehacks.html', 'https://neildaniel00.github.io/experiments/elliptical.html', 'https://neildaniel00.github.io/experiments/tictactoe.html', 'https://neildaniel00.github.io/experiments/multiplication.html', 'https://neildaniel00.github.io/experiments/editor.html', 'https://neildaniel00.github.io/experiments/filegen.html', 'https://neildaniel00.github.io/volumecalc.html', 'https://neildaniel00.github.io/experiments/flappybird.html', 'https://neildaniel00.github.io/metronome/index.html', 'https://neildaniel00.github.io/experiments/loading.html', 'https://neildaniel00.github.io/experiments/disappearingloader.html', 'https://neildaniel00.github.io/experiments/boring.html', 'https://neildaniel00.github.io/hackertyper.html', 'https://neildaniel00.github.io/vault/codeshop.html']
+    botMessage = links[Math.floor(Math.random()*(links.length))];
   }
 }
 //this runs each time enter is pressed.
@@ -78,10 +82,12 @@ function newEntry() {
 //text to Speech
 //https://developers.google.com/web/updates/2014/01/Web-apps-that-talk-Introduction-to-the-Speech-Synthesis-API
 function Speech(say) {
+  /*
   if ('speechSynthesis' in window && talking) {
     var utterance = new SpeechSynthesisUtterance(say);
     speechSynthesis.speak(utterance);
   }
+  Annoying, so don't un-comment*/
 }
 
 //runs the keypress() function when a key is pressed
