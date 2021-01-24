@@ -1,22 +1,23 @@
+
 <!DOCTYPE html>
 <html>
   <head>
     <title>Prime Number Calculator - neildaniel00</title>
   <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+  <style>
+
+    </style>
   </head>
 
   <body>
-    <script language="JavaScript">
+    <script>
 
       function calculate(form) {
         var num = parseInt(form.number.value);
 
         if (isNaN(num) || num < 0) {
           form.result.value =
-            "' " +
-            form.number.value +
-            " '" +
-            ' is not a valid number! Try again!';
+            ""
         }
 
         if (num == 1) {
@@ -45,18 +46,12 @@
         if (prime == 'no') form.result.value = num + ' is prime!';
       }
     </script>
+    <h1>Prime Number Calculator</h1>
     <form name="form">
       <p>
-        Enter a number:
-        <input type="number" onkeyup="calculate(this.form)" onkeydown="calculate(this.form)" name="number" size="10" />
+        <input type="number" onkeyup="calculate(this.form)" onkeydown="calculate(this.form)" placeholder="Enter A Number" name="number" size="28" />
         <br />
-        <input
-          type="button"
-          value="Calculate Prime-ness"
-          onClick="calculate(this.form)"
-          name="button"
-        />
-        <input type="text" name="result" size="35" value="" disabled />
+        <input placeholder="The result will appear here" type="text" name="result" size="35" value="" disabled />
         <br />
       </p>
     </form>
