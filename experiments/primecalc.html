@@ -7,6 +7,7 @@
 
   <body>
     <script language="JavaScript">
+
       function calculate(form) {
         var num = parseInt(form.number.value);
 
@@ -47,7 +48,7 @@
     <form name="form">
       <p>
         Enter a number:
-        <input type="number" name="number" size="10" />
+        <input type="number" onkeydown="calculate(this.form)" name="number" size="10" />
         <br />
         <input
           type="button"
