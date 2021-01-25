@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -20,6 +21,29 @@
   background-color: crimson;
   border: 1px;
 }
+
+  h1 {
+    font-weight:bold;
+    font-size:1.6em;
+    margin-bottom:1em;
+  }
+
+					.secretbutton {
+						border-radius: 10%;
+
+						border: 1px solid;
+
+						background-color: grey;
+
+						box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12),
+							0 1px 4px rgba(0, 0, 0, 0.24);
+					}
+
+					.inline {
+						display: inline-block;
+
+						vertical-align: middle;
+					}
 					.box {
 						height: 120px;
 
@@ -126,6 +150,24 @@ else {
   hide.style.visibility = 'visible';
   hide1.style.visibility = 'hidden';
 }
+var x = localStorage.getItem('cheatedclicks');
+x = parseInt(x);
+$(function(){
+    var kKeys = [];
+    function Kpress(e){
+        kKeys.push(e.keyCode);
+        if (kKeys.toString().indexOf("38,38,40,40,37,39,37,39,66,65") >= 0) {
+            $(this).unbind('keydown', Kpress);
+            kExec();
+        }
+    }
+    $(document).keydown(Kpress);
+});
+function kExec(){
+  x = x*2;
+  localStorage.getItem('cheatedclicks') = x;
+   document.getElementById("output").innerHTML = "You... you broke my code? You're good at this. I'll give you double your clicks."
+};
 
       </script>
 
@@ -134,7 +176,8 @@ else {
     <footer>
 
       <p style="position: fixed; bottom: 0; width:100%; text-align: center">Made by: neildaniel00. Also I made a copy of this for <a href="https://bowswa.github.io" target="_blank">Bowswa</a>.</p>
-	    <button title="Don't click that. It's private"><a target="_blank" href="/vault/vbucks.html">A Secret</a></button>
+	    <button class="secretbutton inline" title="Don't click that. It's private"><a target="_blank" href="/vault/vbucks.html">A Secret</a></button>
+
     </footer>
     </center>
   </body>
