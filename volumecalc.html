@@ -137,13 +137,13 @@ $( document ).ready(function() {
   <h1>Rectangular Prism</h1>
   <h4>Formula: L*W*H</h4>
     <label for="lengthValue">Length:          
-    <input type="text" name="lengthValue" id="lengthValue" /> </label>
+    <input type="number" name="lengthValue" id="lengthValue" /> </label>
     <br />
     <label for="widthValue">Width:  
-    <input type="text" name="widthValue" id="widthValue" /></label>
+    <input type="number" name="widthValue" id="widthValue" /></label>
     <br />
     <label for="heightValue">Height:                 
-    <input type="text" name="heightValue" id="heightValue" />
+    <input type="number" name="heightValue" id="heightValue" />
     </label>
     <br />
     <input type="button" value="Calculate" name="calculate" id="calculate"  />
@@ -163,7 +163,7 @@ $( document ).ready(function() {
   <h1>Cube</h1>
   <h4>Formula: L*L*L</h4>
     <label for="cubeLength">Length:                 
-    <input type="text" name="cubeLength" id="cubeLength" />
+    <input type="number" name="cubeLength" id="cubeLength" />
     </label>
     <br />
     <input type="button" value="Calculate" name="cubeCalculate" id="cubeCalculate"  />
@@ -186,11 +186,11 @@ $( document ).ready(function() {
    <h3> Pi is represented as 3.14 </h3>
   <h4>Formula: (1/3*pi)*(r*r)*h</h4>
     <label for="coneHeight">Height:                 
-    <input type="text" name="coneHeight" id="coneHeight" />
+    <input type="number" name="coneHeight" id="coneHeight" />
     </label>
     <br />
         <label for="coneRad">Radius:                 
-    <input type="text" name="coneRad" id="coneRad" />
+    <input type="number" name="coneRad" id="coneRad" />
     </label>
     <br />
     <input type="button" value="Calculate" name="coneCalculate" id="coneCalculate"  />
@@ -210,11 +210,11 @@ $( document ).ready(function() {
    <h3> Pi is represented as 3.14 </h3>
      <h4>Formula: pi*(r*r)*h</h4>
     <label for="cylHeight">Height:                 
-    <input type="text" name="cylHeight" id="cylHeight" />
+    <input type="number" name="cylHeight" id="cylHeight" />
     </label>
     <br />
         <label for="cylRad">Radius:                 
-    <input type="text" name="cylRad" id="cylRad" />
+    <input type="number" name="cylRad" id="cylRad" />
     </label>
     <br />
     <input type="button" value="Calculate" name="cylCalculate" id="cylCalculate"  />
@@ -236,7 +236,7 @@ $( document ).ready(function() {
   <h3> Pi is represented as 3.14 </h3>
   <h4>Formula: (4/3*pi)*(r*r*r)</h4>
     <label for="sphRad">Radius:                 
-    <input type="text" name="sphRad" id="sphRad" />
+    <input type="number" name="sphRad" id="sphRad" />
     </label>
     <br />
     <input type="button" value="Calculate" name="sphCalculate" id="sphCalculate"  />
@@ -258,7 +258,7 @@ $( document ).ready(function() {
   <h3> Pi is represented as 3.14 </h3>
     <h4>Formula: (2/3*pi)*(r*r*r)</h4>
     <label for="hemiRad">Radius:                 
-    <input type="text" name="hemiRad" id="hemiRad" />
+    <input type="number" name="hemiRad" id="hemiRad" />
     </label>
     <br />
     <input type="button" value="Calculate" name="hemiCalculate" id="hemiCalculate"  />
@@ -276,10 +276,10 @@ $( document ).ready(function() {
   <h1>Pyramid</h1>
     <h4>Formula: ((1/3*side length)*(1/3*side length))*h</h4>
     <label for="sidelength">Side Length:          
-    <input type="text" name="sidelength" id="sidelength" /> </label>
+    <input type="number" name="sidelength" id="sidelength" /> </label>
     <br />
     <label for="pryHeight">Height:                 
-    <input type="text" name="pryHeight" id="pryHeight" />
+    <input type="number" name="pryHeight" id="pryHeight" />
     </label>
     <br />
     <input type="button" value="Calculate" name="pryCalculate" id="pryCalculate"  />
@@ -306,13 +306,13 @@ $( document ).ready(function() {
   <h4>Formula: 2(H*L) + 2(L*W) + 2(H*W)</h4>
   <h4>OR: 2(Face A + Face B + Face C)</h4>
     <label for="surlengthValue">Length:          
-    <input type="text" name="surlengthValue" id="surlengthValue" /> </label>
+    <input type="number" name="surlengthValue" id="surlengthValue" /> </label>
     <br />
     <label for="surwidthValue">Width:  
-    <input type="text" name="surwidthValue" id="surwidthValue" /></label>
+    <input type="number" name="surwidthValue" id="surwidthValue" /></label>
     <br />
     <label for="surheightValue">Height:                 
-    <input type="text" name="surheightValue" id="surheightValue" />
+    <input type="number" name="surheightValue" id="surheightValue" />
     </label>
     <br />
     <input type="button" value="Calculate" name="surcalculate" id="surcalculate"  />
@@ -320,21 +320,6 @@ $( document ).ready(function() {
     <div id="result">
     <p>Surface Area: <span id="surarea"></span></p>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
  <br /> <br /> <br /> <br /> <br />
   <br />
