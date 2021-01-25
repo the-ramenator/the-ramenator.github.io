@@ -150,8 +150,17 @@ else {
   hide.style.visibility = 'visible';
   hide1.style.visibility = 'hidden';
 }
+	    </script>
+	    <script>
 var x = localStorage.getItem('cheatedclicks');
 x = parseInt(x);
+if (isNaN(x)) {
+  x = 0;
+}
+else{
+ //Nothing here
+ document.getElementById('output').innerHTML = "Break x2 first";
+}
 $(function(){
     var kKeys = [];
     function Kpress(e){
@@ -170,9 +179,6 @@ function kExec(){
 };
 
       </script>
-
-
-
     <footer>
 
       <p style="position: fixed; bottom: 0; width:100%; text-align: center">Made by: neildaniel00. Also I made a copy of this for <a href="https://bowswa.github.io" target="_blank">Bowswa</a>.</p>
