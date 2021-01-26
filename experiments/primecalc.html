@@ -106,7 +106,7 @@
         <br />
       </p>
     </form>
-    <button onclick="myFunction()">Click To Hide The First 1229 Prime Numbers Lol</button>
+    <button id="dasbutton" onclick="myFunction()">Click To Hide The First 1229 Prime Numbers Lol</button>
   <script>
 function myFunction() {
   var x = document.getElementById("myDIV");
@@ -114,6 +114,7 @@ function myFunction() {
     x.style.display = "block";
   } else {
     x.style.display = "none";
+    document.getElementById('dasbuttons').innerHTML = "Click To Show The First 1229 Prime Numbers Lol";
   }
 }
     </script>
