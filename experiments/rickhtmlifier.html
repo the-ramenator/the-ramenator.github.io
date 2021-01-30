@@ -1,0 +1,48 @@
+<!doctype html>
+
+<html>
+  <head>
+     <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+    <title>Simple Rick-Roll HTMLifier - neildaniel00</title>
+  </head>
+
+  <body>
+    <center>
+      <h1>Rick-Roll HTML Maker</h1>
+      <p>This Rick-Roll maker makes code that's believeable. You know the description that shows up when you post a link on Discord? Well this HTMLifier makes that. Copy and paste the HTML code below after you click the button. <a href="https://neildaniel00.github.io/vault/vbucks.html" target="_blank">Click Here To see it in Action!</a>.</p>
+<textarea rows="20" cols="70" id="output" class="outputty" type="text" placeholder="This Will Be Filled When You Press The Button Below" disabled></textarea><br><br><br>
+  <button type="button" class="box" onclick="myFunction()">Generate Rick-Roll Code</button><br><br>
+    </center>
+
+
+            <script>
+function myFunction() {
+  //var idk = document.getElementById("input").innerHTML;
+  var descprompt = prompt('Description:');
+  var imgprompt = prompt('Image link:')
+  var titleprompt = prompt('Title:')
+  var title = "<meta property=\"og:title\" content=\""+titleprompt+"\"/>"//Done
+  var img = "<meta property= \"og:image\" content=\""+imgprompt+"\"/>"//Done
+  var desc = "<meta property=\"og:description\" content=\""+descprompt+"\"/>"//Done
+document.getElementById("output").innerHTML = '<!DOCTYPE html>\n' +
+'<html lang="en">\n'+
+'<head>\n' +
+'<title>Get Rick-Rolled</title>\n'+
+'<meta charset="utf-8">\n'+
+'<meta name="viewport" content="width=device-width, initial-scale=1.0">\n'+
+img+'<!--This is the image you put in-->\n'+
+desc+'<!--This is the description you put in-->\n'+
+title+'<!--This is the title you put in-->\n'+
+"<meta property=\"title\" content=\""+titleprompt+"\"/>\n"+
+"<meta property=\"description\" content=\""+descprompt+"\"/>\n"+
+'</head>\n'+
+'<body>\n'+
+'<iframe id="video-frame" src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?&enablejsapi=1&autoplay=1&mute=0&loop=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>\n'+
+'<!--The Link Above is the roll-->\n'+
+'</body>\n'+
+'</html>\n'
+}
+</script>
+<!--How does this work? Well you put prompts, asking for the user's input for title, description, etc. Then you put it in an html string, and then you put the vars in a html textarea or paragraph, using .innerHTML = ...-->
+  </body>
+</html>
