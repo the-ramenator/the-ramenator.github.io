@@ -315,7 +315,7 @@ select {
 .theme_bg_color {
   background: #00ff00; }
 
-
+.no-drop {cursor: no-drop;}
 
 
 				</style>
@@ -323,7 +323,7 @@ select {
 
 <body>
 	<center>
-		<div onclick="codeinput()" style="font-size: 20px" class="codebox">
+		<div onclick="codeinput()" style="font-size: 20px" class="codebox no-drop">
 			v1.4.8
 		</div>
 
@@ -922,6 +922,8 @@ function closeNav() {
         var clickval4 = 0;
 
         var clickval6 = 0;
+					
+	var cheatcheck = false;				
 
         var speed = 1010;
 
@@ -1065,19 +1067,26 @@ function checks() {
           avariable = prompt('Password?');
 
           if (avariable === 'eRpGf*4sU6C@r&s') {
-            inpt2 = localStorage.getItem('cheated clicks');
-	    if (!inpt2){
-	       inpt2 = 1;
-	       e += parseInt(inpt2);
-		alert('You just cheated and got ' + inpt2 + ' extra clicks. Are you happy? Now leave me alone. I want some sleep.')
-	    }
+		  if(localStorage.getItem('cheatcheck') === false){
+           		 inpt2 = localStorage.getItem('cheated clicks');
+			  localStorage.getItem('cheatclick') = true;
+	    		if (!inpt2){
+	       			inpt2 = 1;
+	       			e += parseInt(inpt2);
+				alert('You just cheated and got ' + inpt2 + ' extra clicks. Are you happy? Now leave me alone. I want some sleep.')
+	   		 }
 	     else {
 		     e += parseInt(inpt2);
 		     alert('You just cheated and got ' + inpt2 + ' extra clicks. Are you happy? Now leave me alone. I want some sleep.')
 	     }
 
             updac();
-          } else {
+          } 
+	else {
+	localStorage.setItem('cheatcheck', cheatcheck)
+	alert("You've either done this before or haven't accessed the secret codeshop.')
+	}
+		  else {
             alert(
               "Seriously? You can't even type in a random 15 digit passcode?"
             );
