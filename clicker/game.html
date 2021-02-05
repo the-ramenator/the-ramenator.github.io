@@ -1084,7 +1084,7 @@ function checks() {
           } 
 	else {
 	localStorage.setItem('cheatcheck', cheatcheck)
-	alert('You\'ve either done this before or haven\'t accessed the secret codeshop.')
+	alert('The cheating function is currently out of order. Don\'t clear anything. I will fix the code. Sorry for the inconvienence.')//You\'ve either done this before or haven\'t accessed the secret codeshop.
 	}
         }
 			  else {
@@ -1812,9 +1812,10 @@ function checks() {
         function autoSave() {
           setInterval(save, 3000)
         }
-        //Cheat script
+        //Cheat script & reset
         function clickcheat() {
           console.log('You attempted to cheat. You forfiet all your clicks and buildings.');
+	  console.log('Hah! Loser!');
           nanreset();
           updac();
         }
