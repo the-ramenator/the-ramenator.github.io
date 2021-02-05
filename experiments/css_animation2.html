@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Keyframes CSS Animations 2 - neildaniel00</title>
+   <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+<style> 
+      @font-face {
+	 font-family: 'Product Sans';
+	 font-style: normal;
+	 font-weight: 400;
+	 src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/productsans/v5/HYvgU2fE2nRJvZ5JFAumwegdm0LZdjqr5-oayXSOefg.woff2) format('woff2');
+}
+      .urmom {
+  border-radius: 10%;
+  height: 50%;
+  width: 50%;
+  margin: 0 auto;
+  background-color: #848484;
+  animation-name: stretch;
+  animation-duration: 3s; 
+  animation-timing-function: ease-out; 
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-fill-mode: none;
+  animation-play-state: running;
+}
+
+@keyframes stretch {
+  0% {
+    transform: scale(.001);
+    background-color: #848484;
+    border-radius: 100%;
+  }
+
+  25% {
+    background-color: #ea4335;
+  }
+  50% {
+    background-color: #fbbc05;
+  }
+
+  75% {
+    background-color: #34a853;
+  }
+  100% {
+    transform: scale(1.5);
+    background-color: #4285f4;
+  }
+}
+
+body,
+html {
+  height: 100%;
+  font-family: Product Sans
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+    </style>
+  </head>
+
+  <body>
+<div class="urmom"><center><br><br><br><br><br><br><br><br>NEILDANIEL00<br>Steal this code (Ctrl+U)</center></div>
+  </body>
+</html>
