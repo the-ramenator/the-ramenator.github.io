@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <style>
+      * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: white;
+}
+h2{
+  font-family: Comic Sans MS;
+  justify-content: center;
+  top: -50%;
+  left: 50%;
+}
+body {
+  background: #222;
+}
+
+div {
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  width: 250px;
+  height: 250px;
+  background: blue;
+  animation: blur 4s ease 0s infinite;
+  -webkit-animation: blur 4s ease 0s infinite;
+  -moz-animation: blur 4s ease 0s infinite;
+}
+
+@keyframes blur {
+  0%,
+  80% {
+    -webkit-filter: blur(0px);
+    -moz-filter: blur(0px);
+    -o-filter: blur(0px);
+    -ms-filter: blur(0px);
+    background-color: blue;
+  }
+  40% {
+    -webkit-filter: blur(50px);
+    -moz-filter: blur(50px);
+    -o-filter: blur(50px);
+    -ms-filter: blur(50px);
+    background-color: red;
+  }
+}
+
+filter: blur(3px);
+
+-webkit-filter: blur(3px);
+
+-moz-filter: blur(3px);
+
+-o-filter: blur(3px);
+
+-ms-filter: blur(3px);
+
+filter: url(blur.svg#blur);
+
+filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='3');
+
+    </style>
+  </head>
+
+  <body>
+    <div>
+  <center><br><br><br><br><br><br>
+    <h2>NEILDANIEL00</h2>
+  </center>
+  </div>
+  </body>
+</html>
