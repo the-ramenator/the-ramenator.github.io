@@ -1,0 +1,140 @@
+<!doctype html>
+
+<html>
+  <head>
+  <title>Marquee Library - neildaniel00</title>
+  <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+    <style>
+@font-face {
+	 font-family: 'Product Sans';
+	 font-style: normal;
+	 font-weight: 400;
+	 src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/productsans/v5/HYvgU2fE2nRJvZ5JFAumwegdm0LZdjqr5-oayXSOefg.woff2) format('woff2');
+}
+code {
+  background-color: #EFEFED;
+  color: #FF4F00;
+}
+body, html {
+  font-family: Product Sans;
+}
+</style>
+  </head>
+
+  <body>
+<center><h1>MARQUEE LIBRARY</h1>
+<h2>PRESS CTRL+U TO STEAL</h2><br><br><br><br>
+<hr>
+
+<!--RIGHT TO LEFT-->
+<marquee>RIGHT TO LEFT</marquee><br><br>
+<!--END RIGHT TO LEFT-->
+<hr>
+
+
+<!--LEFT TO RIGHT-->
+<marquee direction="right">LEFT TO RIGHT</marquee><br><br>
+<!--END LEFT TO RIGHT-->
+<br>
+
+<hr>
+<!--UP TO DOWN-->
+<marquee scrollamount="4" direction="up"><br><br><br><br>DOWN TO UP</marquee>
+<!--END UP TO DOWN-->
+<hr>
+
+<!--DOWN TO UP-->
+<marquee scrollamount="4" direction="down"><br><br><br><br>UP TO DOWN</marquee>
+<!--END DOWN TO UP-->
+<hr>
+<!--FASTER-->
+<marquee scrollamount="100">FASTER</marquee><br>
+<!--END FASTER-->
+<hr>
+<!--FAST-->
+<marquee scrollamount="50">FAST</marquee><br>
+<!--END FAST-->
+<hr>
+<!--SLOW-->
+<marquee scrollamount="10">SLOW</marquee><br>
+<!--END SLOW-->
+<hr>
+<!--SLOWEST-->
+<marquee scrollamount="1">SLOWEST</marquee><br>
+<!--END SLOWEST-->
+<hr>
+<!--LOOP ONCE-->
+<marquee loop="1">LOOP ONCE</marquee>
+<!--END LOOP ONCE-->
+<hr>
+<!--LOOP TEN TIMES-->
+<marquee loop="10">LOOP TEN TIMES</marquee>
+<!--END LOOP TEN TIMES-->
+<hr>
+<!--DVD EFFECT-->
+<marquee direction="down" width="250" height="200" behavior="alternate" style="border:solid">
+  <marquee behavior="alternate">
+DVD EFFECT  </marquee>
+</marquee>
+<!--END DVD EFFECT-->
+<hr>
+<br><br>
+<h2 id="attributes">ATTRIBUTES</h2><div><dl>
+ <dt><strong id="attr-behavior"><code>behavior</code></strong></dt>
+ <dd>Sets how the text is scrolled within the marquee. Possible values are <code>scroll</code>, <code>slide</code> and <code>alternate</code>. If no value is specified, the default value is <code>scroll</code>.</dd><br>
+
+ <dt><strong id="attr-bgcolor"><code>bgcolor</code></strong></dt>
+ <dd>Sets the background color through color name or hexadecimal value.</dd>
+ <br>
+ <dt><strong id="attr-direction"><code>direction</code></strong></dt>
+ <dd>Sets the direction of the scrolling within the marquee. Possible values are <code>left</code>, <code>right</code>, <code>up</code> and <code>down</code>. If no value is specified, the default value is <code>left</code>.</dd>
+ <br>
+ <dt><strong id="attr-height"><code>height</code></strong></dt>
+ <dd>Sets the height in pixels or percentage value.</dd><br>
+ <dt><strong id="attr-hspace"><code>hspace</code></strong></dt>
+ <dd>Sets the horizontal margin</dd>
+ <br>
+
+ <dt><strong id="attr-loop"><code>loop</code></strong></dt>
+ <dd>Sets the number of times the marquee will scroll. If no value is specified, the default value is −1, which means the marquee will scroll continuously.</dd>
+ <br>
+
+ <dt><strong id="attr-scrollamount"><code>scrollamount</code></strong></dt>
+ <dd>Sets the amount of scrolling at each interval in pixels. The default value is 6.</dd>
+ <br>
+
+ <dt><strong id="attr-scrolldelay"><code>scrolldelay</code></strong></dt>
+ <dd>Sets the interval between each scroll movement in milliseconds. The default value is 85. Note that any value smaller than 60 is ignored and the value 60 is used instead, unless<code> truespeed </code>is specified.</dd>
+ <br>
+
+ <dt><strong id="attr-truespeed"><code>truespeed</code></strong></dt>
+ <dd>By default,<code> scrolldelay </code>values lower than 60 are ignored. If<code> truespeed </code>is present, those values are not ignored.</dd>
+ <br>
+
+ <dt><strong id="attr-vspace"><code>vspace</code></strong></dt>
+ <dd>Sets the vertical margin in pixels or percentage value.</dd>
+ <br>
+
+ <dt><strong id="attr-width"><code>width</code></strong></dt>
+ <dd>Sets the width in pixels or percentage value.</dd>
+ <br>
+</dl></div><h2 id="event_handlers">Event handlers</h2><div><dl>
+ <dt><strong id="attr-onbounce"><code>onbounce</code></strong></dt>
+ <dd>Fires when the marquee has reached the end of its scroll position. It can only fire when the behavior attribute is set to <code>alternate</code>.</dd><br>
+
+ <dt><strong id="attr-onfinish"><code>onfinish</code></strong></dt>
+ <dd>Fires when the marquee has finished the amount of scrolling that is set by the loop attribute. It can only fire when the loop attribute is set to some number that is greater than 0.</dd><br>
+
+ <dt><strong id="attr-onstart"><code>onstart</code></strong></dt>
+ <dd>Fires when the marquee starts scrolling.</dd><br>
+
+</dl></div><h2 id="methods">Methods</h2><div><dl>
+ <dt><code>start()</code></dt>
+ <dd>Starts scrolling of the marquee.</dd><br>
+
+ <dt><code>stop()</code></dt>
+ <dd>Stops scrolling of the marquee.</dd><br>
+
+</center>
+  </body>
+</html>
