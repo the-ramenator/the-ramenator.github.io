@@ -1,0 +1,94 @@
+<!doctype html>
+
+<html>
+  <head>
+    <title>Multiple Choice Quiz - neildaniel00</title>
+  <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+   
+    <style>
+      body, html{
+        font-family: Comic Sans MS;
+      }
+      button {
+        font-family: Comic Sans MS;
+        border-radius: 5%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <center>
+      <h1>The NEILDANIEL00 Quiz!</h1>
+    <ul>
+  <li type="none">
+    <h3>How many letters are there in "supercalifragilisticexpialidocious"?</h3>
+    <input type="radio" name="question0" value="A">A - 34<br>
+    <input type="radio" name="question0" value="B">B - 32<br>
+    <input type="radio" name="question0" value="C">C - 36<br>
+    <input type="radio" name="question0" value="D">D - 35<br>
+  </li>
+  <li type="none">
+    <h3>How many letters are there in the longest German word "Kraftfahrzeug-Haftpflichtversicherung"?</h3>
+    <input type="radio" name="question1" value="A">A - 21<br>
+    <input type="radio" name="question1" value="B">B - 42<br>
+    <input type="radio" name="question1" value="C">C - 36<br>
+    <input type="radio" name="question1" value="D">D - 56<br>
+  </li>
+  <li type="none">
+    <h3>How many letters are there in the longest English word "Pneumonoultramicroscopicsilicovolcanoconiosis"?</h3>
+    <input type="radio" name="question2" value="A">A - 53<br>
+    <input type="radio" name="question2" value="B">B - 45<br>
+    <input type="radio" name="question2" value="C">C - 32<br>
+    <input type="radio" name="question2" value="D">D - 56<br>
+  </li>
+  <li type="none">
+    <h3>How many letters are there in the longest Russian word "Tetragidropiranilciklopentiltetragidropiridopiridinovaya"?</h3>
+    <input type="radio" name="question3" value="A">A - 55<br>
+    <input type="radio" name="question3" value="B">B - 23<br>
+    <input type="radio" name="question3" value="C">C - 99<br>
+    <input type="radio" name="question3" value="D">D - 47<br>
+  </li>
+  <li type="none">
+    <h3>How many letters are there in the longest Russian word "Tetragidropiranilciklopentiltetragidropiridopiridinovaya"?</h3>
+    <input type="radio" name="question3" value="A">A - 55<br>
+    <input type="radio" name="question3" value="B">B - 23<br>
+    <input type="radio" name="question3" value="C">C - 99<br>
+    <input type="radio" name="question3" value="D">D - 47<br>
+  </li>
+  <li type="none">
+    <h3>What is neildaniel00's rule?</h3>
+    <input type="radio" name="question3" value="A">A - Press Ctrl+U to steal<br>
+    <input type="radio" name="question3" value="B">B - Give credit to neildaniel00<br>
+    <input type="radio" name="question3" value="C">C - Commercial use for this font requires a license.<br>
+    <input type="radio" name="question3" value="D">D - I have no rules.<br>
+  </li>
+  
+  </ul>
+<button onclick="returnScore()">View Results</button>
+<p id="resultsshow"></p>
+<p id="correctanswers"></p>
+</center>
+<script>
+  var answers = ["A","C","B","A","D"], 
+    tot = answers.length;
+
+function getCheckedValue( radioName ){
+    var radios = document.getElementsByName( radioName ); // Get radio group by-name
+    for(var y=0; y<radios.length; y++)
+      if(radios[y].checked) return radios[y].value; // return the checked value
+}
+
+function getScore(){
+  var score = 0;
+  for (var i=0; i<tot; i++)
+    if(getCheckedValue("question"+i)===answers[i]) score += 1; // increment only
+  return score;
+}
+
+function returnScore(){
+  document.getElementById("resultsshow").innerHTML = "Your score is "+ getScore() +"/"+ tot;
+  document.getElementById('correctanswers').innerHTML = "The correct answers are "+answers+".";
+}
+</script>
+  </body>
+</html>
