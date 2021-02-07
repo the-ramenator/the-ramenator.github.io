@@ -1,0 +1,164 @@
+<!doctype html>
+
+<html>
+  <head>
+        <title>Date & Time - neildaniel00</title>
+  <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+  </head>
+
+  <body>
+        <style>
+@font-face {
+	 font-family: 'Product Sans';
+	 font-style: normal;
+	 font-weight: 400;
+	 src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/productsans/v5/HYvgU2fE2nRJvZ5JFAumwegdm0LZdjqr5-oayXSOefg.woff2) format('woff2');
+}
+ body {
+   justify-content: center;
+	 align-items: center;
+	 font-family: Product Sans;
+	 padding: 20px;
+}
+p, span{
+  font-size: 5vh;
+}
+ .blue {
+	 color: #4285f4;
+}
+ .red {
+	 color: #ea4335;
+}
+ .yellow {
+	 color: #fbbc05;
+}
+ .green {
+	 color: #34a853;
+}
+ .grey {
+	 color: #848484;
+}
+</style>
+<center>
+    <p class="grey" id="date" title="Day, Month, Year"></p>
+    <p class="grey" id="time" title="Hour, Minute, Second"></p><br><br><br><br>
+    <strong><span class="blue">N</span><span class="red">E</span><span class="yellow">I</span><span class="blue">L</span><span class="green">D</span><span class="yellow">A</span><span class="red">N</span><span class="blue">I</span><span class="green">E</span><span class="yellow">L</span><span class="grey">0</span><span class="grey">0</span></strong>
+    </center>
+    <script>
+      //Yes, I make comments in my code for you stealers out there
+      function date_time() {
+        //Declaring variables/naming variables
+      var d = new Date();
+      var umonth = d.getMonth();
+      var month;
+      var year = d.getFullYear();
+      var uday = d.getDay();
+      var day;
+      var hour = d.getHours();
+      var minutes = d.getMinutes();
+      var seconds = d.getSeconds();
+      //Day number to string
+      if (uday === 0) {
+        day = 'Sunday';
+      }
+      else if (uday === 1) {
+        day = "Monday";
+      }
+      else if (uday === 2) {
+        day = "Tuesday";
+      }
+      else if (uday === 3) {
+        day = "Wednesday";
+      }
+      else if (uday === 4) {
+        day = "Thursday";
+      }
+      else if (uday === 5) {
+        day = "Friday";
+      }
+      else if (uday === 6) {
+        day = "Saturday";
+      }
+      else {
+      day = "Day Not Detected";
+      }
+      //Month Number to String
+      if (umonth === 0) {
+        month = "January";
+      }
+      else if (umonth === 1){
+        month = "February"
+      }
+
+      else if (umonth === 2){
+        month = "March"
+      }
+
+      else if (umonth === 3){
+        month = "April"
+      }
+
+      else if (umonth === 4){
+        month = "May"
+      }
+
+      else if (umonth === 5){
+        month = "June"
+      }
+
+      else if (umonth === 6){
+        month = "July"
+      }
+
+      else if (umonth === 7){
+        month = "August"
+      }
+
+      else if (umonth === 8){
+        month = "September"
+      }
+
+      else if (umonth === 9){
+        month = "October"
+      }
+
+      else if (umonth === 10){
+        month = "November"
+      }
+
+      else if (umonth === 11){
+        month = "December"
+      }
+
+      else{
+        month = "Month Not Detected"
+      }
+      //Digit counting for seconds
+      if(seconds<10) {
+        seconds = "0"+seconds;
+      }
+      else {
+        seconds = seconds;
+      }
+      //Digit counting for minutes
+      if (minutes<10) {
+        minutes = "0"+minutes
+      }
+      else {
+        minutes = minutes;
+      }
+      //Digit counting for hours
+      if (hour<10) {
+        hour = "0"+hour;
+      }
+      else {
+        hour = hour;
+      }
+      //Putting it all together
+       document.getElementById("date").innerHTML = "Today's date is:  &nbsp; "+day+", "+month+" "+year;
+       document.getElementById("time").innerHTML = "The time currently is:   "+hour+" : "+minutes+" : "+seconds;
+
+      }setInterval(date_time, 1000)    
+</script>
+  </body>
+</html>
