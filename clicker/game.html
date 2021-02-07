@@ -1069,7 +1069,8 @@ function checks() {
           if (avariable === 'eRpGf*4sU6C@r&s') {
 		  if(localStorage.getItem('cheatcheck') !== true){
            		 inpt2 = localStorage.getItem('cheated clicks');
-			  localStorage.getItem('cheatcheck') = true;
+			  cheatcheck = true;
+			  localStorage.setItem('cheatcheck', cheatcheck);
 	    		if (!inpt2){
 	       			inpt2 = 1;
 	       			e += parseInt(inpt2);
