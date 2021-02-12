@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loader #3 - neildaniel00</title>
+<link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+<style>
+/* Center the loader */
+#loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+/* Add animation to "page content" */
+.animate-bottom {
+  position: relative;
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 1s;
+  animation-name: animatebottom;
+  animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+  from { bottom:-100px; opacity:0 } 
+  to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom { 
+  from{ bottom:-100px; opacity:0 } 
+  to{ bottom:0; opacity:1 }
+}
+
+#myDiv {
+  display: none;
+  text-align: center;
+}
+.lds-facebook {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-facebook div {
+  display: inline-block;
+  position: absolute;
+  left: 8px;
+  width: 16px;
+  background: #fcf;
+  animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+.lds-facebook div:nth-child(1) {
+  left: 8px;
+  animation-delay: -0.24s;
+}
+.lds-facebook div:nth-child(2) {
+  left: 32px;
+  animation-delay: -0.12s;
+}
+.lds-facebook div:nth-child(3) {
+  left: 56px;
+  animation-delay: 0;
+}
+@keyframes lds-facebook {
+  0% {
+    top: 8px;
+    height: 64px;
+  }
+  50%, 100% {
+    top: 24px;
+    height: 32px;
+  }
+}
+
+</style>
+</head>
+<body onload="myFunction()" style="margin:0;">
+
+<div id="loader"><div class="lds-facebook"><div></div><div></div><div></div></div></div>
+
+<div style="display:none;" id="myDiv" class="animate-bottom">
+  <h2>Tada!</h2>
+  <p>Some text in my newly loaded page..</p>
+</div>
+
+<script>
+var myVar;
+
+function myFunction() {
+  myVar = setTimeout(showPage, 3000);
+}
+
+function showPage() {
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("myDiv").style.display = "block";
+}
+</script>
+
+</body>
+</html>
