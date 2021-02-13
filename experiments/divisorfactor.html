@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+        <title>Factor/Divisor Calculator - neildaniel00</title>
+  <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+
+  </head>
+  <body>
+    <script>
+      //Imma explain my code for u stealers
+      function display() {
+        var analert = prompt('Enter the number: '); //Getting the user's input
+        analert = parseInt(analert); //Make the user's input a number
+        const factors = (number) =>
+          Array.from(Array(number), (_, i) => i) //Start stuff I don't understand
+            .filter((i) => number % i === 0); //End Stuff i don't understand
+        document.getElementById('urmom').innerHTML =
+          'The factors/divisors of ' +
+          analert +
+          ' are: ' +
+          factors(analert) +
+          ',' +
+          analert; //Putting the result into a <p>
+      }
+    </script>
+    <center>
+      <h1>Factor/Divisor Calculator</h1>
+      <button onclick="display()">Get Your Divisor List!</button>
+      <p id="urmom">Press the button above to test it out!</p>
+      <br />
+    </center>
+  </body>
+</html>
