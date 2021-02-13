@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loader #9 - neildaniel00</title>
+  <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+
+<style>
+/* Center the loader */
+#loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+.lds-heart {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  transform: rotate(45deg);
+  transform-origin: 40px 40px;
+}
+.lds-heart div {
+  top: 32px;
+  left: 32px;
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background: #fcf;
+  animation: lds-heart 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.lds-heart div:after,
+.lds-heart div:before {
+  content: " ";
+  position: absolute;
+  display: block;
+  width: 32px;
+  height: 32px;
+  background: #fcf;
+}
+.lds-heart div:before {
+  left: -24px;
+  border-radius: 50% 0 0 50%;
+}
+.lds-heart div:after {
+  top: -24px;
+  border-radius: 50% 50% 0 0;
+}
+@keyframes lds-heart {
+  0% {
+    transform: scale(0.95);
+  }
+  5% {
+    transform: scale(1.1);
+  }
+  39% {
+    transform: scale(0.85);
+  }
+  45% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(0.9);
+  }
+}
+
+/* Add animation to "page content" */
+.animate-bottom {
+  position: relative;
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 1s;
+  animation-name: animatebottom;
+  animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+  from { bottom:-100px; opacity:0 } 
+  to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom { 
+  from{ bottom:-100px; opacity:0 } 
+  to{ bottom:0; opacity:1 }
+}
+
+#myDiv {
+  display: none;
+  text-align: center;
+}
+</style>
+</head>
+<body onload="myFunction()" style="margin:0;">
+
+<div id="loader"><div class="lds-heart"><div></div></div></div>
+
+<div style="display:none;" id="myDiv" class="animate-bottom">
+  <h2>Tada!</h2>
+  <p>Some text in my newly loaded page..</p>
+</div>
+
+<script>
+var myVar;
+
+function myFunction() {
+  myVar = setTimeout(showPage, 3000);
+}
+
+function showPage() {
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("myDiv").style.display = "block";
+}
+</script>
+
+</body>
+</html>
