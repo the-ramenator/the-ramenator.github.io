@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
   <head>
         <title>Factor/Divisor Calculator - neildaniel00</title>
@@ -10,24 +9,25 @@
     <script>
       //Imma explain my code for u stealers
       function display() {
-        var analert = prompt('Enter the number: '); //Getting the user's input
-        analert = parseInt(analert); //Make the user's input a number
+        var aninput = document.getElementById('input').value; //Getting the user's input
+        aninput = parseInt(aninput); //Make the user's input a number
         const factors = (number) =>
           Array.from(Array(number), (_, i) => i) //Start stuff I don't understand
             .filter((i) => number % i === 0); //End Stuff i don't understand
-        document.getElementById('urmom').innerHTML =
+        document.getElementById('output').innerHTML =
           'The factors/divisors of ' +
-          analert +
+          aninput +
           ' are: ' +
-          factors(analert) +
+          factors(aninput) +
           ',' +
-          analert; //Putting the result into a <p>
+          aninput; //Putting the result into a <p>
       }
     </script>
     <center>
       <h1>Factor/Divisor Calculator</h1>
+      <textarea rows="2" cols="30" id="input" placeholder="Enter a number and press the button below!"></textarea><br><br>
       <button onclick="display()">Get Your Divisor List!</button>
-      <p id="urmom">Press the button above to test it out!</p>
+      <p id="output"></p>
       <br />
     </center>
   </body>
