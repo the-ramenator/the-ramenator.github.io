@@ -30,8 +30,8 @@
     </style>
     <script>
       function compute() {
-        var val1 = document.fractions.variable1.value;
-        var val2 = document.fractions.variable2.value;
+        var val1 = document.getElementById('numerator').value;
+        var val2 = document.getElementById('denominator').value;
         var val3 = 0;
         while (val1 % 2 == 0 && val2 % 2 == 0) {
           val1 = val1 / 2;
@@ -49,14 +49,14 @@
         }
         var result = val1 + '/' + val2;
         if (val3 == 0) {
-          document.fractions.val4.value =
+          document.getElementById('result').innerHTML =
             'The fraction ' +
             val1 +
             '/' +
             val2 +
             ' cannot be reduced any more!';
         } else {
-          document.fractions.val4.value = result;
+          document.getElementById('result').innerHTML = result;
         }
       }
     </script>
@@ -64,30 +64,28 @@
   <body>
     <center>
       <h1>Fraction Reducer</h1>
-      <form name="fractions">
-        <input
-          placeholder="Numerator"
-          name="variable1"
-          size="20"
-          maxlength="6"
-        /><br /><br />
-        <div class="hr"></div>
-        <br />
-        <input
-          placeholder="Denominator"
-          name="variable2"
-          size="20"
-          maxlength="6"
-         />
-        <br /><br />
-        <button onclick="compute()">Reduce Your Fraction!</button>
-        <br /><br /><br />
-        <input placeholder="Result" name="val4" size="25" disabled />
-
-        <br /><br />
-
-        <input type="reset" value="Reset" />
-      </form>
+      <input
+        placeholder="Numerator"
+        id="numerator"
+        size="20"
+        maxlength="6"
+      /><br /><br />
+      <div class="hr"></div>
+      <br />
+      <input
+        placeholder="Denominator"
+        id="denominator"
+        size="20"
+        maxlength="6"
+      />
+      <br /><br />
+      <button onclick="compute()">Reduce Your Fraction!</button>
+      <br /><br /><br />
+      <p
+        id="result"
+        style="background-color: lightgrey; width: 50%; border-radius: 5%"
+      >This will be filled when you enter information in the fields above.
+      </p>
     </center>
 
     <br /><br />
