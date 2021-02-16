@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fraction Reducer - neildaniel00</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"
+    />
+
+    <style>
+      @font-face {
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Open Sans'), local('OpenSans'),
+          url(https://fonts.gstatic.com/s/productsans/v5/HYvgU2fE2nRJvZ5JFAumwegdm0LZdjqr5-oayXSOefg.woff2)
+            format('woff2');
+      }
+      body,
+      button,
+      input {
+        font-family: Product Sans;
+      }
+      .hr {
+        background-color: black;
+        height: 2px;
+        width: 200px;
+      }
+    </style>
+    <script>
+      function compute() {
+        var val1 = document.fractions.variable1.value;
+        var val2 = document.fractions.variable2.value;
+        var val3 = 0;
+        while (val1 % 2 == 0 && val2 % 2 == 0) {
+          val1 = val1 / 2;
+          val2 = val2 / 2;
+          val3 = val3 + 1;
+        }
+        var counter = 3;
+        while (counter <= val1 && counter <= val2) {
+          while (val1 % counter == 0 && val2 % counter == 0) {
+            val1 = val1 / counter;
+            val2 = val2 / counter;
+            val3 = val3 + 1;
+          }
+          counter = counter + 2;
+        }
+        var result = val1 + '/' + val2;
+        if (val3 == 0) {
+          document.fractions.val4.value =
+            'The fraction ' +
+            val1 +
+            '/' +
+            val2 +
+            ' cannot be reduced any more!';
+        } else {
+          document.fractions.val4.value = result;
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <center>
+      <h1>Fraction Reducer</h1>
+      <form name="fractions">
+        <input
+          placeholder="Numerator"
+          name="variable1"
+          onkeyup="compute()"
+          onkeydown="compute()"
+          size="20"
+          maxlength="6"
+        /><br /><br />
+        <div class="hr"></div>
+        <br />
+        <input
+          placeholder="Denominator"
+          name="variable2"
+          size="20"
+          maxlength="6"
+          onkeyup="compute()"
+          onkeydown="compute()"
+        />
+        <br /><br /><br /><br /><br />
+        <input placeholder="Result" name="val4" size="25" disabled />
+
+        <br /><br />
+
+        <input type="reset" value="Reset" />
+      </form>
+    </center>
+
+    <br /><br />
+    <center>
+      <p>Press Ctrl+U to steal.</p>
+    </center>
+  </body>
+</html>
