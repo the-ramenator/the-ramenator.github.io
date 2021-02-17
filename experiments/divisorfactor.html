@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-        <title>Factor/Divisor Calculator - neildaniel00</title>
-  <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
-
+    <title>Factor/Divisor Calculator - neildaniel00</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"
+    />
   </head>
   <body>
     <script>
@@ -22,13 +25,32 @@
           ',' +
           aninput; //Putting the result into a <p>
       }
+      function getdigits() {
+      var a_nother_variable = prompt('hoi');
+      var val=a_nother_variable;
+      console.log("Count : ",val.split(",").length);
+
+        }
     </script>
     <center>
       <h1>Factor/Divisor Calculator</h1>
-      <textarea rows="2" cols="30" id="input" placeholder="Enter a number and press the button below!"></textarea><br><br>
+      <textarea
+        rows="2"
+        cols="30"
+        id="input"
+        placeholder="Enter a number and press the button below!"
+      ></textarea
+      ><br /><br />
       <button onclick="display()">Get Your Divisor List!</button>
       <p id="output"></p>
       <br />
+      <br />
+      <br />
+      <p>The feature below is experimental and doesn't work yet.</p>
+      <h3>Count the Number of Factors/Divisors</h3>
+      <br />
+      <button onclick="getdigits()">Count it!</button>
+      <p id="digitcount">Sorry for the inconvienence. You'll have to press Ctrl+Shift+I to open the console. There, you'll see a <b>Count: <i>A_Number</i></b></p>
     </center>
   </body>
 </html>
