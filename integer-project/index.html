@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,7 +44,7 @@
     font-weight: bolder;
     border : 0px solid lightgrey;
     text-align: center;
-    left: 45%;
+    left: 25%;
     cursor: pointer;
     position: absolute;
     color : black;
@@ -51,6 +52,24 @@
 
 }
 .directions:hover{
+    border: 3px solid lightseagreen;
+    color : lightseagreen;
+}
+
+.directions2{
+    background-color: white;
+    font-size: 1.5em;
+    font-weight: bolder;
+    border : 0px solid lightgrey;
+    text-align: center;
+    left: 65%;
+    cursor: pointer;
+    position: absolute;
+    color : black;
+  border-radius: 8px;
+
+}
+.directions2:hover{
     border: 3px solid lightseagreen;
     color : lightseagreen;
 }
@@ -213,6 +232,21 @@
   text-decoration: none;
   cursor: pointer;
 }
+/* The Close2 Button */
+.close2 {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close2:hover,
+.close2:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 </style>
 
 </head>
@@ -260,7 +294,39 @@
     </ul>  </div>
 
 </div>
+</center>
+<button class="directions2" id="myBtn2">Answer Key</button>
+<!-- The Modal -->
+<div id="myModal2" class="modal">
 
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close2">&times;</span>
+<ol>
+<li>-15</li>
+<li>64</li>
+<li>-11</li>
+<li>8</li>
+<li>36</li>
+<li>4</li>
+<li>-8</li>
+<li>-9</li>
+<li>0</li>
+<li>3</li>
+<li>15</li>
+<li>900</li>
+<li>1100</li>
+<li>-36</li>
+<li>-500</li>
+<li>-38</li>
+<li>-6</li>
+<li>-12</li>
+<li>7</li>
+<li>2</li>
+</ol>
+</div>
+</div>
+<center>
 <script>
 // Get the modal
 var modal = document.getElementById("myModal");
@@ -288,6 +354,35 @@ window.onclick = function(event) {
   }
 }
 </script>
+
+<script>
+// Get the modal
+var modal2 = document.getElementById("myModal2");
+
+// Get the button that opens the modal
+var btn2 = document.getElementById("myBtn2");
+
+// Get the <span> element that closes the modal
+var span2 = document.getElementsByClassName("close2")[0];
+
+// When the user clicks the button, open the modal 
+btn2.onclick = function() {
+  modal2.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span2.onclick = function() {
+  modal2.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal2) {
+    modal2.style.display = "none";
+  }
+}
+</script>
+
 </center>
 
     <script>
@@ -307,32 +402,32 @@ const scoreDiv = document.getElementById("scoreContainer");
 // create our questions
 let questions = [
     {
-        //1
-        question : "3-5",
+        //1 *#1
+        question : "3*-5",
         imgSrc : "img/q1.png",
-        choiceA : "-2",
-        choiceB : "2",
-        choiceC : "-8",
+        choiceA : "-15",
+        choiceB : "15",
+        choiceC : "-35",
         correct : "A"
     },{
-        //2
-        question : "3-(-5)",
+        //2 *#2
+        question : "-8*-8)",
         imgSrc : "img/q2.png",
-        choiceA : "8",
-        choiceB : "-8",
-        choiceC : "2",
+        choiceA : "64",
+        choiceB : "-64",
+        choiceC : "88",
         correct : "A"
     },{
-        //3
-        question : "-9-(-2)",
+        //3 +#1
+        question : "-9+-2",
         imgSrc : "img/q3.png",
-        choiceA : "7",
-        choiceB : "-7",
-        choiceC : "2",
+        choiceA : "11",
+        choiceB : "-11",
+        choiceC : "-7",
         correct : "B"
     },{
-        //4
-        question : "|-3-5|",
+        //4 +#2
+        question : "|-3+-5|",
         imgSrc : "img/q4.png",
         choiceA : "8",
         choiceB : "-8",
@@ -340,37 +435,37 @@ let questions = [
         correct : "A"
     }
     ,{
-        //5
-        question : "|-3-(-5)|",
+        //5 -#1
+        question : "|-12-12-12|",
         imgSrc : "img/q5.png",
-        choiceA : "8",
-        choiceB : "-8",
-        choiceC : "2",
+        choiceA : "0",
+        choiceB : "-36",
+        choiceC : "36",
         correct : "C"
     },{
-        //6
-        question : "3+-1",
+        //6 -#2
+        question : "3-(-1)",
         imgSrc : "img/q6.png",
-        choiceA : "2",
-        choiceB : "-4",
-        choiceC : "4",
-        correct : "A"
-    },{
-        //7
-        question : "-|-9-(-5)|",
-        imgSrc : "img/q7.png",
         choiceA : "4",
         choiceB : "-4",
-        choiceC : "14",
+        choiceC : "2",
+        correct : "A"
+    },{
+        //7 /#1
+        question : "72/-9",
+        imgSrc : "img/q7.png",
+        choiceA : "8",
+        choiceB : "-8",
+        choiceC : "9",
         correct : "B"
     }
     ,{
-        //8
-        question : "-10-10",
+        //8 /#2
+        question : "-90/10",
         imgSrc : "img/q8.png",
-        choiceA : "-20",
-        choiceB : "0",
-        choiceC : "20",
+        choiceA : "-9",
+        choiceB : "9",
+        choiceC : "-10",
         correct : "A"
     },{
         //9
