@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Custom Alert Boxes - neildaniel00</title>
+  <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+
+<style>
+@font-face {
+	 font-family: 'Product Sans';
+	 font-style: normal;
+	 font-weight: 400;
+	 src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/productsans/v5/HYvgU2fE2nRJvZ5JFAumwegdm0LZdjqr5-oayXSOefg.woff2) format('woff2');
+}
+ body {
+	 font-family: Product Sans;
+}
+
+.alert {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+  opacity: 1;
+  transition: opacity 0.6s;
+  margin-bottom: 15px;
+}
+/*Copy paste and change the names and colors. Keep the .alert tho*/
+.alert.success {background-color: #4CAF50;}
+.alert.info {background-color: #2196F3;}
+.alert.warning {background-color: #ff9800;}
+.alert.mine {background-color: lightgrey; color: red;}
+.alert.steal {background-color: black; }
+/*Example color addition: .alert.urmom {background-color: lightgrey;}*/
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+/*Moves alerts to bottom*/
+.footer{
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+</style>
+</head>
+<body>
+<center>
+<h2>Alert Messages</h2>
+<p>Click on the "x" symbol to close the alert message.</p>
+<footer class="footer">
+  <!--div below is default alert (red)-->
+<div class="alert">
+  <span class="closebtn">&times;</span>  
+  <strong>Danger!</strong> Indicates a dangerous or potentially negative action.
+</div>
+<!--Green div-->
+<div class="alert success">
+  <span class="closebtn">&times;</span>  
+  <strong>Success!</strong> Indicates a successful or positive action.
+</div>
+<!--Blue Div-->
+<div class="alert info">
+  <span class="closebtn">&times;</span>  
+  <strong>Info!</strong> Indicates a neutral informative change or action.
+</div>
+<!--Orange/yellow div-->
+<div class="alert warning">
+  <span class="closebtn">&times;</span>  
+  <strong>Warning!</strong> Indicates a warning that might need attention.
+</div>
+<!--Grey div-->
+<div class="alert mine">
+  <span class="closebtn">&times;</span>  
+  <strong>NOT MADE BY ME!</strong> This was made by W3Schools, and I just stole the code and made it look better.
+</div>
+<!--Black div-->
+<div class="alert steal">
+  <span class="closebtn">&times;</span>  
+  <strong>Press Ctrl+U to steal!</strong> I made some helpful comments in the code.
+</div>
+<!--Add a div! Copy paste any code.-->
+<!--Example addition:-->
+<!--<div class="alert insert-color-class-name-here">
+  <span class="closebtn">&times;</span>  
+  <strong>Bolded Text</strong> Other description.
+</div>-->
+</footer>
+<script>
+  //Keep the js below. It tells the code to remove the div 600 miliseconds after the "x" has been clicked.
+var close = document.getElementsByClassName("closebtn");
+var i;
+
+for (i = 0; i < close.length; i++) {
+  close[i].onclick = function(){
+    var div = this.parentElement;
+    div.style.opacity = "0";
+    setTimeout(function(){ div.style.display = "none"; }, 600);
+  }
+}
+</script>
+</center>
+</body>
+</html>
