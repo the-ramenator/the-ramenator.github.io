@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Loader #11 - neildaniel00</title>
+	<link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+	<style>
+		/* Center the loader */
+		#loader {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+		}
+
+		/* Add animation to "page content" */
+		.animate-bottom {
+			position: relative;
+			-webkit-animation-name: animatebottom;
+			-webkit-animation-duration: 1s;
+			animation-name: animatebottom;
+			animation-duration: 1s
+		}
+
+		@-webkit-keyframes animatebottom {
+			from {
+				bottom: -100px;
+				opacity: 0
+			}
+
+			to {
+				bottom: 0px;
+				opacity: 1
+			}
+		}
+
+		@keyframes animatebottom {
+			from {
+				bottom: -100px;
+				opacity: 0
+			}
+
+			to {
+				bottom: 0;
+				opacity: 1
+			}
+		}
+
+		#myDiv {
+			display: none;
+			text-align: center;
+		}
+	</style>
+	<style>
+		@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
+
+		*,
+		*:before,
+		*:after {
+			-moz-box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+			box-sizing: border-box;
+		}
+
+		body {
+			margin: 0;
+			background: #FFFFFF;
+			padding: 0;
+			overflow: hidden;
+		}
+
+		body.loaded {
+			overflow-y: auto;
+		}
+
+		.overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 99;
+		}
+
+		.overlay .door:before,
+		.overlay .door:after {
+			content: "";
+			position: absolute;
+			width: 50%;
+			height: 100%;
+			background: #111;
+			transition: 0.5s cubic-bezier(0.77, 0, 0.18, 1);
+			transition-delay: 0.8s;
+		}
+
+		.overlay .door:before {
+			left: 0;
+		}
+
+		.overlay .door:after {
+			right: 0;
+		}
+
+		.overlay.loaded .door:before {
+			left: -50%;
+		}
+
+		.overlay.loaded .door:after {
+			right: -50%;
+		}
+
+		.overlay.loaded .container {
+			opacity: 0;
+			margin-top: -15px;
+		}
+
+		.overlay .container {
+			position: relative;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			transition: 0.5s cubic-bezier(0.77, 0, 0.18, 1);
+		}
+
+		.overlay .container .skip {
+			display: block;
+			width: 130px;
+			text-align: center;
+			margin: 50px auto 0;
+			cursor: pointer;
+			color: #00FFFF;
+			font-family: "Raleway", sans-serif;
+			font-weight: bold;
+			padding: 12px 0;
+			border: 2px solid #00FFFF;
+			border-radius: 0;
+			z-index: 2;
+			overflow: hidden;
+		}
+
+		.overlay .container .skip:hover {
+			color: #000;
+			background: #fff;
+			border: 2px solid #fff;
+		}
+
+		.loader {
+			width: 100px;
+			height: 100px;
+			border: 3px solid #00FFFF;
+			border-radius: 0;
+			position: relative;
+			-moz-animation: spin 6s linear infinite;
+			-webkit-animation: spin 6s linear infinite;
+			animation: spin 6s linear infinite;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.loader .loader-two {
+			width: 90px;
+			height: 90px;
+			border: 3px solid #00FFFF;
+			border-radius: 0;
+			position: relative;
+			-moz-animation: spin 6s linear infinite;
+			-webkit-animation: spin 6s linear infinite;
+			animation: spin 6s linear infinite;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.loader .loader-three {
+			width: 80px;
+			height: 80px;
+			border: 3px solid #00FFFF;
+			border-radius: 0;
+			position: relative;
+			-moz-animation: spin 6s linear infinite;
+			-webkit-animation: spin 6s linear infinite;
+			animation: spin 6s linear infinite;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.loader .loader-four {
+			width: 70px;
+			height: 70px;
+			border: 3px solid #00FFFF;
+			border-radius: 0;
+			position: relative;
+			-moz-animation: spin 6s linear infinite;
+			-webkit-animation: spin 6s linear infinite;
+			animation: spin 6s linear infinite;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.loader .loader-five {
+			width: 60px;
+			height: 60px;
+			border: 3px solid #00FFFF;
+			border-radius: 0;
+			position: relative;
+			-moz-animation: spin 6s linear infinite;
+			-webkit-animation: spin 6s linear infinite;
+			animation: spin 6s linear infinite;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.loader .loader-six {
+			width: 50px;
+			height: 50px;
+			border: 3px solid #00FFFF;
+			border-radius: 0;
+			position: relative;
+			-moz-animation: spin 6s linear infinite;
+			-webkit-animation: spin 6s linear infinite;
+			animation: spin 6s linear infinite;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.loader .loader-seven {
+			width: 40px;
+			height: 40px;
+			border: 3px solid #00FFFF;
+			border-radius: 0;
+			position: relative;
+			-moz-animation: spin 6s linear infinite;
+			-webkit-animation: spin 6s linear infinite;
+			animation: spin 6s linear infinite;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.loader .loader-eight {
+			width: 30px;
+			height: 30px;
+			border: 3px solid #00FFFF;
+			border-radius: 0;
+			position: relative;
+			-moz-animation: spin 6s linear infinite;
+			-webkit-animation: spin 6s linear infinite;
+			animation: spin 6s linear infinite;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.loader .loader-nine {
+			width: 20px;
+			height: 20px;
+			border: 3px solid #00FFFF;
+			border-radius: 0;
+			position: relative;
+			-moz-animation: spin 6s linear infinite;
+			-webkit-animation: spin 6s linear infinite;
+			animation: spin 6s linear infinite;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.loader .loader-ten {
+			width: 10px;
+			height: 10px;
+			border: 3px solid #00FFFF;
+			border-radius: 50%;
+			position: relative;
+			-moz-animation: spin 6s linear infinite;
+			-webkit-animation: spin 6s linear infinite;
+			animation: spin 6s linear infinite;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		@-moz-keyframes spin {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+
+		@-webkit-keyframes spin {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+
+		@keyframes spin {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+
+		.header {
+			background: url("https://images.unsplash.com/photo-1485245389155-8173f59637a5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80") center/cover;
+			background-size: cover;
+			height: 100vh;
+		}
+
+		.header .filter {
+			background: rgba(0, 0, 0, 0.55);
+			width: 100%;
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+		}
+
+		.header .filter h1 {
+			font-family: "Raleway", sans-serif;
+			font-weight: bold;
+			color: #fff;
+			position: absolute;
+			margin: auto;
+			z-index: 95;
+			font-size: 2.5em;
+			text-align: center;
+		}
+
+		.header .filter p {
+			color: #fff;
+			font-family: "Raleway", sans-serif;
+			font-weight: bold;
+			text-align: center;
+			width: 550px;
+			margin: 0 auto;
+			line-height: 35px;
+			z-index: 95;
+		}
+
+		.vidya {
+			background: #191919;
+			width: 100% px;
+			margin: 0 auto;
+			box-sizing: border-box;
+		}
+
+		iframe {
+			height: 700px;
+			width: 100%;
+		}
+
+		.blue-font {
+			color: #00FFFF !important;
+		}
+
+		.center {
+			left: 50%;
+			position: relative;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		.container-fluid {
+			min-height: 100%;
+			padding: 0;
+		}
+
+		.cursor {
+			-moz-animation: blink 0.7s infinite;
+			-webkit-animation: blink 0.7s infinite;
+			animation: blink 0.7s infinite;
+			opacity: 1;
+		}
+
+		@-moz-keyframes blink {
+			0% {
+				opacity: 1;
+			}
+
+			50% {
+				opacity: 0;
+			}
+
+			100% {
+				opacity: 1;
+			}
+		}
+
+		@-webkit-keyframes blink {
+			0% {
+				opacity: 1;
+			}
+
+			50% {
+				opacity: 0;
+			}
+
+			100% {
+				opacity: 1;
+			}
+		}
+
+		@keyframes blink {
+			0% {
+				opacity: 1;
+			}
+
+			50% {
+				opacity: 0;
+			}
+
+			100% {
+				opacity: 1;
+			}
+		}
+
+		.point-down {
+			fill: #00f6ed;
+			position: fixed;
+			bottom: 0;
+			left: 50%;
+			margin-left: -20px;
+			width: 40px;
+			height: 40px;
+			background-size: contain;
+		}
+
+		.bouncy {
+			-moz-animation: bouncy 2s infinite;
+			-webkit-animation: bouncy 2s infinite;
+			animation: bouncy 2s infinite;
+		}
+
+		@-moz-keyframes bouncy {
+
+			0%,
+			20%,
+			50%,
+			80%,
+			100% {
+				-moz-transform: translateY(0);
+				transform: translateY(0);
+			}
+
+			40% {
+				-moz-transform: translateY(-30px);
+				transform: translateY(-30px);
+			}
+
+			60% {
+				-moz-transform: translateY(-15px);
+				transform: translateY(-15px);
+			}
+		}
+
+		@-webkit-keyframes bouncy {
+
+			0%,
+			20%,
+			50%,
+			80%,
+			100% {
+				-webkit-transform: translateY(0);
+				transform: translateY(0);
+			}
+
+			40% {
+				-webkit-transform: translateY(-30px);
+				transform: translateY(-30px);
+			}
+
+			60% {
+				-webkit-transform: translateY(-15px);
+				transform: translateY(-15px);
+			}
+		}
+
+		@keyframes bouncy {
+
+			0%,
+			20%,
+			50%,
+			80%,
+			100% {
+				-moz-transform: translateY(0);
+				-ms-transform: translateY(0);
+				-webkit-transform: translateY(0);
+				transform: translateY(0);
+			}
+
+			40% {
+				-moz-transform: translateY(-30px);
+				-ms-transform: translateY(-30px);
+				-webkit-transform: translateY(-30px);
+				transform: translateY(-30px);
+			}
+
+			60% {
+				-moz-transform: translateY(-15px);
+				-ms-transform: translateY(-15px);
+				-webkit-transform: translateY(-15px);
+				transform: translateY(-15px);
+			}
+		}
+	</style>
+</head>
+
+<body onload="myFunction()" style="margin:0;">
+
+	<div id="loader">
+		<!-- load screen -->
+		<div class="overlay">
+			<div class="door"></div>
+			<div class="container">
+				<div class="loader">
+					<div class="loader-two">
+						<div class="loader-three">
+							<div class="loader-four">
+								<div class="loader-five">
+									<div class="loader-six">
+										<div class="loader-seven">
+											<div class="loader-eight">
+												<div class="loader-nine">
+													<div class="loader-ten">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div style="display:none;" id="myDiv" class="animate-bottom">
+		<h2>NEILDANIEL00!</h2>
+		<p>Press Ctrl+U to steal.</p>
+	</div>
+
+	<script>
+		var myVar;
+
+function myFunction() {
+  myVar = setTimeout(showPage, 5000);
+}
+
+function showPage() {
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("myDiv").style.display = "block";
+}
+	</script>
+
+</body>
+
+</html>
