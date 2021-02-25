@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Loader #14 - neildaniel00</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      /* Center the loader */
+      #loader {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+      }
+      /* Add animation to "page content" */
+      .animate-bottom {
+        position: relative;
+        -webkit-animation-name: animatebottom;
+        -webkit-animation-duration: 1s;
+        animation-name: animatebottom;
+        animation-duration: 1s;
+      }
+
+      @-webkit-keyframes animatebottom {
+        from {
+          bottom: -100px;
+          opacity: 0;
+        }
+        to {
+          bottom: 0px;
+          opacity: 1;
+        }
+      }
+
+      @keyframes animatebottom {
+        from {
+          bottom: -100px;
+          opacity: 0;
+        }
+        to {
+          bottom: 0;
+          opacity: 1;
+        }
+      }
+
+      #myDiv {
+        display: none;
+        text-align: center;
+      }
+
+      .container {
+        text-align: center;
+        background-color: #FFF;
+        height: 100px;
+        width: 100px;
+        overflow: hidden;
+      }
+
+      .loader2 {
+        position: relative;
+        width: 5px;
+        height: 5px;
+
+        top: 49%;
+        top: -webkit-calc(50% - 43px);
+        top: calc(50% - 2.5px);
+        left: 49%;
+        left: -webkit-calc(50% - 43px);
+        left: calc(50% - 2.5px);
+
+        background-color: #000;
+        border-radius: 50px;
+      }
+
+      .loader2:before {
+        content: '';
+        position: absolute;
+        top: -38px;
+        border-top: 3px solid #000;
+        border-right: 3px solid #000;
+        border-radius: 0 50px 0px 0;
+        width: 40px;
+        height: 40px;
+        background-color: grey;
+        -webkit-transform-origin: 0% 100%;
+        transform-origin: 0% 100%;
+        -webkit-animation: loader2 1.5s linear infinite;
+        animation: loader2 1.5s linear infinite;
+      }
+
+      .loader2:after {
+        content: '';
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        border-bottom: 3px solid #000;
+        border-left: 3px solid #000;
+        border-radius: 0 0px 0px 50px;
+        width: 40px;
+        height: 40px;
+        background-color: grey;
+        -webkit-transform-origin: 100% 0%;
+        transform-origin: 100% 0%;
+        -webkit-animation: loader2 1.5s linear infinite;
+        animation: loader2 1.5s linear infinite;
+      }
+
+      @-webkit-keyframes loader2 {
+        0% {
+          -webkit-transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+        }
+      }
+
+      @keyframes loader2 {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body onload="myFunction()" style="margin: 0">
+    <div id="loader">
+      <div class="container"><div class="loader2"></div></div>
+    </div>
+    <div style="display: none" id="myDiv" class="animate-bottom">
+      <h2>NEILDANIEL00!</h2>
+      <p>Press Ctrl+U to steal!</p>
+    </div>
+
+    <script>
+      var myVar;
+
+      function myFunction() {
+        myVar = setTimeout(showPage, 3000);
+      }
+
+      function showPage() {
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('myDiv').style.display = 'block';
+      }
+    </script>
+  </body>
+</html>
