@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"
+    />
+    <title>CSS Typewriter Effect - neildaniel00</title>
+    <style>
+      /* Google Fonts */
+      @import url(https://fonts.googleapis.com/css?family=Anonymous+Pro);
+      /*Start General Stuff*/
+      html {
+        min-height: 100%;
+        overflow: hidden;
+      }
+      body {
+        height: calc(100vh - 8em);
+        padding: 4em;
+        color: rgba(255, 255, 255, 0.75);
+        font-family: 'Anonymous Pro', monospace;
+        background-color: rgb(25, 25, 25);
+      }
+      /*End General Stuff*/
+      .line-1 {
+        position: relative;
+        top: 50%;
+        width: 24em;
+        margin: 0 auto;
+        border-right: 2px solid rgba(255, 255, 255, 0.75);
+        font-size: 180%;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        transform: translateY(-50%);
+      }
+
+      /* Animation */
+      .anim-typewriter {
+        animation: typewriter 4s steps(23)
+            /*The number next to steps is equal to the number of characters in the <p> with class line-1 anim-typewriter*/
+            1s 1 normal both,
+          blinkTextCursor 500ms steps(44)
+            /*Number next to steps here is how many times the cursor blinks*/
+            infinite normal;
+      }
+      @keyframes typewriter {
+        from {
+          width: 0;
+        }
+        to {
+          width: 12.5em; /*How far the cursor goes. Will take some trial and error to figure out. If you have a formula, contact me on discord (Half-Cooked Ramen #7300) and tell it to me. I will then commit a comment with a formula.*/
+        }
+      }
+      @keyframes blinkTextCursor {
+        from {
+          border-right-color: rgba(255, 255, 255, 0.75);
+        }
+        to {
+          border-right-color: transparent;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!--Putting text in the <p> and adding the proper classes-->
+    <p class="line-1 anim-typewriter">{PRESS CTRL+U TO STEAL}</p>
+    <!--The line below isn't important-->
+    <p>Made By: NEILDANIEL00</p>
+  </body>
+</html>
