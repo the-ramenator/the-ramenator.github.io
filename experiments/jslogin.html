@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple JS Login Form - neildaniel00</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Press+Start+2P"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"
+    />
+    <style>
+      .buttons {
+        display: inline-block;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        border: none;
+        border-radius: 100px;
+        box-shadow: 0 7px #999;
+        font-family: 'Press Start 2P', cursive;
+        background-color: crimson;
+        border: 1px;
+      }
+      .buttons:hover {
+        background-color: #bf002e;
+      }
+      .buttons:active {
+        box-shadow: 0 3px #666;
+        transform: translateY(4px);
+      }
+      h1 {
+        font-weight: bold;
+        font-size: 1.6em;
+        margin-bottom: 1em;
+      }
+
+      .secretbutton {
+        border-radius: 10%;
+
+        border: 1px solid;
+
+        background-color: grey;
+
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+      }
+
+      .inline {
+        display: inline-block;
+
+        vertical-align: middle;
+      }
+      .box {
+        height: 40px;
+
+        width: 140px;
+
+        border-radius: 10px;
+
+        border: 1px solid;
+
+        background-color: hsl(0, 100%, 50%);
+
+        box-shadow: 0 0 10px hsla(0, 100%, 50%, 0.5),
+          0 0 10px hsla(0, 100%, 50%, 0.5), 0 0 10px hsla(0, 100%, 50%, 0.5),
+          0 0 5px hsla(120, 100%, 25%, 1), 0 0 5px hsla(120, 100%, 25%, 1),
+          0 0 5px hsla(120, 100%, 25%, 1);
+      }
+
+      .box {
+        cursor: pointer;
+
+        outline: none;
+
+        transition: 0.2s all;
+      }
+
+      .box:active {
+        transform: scale(10);
+
+        /* Scaling button to 0.75 to its original size */
+
+        box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+      }
+
+      a {
+        color: inherit;
+      }
+      body,
+      html {
+        text-align: center;
+        background-color: limegreen;
+
+        font-family: 'Press Start 2P', cursive;
+      }
+      .inputty {
+        border-width: thick;
+      }
+    </style>
+
+    <style>
+      input[type='text']::placeholder {
+        text-align: center;
+      }
+      input[type='password']::placeholder {
+        text-align: center;
+      }
+
+      /* The Modal (background) */
+      .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0); /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+      }
+
+      /* Modal Content */
+      .modal-content {
+        background-color: a;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid a;
+        width: 80%;
+        color: white;
+      }
+
+      /* The Close Button */
+      .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <center>
+      <h1>Simple JS Login Form</h1>
+      <br />
+      <button id="myBtn" class="buttons">
+        <br /><br />Try Your Luck At Logging In<br /><br /><br />
+      </button>
+
+      <!-- The Modal -->
+      <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <code>Username: admin</code><br />
+          <code>Password: pass</code><br /><br />
+          <input
+            id="user"
+            class="inputty"
+            type="text"
+            placeholder="Username"
+          /><br />
+
+          <input
+            id="pass"
+            class="inputty"
+            type="password"
+            placeholder="Password"
+          /><br /><br />
+          <button type="button" class="box buttons" onclick="myFunction()">
+            >Log In<</button
+          ><br /><br />
+          <h5><span id="output"></span></h5>
+          <br /><br />
+        </div>
+      </div>
+
+      <script>
+        function myFunction() {
+          var username = document.getElementById('user').value == 'admin';
+          var password = document.getElementById('pass').value == 'pass';
+          if (username && password) {
+            document.getElementById('output').innerHTML =
+              "You've been successfully logged in!";
+          } else if (!username || !password) {
+            document.getElementById('output').innerHTML =
+              "Nice try stupid. You didn't type it in correctly.";
+          }
+        }
+      </script>
+
+      <script>
+        // Get the modal
+        var modal = document.getElementById('myModal');
+
+        // Get the button that opens the modal
+        var btn = document.getElementById('myBtn');
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName('close')[0];
+
+        // When the user clicks the button, open the modal
+        btn.onclick = function () {
+          modal.style.display = 'block';
+        };
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+          modal.style.display = 'none';
+        };
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+          if (event.target == modal) {
+            modal.style.display = 'none';
+          }
+        };
+      </script>
+    </center>
+  </body>
+</html>
