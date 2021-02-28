@@ -1,6 +1,4 @@
-
-
-<!doctype html>
+<!DOCTYPE html>
 <!--Somebody wanted me to explain my code, so here ya go-->
 <html>
   <head>
@@ -16,6 +14,9 @@
       body {
   display: flex;
   justify-content: center;
+}
+.div{
+  display: flex;
 }
 .ball {
   width: 100px;
@@ -284,7 +285,7 @@
 @keyframes bounce3 {
   from { transform: translate3d(0, 0, 0); background-color: lime;}
   to   { transform: translate3d(0, 600%, 0); background-color: green;}
-}3
+}
 @keyframes bounce3-white {
   from { tranform: translate3d(0, 0, 0); background-color: #FFF;}
   to   { transform: translate3d(0, 600%, 0); background-color: #FFF;}
@@ -358,22 +359,81 @@
   </head>
 
   <body>
+    <button id="dasbutton" title="Click to once to turn one ball white. Click 2 times to turn 2 white. Click 3 to turn 3 white. Etc." onclick='white_it()'>Turn All The Balls White!</button>
     <!--Divs that call the classnames we defined earlier-->
-<div class="ball"><center><br><br>N</center></div>&nbsp;  
-<div class="ball1"><center><br><br>E</center></div>&nbsp;  
-<div class="ball2"><center><br><br>I<center></div>&nbsp;  
-<div class="ball3"><center><br><br>L</center></div>&nbsp;  
-<div class="ball4"><center><br><br>D</center></div>&nbsp;  
-<div class="ball5"><center><br><br>A</center></div>&nbsp;  
-<div class="ball6"><center><br><br>N</center></div>&nbsp;  
-<div class="ball7"><center><br><br>I</center></div>&nbsp;  
-<div class="ball8"><center><br><br>E</center></div>&nbsp;  
-<div class="ball9"><center><br><br>L</center></div>&nbsp;  
-<div class="ball10"><center><br><br>0<center></div>&nbsp;  
-<div class="ball11"><center><br><br>0</center></div>&nbsp;
+    <div class="div">
+<div id="ball" class="ball"><center><br><br>N</center></div>&nbsp;  
+<div id="ball1" class="ball1"><center><br><br>E</center></div>&nbsp;  
+<div id="ball2" class="ball2"><center><br><br>I<center></div>&nbsp;  
+<div id="ball3" class="ball3"><center><br><br>L</center></div>&nbsp;  
+<div id="ball4" class="ball4"><center><br><br>D</center></div>&nbsp;  
+<div id="ball5" class="ball5"><center><br><br>A</center></div>&nbsp;  
+<div id="ball6" class="ball6"><center><br><br>N</center></div>&nbsp;  
+<div id="ball7" class="ball7"><center><br><br>I</center></div>&nbsp;  
+<div id="ball8" class="ball8"><center><br><br>E</center></div>&nbsp;  
+<div id="ball9" class="ball9"><center><br><br>L</center></div>&nbsp;  
+<div id="ball10" class="ball10"><center><br><br>0<center></div>&nbsp;  
+<div id="ball11" class="ball11"><center><br><br>0</center></div>&nbsp;
+</div>
 </body>
-
-
+<!--The JS Below:
+Explanation: It switches the balls' background color to white. It gets the balls' id and then class. The class is not white, then it gets switched. If everything is white, then everything becomes colorful again!-->
+<script>
+  function white_it(){
+    if (document.getElementById('ball').getAttribute('class') === 'ball') {
+    document.getElementById('ball').setAttribute('class', 'ball-white');
+    document.getElementById('dasbutton').innerHTML= "Turn All The Balls White!";
+    }
+    else if(document.getElementById('ball1').getAttribute('class') === 'ball1'){
+    document.getElementById('ball1').setAttribute('class', 'ball1-white');
+    }
+    else if(document.getElementById('ball2').getAttribute('class') === 'ball2'){
+    document.getElementById('ball2').setAttribute('class', 'ball2-white');
+    }
+    else if(document.getElementById('ball3').getAttribute('class') === 'ball3'){
+    document.getElementById('ball3').setAttribute('class', 'ball3-white');
+    }
+    else if(document.getElementById('ball4').getAttribute('class') === 'ball4'){
+    document.getElementById('ball4').setAttribute('class', 'ball4-white');
+    }
+    else if(document.getElementById('ball5').getAttribute('class') === 'ball5'){
+    document.getElementById('ball5').setAttribute('class', 'ball5-white');
+    }
+    else if(document.getElementById('ball6').getAttribute('class') === 'ball6'){
+    document.getElementById('ball6').setAttribute('class', 'ball6-white');
+    }
+    else if(document.getElementById('ball7').getAttribute('class') === 'ball7'){
+    document.getElementById('ball7').setAttribute('class', 'ball7-white');
+    }
+    else if(document.getElementById('ball8').getAttribute('class') === 'ball8'){
+    document.getElementById('ball8').setAttribute('class', 'ball8-white');
+    }
+    else if(document.getElementById('ball9').getAttribute('class') === 'ball9'){
+    document.getElementById('ball9').setAttribute('class', 'ball9-white');
+    }
+    else if(document.getElementById('ball10').getAttribute('class') === 'ball10'){
+    document.getElementById('ball10').setAttribute('class', 'ball10-white');
+    }
+    else if(document.getElementById('ball11').getAttribute('class') === 'ball11'){
+    document.getElementById('ball11').setAttribute('class', 'ball11-white');
+    }
+    else{
+    document.getElementById('ball').setAttribute('class', 'ball');
+    document.getElementById('ball1').setAttribute('class', 'ball1');
+    document.getElementById('ball2').setAttribute('class', 'ball2');
+    document.getElementById('ball3').setAttribute('class', 'ball3');
+    document.getElementById('ball4').setAttribute('class', 'ball4');
+    document.getElementById('ball5').setAttribute('class', 'ball5');
+    document.getElementById('ball6').setAttribute('class', 'ball6');
+    document.getElementById('ball7').setAttribute('class', 'ball7');
+    document.getElementById('ball8').setAttribute('class', 'ball8');
+    document.getElementById('ball9').setAttribute('class', 'ball9');
+    document.getElementById('ball10').setAttribute('class', 'ball10');
+    document.getElementById('ball11').setAttribute('class', 'ball11');
+    document.getElementById('dasbutton').innerHTML= "Turn All The Balls Colorful!";
+    }
+};
+</script>
 
 
   <!--  /*This stuff below (@font-face) calls the minecraft font from the internet.*/-->
@@ -385,6 +445,10 @@
 }
 body, html {
   font-family: Minecraftia;
+}
+button{
+  font-family: Minecraftia;
+  font-size: 10px;
 }
 </style>
 </html>
