@@ -4,7 +4,7 @@
   <head>
     <!--Imports the title and favicon-->
       <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
-<title>Keyframes CSS Animation 4</title>
+<title>Keyframes CSS Animation 4 - v1.1.1</title>
   <!--Imports CSS capabilities into HTML-->  
     <!--Simple structure. All the "balls" below are just copied and pasted. I also changed the animation delay. Go to w3schools or search up css animation to find out more.-->
 
@@ -359,7 +359,9 @@
   </head>
 
   <body>
-    <button id="dasbutton" title="Click to once to turn one ball white. Click 2 times to turn 2 white. Click 3 to turn 3 white. Etc." onclick='white_it()'>Turn The Balls White!</button>
+    <!--Buttons below call the functions in the <script> tag-->
+    <button id="dasbutton" title="Click to once to turn one ball white. Click 2 times to turn 2 white. Click 3 to turn 3 white. Etc." onclick='white_it()'>Turn The Balls White!</button>    
+    <button id="dasbutton2" title="Click to once to turn one ball colorful. Click 2 times to turn 2 colorful. Click 3 to turn 3 colorful. Etc." onclick='color_it()'>Turn The Balls Colorful!</button>
     <!--Divs that call the classnames we defined earlier-->
     <div class="div">
 <div id="ball" class="ball"><center><br><br>N</center></div>&nbsp;  
@@ -377,12 +379,11 @@
 </div>
 </body>
 <!--The JS Below:
-Explanation: It switches the balls' background color to white. It gets the balls' id and then class. The class is not white, then it gets switched. If everything is white, then everything becomes colorful again!-->
+Explanation: color_it() switches the balls' background color to white. It gets the balls' id and then class. The class is not white, then it gets switched. If everything is white, then nothing else happens. For color_it(), it works the same way as white_it(), but in reverse.-->
 <script>
   function white_it(){
     if (document.getElementById('ball').getAttribute('class') === 'ball') {
     document.getElementById('ball').setAttribute('class', 'ball-white');
-    document.getElementById('dasbutton').innerHTML= "Turn The Balls White!";
     }
     else if(document.getElementById('ball1').getAttribute('class') === 'ball1'){
     document.getElementById('ball1').setAttribute('class', 'ball1-white');
@@ -414,13 +415,12 @@ Explanation: It switches the balls' background color to white. It gets the balls
     else if(document.getElementById('ball10').getAttribute('class') === 'ball10'){
     document.getElementById('ball10').setAttribute('class', 'ball10-white');
     }
-    else if(document.getElementById('ball11').getAttribute('class') === 'ball11'){
+    else{
     document.getElementById('ball11').setAttribute('class', 'ball11-white');
-    document.getElementById('dasbutton').innerHTML= "Turn The Balls Colorful!";
     }
-    
-    
-    else if(document.getElementById('ball').getAttribute('class') === 'ball-white'){
+};
+function color_it(){
+  if(document.getElementById('ball').getAttribute('class') === 'ball-white'){
     document.getElementById('ball').setAttribute('class', 'ball');
     }
     else if(document.getElementById('ball1').getAttribute('class') === 'ball1-white'){
@@ -433,7 +433,7 @@ Explanation: It switches the balls' background color to white. It gets the balls
     document.getElementById('ball3').setAttribute('class', 'ball3');
     }
     else if(document.getElementById('ball4').getAttribute('class') === 'ball4-white'){
-    document.getElementById('ball'4).setAttribute('class', 'ball4');
+    document.getElementById('ball4').setAttribute('class', 'ball4');
     }
     else if(document.getElementById('ball5').getAttribute('class') === 'ball5-white'){
     document.getElementById('ball5').setAttribute('class', 'ball5');
@@ -441,7 +441,7 @@ Explanation: It switches the balls' background color to white. It gets the balls
     else if(document.getElementById('ball6').getAttribute('class') === 'ball6-white'){
     document.getElementById('ball6').setAttribute('class', 'ball6');
     }
-    else if(document.getElementById('ball7').getAttribute('class') === 'ball-white7'){
+    else if(document.getElementById('ball7').getAttribute('class') === 'ball7-white'){
     document.getElementById('ball7').setAttribute('class', 'ball7');
     }
     else if(document.getElementById('ball8').getAttribute('class') === 'ball8-white'){
@@ -450,12 +450,11 @@ Explanation: It switches the balls' background color to white. It gets the balls
     else if(document.getElementById('ball9').getAttribute('class') === 'ball9-white'){
     document.getElementById('ball9').setAttribute('class', 'ball9');
     }
-    else if(document.getElementById('ball10').getAttribute('class') === 'ball11-white'){
+    else if(document.getElementById('ball10').getAttribute('class') === 'ball10-white'){
     document.getElementById('ball10').setAttribute('class', 'ball10');
     }
     else{
     document.getElementById('ball11').setAttribute('class', 'ball11');
-    document.getElementById('dasbutton').innerHTML= "Turn The Balls White!";
     }
 };
 </script>
