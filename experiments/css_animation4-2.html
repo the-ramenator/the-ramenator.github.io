@@ -359,7 +359,7 @@
   </head>
 
   <body>
-    <button id="dasbutton" title="Click to once to turn one ball white. Click 2 times to turn 2 white. Click 3 to turn 3 white. Etc." onclick='white_it()'>Turn All The Balls White!</button>
+    <button id="dasbutton" title="Click to once to turn one ball white. Click 2 times to turn 2 white. Click 3 to turn 3 white. Etc." onclick='white_it()'>Turn The Balls White!</button>
     <!--Divs that call the classnames we defined earlier-->
     <div class="div">
 <div id="ball" class="ball"><center><br><br>N</center></div>&nbsp;  
@@ -416,6 +416,7 @@ Explanation: It switches the balls' background color to white. It gets the balls
     }
     else if(document.getElementById('ball11').getAttribute('class') === 'ball11'){
     document.getElementById('ball11').setAttribute('class', 'ball11-white');
+    document.getElementById('dasbutton').innerHTML= "Turn All The Balls Colorful!";
     }
     else{
     document.getElementById('ball').setAttribute('class', 'ball');
@@ -430,7 +431,7 @@ Explanation: It switches the balls' background color to white. It gets the balls
     document.getElementById('ball9').setAttribute('class', 'ball9');
     document.getElementById('ball10').setAttribute('class', 'ball10');
     document.getElementById('ball11').setAttribute('class', 'ball11');
-    document.getElementById('dasbutton').innerHTML= "Turn All The Balls Colorful!";
+    document.getElementById('dasbutton').innerHTML= "Turn The Balls White!";
     }
 };
 </script>
