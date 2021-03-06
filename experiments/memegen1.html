@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <title>Change My Mind - MEMEGEN 1 - neildaniel00</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"
+    />
+    <style>
+      .eo {
+        transform: skewY(-9deg) skewX(0deg) rotateY(-3deg) rotateX(3deg)
+          rotateZ(0.6deg);
+        position: absolute;
+        left: 210;
+        top: 210px;
+        width: 205px;
+        height: 10px;
+        text-transform: uppercase;
+        color: white;
+        text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000,
+          -2px 2px 0 #000, 0px 2px 0 #000, 2px 0px 0 #000, 0px -2px 0 #000,
+          -2px 0px 0 #000, 2px 2px 5px #000;
+      }
+      .img {
+        width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body style="perspective: 400px">
+    <div style="margin: 50px; position: absolute; left: 0; top: 0; z-index: 50">
+      <img class="img" src="https://imgflip.com/s/meme/Change-My-Mind.jpg" />
+      <div
+        class="eo"
+        id="eo"
+        contenteditable
+        onkeypress="keypress(event);"
+        style="font-size: 12px"
+        spellcheck="false"
+      >
+        Click me to edit.
+        <br /><br />
+        Type '&lt;' and '&gt;' to change the text size.
+        <br /><br />Take A Screenshot!
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript">
+    function keypress(e) {
+      var key = e.key;
+      if (key != '<' && key != '>') return;
+      var adj = key == '<' ? -1 : +1;
+      var eo = document.getElementById('eo');
+      var size = parseInt(eo.style['font-size']);
+      eo.style['font-size'] = size + adj + 'px';
+      e.preventDefault();
+    }
+  </script>
+</html>
