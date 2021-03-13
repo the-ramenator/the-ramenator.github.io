@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>GCD Calculator - neildaniel00</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"
+    />
+  </head>
+
+  <body>
+    <p>
+      Write the numbers in list format. Ex: <code>2,45,647,34</code> and hit
+      submit!
+    </p>
+    <input
+      type="text"
+      id="input"
+      placeholder="Enter your integer(s) here!"
+      onkeypress="validate(event)"
+    />
+    <input type="submit" onClick="input()" />
+    <p id="gcf"></p>
+    <script>
+      function gcd_two_numbers(x, y) {
+        if (typeof x !== 'number' || typeof y !== 'number') {
+          return false;
+        }
+
+        x = Math.abs(x);
+        y = Math.abs(y);
+        let t;
+        while (y) {
+          t = y;
+          y = x % y;
+          x = t;
+        }
+
+        return x;
+      }
+
+      function gcd_more_than_two_numbers(input) {
+        if (toString.call(input) !== '[object Array]') {
+          return false;
+        }
+
+        let len = input.length;
+        if (!len) {
+          return null;
+        }
+
+        let a = input[0];
+        let b;
+        for (var i = 1; i < len; i++) {
+          b = input[i];
+          a = gcd_two_numbers(a, b);
+        }
+
+        return a;
+      }
+
+      let inp = document.getElementById('input');
+
+      function input() {
+        let values = inp.value.replace(' ', '').split`,`.map((x) => +x);
+        let output = gcd_more_than_two_numbers(values);
+        document.getElementById('gcf').innerHTML =
+          'GCD =<code><b> ' + output + '</code></b>';
+      }
+
+      inp.addEventListener('keyup', function (event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          input();
+        }
+      });
+
+      function validate(evt) {
+        var theEvent = evt || window.event;
+
+        if (theEvent.type === 'paste') {
+          key = event.clipboardData.getData('text/plain');
+        } else {
+          var key = theEvent.keyCode || theEvent.which;
+          key = String.fromCharCode(key);
+        }
+
+        var regex = /-+|[0-9]|\,/;
+        if (!regex.test(key)) {
+          theEvent.returnValue = false;
+          if (theEvent.preventDefault) {
+            theEvent.preventDefault();
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
