@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <head>
@@ -146,7 +145,7 @@
 	</style>
 	<meta charset="utf-8">
 	<meta content='IE=8' http-equiv='X-UA-Compatible'>
-	<title>Audio Player - neildaniel00</title>
+	<title>Audio Player</title>
 	<link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
 	<meta name="viewport" content="width=device-width">
 	<link rel="stylesheet" href="css/style.css">
@@ -155,7 +154,7 @@
 </head>
 
 <body>
-	<input class="audio" type="file" id="input" accept=".m4a,.mp3,.midi,.mid,.wav,.3gp,.m4b,.m4p,.mmf,.mp4,.webm,.mov"  onchange="handleFiles(this.files)"/>
+	<input class="audio" type="file" id="input" accept="audio/*,video/*"  onchange="handleFiles(this.files)"/>
 	<!--<button id="playSampleButton" type="button" onClick="playSample()">Play Sample File</button>
 	<button id="useMicButton" type="button" onClick="useMic()">Use Microphone</button>-->
 	<span id="loading"></span>
@@ -283,7 +282,7 @@ function handleFiles(files) {
 	};
 	request.send();
 	
-	$("button, input").prop("disabled",true);
+	$('input').toggle(false); //hides button
 }
 
 function playSample() {
@@ -304,11 +303,11 @@ function playSample() {
  	// When loaded decode the data
 	request.onload = function() {
 		
-		$("#title").html("Infinite");
-		$("#album").html("Infinite");
-		$("#artist").html("Valence");
+		$("#title").html("");
+		$("#album").html("");
+		$("#artist").html("");
 		onWindowResize();
-		$("#title, #artist, #album").css("visibility", "visible");
+		$("#title, #artist, #album").css("visibility", "hidden");
 		
 		// decode the data
 		context.decodeAudioData(request.response, function(buffer) {
@@ -347,11 +346,11 @@ function useMic()
 		//start updating
 		rafID = window.requestAnimationFrame( updateVisualization );
 		
-		$("#title").html("Mic");
-		$("#album").html("Input");
-		$("#artist").html("Using");
+		$("#title").html("");
+		$("#album").html("");
+		$("#artist").html("");
 		onWindowResize();
-		$("#title, #artist, #album").css("visibility", "visible");
+		$("#title, #artist, #album").css("visibility", "hidden");
 		$("#freq, body").addClass("animateHue");
 	})
 	.catch(function(err) {
@@ -463,7 +462,7 @@ function reset () {
 function updateVisualization () {
         
 	// get the average, bincount is fftsize / 2
-	if (fileChosen || hasSetupUserMedia) {
+	if (fileChosen || hasSetupUserMedia) {
 		var array = new Uint8Array(analyser.frequencyBinCount);
 		analyser.getByteFrequencyData(array);
 
