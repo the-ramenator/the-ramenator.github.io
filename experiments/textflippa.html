@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Text Flippa - neildaniel00</title>
+  <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+
+</head>
+
+<body>
+  <h1>Text Flippa</h1>
+
+  <input onkeyup="change()" onkeydown="change()" id="input" type="text" placeholder="Enter your text here!">
+
+  <br>
+  <span id="span4" class='flip_H_V'>neildaniel00</span><br>
+  <span id="span" class='flip_H'>neildaniel00</span><br>
+  <span id="span2" class='flip_V'>neildaniel00</span><br><span id="span3" class='flip_V_H'> neildaniel00</span><br>
+  <style>
+    @font-face {
+      font-family: 'Product Sans';
+      font-style: normal;
+      font-weight: 400;
+      src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/productsans/v5/HYvgU2fE2nRJvZ5JFAumwegdm0LZdjqr5-oayXSOefg.woff2) format('woff2');
+    }
+
+    span {
+      display: inline-block;
+      margin: 1em;
+    }
+
+    .flip_H {
+      transform: scale(-1, 1);
+    }
+
+    .flip_V {
+      transform: scale(1, -1);
+    }
+
+    .flip_V_H {
+      transform: scale(-1, -1);
+    }
+
+    .flip_H_V {
+      transform: scale(1, 1);
+    }
+
+    span {
+      font-size: 20px;
+    }
+
+    html,
+    body {
+      text-align: center;
+      font-family: Product Sans;
+      background: rgb(2, 0, 36);
+      background: linear-gradient(90deg,
+          rgba(2, 0, 36, 1) 0%,
+          rgba(0, 97, 255, 1) 0%,
+          rgba(0, 212, 255, 1) 100%);
+    }
+
+    input {
+      border-radius: 8px;
+      border: none;
+      text-align: center;
+    }
+  </style>
+  <script>
+    var input = document.getElementById('input').value;
+
+    function change() {
+      document.getElementById('span').innerHTML = document.getElementById('input').value;
+      document.getElementById('span2').innerHTML = document.getElementById('input').value;
+      document.getElementById('span3').innerHTML = document.getElementById('input').value;
+      document.getElementById('span4').innerHTML = document.getElementById('input').value;
+    }
+  </script>
+</body>
+
+</html>
