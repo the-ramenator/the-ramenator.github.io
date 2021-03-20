@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LCM Calculator - neildaniel00</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"
+    />
+  </head>
+  <body>
+    <div id="lcmCalc" class="mb-4">
+      <div class="form-group">
+        <label for="firstNum">Enter First Number</label>
+        <input type="number" class="form-control" id="firstNum" />
+      </div>
+      <div class="form-group">
+        <label for="secondNum">Enter Second Number</label>
+        <input type="number" class="form-control" id="secondNum" />
+      </div>
+      <div id="button">
+        <button class="mb-3 mt-1">Submit</button>
+      </div>
+      <div class="form-group">
+        <label for="result">LCM: </label>
+        <input type="number" class="form-control" id="result" disabled />
+      </div>
+    </div>
+    <p>
+      <br /><br /><br />
+      NOTE:
+      <code
+        >To calculate more than two numbers, put in 2 numbers to start with, and
+        then do the the others in pairs of 2.</code
+      >
+    </p>
+    <p>
+      Ex: LCM(24, 28, 32, 36)<code
+        ><br />
+        LCM(24, 28) = 168<br />LCM(32,36) = 288<br />LCM(168,288) =
+        <strong>2016</strong></code
+      ><br />
+    </p>
+    <p>
+      Ex 2: LCM(12,32,31)<code
+        ><br />
+        LCM(12, 32) = 96<br />LCM(96,31) = <strong>2976</strong></code
+      ><br />
+    </p>
+  </body>
+  <script>
+    //Get the appropriate Html elements
+    var firstNum = document.getElementById('firstNum');
+    var secondNum = document.getElementById('secondNum');
+    var result = document.querySelector('#result');
+    var submit = document.getElementsByTagName('button')[0];
+    var refresh = document.querySelectorAll('button')[1];
+
+    //Submit entries for the calculation
+    submit.addEventListener('click', function () {
+      var lcmResult = lcmOfTwoNums(firstNum.value, secondNum.value);
+      result.value = lcmResult;
+    });
+    //Refresh the calculator
+    refresh.addEventListener('click', function () {
+      firstNum.value = null;
+      secondNum.value = null;
+      result.value = null;
+    });
+
+    //Declaring but not calling the function that calculates the LCM OF TWO Numbers
+    function lcmOfTwoNums(num1, num2) {
+      var accumulatedDivisors = [1]; //all the divisors will be stored here
+      var a = 0; //this is how we access the individual divisors
+      var result = 1; //this is the result that will be returned at the end of the calculation
+      if (num1 == 0 || num2 == 0) {
+        result = 0;
+        return result; //lcm of 0 and any number is 0
+      }
+      //select the larger number
+      var num3;
+      function largerNum() {
+        if (num1 > num2) {
+          num3 = num1;
+        } else {
+          num3 = num2;
+        }
+      }
+      largerNum();
+
+      //look for the lowest number that can evenly divide any of the two dividends
+      for (var i = 2; i <= num3; i++) {
+        while (num1 % i === 0 || num2 % i === 0) {
+          accumulatedDivisors.push(i);
+          if (num1 % i === 0) {
+            num1 /= i;
+          }
+          if (num2 % i === 0) {
+            num2 /= i;
+          }
+          //select the larger number at each point in the loop.
+          largerNum();
+        }
+      }
+
+      //multiply all the accumulated divisors
+      while (a < accumulatedDivisors.length) {
+        result *= accumulatedDivisors[a];
+        a++;
+      }
+
+      return result;
+    }
+  </script>
+</html>
