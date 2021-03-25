@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+
+  <title>Discord text transformer - Sheeptester Fork</title>
+  <link rel="stylesheet" type="text/css" href="../sheep3.css">
+  <script src="../sheep3.js" charset="utf-8"></script>
+  <meta charset="UTF-8">
+  <meta name="description" content="Miscellaneous text transforms for my own personal use on Discord - Made by Sean, aditions by Half-Cooked Ramen" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Raleway', sans-serif;
+      background-color: #36393f;
+      color: #dcddde;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-weight: normal;
+    }
+
+    textarea {
+      display: block;
+      border: none;
+      background: none;
+      border-radius: 5px;
+      padding: 20px;
+      background-color: rgba(114, 118, 125, 0.3);
+      color: hsla(0, 0%, 100%, 0.7);
+      font: inherit;
+      margin-bottom: 20px;
+      height: 1em;
+      line-height: 1;
+      width: 50%;
+    }
+
+    textarea::placeholder {
+      color: hsla(0, 0%, 100%, 0.3);
+    }
+
+    textarea:focus {
+      outline: none;
+      /* a crime */
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Discord text transformer</h1>
+  <textarea id="input" autofocus></textarea>
+  <label for="percharspoiler">Spoiler each character</label>
+  <textarea id="percharspoiler" readonly></textarea>
+  <label for="exasperated">Exasperated</label>
+  <textarea id="exasperated" readonly></textarea>
+  <label for="ascended">Ascended</label>
+  <textarea id="ascended" readonly></textarea>
+  <label for="emojify">Emojified</label>
+  <textarea id="emojify" readonly></textarea>
+  <label for="emojify-no-space">Emojified (with flags)</label>
+  <textarea id="emojify-no-space" readonly></textarea>
+  <label for="invisibles">Insert invisibles</label>
+  <textarea id="invisibles" readonly></textarea>
+  <label for="spoilaboi">Normal Spoiler</label>
+  <textarea id="normalspoiler" readonly></textarea>
+  <label for="strikethru">Strikethrough</label>
+  <textarea id="strikethrough" readonly></textarea>
+  <label for="cod1">Single Line Code</label>
+  <textarea id="code1" readonly></textarea>
+  <label for="cod3">Full Line Code</label>
+  <textarea id="code2" readonly></textarea>
+  <label for="cod3">JS Code</label>
+  <textarea id="code3" readonly></textarea>
+  <script>
+    const input = document.getElementById('input');
+    const chars = {
+      '!': '❗',
+      '?': '❓',
+      '#': '#️⃣',
+      '*': '*️⃣',
+      '+': '➕',
+      '-': '➖',
+      '$': '💲',
+      '.': '⏺️'
+    };
+    const offsetChar = (base, offset) => String.fromCodePoint(base.codePointAt() + offset);
+    for (let i = 0; i < 26; i++) chars[offsetChar('a', i)] = offsetChar('🇦', i);
+    for (let i = 0; i < 10; i++) chars[i] = i + '0️⃣'.slice(1)
+    const transformers = [
+      (output => input => {
+        output.value = [...input].map(c => `||${c}||`).join('');
+      })(document.getElementById('percharspoiler')),
+      (output => input => {
+        output.value = input.toLowerCase().replace(/\w+/g, word => {
+          let capital = true;
+          return [...word].map((l, i) => (i === 0 || l === 'i' || (capital = !capital)) &&
+            l !== 'l' ? l : l.toUpperCase()).join('')
+        });
+      })(document.getElementById('exasperated')),
+      (output => input => {
+        output.value = `***${[...input.toUpperCase()].join(' ')}***`;
+      })(document.getElementById('ascended')),
+      (output => input => {
+        output.value = [...input.toLowerCase('')].map(c => chars[c] || c).join(' ');
+      })(document.getElementById('emojify')),
+      (output => input => {
+        output.value = [...input.toLowerCase('')].map(c => chars[c] || c).join('');
+      })(document.getElementById('emojify-no-space')),
+      (output => input => {
+        output.value = [...input].join('\u200B');
+      })(document.getElementById('invisibles'))
+    ];
+    input.addEventListener('input', e => {
+      transformers.forEach(transformer => transformer(input.value));
+      document.getElementById('normalspoiler').value = "||" + document.getElementById('input').value + "||";
+      document.getElementById('strikethrough').value = "~~" + document.getElementById('input').value + "~~";
+      document.getElementById('code1').value = "`" + document.getElementById('input').value + "`";
+      document.getElementById('code2').value = "```" + document.getElementById('input').value + "```";
+      document.getElementById('code3').value = "```js\n" + document.getElementById('input').value + "```";
+    });
+  </script>
+</body>
+
+</html>
