@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--Start Unnecsary Stuff (I can't spell)-->
+    <title>Custom Alert Boxes - neildaniel00</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"
+    />
+    <!--End Unnecsary Stuff (I can't spell)-->
+    <style>
+      @font-face {
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Open Sans'), local('OpenSans'),
+          url(https://fonts.gstatic.com/s/productsans/v5/HYvgU2fE2nRJvZ5JFAumwegdm0LZdjqr5-oayXSOefg.woff2)
+            format('woff2');
+      }
+
+      body {
+        font-family: Product Sans;
+      }
+/*Keep the stuff below; delete the stuff above*/
+      .alert {
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+        opacity: 1;
+        transition: opacity 0.6s;
+        margin-bottom: 15px;
+        font-size: 12.5px;
+      }
+
+      .alert.success {
+        background-color: #4caf50;
+        width: 150px;
+        height: 15px;
+      }
+
+      .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .closebtn:hover {
+        color: black;
+      }
+
+      /*Moves alerts to bottom*/
+      .footer {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        left: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <center>
+      <h2>Game Saved!</h2>
+      <p>Click on the button below to activate the message</p>
+      <button onclick="showalert()">
+    <!--The button is just to run the function. You can delete the button-->
+        <p>Save Game</p>
+      </button>
+      <!--Start Keep Stuff-->
+      <footer class="footer">
+        <div id="alertgamesaved" class="alert success">
+          <span class="closebtn" id="closebtn">&times;</span>
+          <strong>Success!</strong> Game Saved!
+        </div>
+      </footer>
+
+    <!--End Keep Stuff-->
+      <script>
+        //Line below hides element onload
+        document.getElementById('alertgamesaved').style.visibility = 'hidden';
+        //Line below introduces function
+        function showalert() {
+          //Add this stuff to the save function!!
+          if (
+            document.getElementById('alertgamesaved').style.visibility ===
+            'hidden'
+          ) {
+            //Hide/show element stuff
+            document.getElementById('alertgamesaved').style.visibility =
+              'visible';
+            document.getElementById('closebtn').style.visibility = 'visible';
+          } else {
+            document.getElementById('alertgamesaved').style.visibility =
+              'visible';
+            document.getElementById('closebtn').style.visibility = 'visible';
+          }
+          //End stuff to add to the save function
+        };
+
+        //Onclick close button: Hide elements. Keep this too. Don't put it in a function lol.
+        document.getElementById('closebtn').onclick = function () {
+          document.getElementById('alertgamesaved').style.visibility = 'hidden';
+          document.getElementById('closebtn').style.visibility = 'hidden';
+        };
+      </script>
+    </center>
+  </body>
+</html>
