@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Audio Visualizer 2 - neildaniel00</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"
+    />
+
+    <style>
+      #thefile {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 100;
+      }
+
+      #canvas {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      audio {
+        position: fixed;
+        left: 10px;
+        bottom: 10px;
+        width: calc(100% - 20px);
+      }
+      #btn {
+        left: 5000px;
+        top: 0%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content">
+      <input type="file" id="thefile" accept="audio/*" />
+      <canvas id="canvas"></canvas>
+      <audio id="audio" controls></audio>
+    </div>
+    <script>
+      window.onload = function () {
+        var file = document.getElementById('thefile');
+        var audio = document.getElementById('audio');
+        file.onchange = function () {
+          audio.style.visibility = 'hidden';
+          file.style.visibility = 'hidden';
+
+          var files = this.files;
+          audio.src = URL.createObjectURL(files[0]);
+          audio.load();
+          audio.play();
+          var context = new AudioContext();
+          var src = context.createMediaElementSource(audio);
+          var analyser = context.createAnalyser();
+
+          var canvas = document.getElementById('canvas');
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+          var ctx = canvas.getContext('2d');
+
+          src.connect(analyser);
+          analyser.connect(context.destination);
+
+          analyser.fftSize = 256;
+
+          var bufferLength = analyser.frequencyBinCount;
+          console.log(bufferLength);
+
+          var dataArray = new Uint8Array(bufferLength);
+
+          var WIDTH = canvas.width;
+          var HEIGHT = canvas.height;
+
+          var barWidth = (WIDTH / bufferLength) * 1;
+          var barHeight;
+          var x = 0;
+
+          function renderFrame() {
+            requestAnimationFrame(renderFrame);
+
+            x = 0;
+
+            analyser.getByteFrequencyData(dataArray);
+
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, WIDTH, HEIGHT);
+
+            for (var i = 0; i < bufferLength; i++) {
+              barHeight = dataArray[i];
+
+              var r = barHeight + 0 * (i / bufferLength);
+              var g = 255 * (i / bufferLength);
+              var b = 255;
+
+              ctx.fillStyle = 'rgb(' + r + ',' + g + ',' + b + ')';
+              ctx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
+
+              x += barWidth + 3.5;
+            }
+          }
+
+          audio.play();
+          renderFrame();
+        };
+      };
+    </script>
+  </body>
+</html>
