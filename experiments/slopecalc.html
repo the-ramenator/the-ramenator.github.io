@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Slope Calculator - neildaniel00</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"
+    />
+
+    <style>
+      input {
+        width: 1.25%;
+      }
+      .line {
+        width: 4.5%;
+        height: 3px;
+        background: black;
+        padding-left: 5px;
+      }
+      .padbtm {
+        padding-bottom: 5px;
+      }
+      .padtop {
+        padding-top: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    (<input type="number" id="x2" placeholder="x2" />,<input
+      type="number"
+      id="y2"
+      placeholder="y2"
+    />)<br />
+    <div class="padtop"></div>
+    <div class="line"></div>
+    <div class="padbtm"></div>
+    (<input type="number" id="x1" placeholder="x1" />,<input
+      type="number"
+      id="y1"
+      placeholder="y1"
+    />)<br /><br />
+    <button onclick="calc()">Calculate Slope!</button><br />
+    <p>Your slope is: <span id="result"></span></p>
+    <p>Formula:<br />Y<sub>2</sub>-Y<sub>1</sub>/X<sub>2</sub>-X<sub>1</sub></p>
+  </body>
+
+  <script>
+    function calc() {
+      document.getElementById('y2').value = parseInt(
+        document.getElementById('y2').value
+      );
+      document.getElementById('y1').value = parseInt(
+        document.getElementById('y1').value
+      );
+      document.getElementById('x1').value = parseInt(
+        document.getElementById('x1').value
+      );
+      document.getElementById('x2').value = parseInt(
+        document.getElementById('x2').value
+      );
+      document.getElementById('result').innerHTML =
+        document.getElementById('y2').value -
+        document.getElementById('y1').value /
+          document.getElementById('x2').value -
+        document.getElementById('x1').value;
+    }
+  </script>
+</html>
