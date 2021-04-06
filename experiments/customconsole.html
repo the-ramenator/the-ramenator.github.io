@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Console.Log With JS & %c - neildaniel00</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"
+    />
+    <script>
+      const styles = [
+        'color: green',
+        'background: yellow',
+        'font-size: 30px',
+        'border: 1px solid red',
+        'text-shadow: 2px 2px black',
+        'padding: 10px',
+      ].join(';');
+      console.log('%cCustom Message 1!', styles);
+      console.log(
+        '%c Custom Message 2!',
+        'font-weight: bold; font-size: 50px;color: red; text-shadow: 3px 3px 0 rgb(217,31,38) , 6px 6px 0 rgb(226,91,14) , 9px 9px 0 rgb(245,221,8) , 12px 12px 0 rgb(5,148,68) , 15px 15px 0 rgb(2,135,206) , 18px 18px 0 rgb(4,77,145) , 21px 21px 0 rgb(42,21,113)'
+      );
+      console.log(
+        '%cCustom %c Message 3!',
+        'background: #3F51B5;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px;',
+        ''
+      );
+    </script>
+  </head>
+
+  <body>
+    <h1>Check your console!</h1>
+    <p>Code here: <br /></p>
+    <ol>
+      <li>
+        &nbsp;<code>
+          const styles = [<br />
+          'color: green',<br />
+          'background: yellow',<br />
+          'font-size: 30px',<br />
+          'border: 1px solid red',<br />
+          'text-shadow: 2px 2px black',<br />
+          'padding: 10px',<br />
+          ].join(';');<br /><br />
+          console.log('%cCustom Message 1!', styles);</code
+        >
+      </li>
+      <br /><br />
+      <li>
+        &nbsp;<code
+          >console.log(<br />
+          '%c Custom Message 2!',<br />
+          'font-weight: bold; font-size: 50px;color: red; <br />text-shadow: 3px
+          3px 0 rgb(217,31,38) , 6px 6px 0 rgb(226,91,14) , 9px 9px 0
+          rgb(245,221,8) , 12px 12px 0 rgb(5,148,68) , 15px 15px 0
+          rgb(2,135,206) , 18px 18px 0 rgb(4,77,145) , 21px 21px 0
+          rgb(42,21,113)' );</code
+        >
+      </li>
+      <br /><br />
+      <li>
+        &nbsp;
+        <code>
+          console.log(<br />
+          '%cCustom %c Message 3!',<br />
+          'background: #3F51B5;color:#FFF;padding:5px;border-radius:
+          5px;line-height: 26px;',<br />
+          ''<br />
+          );</code
+        >
+      </li>
+    </ol>
+  </body>
+</html>
