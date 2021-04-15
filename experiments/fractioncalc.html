@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+	<head>
+      <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+
+		<meta charset="UTF-8" />
+		<title>Fraction Calculator - neildaniel00</title>
+   <script>
+      
+function Fraction(n, d) {
+	this.numerator = n;
+	this.denominator = d;
+
+	//default values
+	if (isNaN(n))
+		this.numerator = 0;
+	if (isNaN(d) || d === 0)
+		this.denominator = 1; //cannot be equal to zero
+
+	//Attach methods
+	this.simplify
+		= frac_simplify;
+	this.toDecimal
+		= frac_toDecimal;
+	this.getNumerator
+		= frac_getNumerator;
+	this.getDenominator
+		= frac_getDenominator;
+	this.setNumerator
+		= frac_setNumerator;
+	this.setDenominator
+		= frac_setDenominator;
+	this.display
+		= frac_display;
+	this.sum
+		= frac_sum;
+	this.difference
+		= frac_difference;
+	this.product
+		= frac_product;
+	this.quotient
+		= frac_quotient;
+}
+
+function frac_simplify() {
+	var output = new Fraction();
+	var gcd = gcf(this.numerator, this.denominator);
+	output.numerator = this.numerator / gcd;
+	output.denominator = this.denominator / gcd;
+	return output
+}
+
+function frac_toDecimal() {
+	return this.numerator / this.denominator;
+}
+
+function frac_getNumerator() {
+	return this.numerator
+}
+
+function frac_getDenominator() {
+	return this.denominator;
+}
+
+function frac_setNumerator(n) {
+	this.numerator = n;
+}
+
+function frac_setDenominator(d) {
+	this.denominator = d;
+}
+
+function frac_display() {
+	if (this.denominator === 1) {
+		return this.numerator;
+	} else {
+		return this.numerator + "/" + this.denominator;
+	}
+}
+
+function frac_sum(fracB) {
+	var output = new Fraction();
+	var n1 = this.numerator * fracB.denominator;
+	var n2 = fracB.numerator * this.denominator;
+	output.setNumerator(n1 + n2);
+	output.setDenominator(this.denominator * fracB.denominator);
+	return output;
+}
+
+function frac_difference(fracB) {
+	var output = new Fraction();
+	var n1 = this.numerator * fracB.denominator;
+	var n2 = fracB.numerator * this.denominator;
+	output.setNumerator(n1 - n2);
+	output.setDenominator(this.denominator * fracB.denominator);
+	return output
+}
+
+function frac_product(fracB) {
+	var output = new Fraction();
+	output.numerator = this.numerator * fracB.numerator;
+	output.denominator = this.denominator * fracB.denominator;
+	return output;
+}
+
+function frac_quotient(fracB) {
+	var output = new Fraction();
+	output.numerator = this.numerator * fracB.denominator;
+	output.denominator = this.denominator * fracB.numerator;
+	return output;
+}
+
+function gcf(m, n)  {
+	if ((m % n) == 0)
+		return n;
+	else
+		return gcf(n, m % n);
+}</script>		<script>
+			function calculate() { //performs the requested action
+				var checked = isChecked();
+				var a = read("a");
+				var b = read("b");
+				if (a === "error" || b === "error") {
+					value = "error";
+				}
+
+				var tmp = new Fraction();
+				var value = 0;
+
+				switch(checked) {
+				case "display":
+					tmp = a;
+					break;
+				case "decimal":
+					value = a.toDecimal();
+					break;
+				case "add":
+					tmp = a.sum(b);
+					break;
+				case "sub":
+					tmp = a.difference(b);
+					break;
+				case "mul":
+					tmp = a.product(b);
+					break;
+				case "div":
+					tmp = a.quotient(b);
+					break;
+				default:
+					value = "error";
+				}
+
+				if (value == 0) { //value has not been set yet
+					if (document.getElementById("simplify").checked === true) {
+						tmp = tmp.simplify();
+					}
+					value = tmp.display();
+				}
+				document.getElementById("output").innerHTML = value;
+			}
+			
+			function read(id) {
+			//parses the input box requested
+			//returns a fraction
+				var input;
+				var value;
+				
+				switch(id) {
+				case "a":
+					input = document.getElementById("inA");
+					break;
+				case "b":
+					input = document.getElementById("inB");
+					break;
+				default:
+					return "error";
+				}
+				
+				//split it into two strings based on the divide symbol
+				//then convert those two into integers
+				//then assign those to the numerator and denominator on output
+				var inText = input.value;
+
+				var in1, in2, in3; //string versions
+
+				//remove spaces
+				var in1 = inText.split(" ");
+				if (in1.length == 2) {
+					var in2 = in1.join("+"); //interperates space as seperating fraction and interger parts
+				} else {
+					var in2 = in1.join("");
+				}
+
+				//seperate parts
+				var interger;
+				var fraction;
+				var numerator;
+				var denominator;
+				var in3 = in2.split("+");
+
+				if (in3.length == 1) {
+					fraction = in3[0];
+				} else if (in3.length == 2) {
+					interger = in3[0]; //sets the interger part of the fraction
+					fraction = in3[1];
+				} else if (in3.length > 2) {
+					return "error";
+				}
+				fractionArr = fraction.split("/");
+				if (fractionArr.length > 2) {
+					return "error";
+				}
+				numerator = fractionArr[0];
+				denominator = fractionArr[1];
+
+				interger = parseFloat(interger);
+				numerator = parseFloat(numerator);
+				denominator = parseFloat(denominator);
+				if (isNaN(interger)) interger = 0;
+				if (isNaN(numerator)) numerator = 0;
+				if (isNaN(denominator)) denominator = 1;
+
+				numerator += interger*denominator; //remove interger part
+
+				var output = new Fraction(numerator, denominator);
+				return output
+			}
+			
+			function operation() {
+			//changes the contents of the screen based on the operation selected
+				checked = isChecked();
+				
+				var b = document.getElementById("inB");
+				if (checked === "display" || checked === "decimal") {
+					b.style.display="none";
+				} else { //requires two operations
+					b.style.display="inline";
+				}
+
+				var operator = document.getElementById("operator");
+				switch(checked) {
+				case "add":
+					operator.innerHTML = "&plus;"
+					break;
+				case "sub":
+					operator.innerHTML = "&minus;"
+					break;
+				case "mul":
+					operator.innerHTML = "&times;"
+					break;
+				case "div":
+					operator.innerHTML = "&divide;"
+					break;
+				default:
+					operator.innerHTML = ""
+				}
+			}
+			
+			function isChecked() { //determines which option is selected
+				var options = document.getElementsByName("operation");
+				var checked;
+				for (var i=0; i < options.length; i++) {
+					if  (options[i].checked) {
+						checked = options[i].value;
+					}
+				}
+				return checked;
+			}
+
+			function copy() { //copys the output to the input
+				var src = document.getElementById("output").innerHTML;
+				document.getElementById("inA").value = src;
+			}
+
+			function reset() {
+			//Firefox does not clear form data when the page is reloaded
+			//this function restores the radio button to the first option
+			//without this function the page turns off the second input
+			//but leaves the operation on whatever was selected
+			//meaning that if the user selected add and entered two values
+			//but then refresed the page only the first value would be editable
+			//and whatever second value they had placed before refreshing would still be there
+			//but would be hidden and impossible to edit
+			//they would have to click another option and then click add again to edit the second input
+				document.getElementsByName("operation")[0].checked=true;
+			}
+		</script>
+	</head>
+
+	<body onload="reset()">
+		<h1>Fraction Calculator</h1>
+
+		<p>
+      Input number:<br>
+			<input id="inA" />
+			<span id="operator"></span>
+			<input id="inB" style="display:none;" /></p>
+		<p>
+      Select Option:<br>
+			<input type="radio" onclick="operation();" name="operation" value="display" checked/>Display<br />
+			<input type="radio" onclick="operation();" name="operation" value="decimal"/>Decimal<br />
+			<input type="radio" onclick="operation();" name="operation" value="add"/>Add<br />
+			<input type="radio" onclick="operation();" name="operation" value="sub"/>Subtract<br />
+			<input type="radio" onclick="operation();" name="operation" value="mul"/>Multiply<br />
+			<input type="radio" onclick="operation();" name="operation" value="div"/>Divide<br />
+		</p>
+		<p>
+			<input type="button" onclick="calculate();" value="Calculate" />
+			<input type="checkbox" id="simplify" />Simplify<br />
+		</p>
+		<p>
+			<span id="output">
+			<input type="button" onclick="copy();" value="Place into input" style="display:none" />
+		</p>
+	</body>
+</html>
