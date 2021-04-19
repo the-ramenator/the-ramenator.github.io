@@ -3,80 +3,164 @@
 <head>
     <title>Neildaniel00 - Experiments</title>
   <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
-<style>
-          h1, h2, h3, h4, h5, h6 {
-          text-shadow:5px 5px 10px black;
-          font-family: Comic Sans MS;
-                    background: rgb(0,255,246);
-background: linear-gradient(90deg, rgba(0,255,246,1) 0%, rgba(72,252,70,1) 100%);
-        }
-        p {
-          font-family: Comic Sans MS;
-          font-size: 1.1rem;
-          text-shadow:5px 5px 10px black;
-        }
-body, html {
-          background: rgb(0,255,246);
-background: linear-gradient(90deg, rgba(0,255,246,1) 0%, rgba(72,252,70,1) 100%);
-        }
+    <link
+      href="https://fonts.googleapis.com/css2?family=Texturina:wght@300&display=swap"
+      rel="stylesheet"
+    />
 
-
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: rgb(0, 255, 170);
-  color: black;
-  position: fixed;
-  top: 0;
-  width: 100%;
-}
-
-
-li {
-  float: left;
-}
-
-li a {
-  display: block;
-  color: black;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-li a:hover:not(.active) {
-  background-color: #333;
-  color: white;
-}
-
-.active {
-  color: white;
-  background-color: #000000;
-}
-
-.ahrefs {
-  color: inherit;
-}
-</style>
 </head>
 <body>
+  <style>
+  .socials {
+        height: 50px;
+        width: 50px;
+      }
+      * {
+        box-sizing: border-box;
+      }
 
-<ul>
-  <li><a href="index.html">Home</a></li>
-  <li><a class="active" href="experiments.html">Experiments</a></li>
-  <li><a href="/clicker/game.html">Clicker Game!</a></li>
-  <li><a href="hackertyper.html">Hacker Typer</a></li>
-  <li><a href="fancytext.html">Fancy Text Generator!</a></li>
-  <li><a href="marquee.html">Marquee Library</a></li>
-    <li><a href="/scratch/projects.html">HTMLified Scratch Projects</a></li>
-  <li><a href="/python/projects.html">Download My Python Projects</a></li>
-    <li><a href="chromehacks.html">Cool Hacks For Your Chromebook</a></li>
-</ul>
+      body {
+        margin: 0px;
+        background: #ecf3f3;
+        font-family: 'Texturina', serif;
+      }
+
+      .nav {
+        height: 50px;
+        width: 100%;
+        background-color: #4d4d4d;
+        position: fixed;
+      }
+
+      .nav > .nav-header {
+        display: inline;
+      }
+
+      .nav > .nav-header > .nav-title {
+        display: inline-block;
+        font-size: 22px;
+        color: #fff;
+        padding: 10px 10px 10px 10px;
+      }
+
+      .nav > .nav-btn {
+        display: none;
+      }
+
+      .nav > .nav-links {
+        display: inline;
+        float: right;
+        font-size: 18px;
+      }
+
+      .nav > .nav-links > a {
+        display: inline-block;
+        padding: 13px 10px 13px 10px;
+        text-decoration: none;
+        color: #efefef;
+      }
+
+      .nav > .nav-links > a:hover {
+        background-color: rgba(0, 0, 0, 0.3);
+      }
+
+      .nav > #nav-check {
+        display: none;
+      }
+
+      @media (max-width: 2000px) {
+        .nav > .nav-btn {
+          display: inline-block;
+          position: absolute;
+          right: 0px;
+          top: 0px;
+        }
+        .nav > .nav-btn > label {
+          display: inline-block;
+          width: 50px;
+          height: 50px;
+          padding: 13px;
+        }
+        .nav > .nav-btn > label:hover,
+        .nav #nav-check:checked ~ .nav-btn > label {
+          background-color: rgba(0, 0, 0, 0.3);
+        }
+        .nav > .nav-btn > label > span {
+          display: block;
+          width: 25px;
+          height: 10px;
+          border-top: 2px solid #eee;
+        }
+        .nav > .nav-links {
+          position: absolute;
+          display: block;
+          width: 100%;
+          background-color: #333;
+          height: 0px;
+          transition: all 0.3s ease-in;
+          overflow-y: hidden;
+          top: 50px;
+          left: 0px;
+        }
+        .nav > .nav-links > a {
+          display: block;
+          width: 100%;
+        }
+        .nav > #nav-check:not(:checked) ~ .nav-links {
+          height: 0px;
+        }
+        .nav > #nav-check:checked ~ .nav-links {
+          height: calc(100vh - 50px);
+          overflow-y: auto;
+        }
+      }
+      .a {
+        color: lightgrey;
+        text-decoration: none;
+      }
+      .a:hover {
+        color: white;
+      }
+      a {
+        color: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <!--Start NAV-->
+
+    <div class="nav">
+      <input type="checkbox" id="nav-check" />
+      <div class="nav-header">
+        <div class="nav-title">neildaniel00</div>
+      </div>
+      <div class="nav-btn">
+        <label for="nav-check">
+          <span></span>
+          <span></span>
+          <span></span>
+        </label>
+      </div>
+      <div class="nav-links">
+        <a class="a" href="index.html">Home</a>
+        <a class="a" href="experiments.html">Experiments</a>
+        <a class="a" href="/clicker/game.html">Clicker Game!</a>
+        <a class="a" href="hackertyper.html">Hacker Typer</a>
+        <a class="a" href="fancytext.html">Fancy Text Generator!</a>
+        <a class="a" href="marquee.html">Marquee Library</a>
+        <a class="a" href="/scratch/projects.html"
+          >HTMLified Scratch Projects</a
+        >
+        <a class="a" href="/python/projects.html"
+          >Download My Python Projects</a
+        >
+        <a class="a" href="chromehacks.html">Cool Hacks For Your Chromebook</a>
+      </div>
+    </div>
+    <!--End NAV-->
 
 <div>
-  <center><strong><br><br><br>
+  <center><br><br><br>
   <h1>Experiments</h1>
 <p>My newest dumb idea:<a class="ahrefs" target="_blank" href="empty.html
 ">Nothing here yet!</a></p>
@@ -179,6 +263,5 @@ li a:hover:not(.active) {
        <p><a class="ahrefs" target="_blank" href="/experiments/memegenall.html">Upload Your Own Meme Template! Drag Around A Textbox!</a></p><br><br>
 
       </center>
-      </strong>
 </body>
 </html>
