@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Website Example - neildaniel00</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/51a8c67162.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      * {
+        padding: 0;
+      }
+      @font-face {
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Open Sans'), local('OpenSans'),
+          url(https://fonts.gstatic.com/s/productsans/v5/HYvgU2fE2nRJvZ5JFAumwegdm0LZdjqr5-oayXSOefg.woff2)
+            format('woff2');
+      }
+      body {
+        font-family: Product Sans;
+      }
+      html {
+        background: black;
+        color: white;
+      }
+      .intro {
+        height: 100vh;
+        background: black;
+        width: 100%;
+        color: white;
+      }
+      .section {
+        height: 50vh;
+        width: 100%;
+        border-radius: 20px;
+      }
+      .white {
+        background: white;
+        color: black;
+      }
+      .black {
+        background: black;
+        color: white;
+      }
+      .slideUp {
+        animation-name: slideUp;
+        -webkit-animation-name: slideUp;
+        animation-duration: 1s;
+        -webkit-animation-duration: 1s;
+        visibility: visible;
+      }
+
+      @keyframes slideUp {
+        0% {
+          opacity: 0;
+          -webkit-transform: translateY(70%);
+        }
+        100% {
+          opacity: 1;
+          -webkit-transform: translateY(0%);
+        }
+      }
+
+      @-webkit-keyframes slideUp {
+        0% {
+          opacity: 0;
+          -webkit-transform: translateY(70%);
+        }
+        100% {
+          opacity: 1;
+          -webkit-transform: translateY(0%);
+        }
+      }
+      #title {
+        color: white;
+      }
+      #smoldesc {
+        color: white;
+      }
+
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 10px;
+        overflow: hidden;
+        background-color: #000;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+
+        z-index: 76;
+      }
+
+      .li {
+        float: left;
+        padding: 0px 16px;
+      }
+
+      .li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        border-radius: 10px;
+      }
+
+      .li a:hover {
+        background-color: #fff;
+        color: #000;
+      }
+
+      .active {
+        background-color: #222;
+      }
+      #about {
+        float: right !important;
+      }
+
+      .Contact-list_div {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-flow: row nowrap;
+        flex-flow: row nowrap;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+      }
+
+      .Contact-icons {
+        color: inherit;
+        font-size: 35px;
+        padding: 0 1rem 0 0;
+      }
+
+      .Contact-icons .fa-instagram {
+        color: #bc2a8d;
+      }
+
+      .Contact-icons .fa-linkedin {
+        color: #0e76a8;
+      }
+
+      .Contact-icons .fa-github-square {
+        color: #2b2b2b;
+      }
+      .parallax {
+        /* The image used */
+        background-image: url('https://venngage-wordpress.s3.amazonaws.com/uploads/2018/09/Nature-Plant-Simple-Background-Image.jpg');
+
+        /* Full height */
+
+        /* Create the parallax scrolling effect */
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      .parallax2 {
+        /* The image used */
+        background-image: url('https://venngage-wordpress.s3.amazonaws.com/uploads/2018/09/Nature-Plant-Simple-Background-Image.jpg');
+
+        /* Full height */
+
+        /* Create the parallax scrolling effect */
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      .parallax3 {
+        /* The image used */
+        background-image: url('https://venngage-wordpress.s3.amazonaws.com/uploads/2018/09/Nature-Plant-Simple-Background-Image.jpg');
+
+        /* Full height */
+
+        /* Create the parallax scrolling effect */
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+      }
+      /* custom scroll bar */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: black;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #ffffff;
+        border-radius: 20px;
+      }
+    </style>
+    <script></script>
+  </head>
+
+  <body>
+    <div class="intro parallax">
+      <div></div>
+      <ul>
+        <li class="li"><a class="active" href="#home">Home</a></li>
+        <li class="li"><a href="#news">News</a></li>
+        <li class="li"><a href="#contact">Contact</a></li>
+        <li class="li"><a href="#blog">Blog</a></li>
+        <li class="li" id="about"><a href="#about">About</a></li>
+      </ul>
+      <center>
+        <h1
+          id="title"
+          class="animate__animated animate__fadeInDown animate__faster"
+        >
+          Website Title
+        </h1>
+        <p
+          id="smoldesc"
+          class="animate__animated animate__fadeInDown animate__fast"
+        >
+          Slogan
+        </p>
+        <br />
+        <img src="insertlinkhere.com" alt="insert Alt here" />
+      </center>
+    </div>
+    <center>
+      <div class="section white">
+        <br />
+
+        <h1>Description</h1>
+      </div>
+      <div class="section black parallax2">
+        <br />
+
+        <h1>Add Stuff</h1>
+      </div>
+      <div class="section white">
+        <br />
+        <h1>Contact Us</h1>
+        <div class="Contact-list_div">
+          <li type="none" class="Contact-list">
+            <a href="#" class="Contact-icons" id="test">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </li>
+          <li type="none" class="Contact-list">
+            <a href="#" class="Contact-icons">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+          <li type="none" class="Contact-list">
+            <a href="#" class="Contact-icons">
+              <i class="fab fa-github-square"></i>
+            </a>
+          </li>
+          <li type="none" class="Contact-list">
+            <a href="#" class="Contact-icons">
+              <i class="fab fa-codepen"></i>
+            </a>
+          </li>
+        </div>
+      </div>
+    </center>
+
+    <div class="section black parallax3">
+      <center>
+        <br /><br />
+        <p>
+          Made By: Neildaniel00. Some ideas were stolen fromW3Schools and
+          <a target="_blank" href="https://oscarviquez.github.io/portfolioV3/"
+            >Oscar Viquez</a
+          >
+        </p>
+        <p>PRESS CTRL+U TO STEAL</p>
+        <p>Put Other Nav Links Here</p>
+        <p>Or Put A &copy; here</p>
+      </center>
+    </div>
+  </body>
+</html>
