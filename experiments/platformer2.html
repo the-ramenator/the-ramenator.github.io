@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Platformer 2</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"
+    />
+    <meta charset="UTF-8" />
+    <style>
+      @media screen and (min-width: 0px) and (min-height: 0px) {
+        #game {
+          width: 512px;
+          height: 256px;
+        }
+      }
+      @media screen and (min-width: 968px) and (min-height: 512px) {
+        #game {
+          width: 768px;
+          height: 384px;
+        }
+      }
+      @media screen and (min-width: 1152px) and (min-height: 640px) {
+        #game {
+          width: 1024px;
+          height: 512px;
+        }
+      }
+      #game {
+        margin: auto;
+        margin-top: 40px;
+        width: 1024px;
+        height: 512px;
+      }
+
+      #canvas {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+      }
+
+      #game-instructions {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="game">
+      <canvas id="canvas">
+        <p>Your browser does not support the &lt;canvas&gt; element.</p>
+      </canvas>
+      <p id="game-instructions">
+        Left / Right to move, Up to jump. Get to the gold block. Avoid red
+        blocks.
+      </p>
+    </div>
+    <script>
+      (function () {
+  var requestAnimationFrame =
+  window.requestAnimationFrame ||
+  window.mozRequestAnimationFrame ||
+  window.webkitRequestAnimationFrame ||
+  window.msRequestAnimationFrame;
+  window.requestAnimationFrame = requestAnimationFrame;
+})();
+
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+
+//----------------------------------------------------------------------------------------------------
+// GAME VARIABLES
+//----------------------------------------------------------------------------------------------------
+
+// Level Map: 64 x 32 Array of Arrays
+// 1 = Solid Block, 2 = Lava Block, 3 = Goal Block
+var level = [
+  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,1,0,0,0,0,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,1,1,1,1,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+  [1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+  [1,2,2,2,2,2,2,2,1,1,2,2,2,2,2,1,1,2,2,2,2,2,1,1,2,2,2,2,2,2,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,1,1],
+  [1,2,2,2,2,2,2,2,1,1,2,2,2,2,2,1,1,2,2,2,2,2,1,1,2,2,2,2,2,2,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+  [1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,1,0,0,0,0,0,1],
+  [1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1]
+];
+var levelCols = level[0].length;                              // 64 Columns
+var levelRows = level.length;                                 // 32 Rows
+var tileSize = 16;                                            // 1 Tile = 16 pixels
+var levelWidth = canvas.width = levelCols * tileSize;         // Pixel Width = 1024
+var levelHeight = canvas.height = levelRows * tileSize;       // Pixel Height = 512
+var player = {
+  xPos: tileSize * 3,   // 3 Tiles right
+  yPos: tileSize * 26,  // 26 Tiles down
+  xSize: tileSize,      // Player Width = 1 tile (16 pixels)
+  ySize: tileSize,      // Player Height = 1 tile (16 pixels)
+  xVelocity: 0,
+  yVelocity: 0,
+  onGround: false,      // Set to true if on ground
+  win: false            // Set to true if win condition is reached
+};
+
+//----------------------------------------------------------------------------------------------------
+// MOVEMENT AND COLLISION DETECTION
+//----------------------------------------------------------------------------------------------------
+
+// Key Check
+var keys = {};
+document.onkeydown = function(e) {keys[e.which] = true;};
+document.onkeyup = function(e) {keys[e.which] = false;};
+
+// Returns true if a and b collide
+function collisionTest(a, b) {
+  return a.x < b.x + b.w && a.x + a.w > b.x &&
+  a.y < b.y + b.h && a.y + a.h > b.y;
+}
+
+function move(p) {
+  // x axis
+  for (var i = 0; i < levelRows; i++) {
+    for (var j = 0; j < levelCols; j++) {
+      if (level[i][j] == 1) {
+        var a = {x: p.xPos + p.xVelocity, y: p.yPos, w: p.xSize, h: p.ySize};
+        var b = {x: j * tileSize, y: i * tileSize, w: tileSize, h: tileSize};
+        if (collisionTest(a, b)) {
+          if (p.xVelocity < 0) {
+            p.xVelocity = b.x + b.w - p.xPos;       // Left Collision
+          } else if (p.xVelocity > 0) {
+            p.xVelocity = b.x - p.xPos - p.xSize;   // Right Collision
+          }
+        }
+      }
+    }
+  }
+  p.xPos += p.xVelocity;
+  // y axis
+  for (var i = 0; i < levelRows; i++) {
+    for (var j = 0; j < levelCols; j++) {
+      if (level[i][j] == 1) {
+        var a = {x: p.xPos, y: p.yPos + p.yVelocity, w: p.xSize, h: p.ySize};
+        var b = {x: j * tileSize, y: i * tileSize, w: tileSize, h: tileSize};
+        if (collisionTest(a, b)) {
+          if (p.yVelocity < 0) {
+            p.yVelocity = b.y + b.h - p.yPos;       // Up Collision
+          } else if (p.yVelocity > 0) {
+            p.yVelocity = b.y - p.yPos - p.ySize;   // Down Collision
+          }
+        }
+      } else if (level[i][j] === 2) {
+        var a = {x: p.xPos, y: p.yPos + p.yVelocity, w: p.xSize, h: p.ySize};
+        var b = {x: j * tileSize, y: i * tileSize, w: tileSize, h: tileSize};
+        if (collisionTest(a, b)) {
+          // Lava blocks reset player.xPos and yPos to the starting position
+          player.xPos = tileSize * 3;
+          player.yPos = tileSize * 26;
+        }
+      } else if (level[i][j] === 3) {
+        var a = {x: p.xPos, y: p.yPos + p.yVelocity, w: p.xSize, h: p.ySize};
+        var b = {x: j * tileSize, y: i * tileSize, w: tileSize, h: tileSize};
+        if (collisionTest(a, b)) {
+          // Goal block sets player.win to true for win condition
+          player.win = true;
+        }
+      }
+    }
+  }
+  p.yPos += p.yVelocity;
+}
+
+//----------------------------------------------------------------------------------------------------
+// RENDERING
+//----------------------------------------------------------------------------------------------------
+
+function renderLevel() {
+  for (var i = 0; i < levelRows; i++) {
+    for (var j = 0; j < levelCols; j++) {
+      if (level[i][j] === 1) {
+        // Solid Blocks
+        ctx.fillStyle = "black";
+        ctx.fillRect(j * tileSize, i * tileSize, tileSize, tileSize);
+      } else if (level[i][j] === 2) {
+        // Lava Blocks
+        ctx.fillStyle = "crimson";
+        ctx.fillRect(j * tileSize, i * tileSize, tileSize, tileSize);
+      } else if (level[i][j] === 3) {
+        // Goal Block
+        ctx.fillStyle = "gold";
+        ctx.fillRect(j * tileSize, i * tileSize, tileSize, tileSize);
+      }
+    }
+  }
+}
+
+function renderPlayer() {
+  ctx.fillStyle = "green";
+  ctx.fillRect(player.xPos, player.yPos, player.xSize, player.ySize);
+}
+
+//----------------------------------------------------------------------------------------------------
+// GAME LOOP
+//----------------------------------------------------------------------------------------------------
+
+window.onload = function gameLoop() {
+  // Clear the level
+  ctx.clearRect(0, 0, levelWidth, levelHeight);
+
+  // Update Player
+  player.xVelocity = 3 * (!!keys[39] - !!keys[37]);           // 3 * Right - Left. Truthy key equals 1, falsy key equals 0.
+  player.yVelocity += 0.6;                                    // Gravity
+  var expectedYPos = player.yPos + player.yVelocity;
+  move(player);
+  player.onGround = (expectedYPos > player.yPos);
+  if (expectedYPos != player.yPos) {player.yVelocity = 0;}    // player.yVelocity is 0 on the ground
+  if (player.onGround && keys[38]) {player.yVelocity = -10;}  // Jump
+
+  // Render Game
+  renderPlayer();
+  renderLevel();
+
+  // Check Win Condition
+  if (player.win) {
+    ctx.font = "50px Consolas";
+    ctx.fillText("You Won!", 450, 100);
+    ctx.font = "35px Consolas";
+    ctx.fillText("Press space to restart", 365, 150);
+    if (keys[32]) {
+      player.win = false;
+      player.xPos = tileSize * 3;   // Reset xPos to start position
+      player.yPos = tileSize * 26;  // Reset yPos to start position
+    }
+  }
+  requestAnimationFrame(gameLoop);
+};
+    </script>
+  </body>
+</html>
