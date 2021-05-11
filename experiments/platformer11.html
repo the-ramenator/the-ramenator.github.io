@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Platformer 11 - neildaniel00</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"
+    />
+    <style>
+      iframe {
+        height: 100vh;
+        width: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+   
+    <iframe
+      id="result"
+      srcdoc="
+<!DOCTYPE html>
+<html lang=&quot;en&quot; >
+
+<head>
+  <link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css&quot;>
+
+  
+  
+<style>
+body {
+  overflow: hidden;
+}
+.background {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+.square {
+  z-index: 5;
+  padding: 10px;
+  box-sizing: border-box;
+  position: absolute;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+}
+.square.player {
+  z-index: 3;
+  background-color: rgba(255,255,255,0.65);
+  border-radius: 5px;
+  border: 4px solid;
+}
+.square.wall {
+  background-color: #444;
+  box-shadow: -1px 1px 8px 0 rgba(0,0,0,0.15);
+}
+.square.not-vis {
+  box-shadow: none;
+  border: 1px solid rgba(0,0,0,0.1);
+  background-color: transparent !important;
+  z-index: 2;
+}
+.square.death {
+  border: 2px dashed #f00;
+  box-shadow: none;
+}
+.square.port:before {
+  content: &quot;&quot;;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 3px solid #fff;
+  -webkit-animation: pulse 4s infinite ease-out;
+          animation: pulse 4s infinite ease-out;
+}
+p {
+  font-family: 'Helvetica', sans-serif;
+  z-index: 1;
+  position: absolute;
+  color: rgba(255,255,255,0.5);
+}
+.stage-title {
+  font-size: 30px;
+  left: 30px;
+  top: 30px;
+}
+.stage-container {
+  position: absolute;
+  overflow: hidden;
+}
+.note {
+  z-index: 10;
+  position: absolute;
+  height: 50px;
+  width: auto;
+  font-size: 14px;
+  color: #fff;
+}
+@-webkit-keyframes pulse {
+  20%, 100% {
+    top: -30px;
+    left: -30px;
+    right: -30px;
+    bottom: -30px;
+    border: 3px solid rgba(255,255,255,0);
+  }
+}
+@keyframes pulse {
+  20%, 100% {
+    top: -30px;
+    left: -30px;
+    right: -30px;
+    bottom: -30px;
+    border: 3px solid rgba(255,255,255,0);
+  }
+}
+</style>
+
+  <script>
+  window.console = window.console || function(t) {};
+</script>
+
+  
+  
+  <script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage(&quot;resize&quot;, &quot;*&quot;);
+  }
+</script>
+
+
+</head>
+
+<body translate=&quot;no&quot; >
+  <div id=&quot;app&quot;>
+    <div class=&quot;stage-container&quot; :style=&quot;{'top': map.y+'px', 'left': map.x+'px', 'height': stages[current_stage].height+'px', 'width': stages[current_stage].width+'px'}&quot;>
+        <div class=&quot;background&quot; :style=&quot;{'background-color': back_color}&quot;></div>
+        <div v-for=&quot;obj in stages[current_stage].objs&quot; :class=&quot;['square', 'wall', (obj.color !== back_color)?obj.type:'not-vis']&quot; :key=&quot;obj.id&quot;
+             :style=&quot;{'height': obj.height+'px', 'width': obj.width+'px', 'top': obj.pos.y+'px', 'left': obj.pos.x+'px', 'background-color': obj.color}&quot;>
+            <!--{{(obj.color !== back_color)?obj.type:'ghost'}}-->
+        </div>
+        <p v-show=&quot;reset_count >= note.r_count&quot; v-for=&quot;note in stages[current_stage].notes&quot; class=&quot;note&quot; :style=&quot;{'top': note.pos.y+'px', 'left': note.pos.x+'px'}&quot;>{{note.text}}</p>
+        <p v-show=&quot;!grav_mode&quot; class=&quot;note&quot; :style=&quot;{'position':'fixed', 'top': '80px', 'left': '30px'}&quot;>Cheating now huh?</p>
+        <div :class=&quot;['square', 'player']&quot; :style=&quot;{'height': player.height+'px', 'width': player.width+'px', 'top': player.pos.y+'px', 'left': player.pos.x+'px'}&quot;></div>
+    </div>
+    <p class=&quot;stage-title&quot;>Stage {{current_stage}} - {{stages[current_stage].title}}</p>
+</div>
+    <script src=&quot;https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js&quot;></script>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js'></script>
+      <script id=&quot;rendered-js&quot; >
+// --- Controls ---
+// WASD to move
+// Space to jump
+// Space in the air will double jump
+// Space against a wall will walljump (walljumps do not use your double jump)
+// Use the arrow keys to change the background color
+// Press R to reset
+// Hold shift for zero gravity (for testing)
+
+// - TO DO -
+// Make more stages (utilizing death squares)
+// Implementing color hazards (https://www.reddit.com/r/gamedevscreens/comments/6i9j4i/level_from_a_game_im_currently_working_on/)
+// Implement camera system for smaller view sizes
+
+// - NOTES FOR MAKING LEVELS -
+/*
+Player jump height: 138px (130px for human error)
+player height is 40px
+port height is 60px
+player should start 80px above starting platform (100px above platform y position)
+port should hover 15px above its platform (75px above platform y position)
+*/
+
+// Stage layouts
+var stage_information = [
+{
+  id: 0,
+  title: 'Intro',
+  start_color: '#00bcd4',
+  height: 700,
+  width: 1200,
+  initial_pos: { x: 300, y: 300 },
+  initial_camera: { x: 0, y: 0 },
+  objs: [
+  {
+    id: 0,
+    pos: { x: 250, y: 400 },
+    height: 50,
+    width: 350,
+    color: '#444',
+    type: 'solid' },
+
+  {
+    id: 1,
+    pos: { x: 550, y: 350 },
+    height: 50,
+    width: 350,
+    color: '#444',
+    type: 'solid' },
+
+  {
+    id: 2,
+    pos: { x: 820, y: 275 },
+    height: 60,
+    width: 60,
+    color: '#FFF',
+    type: 'port',
+    next_stage: 1 }],
+
+
+  notes: [
+  {
+    text: 'Use WASD to move and space to jump',
+    pos: { x: 330, y: 420 },
+    r_count: 0 },
+
+  {
+    text: 'Portals will transport you to the next level',
+    pos: { x: 620, y: 370 },
+    r_count: 0 },
+
+  {
+    text: 'PLAY IN FULLSCREEN',
+    pos: { x: 395, y: 480 },
+    r_count: 0 }] },
+
+
+
+{
+  id: 1,
+  title: 'Double Jumping',
+  start_color: '#e91e63',
+  height: 700,
+  width: 1200,
+  initial_pos: { x: 550, y: 400 },
+  initial_camera: { x: 0, y: 0 },
+  objs: [
+  {
+    id: 0,
+    pos: { x: 450, y: 500 },
+    height: 50,
+    width: 350,
+    color: '#444',
+    type: 'solid' },
+
+  {
+    id: 1,
+    pos: { x: 300, y: 275 },
+    height: 50,
+    width: 350,
+    color: '#444',
+    type: 'solid' },
+
+  {
+    id: 2,
+    pos: { x: 330, y: 200 },
+    height: 60,
+    width: 60,
+    color: '#FFF',
+    type: 'port',
+    next_stage: 2 }],
+
+
+  notes: [
+  {
+    text: 'Use double jumps to reach higher places',
+    pos: { x: 380, y: 292 },
+    r_count: 2 }] },
+
+
+
+{
+  id: 2,
+  title: 'The \'WHOA\' Jump',
+  start_color: '#e9c65f',
+  height: 700,
+  width: 1200,
+  initial_pos: { x: 580, y: 150 },
+  initial_camera: { x: 0, y: 0 },
+  objs: [
+  {
+    id: 0,
+    pos: { x: 350, y: 250 },
+    height: 50,
+    width: 500,
+    color: '#444',
+    type: 'solid' },
+
+  {
+    id: 1,
+    pos: { x: 540, y: 450 },
+    height: 50,
+    width: 120,
+    color: '#444',
+    type: 'solid' },
+
+  {
+    id: 2,
+    pos: { x: 570, y: 375 },
+    height: 60,
+    width: 60,
+    color: '#FFF',
+    type: 'port',
+    next_stage: 3 }],
+
+
+  notes: [
+  {
+    text: 'You can double jump in mid-air',
+    pos: { x: 500, y: 270 },
+    r_count: 2 }] },
+
+
+
+{
+  id: 3,
+  title: 'Wall Jumping',
+  start_color: '#e91e63',
+  height: 900,
+  width: 1200,
+  initial_pos: { x: 450, y: 650 },
+  initial_camera: { x: 0, y: 300 },
+  objs: [
+  {
+    id: 0,
+    pos: { x: 410, y: 750 },
+    height: 50,
+    width: 120,
+    color: '#444',
+    type: 'solid' },
+
+  {
+    id: 1,
+    pos: { x: 530, y: 150 },
+    height: 650,
+    width: 50,
+    color: '#444',
+    type: 'solid' },
+
+  {
+    id: 2,
+    pos: { x: 580, y: 150 },
+    height: 50,
+    width: 120,
+    color: '#444',
+    type: 'solid' },
+
+  {
+    id: 3,
+    pos: { x: 610, y: 75 },
+    height: 60,
+    width: 60,
+    color: '#FFF',
+    type: 'port',
+    next_stage: 4 }],
+
+
+  notes: [
+  {
+    text: 'Jump while against a wall to wall jump',
+    pos: { x: 600, y: 600 },
+    r_count: 2 }] },
+
+
+
+{
+  id: 4,
+  title: 'The Red Box',
+  start_color: '#00bcd4',
+  height: 700,
+  width: 1200,
+  initial_pos: { x: 200, y: 300 },
+  initial_camera: { x: 0, y: 0 },
+  objs: [
+  {
+    id: 0,
+    pos: { x: 150, y: 400 },
+    height: 50,
+    width: 850,
+    color: '#444',
+    type: 'solid' },
+
+  {
+    id: 1,
+    pos: { x: 770, y: 230 },
+    height: 170,
+    width: 50,
+    color: '#e91e63',
+    type: 'solid' },
+
+  {
+    id: 2,
+    pos: { x: 950, y: 230 },
+    height: 170,
+    width: 50,
+    color: '#e91e63',
+    type: 'solid' },
+
+  {
+    id: 3,
+    pos: { x: 770, y: 230 },
+    height: 50,
+    width: 230,
+    color: '#e91e63',
+    type: 'solid' },
+
+  {
+    id: 4,
+    pos: { x: 855, y: 325 },
+    height: 60,
+    width: 60,
+    color: '#FFF',
+    type: 'port',
+    next_stage: 5 }],
+
+
+  notes: [
+  {
+    text: 'Use the left, down, and right arrows to change the background color',
+    pos: { x: 560, y: 420 },
+    r_count: 0 }] },
+
+
+
+{
+  id: 5,
+  title: 'The Great Escape',
+  start_color: '#00bcd4',
+  height: 1800,
+  width: 800,
+  initial_pos: { x: 380, y: 300 },
+  initial_camera: { x: 0, y: 0 },
+  objs: [
+  {
+    id: 0,
+    pos: { x: 250, y: 200 },
+    height: 1450,
+    width: 50,
+    color: '#444',
+    type: 'solid' },
+
+  {
+    id: 1,
+    pos: { x: 500, y: 200 },
+    height: 1450,
+    width: 50,
+    color: '#444',
+    type: 'solid' },
+
+  {
+    id: 2,
+    pos: { x: 250, y: 200 },
+    height: 50,
+    width: 300,
+    color: '#444',
+    type: 'solid' },
+
+  {
+    id: 3,
+    pos: { x: 300, y: 400 },
+    height: 50,
+    width: 200,
+    color: '#e91e63',
+    type: 'solid' },
+
+  {
+    id: 4,
+    pos: { x: 300, y: 600 },
+    height: 50,
+    width: 200,
+    color: '#e9c65f',
+    type: 'solid' },
+
+  {
+    id: 5,
+    pos: { x: 300, y: 800 },
+    height: 50,
+    width: 200,
+    color: '#00bcd4',
+    type: 'solid' },
+
+  {
+    id: 6,
+    pos: { x: 300, y: 1000 },
+    height: 50,
+    width: 200,
+    color: '#e9c65f',
+    type: 'solid' },
+
+  {
+    id: 7,
+    pos: { x: 300, y: 1200 },
+    height: 50,
+    width: 200,
+    color: '#e91e63',
+    type: 'solid' },
+
+  {
+    id: 8,
+    pos: { x: 300, y: 1400 },
+    height: 50,
+    width: 200,
+    color: '#00bcd4',
+    type: 'solid' },
+
+  {
+    id: 9,
+    pos: { x: 300, y: 1600 },
+    height: 50,
+    width: 200,
+    color: '#444',
+    type: 'solid' },
+
+  {
+    id: 10,
+    pos: { x: 370, y: 1525 },
+    height: 60,
+    width: 60,
+    color: '#FFF',
+    type: 'port',
+    next_stage: 6 }],
+
+
+  notes: [
+  {
+    text: 'Have Fun!',
+    pos: { x: 370, y: 270 },
+    r_count: 0 }] },
+
+
+
+{
+  id: 6,
+  title: 'Multitasking',
+  start_color: '#e9c65f',
+  height: 1500,
+  width: 1000,
+  initial_pos: { x: 480, y: 1200 },
+  initial_camera: { x: 0, y: 600 },
+  objs: [
+  {
+    id: 0,
+    pos: { x: 400, y: 1300 },
+    height: 50,
+    width: 200,
+    color: '#444',
+    type: 'solid' },
+
+  {
+    id: 1,
+    pos: { x: 700, y: 800 },
+    height: 400,
+    width: 50,
+    color: '#e91e63',
+    type: 'solid' },
+
+  {
+    id: 2,
+    pos: { x: 250, y: 300 },
+    height: 500,
+    width: 50,
+    color: '#e9c65f',
+    type: 'solid' },
+
+  {
+    id: 3,
+    pos: { x: 500, y: 0 },
+    height: 400,
+    width: 50,
+    color: '#e91e63',
+    type: 'solid' },
+
+  {
+    id: 4,
+    pos: { x: 550, y: 350 },
+    height: 50,
+    width: 200,
+    color: '#444',
+    type: 'solid' },
+
+  {
+    id: 5,
+    pos: { x: 620, y: 275 },
+    height: 60,
+    width: 60,
+    color: '#FFF',
+    type: 'port',
+    next_stage: 7 }],
+
+
+  notes: [
+  {
+    text: 'You can change the background color while in the air',
+    pos: { x: 330, y: 1150 },
+    r_count: 2 }] },
+
+
+
+{
+  id: 7,
+  title: 'Columns',
+  start_color: '#00bcd4',
+  height: 700,
+  width: 2000,
+  initial_pos: { x: 180, y: 300 },
+  initial_camera: { x: 0, y: 0 },
+  objs: [
+  {
+    id: 0,
+    pos: { x: 100, y: 400 },
+    height: 50,
+    width: 200,
+    color: '#444',
+    type: 'solid' },
+
+  {
+    id: 1,
+    pos: { x: 500, y: 50 },
+    height: 700,
+    width: 50,
+    color: '#e91e63',
+    type: 'solid' },
+
+  {
+    id: 2,
+    pos: { x: 700, y: 50 },
+    height: 700,
+    width: 50,
+    color: '#e9c65f',
+    type: 'solid' },
+
+  {
+    id: 3,
+    pos: { x: 900, y: 50 },
+    height: 700,
+    width: 50,
+    color: '#00bcd4',
+    type: 'solid' },
+
+  {
+    id: 4,
+    pos: { x: 1100, y: 50 },
+    height: 700,
+    width: 50,
+    color: '#e9c65f',
+    type: 'solid' },
+
+  {
+    id: 5,
+    pos: { x: 1300, y: 50 },
+    height: 700,
+    width: 50,
+    color: '#00bcd4',
+    type: 'solid' },
+
+  {
+    id: 6,
+    pos: { x: 1500, y: 50 },
+    height: 700,
+    width: 50,
+    color: '#e91e63',
+    type: 'solid' },
+
+  {
+    id: 7,
+    pos: { x: 500, y: 0 },
+    height: 50,
+    width: 1050,
+    color: '#AAA',
+    type: 'death' },
+
+  {
+    id: 8,
+    pos: { x: 500, y: 650 },
+    height: 50,
+    width: 1050,
+    color: '#AAA',
+    type: 'death' },
+
+  {
+    id: 9,
+    pos: { x: 1750, y: 325 },
+    height: 60,
+    width: 60,
+    color: '#FFF',
+    type: 'port',
+    next_stage: 8 }],
+
+
+  notes: [
+  {
+    text: 'Don\'t touch the death squares!',
+    pos: { x: 105, y: 280 },
+    r_count: 0 },
+
+  {
+    text: 'Use fullscreen for the camera plz',
+    pos: { x: 95, y: 480 },
+    r_count: 0 }] },
+
+
+
+{
+  id: 8,
+  title: 'Placeholder',
+  start_color: '#00bcd4',
+  height: 700,
+  width: 1200,
+  initial_pos: { x: 280, y: 300 },
+  initial_camera: { x: 0, y: 0 },
+  objs: [
+  {
+    id: 0,
+    pos: { x: 200, y: 400 },
+    height: 50,
+    width: 200,
+    color: '#444',
+    type: 'solid' },
+
+  {
+    id: 1,
+    pos: { x: 600, y: 400 },
+    height: 50,
+    width: 200,
+    color: '#888',
+    type: 'death' },
+
+  {
+    id: 2,
+    pos: { x: 460, y: 325 },
+    height: 60,
+    width: 60,
+    color: '#FFF',
+    type: 'port',
+    next_stage: 0 }],
+
+
+  notes: [
+  {
+    text: 'More stages coming soon!',
+    pos: { x: 220, y: 280 },
+    r_count: 0 },
+
+  {
+    text: 'Death Square! Do NOT touch!',
+    pos: { x: 605, y: 340 },
+    r_count: 0 }] }];
+
+
+
+
+
+// Key functions to track user input
+document.addEventListener('keydown', function (e) {
+  e.preventDefault();
+  var key = e.keyCode;
+  switch (key) {
+    case 87:app.input.W_KEY = true;break; // W
+    case 65:app.input.A_KEY = true;break; // A
+    case 83:app.input.S_KEY = true;break; // S
+    case 68:app.input.D_KEY = true;break; // D
+    case 37:app.input.LEFT = true;break; // Left
+    case 38:app.input.UP = true;break; // Up
+    case 39:app.input.RIGHT = true;break; // Right
+    case 40:app.input.DOWN = true;break; // Down
+    case 32:app.input.SPACE = true;break; // Space
+    case 16:app.input.SHIFT = true;break; // Shift
+    case 81:app.input.Q_KEY = true;break; // Q
+    case 69:app.input.E_KEY = true;break; // E
+    case 82:app.input.R_KEY = true;break; // R
+    case 70:app.input.F_KEY = true;break; // F
+    default:console.log(key);return false;}
+
+});
+document.addEventListener('keyup', function (e) {
+  var key = e.keyCode;
+  switch (key) {
+    case 87:app.input.W_KEY = false;break; // W
+    case 65:app.input.A_KEY = false;break; // A
+    case 83:app.input.S_KEY = false;break; // S
+    case 68:app.input.D_KEY = false;break; // D
+    case 37:app.input.LEFT = false;break; // Left
+    case 38:app.input.UP = false;break; // Up
+    case 39:app.input.RIGHT = false;break; // Right
+    case 40:app.input.DOWN = false;break; // Down
+    case 32:app.input.SPACE = false;break; // Space
+    case 16:app.input.SHIFT = false;break; // Shift
+    case 81:app.input.Q_KEY = false;break; // Q
+    case 69:app.input.E_KEY = false;break; // E
+    case 82:app.input.R_KEY = false;break; // R
+    case 70:app.input.F_KEY = false;break; // F
+    default:return false;}
+
+});
+
+// - Vue Stuff -
+var app = new Vue({
+  el: '#app',
+  data: {
+    // 50 FPS (60 FPS time has random jumping to it, probably because of the decimal)
+    frame: setInterval(function () {app.frame_func();}, 20),
+    input: {
+      // WASD Keys
+      W_KEY: false,
+      A_KEY: false,
+      S_KEY: false,
+      D_KEY: false,
+      // Arrow keys
+      UP: false,
+      LEFT: false,
+      DOWN: false,
+      RIGHT: false,
+      // Modifiers
+      SPACE: false,
+      SHIFT: false,
+      // Extras
+      Q_KEY: false,
+      E_KEY: false,
+      R_KEY: false,
+      F_KEY: false },
+
+    player: {
+      // Size and position
+      height: 40,
+      width: 40,
+      pos: { x: 20, y: 20 },
+      on_ground: false,
+      // Movement
+      gravity: 0.75,
+      vx: 0,
+      vy: 0,
+      vx_max: 14,
+      vy_max: 14,
+      vx_acc: 0.6,
+      vy_acc: 0.4,
+      // Bounciness
+      bounce: false,
+      // Double Jummping
+      dub_jumps: 1,
+      max_dub_jumps: 1,
+      dub_jump_mod: 1 },
+
+    map: { x: 0, y: 0 },
+    stages: stage_information,
+    current_stage: 0,
+    grav_mode: true,
+    color_array: ['#e91e63', '#00bcd4', '#e9c65f'],
+    back_color: '#00bcd4',
+    reset_count: 0 },
+
+  methods: {
+    init: function () {app.reset();this.reset_count = 0;},
+    update_pos: function () {
+      this.player.pos.x += this.player.vx;
+      this.player.pos.y += this.player.vy;
+
+      // Setting Outer Boundaries
+      // X
+      if (this.player.pos.x < 0) {
+        this.player.pos.x = 0;
+        if (this.player.bounce) {this.player.vx = -this.player.vx / 1.6;} else {this.player.vx = 0;};
+      };
+      if (this.player.pos.x > this.stages[this.current_stage].width - this.player.width) {
+        this.player.pos.x = this.stages[this.current_stage].width - this.player.width;
+        if (this.player.bounce) {this.player.vx = -this.player.vx / 1.6;} else {this.player.vx = 0;};
+      };
+      // Y
+      if (this.player.pos.y < 0) {
+        this.player.pos.y = 0;
+        if (this.player.bounce) {this.player.vy = -this.player.vy / 1.6;} else {this.player.vy = 0;};
+      };
+      if (this.player.pos.y > this.stages[this.current_stage].height - this.player.height) {
+        this.player.pos.y = this.stages[this.current_stage].height - this.player.height;
+        app.reset();
+        // if(this.player.bounce){ this.player.vy = -(this.player.vy)/1.6; } else { this.player.vy = 0; };
+      };
+    },
+    update_movement: function () {
+      // X Movement
+      this.player.vx += (this.input.D_KEY ? this.player.vx_acc : -this.player.vx_acc) + (this.input.A_KEY ? -this.player.vx_acc : this.player.vx_acc);
+      if (!this.input.D_KEY &amp;&amp; !this.input.A_KEY || this.input.D_KEY &amp;&amp; this.input.A_KEY) {
+        if (this.player.vx < this.player.vx_acc &amp;&amp; this.player.vx > -this.player.vx_acc) {this.player.vx = 0;};
+        if (this.player.vx < 0) {this.player.vx += this.player.vx_acc / 1.6;};
+        if (this.player.vx > 0) {this.player.vx -= this.player.vx_acc / 1.6;};
+      };
+      if (this.player.vx > this.player.vx_max) {this.player.vx = this.player.vx_max;};
+      if (this.player.vx < -this.player.vx_max) {this.player.vx = -this.player.vx_max;};
+
+      // Y Movement
+      if (!this.grav_mode) {
+        this.player.vy += (this.input.S_KEY ? this.player.vy_acc : -this.player.vy_acc) + (this.input.W_KEY ? -this.player.vy_acc : this.player.vy_acc);
+        if (!this.input.S_KEY &amp;&amp; !this.input.W_KEY || this.input.S_KEY &amp;&amp; this.input.W_KEY) {
+          if (this.player.vy < this.player.vy_acc &amp;&amp; this.player.vy > -this.player.vy_acc) {this.player.vy = 0;};
+          if (this.player.vy < 0) {this.player.vy += this.player.vy_acc / 1.6;};
+          if (this.player.vy > 0) {this.player.vy -= this.player.vy_acc / 1.6;};
+        };
+      };
+      if (this.player.vy > this.player.vy_max) {this.player.vy = this.player.vy_max;};
+      if (this.player.vy < -this.player.vy_max) {this.player.vy = -this.player.vy_max;};
+    },
+    update_camera: function () {
+      //  Trying camera stuff
+      // X
+      if (this.player.pos.x >= screen.width * 0.8 - this.map.x &amp;&amp; this.player.vx > 0 ||
+      this.player.pos.x <= screen.width * 0.2 - this.map.x &amp;&amp; this.player.vx < 0) {
+        this.map.x -= this.player.vx;
+      };
+      if (this.map.x < -(this.stages[this.current_stage].width - screen.width)) {this.map.x = -(this.stages[this.current_stage].width - screen.width);};
+      if (this.map.x > 0) {this.map.x = 0;};
+      // Y
+      if (this.player.pos.y >= window.innerHeight * 0.7 - this.map.y &amp;&amp; this.player.vy > 0 ||
+      this.player.pos.y <= window.innerHeight * 0.3 - this.map.y &amp;&amp; this.player.vy < 0) {
+        this.map.y -= this.player.vy;
+      };
+      if (this.map.y < -(this.stages[this.current_stage].height - window.innerHeight)) {this.map.y = -(this.stages[this.current_stage].height - window.innerHeight);};
+      if (this.map.y > 0) {this.map.y = 0;};
+    },
+    collision_check: function (obj) {
+      if (!(this.player.pos.y + this.player.height < obj.pos.y || this.player.pos.y > obj.pos.y + obj.height ||
+      this.player.pos.x + this.player.width < obj.pos.x || this.player.pos.x > obj.pos.x + obj.width))
+      {// Collision                
+        // solid object
+        if (obj.type === 'solid' &amp;&amp; obj.color.toLowerCase() !== this.back_color.toLowerCase()) {this.collision_handler(obj);};
+
+        // Finish object
+        if (obj.type === 'port') {
+          this.current_stage = obj.next_stage;
+          this.back_color = this.stages[this.current_stage].start_color;
+          this.reset();
+          this.reset_count = 0;
+        }
+
+        // Obstacle Object
+        if (obj.type === 'death') {this.reset();};
+      } else {/* No collision */};
+    },
+    collision_handler: function (obj) {
+      // Left and Right Edge Check
+      if (this.player.pos.x < obj.pos.x + obj.width &amp;&amp; this.player.pos.x > obj.pos.x ||
+      this.player.pos.x + this.player.width > obj.pos.x &amp;&amp; this.player.pos.x < obj.pos.x + obj.width) {
+        // Top Collision
+        if (this.player.pos.y > obj.pos.y + (obj.height - this.player.vy_max) &amp;&amp; this.player.vy < 0) {
+          this.player.pos.y = obj.pos.y + obj.height;
+          if (this.player.bounce) {this.player.vy = -this.player.vy / 1.6;} else {this.player.vy = 0;};
+        };
+        // Bottom collision
+        if (this.player.pos.y + this.player.height < obj.pos.y + this.player.vy_max &amp;&amp; this.player.vy > 0) {
+          this.player.pos.y = obj.pos.y - this.player.height;
+          if (this.player.bounce) {this.player.vy = -this.player.vy / 1.6;} else {this.player.vy = 0;};
+          // Jump Stuff
+          this.player.on_ground = true;
+          this.player.dub_jumps = this.player.max_dub_jumps;
+        };
+      };
+
+      // Top and Bottom Edge Check
+      if (this.player.pos.y < obj.pos.y + obj.height &amp;&amp; this.player.pos.y > obj.pos.y ||
+      this.player.pos.y + this.player.height > obj.pos.y &amp;&amp; this.player.pos.y < obj.pos.y + obj.height) {
+        // Left collision
+        if (this.player.pos.x > obj.pos.x + (obj.width - this.player.vx_max) &amp;&amp; this.player.vx <= 0) {
+          if (this.player.vy >= 0) {this.player.gravity = 0.25;} // Sliding down wall: Slows downward acceleration
+          this.player.pos.x = obj.pos.x + obj.width;
+          if (this.player.bounce) {this.player.vx = -this.player.vx / 1.6;} else {this.player.vx = 0;};
+
+          // Wall Jumping
+          if (this.input.SPACE &amp;&amp; this.grav_mode) {
+            this.player.vy = this.player.vy_max * -1;
+            this.player.vx = this.player.vx_max * 0.75;
+            this.input.SPACE = false;
+          };
+        }
+        // Right collision
+        if (this.player.pos.x + this.player.width < obj.pos.x + this.player.vx_max &amp;&amp; this.player.vx >= 0) {
+          if (this.player.vy >= 0) {this.player.gravity = 0.25;} // Sliding down wall: Slows downward acceleration
+          this.player.pos.x = obj.pos.x - this.player.width;
+          if (this.player.bounce) {this.player.vx = -this.player.vx / 1.6;} else {this.player.vx = 0;};
+
+          // Wall Jumping
+          if (this.input.SPACE &amp;&amp; this.grav_mode) {
+            this.player.vy = this.player.vy_max * -1;
+            this.player.vx = this.player.vx_max * -0.75;
+            this.input.SPACE = false;
+          };
+        }
+      };
+    },
+    frame_func: function () {
+      this.update_movement();
+      this.update_pos();
+      this.update_camera();
+      this.player.gravity = 0.75;
+      this.player.on_ground = false;
+
+      // Collision Stuff
+      for (var i in this.stages[this.current_stage].objs) {app.collision_check(app.stages[app.current_stage].objs[i]);};
+
+      // Grav stuff
+      this.grav_mode = !this.input.SHIFT; // Hold shift to turn off gravity
+      if (this.grav_mode) {
+        // Jumping
+        if (this.input.SPACE &amp;&amp; this.player.on_ground) {
+          this.player.vy = this.player.vy_max * -1;
+          this.input.SPACE = false;
+        } else if (this.input.SPACE &amp;&amp; this.player.dub_jumps) {
+          this.player.vy = this.player.vy_max * -1 * this.player.dub_jump_mod;
+          this.player.dub_jumps--;
+          this.input.SPACE = false;
+        } else {
+          this.player.vy += this.player.gravity;
+        };
+      };
+
+      // Changing Background Colors
+      if (this.input.LEFT) {this.back_color = '#e91e63';};
+      if (this.input.DOWN) {this.back_color = '#00bcd4';};
+      if (this.input.RIGHT) {this.back_color = '#e9c65f';};
+
+      // Reset Button
+      if (this.input.R_KEY) {this.reset();this.input.R_KEY = false;};
+    },
+    reset: function () {
+      this.reset_count++;
+      this.player.vx = 0;
+      this.player.vy = 0;
+      this.player.dub_jumps = this.player.max_dub_jumps;
+      this.player.pos.x = this.stages[this.current_stage].initial_pos.x;
+      this.player.pos.y = this.stages[this.current_stage].initial_pos.y;
+      this.map.x = this.stages[this.current_stage].initial_camera.x;
+      this.map.y = -this.stages[this.current_stage].initial_camera.y;
+      this.back_color = this.stages[this.current_stage].start_color;
+    } } });
+
+
+
+app.init();
+//# sourceURL=pen.js
+    </script>
+
+  
+
+</body>
+
+</html>
+ 
+"
+      sandbox="allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation  allow-scripts allow-top-navigation-by-user-activation" allow="accelerometer; camera; encrypted-media; geolocation; gyroscope; microphone; midi; clipboard-read; clipboard-write" allowTransparency="true"
+      allowpaymentrequest="true" allowfullscreen="true" class="result-iframe">
+      </iframe>
+
+  </body>
+</html>
