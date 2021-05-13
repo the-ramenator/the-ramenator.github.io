@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Favicon Changer - neildaniel00</title>
+<script>
+const link = document.querySelector("link[rel~='icon']");
+function changefav() {
+  link.href = 'https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png';
+  if (!link) {
+    link = document.createElement('link');
+    link.rel = 'icon';
+    document.getElementsByTagName('head')[0].appendChild(link);
+}
+else{}
+}
+</script>
+</head>
+<body>
+
+<h2>Click the button below to see the favicon change!</h2><br>
+<button onclick="changefav()">Change Favicon</button><br><br>
+<button id="exbtn" onclick="showex()">Show Explanation</button>
+<div id="ex">
+<p>The favicon is the icon next to the title of the page. The favicon in the image below is the multi-color <b>G</b> next to "Google". <br></p>
+<img src="https://favicon.io/assets/static/google-favicon.bd6740a.fd4408624a9d2a1c0eeb4652fd81ca2c.png">
+</div>
+<script>
+var ex = document.getElementById('ex');
+ex.style.display = "none";
+function showex(){
+if(ex.style.display === "block"
+){
+ex.style.display = "none";
+document.getElementById('exbtn').innerHTML = "Show Explanation";
+
+}
+else{
+ex.style.display = "block";
+document.getElementById('exbtn').innerHTML = "Hide Explanation";
+}
+}
+
+</script>
+</body>
+</html>
