@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"
+    />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>School Block Site Fabricator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+  <style>
+    html {
+      box-sizing: border-box;
+      display: flex;
+      min-height: 100%;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: inherit;
+    }
+
+    body {
+      background: linear-gradient(to bottom, #444652, #28282E);
+      display: flex;
+      font: 14px/1.3 "Roboto", Arial, sans-serif;
+      min-height: 100%;
+      min-height: 100vh;
+      margin: 0;
+      width: 100%;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .blockScreen {
+      align-items: center;
+      color: #666e80;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100%;
+      min-height: 100vh;
+      position: relative;
+      text-align: center;
+      width: 100%;
+      z-index: 0;
+    }
+
+    .blockScreen svg {
+      margin: 16px 0 8px;
+    }
+
+    .blockScreen .svgAccessBlocked-paths {
+      stroke: #00AFD7;
+      stroke: #F04848;
+    }
+
+    .blockScreen .blockScreen-customSchoolName {
+      color: white;
+      font: 400 18px/1 "Roboto", Arial, sans-serif;
+      margin: 0 16px;
+    }
+
+
+    .blockScreen .blockScreen-stripe {
+      background: #00AFD7;
+      background: #F04848;
+      color: rgba(255, 255, 255, 0.8);
+      flex: 0 1 auto;
+      margin: 32px 0;
+      padding: 24px 16px;
+      width: 100%;
+    }
+
+    .blockScreen .blockScreenStripe-website {
+      font: 30px "Roboto", Arial, sans-serif;
+      color: white;
+    }
+    .input{
+      font: 30px "Roboto", Arial, sans-serif;
+      color: white;
+      background: #F04848;
+      border: none;
+      text-align: center;
+    }
+    .input2{
+      font: 15px "Roboto", Arial, sans-serif;
+      color: white;
+      background: #F04848;
+      border: none;
+      overflow: visible;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="blockScreen">
+
+    <svg class="blockScreen-svg" height="66" viewbox="0 0 66 66" width="66" xmlns="http://www.w3.org/2000/svg">
+      <title>access blocked</title>
+      <g class="svgAccessBlocked-paths" fill="none" fill-rule="evenodd" stroke="#00AFD7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        <path d="M33 1C15.327 1 1 15.327 1 33c0 17.673 14.327 32 32 32 17.673 0 32-14.327 32-32"></path>
+        <path d="M21.288 21.387v-4.344c0-3.624 2.936-6.562 6.564-6.562h17v10.93c1.35.26 2.37 1.446 2.37 2.883v.822c0 1.44-1.037 2.638-2.4 2.887-.437 6.106-5.53 10.924-11.752 10.924-6.213 0-11.302-4.816-11.75-10.9-1.435-.19-2.542-1.414-2.542-2.91v-.823c0-1.48 1.093-2.702 2.51-2.906zM27.435 38.926l-2.772 5.656h-6.598c-3.385 0-6.398 2.85-6.398 6.196v6.06m42.666-.134v-6.06c0-3.34-2.74-6.062-6.118-6.062h-7.413l-2.77-5.656M53.148 10.48H65v8.297H53.148zM55.52 3.37h7.11v7.11h-7.11z"></path>
+      </g>
+    </svg>
+    <div class="blockScreen-customSchoolName" id="blockScreen-customSchoolName">Dekalb County School District</div>
+    <div class="blockScreen-stripe">
+      <div class="blockScreenStripe-top">
+        <span data-translation="oops">Oops</span>,
+      </div>
+      <div class="blockScreenStripe-website"><span id="host">
+          <input class="input" onkeypress="this.style.width = 
+            ((this.value.length + 7) * 20) + 'px';" placeholder="TypeWebsiteNameHere.com"id="host">
+        </span></div>
+      <div class="blockScreenStripe-bottom">
+        <span data-translation="is_not_available_because">is not available because</span> <span id="reason"></span><input class="input2" onkeypress="this.style.width = 
+            ((this.value.length + 2) * 8) + 'px';" placeholder="Enter Reason Here">.
+      </div>
+    </div>
+    <div class="blockScreen-customBodyText" id="blockScreen-customBodyText">Sorry, you are not allowed to access this page.
+      Use of this computer constitutes acceptance of the DeKalb County School System Acceptable Use Policies.
+      Activities are monitored to ensure compliance with the terms of these policies.
+      Reference full board policies IFBG and IFBGC at http://www.dekalb.k12.ga.us.</div>
+
+</body>
+
+</html>
