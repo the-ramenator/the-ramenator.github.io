@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<title>German Website Score Fabricator - neildaniel00</title>
+   <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"
+    />
+<style>
+  .img {
+    position: relative;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+  }
+
+  body{
+      background-repeat: no-repeat;
+  background-size: 100vw 100vh;
+
+  }
+
+  button {
+    z-index: 10;
+  }
+</style>
+
+<body>
+  <p id="direct">Directions:<br id="direct7">
+  <ol id="direct2">
+    <li id="direct3">Upload a screenshot of to website you want to fake using the "Choose File" button.</li>
+    <li id="direct4">Click finalize fake to make the buttons and the directions dissappear.</li>
+    <li id="direct5">Take a screenshot and upload it to the assignment!</li>
+  </ol>
+  </p>
+    <br id="direct6">
+  <input type="file" id="getval" /><br /><br />
+  <button id="finalbtn" onclick="finalize()">Finalize Fake</button>
+  <img class="img" src="https://lh5.googleusercontent.com/zANhgbhglg3Ovv2Zjvs3pkE_ynr_KD2ts3P4W5ZkjjgDuUau2zQ0kazv16bM7LV1bTprk67k06W9IaRhtVWQXIF534KTSxDqebuE9MEBJq3wJdtzJarLgL9GoV5ipjE0lAUJRv10a4E"></img>
+  <script>
+    function finalize() {
+      document.getElementById('finalbtn').style.display = 'none';
+      document.getElementById('getval').style.display = 'none';
+ document.getElementById('direct').style.display = 'none';
+ document.getElementById('direct2').style.display = 'none';
+       document.getElementById('direct3').style.display = 'none';
+     document.getElementById('direct4').style.display = 'none'; document.getElementById('direct5').style.display = 'none'; document.getElementById('direct6').style.display = 'none'; document.getElementById('direct7').style.display = 'none';
+
+
+
+
+
+
+    }
+  </script>
+
+  <script>
+    document
+      .getElementById('getval')
+      .addEventListener('change', readURL, true);
+
+    function readURL() {
+      var file = document.getElementById('getval').files[0];
+      var reader = new FileReader();
+      reader.onloadend = function() {
+        document.body.style.backgroundImage = 'url(' + reader.result + ')';
+        document.body.style.backgroundRepeat = 'no-repeat';
+      };
+      if (file) {
+        reader.readAsDataURL(file);
+      } else {}
+    }
+  </script>
+</body>
+
+</html>
