@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"
+    />
+    <title>Image to Hexcode - The Ramenator</title>
+    <style>
+      @import url(//fonts.googleapis.com/css?family=Lato:300:400);
+
+      body {
+        margin: 0;
+      }
+
+      h1 {
+        font-family: 'Lato', sans-serif;
+        font-weight: 300;
+        letter-spacing: 2px;
+        font-size: 48px;
+      }
+      p {
+        font-family: 'Lato', sans-serif;
+        letter-spacing: 1px;
+        font-size: 14px;
+        color: #333333;
+      }
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      span,
+      input,
+      button,
+      label {
+        font-family: 'Lato', sans-serif;
+      }
+
+      .header {
+        position: relative;
+        text-align: center;
+        background: linear-gradient(
+          60deg,
+          rgba(84, 58, 183, 1) 0%,
+          rgba(0, 172, 193, 1) 100%
+        );
+        color: white;
+      }
+      .logo {
+        width: 50px;
+        fill: white;
+        padding-right: 15px;
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      .inner-header {
+        height: 30vh;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      .flex {
+        /*Flexbox for containers*/
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+
+      .waves {
+        position: relative;
+        width: 100%;
+        height: 15vh;
+        margin-bottom: -7px; /*Fix for safari gap*/
+        min-height: 100px;
+        max-height: 150px;
+      }
+
+      .content {
+        position: relative;
+        height: 20vh;
+        text-align: center;
+        background-color: white;
+      }
+
+      /* Animation */
+
+      .parallax > use {
+        animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+      }
+      .parallax > use:nth-child(1) {
+        animation-delay: -2s;
+        animation-duration: 7s;
+      }
+      .parallax > use:nth-child(2) {
+        animation-delay: -3s;
+        animation-duration: 10s;
+      }
+      .parallax > use:nth-child(3) {
+        animation-delay: -4s;
+        animation-duration: 13s;
+      }
+      .parallax > use:nth-child(4) {
+        animation-delay: -5s;
+        animation-duration: 20s;
+      }
+      @keyframes move-forever {
+        0% {
+          transform: translate3d(-90px, 0, 0);
+        }
+        100% {
+          transform: translate3d(85px, 0, 0);
+        }
+      }
+      /*Shrinking for mobile*/
+      @media (max-width: 768px) {
+        .waves {
+          height: 40px;
+          min-height: 40px;
+        }
+        .content {
+          height: 30vh;
+        }
+        h1 {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <style>
+      .imgDisplay {
+        cursor: crosshair;
+        padding: 0px;
+        border: none;
+      }
+      .imgDisplay:hover {
+        cursor: crosshair;
+        padding: 0px;
+        border: 1px dashed black;
+      }
+      /* #webbtn { 
+         display: inline-block;
+         padding: 0.35em 1.2em;
+         border: 0.1em solid #ffffff;
+         margin: 0 0.3em 0.3em 0;
+         border-radius: 0.12em;
+         box-sizing: border-box;
+         text-decoration: none;
+         font-family: 'Roboto', sans-serif;
+         font-weight: 300;
+         color: #ffffff;
+         text-align: center;
+         transition: all 0.2s;
+        text-decoration: none;
+      }
+      #webbtn:hover {
+         color: #000000;
+         background-color: #ffffff;
+      }*/
+      .invis {
+        display: none;
+      }
+      .a-modal {
+        text-decoration: none;
+        color: black;
+      }
+      .underline {
+        text-decoration-style: dashed;
+      }
+      .underline:hover {
+        text-decoration-style: solid;
+      }
+
+      /* The Modal (background) */
+      .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0); /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+        -webkit-animation-name: fadeIn; /* Fade in the background */
+        -webkit-animation-duration: 0.4s;
+        animation-name: fadeIn;
+        animation-duration: 0.4s;
+      }
+
+      /* Modal Content */
+      .modal-content {
+        position: fixed;
+        bottom: 0;
+        background-color: #fefefe;
+        width: 100%;
+        -webkit-animation-name: slideIn;
+        -webkit-animation-duration: 0.4s;
+        animation-name: slideIn;
+        animation-duration: 0.4s;
+      }
+
+      /* The Close Button */
+      .close {
+        color: white;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .modal-header {
+        padding: 2px 16px;
+        background: linear-gradient(
+          60deg,
+          rgba(84, 58, 183, 1) 0%,
+          rgba(0, 172, 193, 1) 100%
+        );
+
+        color: white;
+      }
+
+      .modal-body {
+        padding: 2px 16px;
+      }
+
+      .modal-footer {
+        padding: 2px 16px;
+        background: linear-gradient(
+          60deg,
+          rgba(84, 58, 183, 1) 0%,
+          rgba(0, 172, 193, 1) 100%
+        );
+        color: white;
+      }
+
+      /* Add Animation */
+      @-webkit-keyframes slideIn {
+        from {
+          bottom: -300px;
+          opacity: 0;
+        }
+        to {
+          bottom: 0;
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideIn {
+        from {
+          bottom: -300px;
+          opacity: 0;
+        }
+        to {
+          bottom: 0;
+          opacity: 1;
+        }
+      }
+
+      @-webkit-keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!--Hey! This is the original version
+of Simple CSS Waves-->
+    <center>
+      <div class="header">
+        <!--Content before waves-->
+        <div class="inner-header flex">
+          <h1>Image To Hexcode</h1>
+        </div>
+
+        <!--Waves Container-->
+        <div>
+          <svg
+            class="waves"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 24 150 28"
+            preserveAspectRatio="none"
+            shape-rendering="auto"
+          >
+            <defs>
+              <path
+                id="gentle-wave"
+                d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+              />
+            </defs>
+            <g class="parallax">
+              <use
+                xlink:href="#gentle-wave"
+                x="48"
+                y="0"
+                fill="rgba(255,255,255,0.7"
+              />
+              <use
+                xlink:href="#gentle-wave"
+                x="48"
+                y="3"
+                fill="rgba(255,255,255,0.5)"
+              />
+              <use
+                xlink:href="#gentle-wave"
+                x="48"
+                y="5"
+                fill="rgba(255,255,255,0.3)"
+              />
+              <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+            </g>
+          </svg>
+        </div>
+        <!--Waves end-->
+      </div>
+      <!--Header ends-->
+      <br /><br /><br /><br />
+      <br />
+      <!--Content starts-->
+      <div class="content">
+        <br />
+        <h3>
+          Upload file from your computer<!--or insert link -->
+          to online image to access its color codes.
+        </h3>
+        <h4>
+          <a id="myBtn" class="a-modal"><u class="underline">More Info</u></a>
+        </h4>
+        <br />
+        <form>
+          <label for="imageLoader" class="button">Upload File</label>
+          <input type="file" id="imageLoader" name="imageLoader" />
+          <div class="invis">
+            <input type="text" placeholder="http://..." id="webImageUrl" />
+            <button class="button" style="left: 60vh" id="webbtn">Go</button>
+          </div>
+        </form>
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+          <!-- Modal content -->
+          <div class="modal-content">
+            <div class="modal-header">
+              <span class="close">&times;</span>
+              <h2>More Info</h2>
+            </div>
+            <div class="modal-body">
+              <p>
+                <b>Image Color Picker</b> is a tool which you can use to get
+                colors from images. When you upload your file, the code renders
+                it, and displays the image.
+              </p>
+              <p>
+                You can move your mouse over a specific part of the image and
+                click to get the exact hexcode.
+              </p>
+              <p>
+                The first grey box is to help you visualize where your mouse is.
+                The second is to lock the color you select, and turn it into a
+                hex code.
+              </p>
+              <p>
+                At this point, the Geometry Dash color picker addition isn't
+                done yet (nor do I know when that will be). Please be patient
+              </p>
+            </div>
+            <div class="modal-footer">
+              <h3>Credits</h3>
+            </div>
+            <div class="modal-body">
+              <p>HTML colorcodes for the color detection</p>
+              <p>Daniel Österman for the CSS waves</p>
+              <p>Me for the Geometry Dash Color Wheel</p>
+            </div>
+          </div>
+        </div>
+
+        <script>
+          // Get the modal
+          var modal = document.getElementById('myModal');
+
+          // Get the button that opens the modal
+          var btn = document.getElementById('myBtn');
+
+          // Get the <span> element that closes the modal
+          var span = document.getElementsByClassName('close')[0];
+
+          // When the user clicks the button, open the modal
+          btn.onclick = function () {
+            modal.style.display = 'block';
+          };
+
+          // When the user clicks on <span> (x), close the modal
+          span.onclick = function () {
+            modal.style.display = 'none';
+          };
+
+          // When the user clicks anywhere outside of the modal, close it
+          window.onclick = function (event) {
+            if (event.target == modal) {
+              modal.style.display = 'none';
+            }
+          };
+        </script>
+        <canvas
+          class="imgDisplay"
+          id="imageCanvas"
+          width="450"
+          height="300"
+          style="background-color: #fff"
+          title="Image display"
+        ></canvas
+        ><br />
+        <canvas
+          id="pixCanvas"
+          width="150"
+          height="150"
+          title="Zoom in on image"
+          style="background-color: #ddd"
+        ></canvas>
+        <canvas
+          id="barvaCanvas"
+          width="150"
+          height="150"
+          title="Color select lock"
+          style="background-color: #ccc"
+        ></canvas
+        ><br />
+        <h4>Color code:</h4>
+        <br />
+        <input
+          type="text"
+          id="pixcolor"
+          disabled
+          style="font-size: 20px; height: 57px"
+        />
+      </div>
+      <!--Content ends-->
+    </center>
+    <!-- For functionality -->
+    <script src="https://html-color-codes.info/static/jquery.min.js"></script>
+    <script src="https://html-color-codes.info/static/img.min.js?rev=2"></script>
+    <script src="https://html-color-codes.info/static/foundation.min.js"></script>
+  </body>
+</html>
