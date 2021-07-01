@@ -1,0 +1,106 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <title>Geometry Dash's Font But The Outline Is Better - The Ramenator</title>
+    <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+    <style>
+        @font-face {
+            font-family: Pusab;
+            src: url('https://gdbrowser.com/assets/Pusab.ttf')
+        }
+        
+        p {
+            font-weight: normal;
+            font-size: 2.9vh;
+            font-family: Pusab, Arial;
+            color: black;
+            -webkit-text-size-adjust: 100%;
+            line-height: 150%;
+        }
+        
+        h1 {
+            font-weight: normal;
+            font-size: 6vh;
+            font-family: Pusab, Arial;
+            color: white;
+            white-space: nowrap;
+            -webkit-text-size-adjust: 100%;
+            line-height: 150%;
+            -webkit-text-stroke-width: 2px;
+            -webkit-text-stroke-color: black;
+            text-shadow: 3px 2px 0px rgba(0, 0, 0, 0.4);
+        }
+        
+        a {
+            color: inherit;
+        }
+        
+        button {
+            background: transparent;
+            border: none;
+        }
+        
+        .accordion {
+            transition: 0.5s;
+        }
+        
+        .panel {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <h1>Geometry Dash's Font, <br>But With A Better Outline</h1>
+        <p>I tried to make a better version of the font used on GD Browser (made by GD Colon).</p>
+        <p>I don't know if it works tho...</p>
+        <button class="accordion"><p>Here's the code: (click to open)</p></button>
+        <div class="panel">
+
+            <p>
+                <br> Replace:<br>
+                <code>
+              text-shadow: -0.275vh -0.275vh 0vh #000, <br>0.275vh -0.275vh 0vh #000, -0.275vh 0.275vh 0vh #000, <br>0.275vh 0.275vh 0vh #000,<br> 0.5vh 0.6vh 0vh rgba(0,0,0,0.4);
+            </code> <br><br>With:
+                <br>
+                <code>-webkit-text-stroke-width: 2px;<br>
+              -webkit-text-stroke-color: black;<br>
+              text-shadow: 3px 2px 0px rgba(0, 0, 0, 0.4);<br>
+  </code>
+            </p>
+        </div>
+        <button class="accordion"> <p>Here's the alphabet + numbers & special characters: (click to open)</p></button>
+        <div class="panel">
+
+            <h1>A&nbsp;a&nbsp;B&nbsp;b&nbsp;C&nbsp;c&nbsp;<br> D&nbsp;d&nbsp;E&nbsp;e&nbsp;F&nbsp;f&nbsp;
+                <br>G&nbsp;g&nbsp;H&nbsp;h&nbsp;I&nbsp;i&nbsp;<br> J&nbsp;j&nbsp;K&nbsp;k&nbsp;L&nbsp;l&nbsp;
+                <br> M&nbsp;m&nbsp;N&nbsp;n&nbsp;O&nbsp;o&nbsp;<br> P&nbsp;p&nbsp;Q&nbsp;q&nbsp;R&nbsp;r&nbsp;
+                <br>S&nbsp;s&nbsp;T&nbsp;t&nbsp;U&nbsp;u&nbsp;<br>V&nbsp;v&nbsp;W&nbsp;w&nbsp;X&nbsp;x&nbsp;<br>Y&nbsp;y&nbsp;Z&nbsp;z&nbsp;<br>1&nbsp;2&nbsp;3&nbsp;4&nbsp;5&nbsp;6&nbsp;7&nbsp;8&nbsp;9&nbsp;0<br>/&nbsp;?&nbsp;<b>&gt;&nbsp;.&nbsp;&lt;&nbsp;</b>,&nbsp;'&nbsp;"&nbsp;;&nbsp;:<br>&nbsp;\&nbsp;|&nbsp;]&nbsp;}&nbsp;[&nbsp;{&nbsp;=&nbsp;+&nbsp;-&nbsp;_&nbsp;)&nbsp;<br>(&nbsp;*&nbsp;&&nbsp;^&nbsp;%&nbsp;$&nbsp;#&nbsp;@&nbsp;!</h1>
+        </div>
+    </center>
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
