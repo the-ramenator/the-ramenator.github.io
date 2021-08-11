@@ -114,14 +114,14 @@
       runPython(pycode);
     });
 function autorun(){
-    if (document.getElementById('auto-run-text').innerHTML === "Auto Run") {
+    if (document.getElementById('auto-run-text').innerHTML == "Auto Run") {
       var myVar = setInterval(function() {
         let pycode = codemirrorEditor.getValue();
         pyop.innerHTML = '';
         runPython(pycode);
       }, 2000);
       document.getElementById('auto-run-text').innerHTML = "Run On Click";
-    } else if(document.getElementById('auto-run-text').innerHTML === "Run On Click") {
+    } else if(document.getElementById('auto-run-text').innerHTML == "Run On Click") {
       clearInterval(pycode);
       var myVar = function() {
         let pycode = codemirrorEditor.getValue();
