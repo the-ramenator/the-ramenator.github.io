@@ -126,8 +126,8 @@ function autorun(){
         let pycode = codemirrorEditor.getValue();
         pyop.innerHTML = '';
         runPython(pycode);
-          clearInterval(pycode);
       };
+      clearInterval(pycode);
       document.getElementById('auto-run-text').innerHTML = "Auto Run";
     }
   else{
