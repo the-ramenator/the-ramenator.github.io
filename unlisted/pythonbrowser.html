@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <!--Almost Everything was made by u/Alternative_Detail31-->
@@ -76,6 +77,7 @@
 <body>
   <center class="row">
     <a class="waves-effect waves-light btn" id="run-btn"><i class="material-icons right">code</i>Run</a>
+    <a class="waves-effect waves-light btn" id="auto-run" onclick="autorun()"><i class="material-icons right">autorenew</i><span id="auto-run-text">Auto Run</span></a>
   </center>
   <br />
 
@@ -112,20 +114,23 @@
       pyop.innerHTML = '';
       runPython(pycode);
     });
-  var setinterval = confirm('Would you like your code to auto run?');
-    if (setinterval == true) {
+function autorun(){
+    if (document.getElementById('auto-run-text').innerHTML == "Auto Run") {
       var myVar = setInterval(function() {
         let pycode = codemirrorEditor.getValue();
         pyop.innerHTML = '';
         runPython(pycode);
       }, 2000);
+      document.getElementById('auto-run-text').innerHTML = "Run On Click";
     } else {
       var myVar = function() {
         let pycode = codemirrorEditor.getValue();
         pyop.innerHTML = '';
         runPython(pycode);
       };
+      document.getElementById('auto-run-text').innerHTML = "Auto Run";
     }
+}
     let startcode = `
 import sys, io, traceback
 namespace = {}  # use separate namespace to hide run_code, modules, etc.
