@@ -122,7 +122,7 @@ function autorun(){
         runPython(pycode);
       }, 2000);
       document.getElementById('auto-run-text').innerHTML = "Run On Click";
-    } else {
+    } else if(document.getElementById('auto-run-text').innerHTML == "Run On Click") {
       var myVar = function() {
         let pycode = codemirrorEditor.getValue();
         pyop.innerHTML = '';
@@ -130,6 +130,9 @@ function autorun(){
       };
       document.getElementById('auto-run-text').innerHTML = "Auto Run";
     }
+  else{
+  console.log('Something went wrong... function autorun(). The InnerHTML quality wasn\'t detected...')
+  }
 }
     let startcode = `
 import sys, io, traceback
