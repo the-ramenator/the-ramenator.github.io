@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Snake AI</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"
+    />
+  <style>
+    body, html{
+      background: black;
+    }
+    iframe{
+      width: 100%;
+      height:90vh;
+      border:none;
+    }
+  </style>
+</head>
+<body bgcolor="black">
+ <center>
+    <iframe
+      id="result"
+      srcdoc="
+<!DOCTYPE html>
+<html lang=&quot;en&quot; >
+
+<head>
+
+  <meta charset=&quot;UTF-8&quot;>
+  
+<link rel=&quot;apple-touch-icon&quot; type=&quot;image/png&quot; href=&quot;https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png&quot; />
+<meta name=&quot;apple-mobile-web-app-title&quot; content=&quot;CodePen&quot;>
+
+<link rel=&quot;shortcut icon&quot; type=&quot;image/x-icon&quot; href=&quot;https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico&quot; />
+
+<link rel=&quot;mask-icon&quot; type=&quot;&quot; href=&quot;https://cpwebassets.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg&quot; color=&quot;#111&quot; />
+
+
+  <title>CodePen - A Pen by neildaniel00</title>
+  
+  
+  
+  
+
+  <script>
+  window.console = window.console || function(t) {};
+</script>
+
+  
+  
+  <script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage(&quot;resize&quot;, &quot;*&quot;);
+  }
+</script>
+
+
+</head>
+
+<body translate=&quot;no&quot; >
+  <html>
+<head>
+<title>Snake AI</title>
+
+</head>
+<body bgcolor=&quot;black&quot;>
+  <center>
+<canvas id=&quot;canvas&quot; width=&quot;500px&quot; height=&quot;500px&quot;>
+</canvas>
+<!-- <input type=&quot;button&quot; value=&quot;Manual&quot; id=&quot;btn&quot; /> -->
+  </center>
+</body>
+
+</html>
+    <script src=&quot;https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-8216c69d01441f36c0ea791ae2d4469f0f8ff5326f00ae2d00e4bb7d20e24edb.js&quot;></script>
+
+  <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+      <script id=&quot;rendered-js&quot; >
+var sitAndRelax;
+var d,distance = [];
+var game_loop, snakeAi;
+$(document).ready(function () {
+  //Canvas stuff
+  var canvas = $(&quot;#canvas&quot;)[0];
+  var ctx = canvas.getContext(&quot;2d&quot;);
+  var w = $(&quot;#canvas&quot;).width();
+  var h = $(&quot;#canvas&quot;).height();
+
+  //Lets save the cell width in a variable for easy control
+  var cw = 10;
+  var food;
+  var score;
+
+  //Lets create the snake now
+  var snake_array; //an array of cells to make up the snake
+  var distanceToFood;
+  var previousDistanceToFood;
+  var firstTime = true;
+  sitAndRelax = false;
+  function init()
+  {
+    d = &quot;right&quot;; //default direction
+    create_snake();
+    create_food(); //Now we can see the food particle
+    //finally lets display the score
+    score = 0;
+
+    previousDistanceToFood = calculateDistance(food.x, food.y, snake_array[0].x, snake_array[0].y);
+    distanceToFood = calculateDistance(food.x, food.y, snake_array[0].x, snake_array[0].y);
+
+    //Lets move the snake now using a timer which will trigger the paint function
+    //every 60ms
+
+    if (typeof game_loop != &quot;undefined&quot;) clearInterval(game_loop);
+    if (typeof snakeAi != &quot;undefined&quot;) clearInterval(snakeAi);
+
+    game_loop = setInterval(paint, 30);
+    snakeAi = setInterval(trigger, 30);
+  }
+  init();
+
+  function create_snake()
+  {
+    var length = 5; //Length of the snake
+    snake_array = []; //Empty array to start with
+    for (var i = length - 1; i >= 0; i--)
+    {
+      //This will create a horizontal snake starting from the top left
+      snake_array.push({ x: i, y: 0 });
+    }
+  }
+
+  //Lets create the food now
+  function create_food()
+  {
+    tx = Math.round(Math.random() * (w - cw) / cw);
+    ty = Math.round(Math.random() * (h - cw) / cw);
+    while (check_collision(tx, ty, snake_array))
+    {
+      tx = Math.round(Math.random() * (w - cw) / cw);
+      ty = Math.round(Math.random() * (h - cw) / cw);
+    }
+    food = {
+      x: tx,
+      y: ty };
+
+    previousDistanceToFood = calculateDistance(food.x, food.y, snake_array[0].x, snake_array[0].y);
+    distanceToFood = calculateDistance(food.x, food.y, snake_array[0].x, snake_array[0].y);
+    //This will create a cell with x/y between 0-44
+    //Because there are 45(450/10) positions accross the rows and columns
+  }
+
+  //Lets paint the snake now
+  function paint()
+  {
+    //To avoid the snake trail we need to paint the BG on every frame
+    //Lets paint the canvas now
+    ctx.fillStyle = &quot;black&quot;;
+    ctx.fillRect(0, 0, w, h);
+    ctx.strokeStyle = &quot;lime&quot;;
+    ctx.strokeWidth = 10;
+    ctx.strokeRect(0, 0, w, h);
+
+    //The movement code for the snake to come here.
+    //The logic is simple
+    //Pop out the tail cell and place it infront of the head cell
+    var nx = snake_array[0].x;
+    var ny = snake_array[0].y;
+    //These were the position of the head cell.
+    //We will increment it to get the new head position
+    //Lets add proper direction based movement now
+    if (d == &quot;right&quot;) nx++;else
+    if (d == &quot;left&quot;) nx--;else
+    if (d == &quot;up&quot;) ny--;else
+    if (d == &quot;down&quot;) ny++;
+
+    //Lets add the game over clauses now
+    //This will restart the game if the snake hits the wall 
+    //Lets add the code for body collision
+    //Now if the head of the snake bumps into its body, the game will restart
+    if (nx == -1 || nx == w / cw || ny == -1 || ny == h / cw || check_collision(nx, ny, snake_array))
+    {
+      //restart game
+      init();
+      //Lets organize the code a bit now.
+      return;
+    }
+
+    //Lets write the code to make the snake eat the food
+    //The logic is simple
+    //If the new head position matches with that of the food,
+    //Create a new head instead of moving the tail
+    if (nx == food.x &amp;&amp; ny == food.y)
+    {
+      var tail = { x: nx, y: ny };
+      score++;
+      //Create new food
+      create_food();
+    } else
+
+    {
+      var tail = snake_array.pop(); //pops out the last cell
+      tail.x = nx;tail.y = ny;
+    }
+    //The snake can now eat the food.
+
+    snake_array.unshift(tail); //puts back the tail as the first cell
+
+    for (var i = 0; i < snake_array.length; i++)
+    {
+      var c = snake_array[i];
+      //Lets paint 10px wide cells
+      paint_cell(c.x, c.y, &quot;lime&quot;);
+    }
+
+    //Lets paint the food
+    paint_cell(food.x, food.y, &quot;red&quot;);
+
+    //Lets paint the score
+    ctx.fillStyle = &quot;lime&quot;;
+    var score_text = &quot;Score: &quot; + score;
+    ctx.fillText(score_text, 5, h - 5);
+  }
+
+  //Lets first create a generic function to paint cells
+  function paint_cell(x, y, color)
+  {
+    ctx.fillStyle = color;
+    ctx.fillRect(x * cw, y * cw, cw, cw);
+    ctx.strokeStyle = &quot;black&quot;;
+    ctx.strokeRect(x * cw, y * cw, cw, cw);
+  }
+
+  function check_collision(x, y, array)
+  {
+    //This function will check if the provided x/y coordinates exist
+    //in an array of cells or not
+    for (var i = 0; i < array.length; i++)
+    {
+      if (array[i].x == x &amp;&amp; array[i].y == y)
+      return true;
+    }
+    return false;
+  }
+  // AI part
+
+
+  var i = 0;
+
+  function isOutBound(x, y)
+  {
+    return x == -1 || x == w / cw || y == -1 || y == h / cw;
+  }
+
+  function countMoveableArea(x, y)
+  {
+    if (isOutBound(x, y) || check_collision(x, y, snake_array))
+    return 0;
+    visited = {};
+    q = new Array();
+    count = 0;
+    var dx = [1, 0, -1, 0];
+    var dy = [0, 1, 0, -1];
+    q.push({ x: x, y: y });
+    while (q.length != 0)
+    {
+      xy = q.pop();
+      for (i = 0; i < 4; i++)
+      {
+        var nx = xy.x + dx[i];
+        var ny = xy.y + dy[i];
+        if (!(check_collision(nx, ny, snake_array) || isOutBound(nx, ny)) &amp;&amp; typeof visited[nx + &quot;,&quot; + ny] == &quot;undefined&quot;)
+        {
+          visited[nx + &quot;,&quot; + ny] = true;
+          q.push({ x: nx, y: ny });
+        }
+      }
+      count++;
+    }
+    console.log(count);
+    return count;
+  }
+
+  function findSafePaths()
+  {
+    var snakeArea = snake_array.length;
+    var threshold = snakeArea * 4;
+    var headX = snake_array[0].x;
+    var headY = snake_array[0].y;
+    var isSafe = { &quot;left&quot;: false, &quot;right&quot;: false, &quot;down&quot;: false, &quot;up&quot;: false };
+    count = countMoveableArea(headX - 1, headY);
+    if (count > threshold)
+    isSafe.left = count;
+    count = countMoveableArea(headX + 1, headY);
+    if (count > threshold)
+    isSafe.right = count;
+    count = countMoveableArea(headX, headY + 1);
+    if (count > threshold)
+    isSafe.down = count;
+    count = countMoveableArea(headX, headY - 1);
+    if (count > threshold)
+    isSafe.up = count;
+    return isSafe;
+  }
+
+  function trigger()
+  {
+    var headX = snake_array[0].x;
+    var headY = snake_array[0].y;
+
+    if (isDistanceIncreasing() || isHeadingTowardsCollision())
+    sitAndRelax = true;else
+
+    sitAndRelax = false;
+
+
+    // safe path
+    isSafe = findSafePaths();
+
+    flag = false;
+    if (d != &quot;right&quot; &amp;&amp; isSafe[&quot;left&quot;] &amp;&amp; (sitAndRelax || distance[3] > distFood(headX - 1, headY)) &amp;&amp; !check_collision(headX - 1, headY, snake_array) &amp;&amp; headX - 1 != -1)
+    {
+      distanceToFood = distFood(headX - 1, headY);
+      d = &quot;left&quot;;
+      flag = true;
+    } else
+    if (d != &quot;left&quot; &amp;&amp; isSafe[&quot;right&quot;] &amp;&amp; (sitAndRelax || distance[3] > distFood(headX + 1, headY)) &amp;&amp; !check_collision(headX + 1, headY, snake_array) &amp;&amp; headX + 1 != w / cw)
+    {
+      distanceToFood = distFood(headX + 1, headY);
+      d = &quot;right&quot;;
+      flag = true;
+    } else
+    if (d != &quot;down&quot; &amp;&amp; isSafe[&quot;up&quot;] &amp;&amp; (sitAndRelax || distance[3] > distFood(headX, headY - 1)) &amp;&amp; !check_collision(headX, headY - 1, snake_array) &amp;&amp; headY - 1 != -1)
+    {
+      distanceToFood = distFood(headX, headY - 1);
+      d = &quot;up&quot;;
+      flag = true;
+    } else
+    if (d != &quot;up&quot; &amp;&amp; isSafe[&quot;down&quot;] &amp;&amp; (sitAndRelax || distance[3] > distFood(headX, headY + 1)) &amp;&amp; !check_collision(headX, headY + 1, snake_array) &amp;&amp; headY + 1 != h / cw)
+    {
+      distanceToFood = distFood(headX, headY + 1);
+      d = &quot;down&quot;;
+      flag = true;
+    }
+
+    if (!flag)
+    {
+
+    }
+    if (distance.length == 4)
+    {
+      distance = distance.splice(1);
+      distance[distance.length] = distanceToFood;
+    } else
+
+    {
+      distance.push(distanceToFood);
+    }
+  }
+
+  function isDistanceIncreasing()
+  {
+    return distance[0] <= distance[1] &amp;&amp; distance[1] <= distance[2] &amp;&amp; distance[2] <= distance[3] ? true : false;
+  }
+
+  function isHeadingTowardsCollision()
+  {
+    if (d == &quot;right&quot; &amp;&amp; (snake_array[0].x + 1 >= w / cw || check_collision(snake_array[0].x + 1, snake_array[0].y, snake_array)))
+    {
+      return true;
+    } else
+    if (d == &quot;left&quot; &amp;&amp; (snake_array[0].x - 1 <= -1 || check_collision(snake_array[0].x - 1, snake_array[0].y, snake_array)))
+    {
+      return true;
+    } else
+    if (d == &quot;up&quot; &amp;&amp; (snake_array[0].y - 1 <= -1 || check_collision(snake_array[0].x, snake_array[0].y - 1, snake_array)))
+    {
+      return true;
+    } else
+    if (d == &quot;down&quot; &amp;&amp; (snake_array[0].y + 1 >= h / cw || check_collision(snake_array[0].x, snake_array[0].y + 1, snake_array)))
+    {
+      return true;
+    }
+    return false;
+  }
+
+  function calculateDistance(x1, y1, x2, y2)
+  {
+    //console.log(Math.round(Math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1))));
+    return Math.round(Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)));
+  }
+
+  function distFood(x1, y1)
+  {
+    var x2 = food.x;
+    var y2 = food.y;
+    return Math.round(Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)));
+  }
+
+  $('#btn').click(function (e) {
+    if (typeof snakeAi != &quot;undefined&quot;)
+    {
+      console.log(snakeAi);
+      clearInterval(snakeAi);
+    } else
+
+    {
+      console.log(&quot;else&quot;);
+      snakeAi = setInterval(trigger, 55);
+    }
+  });
+
+  //Lets add the keyboard controls now
+  $(document).keydown(function (e) {
+    var key = e.which;
+    //We will add another clause to prevent reverse gear
+    if (key == &quot;37&quot; &amp;&amp; d != &quot;right&quot;) d = &quot;left&quot;;else
+    if (key == &quot;38&quot; &amp;&amp; d != &quot;down&quot;) d = &quot;up&quot;;else
+    if (key == &quot;39&quot; &amp;&amp; d != &quot;left&quot;) d = &quot;right&quot;;else
+    if (key == &quot;40&quot; &amp;&amp; d != &quot;up&quot;) d = &quot;down&quot;;
+    //The snake is now keyboard controllable
+  });
+
+});
+//# sourceURL=pen.js
+    </script>
+
+  
+
+</body>
+
+</html>
+ 
+"
+      sandbox="allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation  allow-scripts allow-top-navigation-by-user-activation" allow="accelerometer; camera; encrypted-media; geolocation; gyroscope; microphone; midi; clipboard-read; clipboard-write" allowTransparency="true"
+      allowpaymentrequest="true" allowfullscreen="true" class="result-iframe">
+      </iframe>
+
+</center>
+</body>
+
+</html>
