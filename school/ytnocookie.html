@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Watch Youtube Unblocked - The Ramenator</title>
+      <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+
+<style>
+  body{
+    font-family: Arial;
+  }
+.accordion {
+  cursor: pointer;
+  padding: 18px;
+  width: 50%;
+  border: 1px;
+  text-align: left;
+  outline: 1px black;
+  font-size: 15px;
+  transition: 0.4s;
+  border-radius: 0.5rem;
+}
+
+
+.panel {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  width: 50%;
+}
+  .right{
+    float: right;
+  }
+</style>
+</head>
+<body>
+  <center>
+<input id="ytid" placeholder="YT ID Here">
+<button onclick="makeLink()">Youtube Embed Unblockify</button><br>
+<a href="" id="result" taget="_blank"></a>
+<br><br>
+  <button class="accordion">Instructions<span class="right">+</span></button>
+<div class="panel">
+  <p>
+    <ol>
+      <li>Go to YouTube</li>
+      <li>Search for the video you want to watch. If you want to watch something in your reccomended, just don't do anything</li>
+      <li>Right-click on the video title and click copy link address</li>
+      <li>Paste it into the text box on this website and remove everything before (and including) the "=". Example: <b>https://www.youtube.com/watch?v=ipK7vQ8gEZw</b> TO <b>ipK7vQ8gEZw</b></li>
+      <li>Click the button and put the link in a new tab and enjoy</li>
+  </ol>
+  </p>
+</div>
+  </center>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+  });
+}
+  function makeLink(){
+  var planid = document.getElementById('ytid').value;
+  var embed = "www.youtube-nocookie.com/embed/"+planid+"?rel=0&amp;modestbranding=1&amp;hd=1&amp;showinfo=0&amp;controls=1&amp;iv_load_policy=3&amp;wmode=transparent&amp;autohide=1&amp;autoplay=0";
+    document.getElementById("result").href=embed; 
+  document.getElementById("result").innerHTML=embed; 
+}
+</script>
+
+</body>
+</html>
