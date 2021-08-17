@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,7 +37,11 @@
 </head>
 <body>
   <center>
-<input id="ytid" placeholder="YT ID Here">
+  Youtube Address Finder: <input id="yturl" placeholder="Paste Link Here" size="20" type="text" /><br /><br />
+<button onclick="YouTubeGetID()">Find</button><br /><br />
+Video id&nbsp; :&nbsp;<label id="videoid"></label></div></blockquote><div class="program">
+</div><br><br>
+  <input id="ytid" placeholder="YT ID Here">
 <button onclick="makeLink()">Youtube Embed Unblockify</button><br>
 <a href="" id="result" target="_blank"></a>
 <br><br>
@@ -47,11 +52,27 @@
       <li>Go to YouTube</li>
       <li>Search for the video you want to watch. If you want to watch something in your reccomended, just don't do anything</li>
       <li>Right-click on the video title and click copy link address</li>
-      <li>Paste it into the text box on this website and remove everything before (and including) the "=". Example: <b>https://www.youtube.com/watch?v=ipK7vQ8gEZw</b> TO <b>ipK7vQ8gEZw</b></li>
-      <li>Click the button and put the link in a new tab and enjoy</li>
+      <li>Paste it into the "Youtube Address Finder" textbox and click "Find"</li>
+      <li>Put the ID into the "YT ID Here" textbox.</li>
+      <li>Click the "Youtube Embed Unblockify" and put the link in a new tab and enjoy</li>
   </ol>
   </p>
 </div>
+<script>
+    function YouTubeGetID(){
+        var url=document.getElementById("yturl").value;
+  var ID = '';
+  url = url.replace(/(>|<)/gi,'').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+  if(url[2] !== undefined) {
+    ID = url[2].split(/[^0-9a-z_\-]/i);
+    ID = ID[0];
+  }
+  else {
+    ID = url;
+  }
+    document.getElementById("videoid").innerHTML=ID;
+}
+    </script>
   </center>
 <script>
 var acc = document.getElementsByClassName("accordion");
