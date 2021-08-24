@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,6 +35,15 @@
   .right{
     float: right;
   }
+  iframe{
+    /*background-color: #d9deda;
+    position: absolute;
+    bottom: 0;*/
+    height: 340px;
+    width: 560px;
+    border: none;
+    
+  }
 </style>
 </head>
 <body>
@@ -50,16 +60,18 @@ Video id&nbsp; :&nbsp;<label id="videoid"></label></div></blockquote><div class=
 <div class="panel">
   <p>
     <ol>
+      <li>Mute this site so you don't get in trouble.</li>
       <li>Go to YouTube</li>
       <li>Search for the video you want to watch. If you want to watch something in your reccomended, just don't do anything</li>
       <li>Right-click on the video title and click copy link address</li>
       <li>Paste it into the "Youtube Address Finder" textbox and click "Find"</li>
       <li>Put the ID into the "YT ID Here" textbox.</li>
-      <li>Click the "Youtube Embed Unblockify" and put the link in a new tab and enjoy</li>
+      <li>Click the "Youtube Embed Unblockify" and put the link in a new tab and enjoy, or watch it here. If you watch it here, unmute the site and turn down your volume so you don't get in trouble.</li>
   </ol>
   <p>Example Link: https://www.youtube.com/watch?v=ipK7vQ8gEZw</p><p>Not a rick roll, trust me.</p>
   </p>
-</div>
+</div><br>
+<iframe id="iframe" src=""></iframe>
 <script>
     function YouTubeGetID(){
         var url=document.getElementById("yturl").value;
@@ -96,6 +108,9 @@ for (i = 0; i < acc.length; i++) {
   var embed = "https://www.youtube-nocookie.com/embed/"+planid+"?rel=0&amp;modestbranding=1&amp;hd=1&amp;showinfo=0&amp;controls=1&amp;iv_load_policy=3&amp;wmode=transparent&amp;autohide=1&amp;autoplay=0";
     document.getElementById("result").href=embed; 
   document.getElementById("result").innerHTML=embed; 
+    document.getElementById('iframe').src=embed;
+    document.getElementById("iframe").style.height = "100vh";
+ document.getElementById("iframe").style.width = "100%";
 }
 </script>
 
