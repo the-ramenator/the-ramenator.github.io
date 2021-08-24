@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -71,7 +68,7 @@ Video id&nbsp; :&nbsp;<label id="videoid"></label></div></blockquote><div class=
   <p>Example Link: https://www.youtube.com/watch?v=ipK7vQ8gEZw</p><p>Not a rick roll, trust me.</p>
   </p>
 </div><br>
-<iframe id="iframe" src=""></iframe>
+<iframe id="iframe" src="" allowfullscreen></iframe>
 <script>
     function YouTubeGetID(){
         var url=document.getElementById("yturl").value;
@@ -109,10 +106,9 @@ for (i = 0; i < acc.length; i++) {
     document.getElementById("result").href=embed; 
   document.getElementById("result").innerHTML=embed; 
     document.getElementById('iframe').src=embed;
-    document.getElementById("iframe").style.height = "100vh";
- document.getElementById("iframe").style.width = "100%";
+    //document.getElementById("iframe").style.height = "100vh";
+ //document.getElementById("iframe").style.width = "100%";
 }
 </script>
-
 </body>
 </html>
