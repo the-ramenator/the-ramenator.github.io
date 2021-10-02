@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>The Xhosa - Neil Daniel and Evan Bowen</title>
+        <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"
+    />
+        <style>
+            @import url(https://fonts.googleapis.com/css?family=Exo:100);
+        @font-face {
+            font-family: "Gochi Hand. Version 1.001";
+            src: url('GochiHand-Regular.ttf')
+        }
+        /* 1. Enable smooth scrolling */
+html,body {
+	scroll-behavior: smooth;
+    font-family: "Gochi Hand. Version 1.001";
+    font-weight: 400;
+}
+
+/* 2. Make nav sticky */
+main > nav {
+	position: sticky;
+	top: 2rem;
+	align-self: start;
+}
+
+/* 3. ScrollSpy active styles (see JS tab for activation) */
+.section-nav li.active > a {
+	color: #000;
+	font-weight: 500;
+}
+
+/* Sidebar Navigation */
+.section-nav {
+	padding-left: 0;
+	border-left: 1px solid #efefef;
+}
+
+.section-nav a {
+	text-decoration: none;
+	display: block;
+	padding: .125rem 0;
+	color: #ccc;
+	transition: all 50ms ease-in-out;
+}
+
+.section-nav a:hover,
+.section-nav a:focus {
+	color: #666;
+}
+
+/** Poor man's reset **/
+* {
+	box-sizing: border-box;
+}
+
+
+
+ol {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+li {
+	margin-left: 1rem;
+}
+
+h1 {
+	font-weight: 300;
+}
+
+/** page layout **/
+main {
+	display: grid;
+	grid-template-columns: 1fr 15em;
+	max-width: 100em;
+	width: 90%;
+	margin: 0 auto;
+}
+
+/** enlarge the sections for this demo, so that we have a long scrollable page **/
+section {
+	//padding-bottom: 20rem;
+    width: 90%;
+}
+            .bold{
+            font-weight: 600; //500-1000
+            }
+            #history{
+            padding-bottom: 7rem;
+            }
+            #language{
+            padding-bottom: 7rem;
+            }
+            #location{
+            padding-bottom: 7rem;
+            }
+            #food{
+            padding-bottom: 7rem;
+            }
+            #traditions{
+            padding-bottom: 7rem;
+            }
+            #religion{
+            padding-bottom: 7rem;
+            }
+            #clothing{
+            padding-bottom: 7rem;
+            }
+            #facts{
+            padding-bottom: 7rem;
+            }
+            #bibliography{
+            padding-bottom: 7rem;
+            }
+            img{
+            border-radius: 0.65rem;
+            }
+
+        </style>
+        <style>
+@-webkit-keyframes bg-scrolling-reverse {
+  100% {
+    background-position: 50px 50px;
+  }
+}
+@-moz-keyframes bg-scrolling-reverse {
+  100% {
+    background-position: 50px 50px;
+  }
+}
+@-o-keyframes bg-scrolling-reverse {
+  100% {
+    background-position: 50px 50px;
+  }
+}
+@keyframes bg-scrolling-reverse {
+  100% {
+    background-position: 50px 50px;
+  }
+}
+@-webkit-keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
+  }
+}
+@-moz-keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
+  }
+}
+@-o-keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
+  }
+}
+@keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
+  }
+}
+/* Main styles */
+body {
+    /*Font 2*/
+    font-weight: 500;
+      font: 400 16px exo, ubuntu, "segoe ui", helvetica, arial, sans-serif;
+  margin-top: 2rem;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAIAAACRXR/mAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAABnSURBVHja7M5RDYAwDEXRDgmvEocnlrQS2SwUFST9uEfBGWs9c97nbGtDcquqiKhOImLs/UpuzVzWEi1atGjRokWLFi1atGjRokWLFi1atGjRokWLFi1af7Ukz8xWp8z8AAAA//8DAJ4LoEAAlL1nAAAAAElFTkSuQmCC") repeat 0 0;
+  -webkit-animation: bg-scrolling-reverse 0.92s infinite;
+  -moz-animation: bg-scrolling-reverse 0.92s infinite;
+  -o-animation: bg-scrolling-reverse 0.92s infinite;
+  animation: bg-scrolling-reverse 0.92s infinite;
+  -webkit-animation-timing-function: linear;
+  -moz-animation-timing-function: linear;
+  -o-animation-timing-function: linear;
+  animation-timing-function: linear;
+}
+
+        </style>
+    </head>
+    <body>
+    <main>
+	<div>
+		<h1>The Xhosa</h1>
+		<p></p>
+
+		<section id="history">
+			<h2>History</h2>
+			<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Before the Dutch came in the 1650’s the Xhosa lived in <b class="bold">southeastern Africa</b>. The Xhosa were <b class="bold">farmers and herders</b> while they lived in southeastern Africa. In the 1820’s the <b class="bold">first christian missionaries made their first outposts</b> where the Xhosa lived. The christian missionaries <b class="bold">did not have much luck</b> when they first tried to set up outposts where the Xhosa lived though. The Xosha were traumatized by Europeans and eventually <b class="bold">converted to Christianity</b>. While apartheid was happening <b class="bold">South African government made seperate regions</b> that were called Bantusans (homelands) for black people with African ancestors. There were two regions that were reserved for Xhosa people, <b class="bold">Transkei and Ciskei</b>. Each region was said to be its own independent country by the apartheid government. Many Xhosa were denied from becoming South African citizens during apartheid. The <b class="bold">Bantusans (homelands) were abolished in 1994</b>.</p>
+            <!--<img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg" style="width: 300px; height: auto;">-->
+		</section>
+		<section id="language">
+			<h2>Language</h2>
+            <p>The Xhosa speak <b class="bold">Xhosa</b> (so creative). Xhosa is derived from <b class="bold">Bantu</b>.</p>
+		</section>
+		<section id="location">
+			<h2>Location</h2>
+            <p>Most Xhosa live in <b class="bold">South Africa in eastern, urban areas</b>. Many of the Xhosa live in <b class="bold">Cape Town (iKapa)</b>, <b class="bold">East London (iMonti)</b>, and <b class="bold">Port Elizabeth (iBhayi)</b>. They can also be found in smaller numbers in most of South Africa’s major urban areas.
+</p>
+		</section>
+		<section id="food">
+			<h2>Food</h2>
+			<p>
+            Common foods include:
+            <ul>
+                <li>Corn</li>
+                <li>Bread</li>
+                <li>Beef</li>
+                <li>Mutton</li>
+                <li>Goat Meat</li>
+                <li>Milk (sour form)</li>
+                <li>Sorghum beer (sour in taste)</li>
+                <li>Soft porridge (made of corn meal flour)</li>                
+                <li>Umngqusho (made of hominy corn with beans and spices)</li>
+            </ul>
+            Some rules for eating in the Xhosa ethnic group are that women can’t eat eggs, new wives can’t eat certain kinds of meat, and men can’t drink milk in a village where he might find a wife.
+            </p>
+<!--<img src="https://live.southafrica.net/media/45529/thexhosapeople_1920x810.jpg?center=0.40740740740740738,0.4&mode=crop&quality=100&width=1920&height=810&bgcolor=white&rnd=132110291340000000
+" style="width: auto; height: 100px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://2.bp.blogspot.com/-DEN3ccYbJOE/Wxo2k-H-fSI/AAAAAAAAAFs/PrT5cu03M_QNb25qmUgA9S-KTkJZcAPoQCLcBGAs/s1600/img_8361.jpg
+" style="width: auto; height: 100px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://videocdn-sbs.akamaized.net/u/video/SBS/253/31/14222915727_0218-large.jpg
+" style="width: auto; height: 100px;">-->
+		</section>
+        		<section id="traditions">
+			<h2>Customs & Traditions</h2>
+			<p>Holidays include:
+                    <ul>
+                        <li>Easter</li>
+                        <li>Good Friday</li>
+                        <li>Christmas</li>
+                        <li>New Year’s Day (January 1)
+                        <li>Workers Day (or May Day, May 1)</li>
+                        <li>The Day of Reconciliation (December 16)</li>
+                        <li>Heritage Day (September 24)</li>
+                        <li>Freedom Day (April 27)</li>
+                        <li>National Women’s Day (August 9th)</li>
+                        <li>Human Rights Day (March 21)</li>
+                        <li>After giving birth, a mother is expected to remain secluded in her house for at least 10 days.</li>
+                    </ul>
+                    <p>Cultures include:</p>
+                    <ul>
+                        <li>Xhosa has traditional music that they dance to while other members sing and clap and play instruments such as rattles, whistles, flutes, mouth harps, and stringed-instruments constructed with a bow and resonator.</li>
+                        <li>
+When the Christian missionaries came they introduced the Xhosa to choral singing, because of that one of the Xhosa people was the person that made the national anthem of South Africa.</li>
+                    </ul>
+                
+</p>
+		</section>
+        <section id="clothing">
+			<h2>Clothing</h2>
+            <p>Xhosa people usually <b class="bold">dress like people from Europe and the United States</b>. It is <b class="bold">customary for a woman to cover her hair</b> with something like a scarf or hat. They also <b class="bold">apply white or ochre-colored mixtures to their bodies</b> and faces. Other clothing includes clothing with <b class="bold">intricately sewn designs</b> on things like blankets and shawls or capes. Recently it was made <b class="bold">acceptable for women to wear pants</b>.
+                
+</p>
+            <!--<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkSPa2Lu95PIl8R9D7DVmd9549qBj92OFpESdsefj7FtAG8DvBuGnIb_lrMY4tnZc0k8A:https://upload.wikimedia.org/wikipedia/commons/e/eb/Xhosa_people%252C_Eastern_Cape%252C_South_Africa_%252820518645211%2529.jpg&usqp=CAU
+" style="width: auto; height: 100px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://live.southafrica.net/media/45529/thexhosapeople_1920x810.jpg?center=0.40740740740740738,0.4&mode=crop&quality=100&width=1920&height=810&bgcolor=white&rnd=132110291340000000
+" style="width: auto; height: 100px;">-->
+		</section>
+		<section id="religion">
+			<h2>Religious Beliefs</h2>
+			<p>The main religion in the Xhosa is <b class="bold">christianity</b>. The Xhosa’s religious practice is basically <b class="bold">lengthy rituals, initiations, and feasts</b>. God is honored by <b class="bold">ritual sacrifices</b> and God is approached through the living’s ancestors. The supreme God is called <b class="bold">uThixo</b> or <b class="bold">uQamata</b>.
+</p>
+		</section>
+		<section id="facts">
+			<h2>Interesting Facts</h2>
+<ul>
+  <li>Most popular sport in South Africa is soccer</li>
+  <li>HIV/AIDS is very common in South Africa and because countries are so poor there isn't much treatment for it</li>
+  <li>According to one oral tradition, the first person on Earth was a great leader called Xhosa</li>
+  <li>Another tradition stresses the essential unity of the Xhosa-speaking people by proclaiming that all the Xhosa subgroups are descendants of one ancestor, Tshawe</li>
+  <li>Freedom Day (April 27), the date of the first national election in which black South Africans could vote</li>
+  <li>The Xhosa people make up some of the poorest and some of the wealthiest of black South Africans.</li>
+</ul>
+
+            	</section>
+		<section id="bibliography">
+			<h2>Bibliography</h2>
+            <p>"Xhosa." <i>Junior Worldmark Encyclopedia of World Cultures</i>, edited by Timothy L. Gall and Susan Bevan Gall, 2nd ed., vol. 8, UXL, 2012, pp. 168-176. <br><i>Gale In Context: Middle School</i>, link.gale.com/apps/doc/CX1931400450/MSIC?u=dunw83187&sid=bookmark-MSIC&xid=363f9543. <br>Accessed 29 Sept. 2021.</p>
+		</section>
+	</div>
+	<nav class="section-nav">
+		<ol>
+			<li><a href="#history">History</a></li>
+			<li><a href="#language">Language</a></li>
+			<li><a href="#location">Location</a></li>
+			<li><a href="#food">Foods</a></li>
+			<li><a href="#traditions">Customs & Traditions</a></li>
+			<li><a href="#religion">Religious Beliefs</a></li>
+			<li><a href="#clothing">Clothing</a></li>
+			<li><a href="#facts">Interesting Facts</a></li>
+			<li><a href="#bibliography">Bibliography</a></li>
+		</ol>
+	</nav>
+</main>
+        <script>
+        window.addEventListener('DOMContentLoaded', () => {
+
+	const observer = new IntersectionObserver(entries => {
+		entries.forEach(entry => {
+			const id = entry.target.getAttribute('id');
+			if (entry.intersectionRatio > 0) {
+				document.querySelector(`nav li a[href="#${id}"]`).parentElement.classList.add('active');
+			} else {
+				document.querySelector(`nav li a[href="#${id}"]`).parentElement.classList.remove('active');
+			}
+		});
+	});
+
+	// Track all sections that have an `id` applied
+	document.querySelectorAll('section[id]').forEach((section) => {
+		observer.observe(section);
+	});
+	
+});
+        </script>
+    </body>
+</html>
