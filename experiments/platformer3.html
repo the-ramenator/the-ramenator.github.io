@@ -168,7 +168,7 @@ var map = {
     /* Movement speed when the key is pressed */
     
     movement_speed: {
-        jump: 5,
+        jump: 10,
         left: 4,
         right: 4
     },
@@ -449,7 +449,7 @@ Clarity.prototype.move_player = function () {
     var right2  = this.get_tile(t_x_right, y_near2);
 
 
-    if (tile.jump && this.jump_switch > 15) {
+    if (tile.d && this.jump_switch > 15) {
 
         this.player.can_jump = true;
         
