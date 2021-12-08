@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -37,23 +38,31 @@
 
 <body>
   <script>
-    var canvas = document.createElement('canvas'),
-      ctx = canvas.getContext('2d'),
-      width = canvas.width = window.innerWidth,
-      height = canvas.height = window.innerHeight,
-      avg = (width + height) / 2,
-      blobs = [],
-      speedRange = Math.random() * (5 - 0.1) + 0.1,
-      maxCombo = 15,
-      radius = 2,
-      count = avg * 0.5,
-      PI = Math.PI,
-      TWOPI = PI * 2;
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
+    var width = canvas.width = window.innerWidth;
+    var height = canvas.height = window.innerHeight;
+    var speedRange_lcl = localStorage.getItem('speedRange_lcl');
+    if(!localStorage.getItem('speedRange_lcl')){
+        speedRange_lcl = Math.random() * (5 - 0.1) + 0.1;
+    }
+    var avg = (width + height) / 2;
+    var blobs = [];
+    var speedRange = speedRange_lcl;
+    var maxCombo = 15;
+    var radius = 2;
+    var count = avg * 0.5;
+    var PI = Math.PI;
+    var TWOPI = PI * 2;
 
     function rand(min, max) {
       return Math.random() * (max - min) + min;
     }
-    var random_color = Math.random() * (1000 - 5) + 5;
+    var random_color_lcl = localStorage.getItem('random_color_lcl');
+    if(!localStorage.getItem('random_color_lcl')){
+        random_color_lcl = Math.random() * (1000 - 5) + 5;
+    }
+    var random_color = random_color_lcl;
 
     function dist(p1, p2) {
       var dx = p1.x - p2.x,
@@ -169,6 +178,22 @@
     document.body.appendChild(canvas);
     createBlobs();
     loop();
+      document.onkeyup=function(e){
+  var e = e || window.event; // for IE to cover IEs window event-object
+  if(e.altKey && e.which == 65) {
+    alert('This keybind saves your preferences.');
+    localStorage.setItem('speedRange_lcl',speedRange_lcl);
+    localStorage.setItem('random_color_lcl',random_color_lcl);
+  }
+};
+            document.onkeyup=function(e){
+  var e = e || window.event; // for IE to cover IEs window event-object
+  if(e.altKey && e.which == 66) {
+    alert('This keybind deletes your saved preferences.');
+    localStorage.removeItem('speedRange_lcl');
+    localStorage.removeItem('random_color_lcl');
+  }
+};
   </script>
 </body>
 
