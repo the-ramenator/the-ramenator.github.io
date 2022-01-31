@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  
+<head>
+    <title>String to Hash Converter - The Ramenator</title>
+</head>
+  
+<body>
+    <center>
+        <h1>String to Hash</h1>
+  
+        <h3>Creating hash from string in JavaScript?</h3>
+      <input id="input"></input>
+  <button onclick="document.getElementById('result').innerHTML = stringToHash(document.getElementById('input').value)">Convert!</button>
+        <p id="result"></p>
+  
+        <script>
+          
+            // Convert to 32bit integer
+            function stringToHash(string) {
+                  
+                var hash = 0;
+                  
+                if (string.length == 0) return hash;
+                  
+                for (i = 0; i < string.length; i++) {
+                    char = string.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash;
+                }
+                  
+                return hash;
+            }
+        </script>
+    </center>
+</body>
+  
+</html>
