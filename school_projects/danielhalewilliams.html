@@ -1,7 +1,12 @@
 <!DOCYPE html>
-<!--Add speedrunner mode -->
 <html>
     <head>
+        <title>Daniel Hale Williams - Text Game</title>
+            <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"
+    />
         <style>
             @font-face {
 	 font-family: 'Product Sans';
@@ -61,7 +66,11 @@
             .btn-grid{
                             background: #481655 !important;
 }
+            p,span,a{
+                                        background: transparent;
 
+            }
+            
 @keyframes fayde {
     0%{
         opacity: 1;
@@ -73,17 +82,45 @@
         opacity: 1;
     }
 }
-
+            .timur{
+            position: absolute;
+                top: 3vh;
+                left: 47vw;
+            }
         </style>
     </head>
-    <body>
+    <body onload="speedTimer()">
         <div class="container">
   <div id="text">Text</div>
+            <p class="timur">Time: <span id="timer">0</span>s</p>
   <div id="option-buttons" class="btn-grid">
-    <button class="btn" id="btn1">Option 1</button>
+    <button class="btn" id="btn1" >Option 1</button>
     <button class="btn" id="btn2">Option 2</button>
   </div>
    </div>
+        <script>
+            var clicked = 0;
+        function speedTimer(){
+            if (clicked == 1){
+                console.log('nah')
+            }
+            else{
+                clicked = 1;
+                countUP();
+            }
+        }
+            function countUP(){
+                if (document.getElementById('text').innerHTML == `This is actually what happened to Daniel Hale Williams! Congratulations for getting to the end of the game. Thank you for playing. <br><br>Credits: Biography.com Editors. “Daniel Hale Williams.” The Biography.com Website, 23 Apr. 2021, <a target="_blank" href="https://www.biography.com/scientist/daniel-hale-williams">biography.com/scientist/daniel-hale-williams</a>.`){
+                //game over
+                }
+                else{
+                             var number = parseInt(document.getElementById('timer').innerText)
+                document.getElementById('timer').innerHTML = number+1;
+
+                }
+            }
+            setInterval(countUP, 1000)
+        </script>
         <script>
         const textElement = document.getElementById('text')
 const optionButtonsElement = document.getElementById('option-buttons')
@@ -365,10 +402,10 @@ const textNodes = [
   },
   {
     id: 21,
-    text: 'This is actually what happened to Daniel Hale Williams! Congratulations for getting to the end of the game. Thank you for playing. Neil Daniel and Abigail Barnes made this game. Ur welcome :). Credits: Biography.com Editors. “Daniel Hale Williams.” The Biography.com Website, 23 Apr. 2021, <a target="_blank" href="https://www.biography.com/scientist/daniel-hale-williams">biography.com/scientist/daniel-hale-williams</a>.',
+    text: 'This is actually what happened to Daniel Hale Williams! Congratulations for getting to the end of the game. Thank you for playing. <br><br>Credits: Biography.com Editors. “Daniel Hale Williams.” The Biography.com Website, 23 Apr. 2021, <a target="_blank" href="https://www.biography.com/scientist/daniel-hale-williams">biography.com/scientist/daniel-hale-williams</a>.',
     options: [
       {
-        text: 'Restart (u won)',
+        text: 'Restart (You Won)',
         nextText: -1
       }
     ]
