@@ -3,16 +3,85 @@
 <html>
     <head>
         <style>
+            @font-face {
+	 font-family: 'Product Sans';
+	 font-style: normal;
+	 font-weight: 400;
+	 src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/productsans/v5/HYvgU2fE2nRJvZ5JFAumwegdm0LZdjqr5-oayXSOefg.woff2) format('woff2');
+}
+            *{
+            background: black;
+                color: white;
+                	 font-family: Product Sans;
+  text-align: center;
+               margin: 0;
+                padding: 0;
+                font-size: 20px;
+
+            }
+            .container{
+            width: 100%;
+                background: #481655 !important;
+                height: 90vh;
+                position: relative;
+                top: 6vh;
+                border-radius: 0.5rem;
+            }
+            .btn{
+                position: relative;
+                top: 35vh;
+                width: 45%;
+                height: 30vh;
+                margin: 0.5rem;
+                border-radius: 1rem;
+                border: 2px solid white;
+                box-shadow: 0 5px #330B3C;
+                background: #481655;
+
+            }
+            .btn:active{
+              box-shadow: 0 2px #330B3C;
+  transform: translateY(2px);
+                  animation-name: fayde;
+  animation-duration: 4s;
+
+            }
+            .btn:hover{
+            background: #41154B;
+            }
+            #text{
+              position: relative;
+                top: 20vh;
+                width: 65%;
+                left: 17%;
+                text-align: center;
+                                background: #481655 !important;
+
+            }
+            .btn-grid{
+                            background: #481655 !important;
+}
+
+@keyframes fayde {
+    0%{
+        opacity: 1;
+    }
+    50%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
         </style>
     </head>
     <body>
         <div class="container">
   <div id="text">Text</div>
   <div id="option-buttons" class="btn-grid">
-    <button class="btn">Option 1</button>
-    <button class="btn">Option 2</button>
-    <button class="btn">Option 3</button>
-    <button class="btn">Option 4</button>
+    <button class="btn" id="btn1">Option 1</button>
+    <button class="btn" id="btn2">Option 2</button>
   </div>
    </div>
         <script>
@@ -28,7 +97,7 @@ function startGame() {
 
 function showTextNode(textNodeIndex) {
   const textNode = textNodes.find(textNode => textNode.id === textNodeIndex)
-  textElement.innerText = textNode.text
+  textElement.innerHTML = textNode.text
   while (optionButtonsElement.firstChild) {
     optionButtonsElement.removeChild(optionButtonsElement.firstChild)
   }
@@ -296,7 +365,7 @@ const textNodes = [
   },
   {
     id: 21,
-    text: 'This is actually what happened to Daniel Hale Williams! Congratulations for getting to the end of the game. Thank you for playing. Neil Daniel and Abigail Barnes made this game. Ur welcome :). Credits: Biography.com Editors. “Daniel Hale Williams.” The Biography.com Website, 23 Apr. 2021, <a href="https://www.biography.com/scientist/daniel-hale-williams">biography.com/scientist/daniel-hale-williams.</a>',
+    text: 'This is actually what happened to Daniel Hale Williams! Congratulations for getting to the end of the game. Thank you for playing. Neil Daniel and Abigail Barnes made this game. Ur welcome :). Credits: Biography.com Editors. “Daniel Hale Williams.” The Biography.com Website, 23 Apr. 2021, <a target="_blank" href="https://www.biography.com/scientist/daniel-hale-williams">biography.com/scientist/daniel-hale-williams</a>.',
     options: [
       {
         text: 'Restart (u won)',
