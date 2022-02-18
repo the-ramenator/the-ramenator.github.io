@@ -1,3 +1,4 @@
+
 <!DOCYPE html>
   <html>
 
@@ -47,7 +48,7 @@ svg {
     letter-spacing: 0.02em;
     text-transform: auto;
           overflow: scroll;
-    text-shadow: 0 0 0.15em #1da9cc;
+    text-shadow: 0 0 0.3em #1da9cc;
     filter: blur(0.007em);
   left: 0; 
   right: 0; 
@@ -64,13 +65,13 @@ svg {
           background: transparent;
           border: 1px solid transparent;
               font-family: 'Montserrat', Arial, sans-serif;
-    font-size: calc(7px + 1vw);
+    font-size: calc(9px + 1vw);
     font-weight: 700;
     color: #fff;
     letter-spacing: 0.02em;
     text-transform: auto;
           overflow: scroll;
-    text-shadow: 0 0 0.15em #1da9cc;
+    text-shadow: 0 0 0.5em #1da9cc;
     filter: blur(0.007em);
           border-radius: 5px;
           cursor: pointer;
@@ -115,8 +116,36 @@ svg {
   0% {
     transform: translate3d(0, 0, 0);
   }
+  10%{
+    filter: brightness(120%);
+  }
+  20%{
+    filter: brightness(100%);
+  }
+  30%{
+    filter: brightness(120%);
+  }
+  40%{
+    filter: brightness(100%);
+  }
+  50%{
+    filter: brightness(120%);
+  }
+  60%{
+    filter: brightness(100%);
+  }
+  70%{
+    filter: brightness(120%);
+  }
+  80%{
+    filter: brightness(100%);
+  }
+  90%{
+    filter: brightness(120%);
+  }
   100% {
     transform: translate3d(-1902px, 0, 0);
+    filter: brightness(100%);
   }
 }
 
@@ -125,6 +154,7 @@ svg {
 @keyframes bg-scrolling-reverse {
   100% {
     background-position: -50px 0px;
+    filter: brightness(100%);
   }
 }
 @keyframes bg-scrolling {
@@ -170,7 +200,11 @@ body {
             document.getElementById('timer').innerHTML = "";
             if (number < 10) {
               document.getElementById('timur').innerHTML = "You speedran the game in " + (number + 1) + " seconds!";
-            } else {
+            }
+            else if (number == 69){
+              document.getElementById('timur').innerHTML = "Time: 69s. Nice.";
+            }
+            else {
               document.getElementById('timur').innerHTML = "You won the game in " + (number + 1) + " seconds!";
             }
           } else {
@@ -223,6 +257,7 @@ body {
           }
           state = Object.assign(state, option.setState)
           showTextNode(nextTextNodeId)
+          console.log('hi');
         }
 
         const textNodes = [{
