@@ -1,488 +1,502 @@
-
 <!DOCYPE html>
   <html>
 
-    <head>
-      <title>Daniel Hale Williams - Text Game</title>
-      <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
-<!--       https://stackoverflow.com/questions/47754999/css-animation-absolute-position-go-off-screen-to-right-and-come-back-from-left/47755864 -->
-      <style>
-body {
- background-color: #013945;
- overflow: hidden;
- text-align:center;
-/*   display: flex; */
-  align-items: center;
-  justify-content: center; 
-}
+  <head>
+    <title>Daniel Hale Williams - Text Game</title>
+    <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+    <style>
+      body {
+        background-color: #013945;
+        overflow: hidden;
+        text-align: center;
+        /*   display: flex; */
+        align-items: center;
+        justify-content: center;
+      }
 
-body,
-html {
-/*  height: 100%;
+      body,
+      html {
+        /*  height: 100%;
  width: 100%; */
- margin: 0;
- padding: 0;
-}
+        margin: 0;
+        padding: 0;
+      }
 
-svg {
- width: 100%;
- height: 100%;
- visibility: hidden;
- 
-}
-#pulseLine {
-	stroke: #C7F8E4;
-	stroke-width: 4px;
-	fill: none;
-	stroke-linecap: round;
-	stroke-linejoin: round;
-}
-      </style>
-      <style>
-        .mega-container{
-          position: absolute;
-              font-family: 'Montserrat', Arial, sans-serif;
-    font-size: calc(7px + 1vw);
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: 0.02em;
-    text-transform: auto;
-          overflow: scroll;
-    text-shadow: 0 0 0.3em #1da9cc;
-    filter: blur(0.007em);
-  left: 0; 
-  right: 0; 
-  margin-left: auto; 
-  margin-right: auto; 
-  width: 75%; /* Need a specific value to work */
+      svg {
+        width: 100%;
+        height: 100%;
+        visibility: hidden;
+      }
 
-          top: 50px;
+      #pulseLine {
+        stroke: #C7F8E4;
+        stroke-width: 4px;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+    </style>
+    <style>
+      .mega-container {
+        position: absolute;
+        font-family: 'Montserrat', Arial, sans-serif;
+        font-size: calc(7px + 1vw);
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: 0.02em;
+        text-transform: auto;
+        overflow: scroll;
+        text-shadow: 0 0 0.3em #1da9cc;
+        filter: blur(0.007em);
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        width: 75%;
+        /* Need a specific value to work */
+        top: 50px;
+      }
 
+      .btn {
+        margin: 20px;
+        padding: 3px;
+        background: transparent;
+        border: 1px solid transparent;
+        font-family: 'Montserrat', Arial, sans-serif;
+        font-size: calc(9px + 1vw);
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: 0.02em;
+        text-transform: auto;
+        overflow: scroll;
+        text-shadow: 0 0 0.5em #1da9cc;
+        filter: blur(0.007em);
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .btn:hover {
+        color: #fff;
+        border: 1px solid
+          /*#C7F8E4*/
+          transparent;
+        animation-name: hover;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+      }
+
+      a {
+        color: #fff;
+      }
+
+      @keyframes hover {
+        0% {
+          transform: translateY(0px);
         }
-        .btn{
-          margin: 20px;
-          padding: 3px;
-          background: transparent;
-          border: 1px solid transparent;
-              font-family: 'Montserrat', Arial, sans-serif;
-    font-size: calc(9px + 1vw);
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: 0.02em;
-    text-transform: auto;
-          overflow: scroll;
-    text-shadow: 0 0 0.5em #1da9cc;
-    filter: blur(0.007em);
-          border-radius: 5px;
-          cursor: pointer;
+
+        50% {
+          transform: translateY(4px);
         }
-        .btn:hover{
-              color: #fff;
-          border: 1px solid /*#C7F8E4*/ transparent;
-            animation-name: hover;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
 
-
+        100% {
+          transform: translateY(0px);
         }
-        a{
-          color: #fff;
+      }
+
+      .svgeee {
+        overflow: hidden;
+      }
+
+      .sliding-background {
+        background: url("https://the-ramenator.github.io/assets/img/Heartbeat_Monitor.png") repeat-x;
+        height: 360px;
+        width: 5072px;
+        animation: slide 10s linear infinite;
+        top: 200px;
+        position: relative;
+      }
+
+      @keyframes slide {
+        0% {
+          transform: translate3d(0, 0, 0);
         }
-        @keyframes hover {
-          0%{
-             transform: translateY(0px);
-          }
-          50%{
-             transform: translateY(4px);
-          }
-          100%{
-             transform: translateY(0px);
-          }
-}
-        .svgeee {
-  overflow: hidden;
-}
 
-.sliding-background {
-  background: url("https://the-ramenator.github.io/assets/img/Heartbeat_Monitor.png") repeat-x;
-  height: 360px;
-  width: 5072px;
-  animation: slide 10s linear infinite;
-  top: 200px;
-  position: relative;
-}
+        10% {
+          filter: brightness(120%);
+        }
 
-@keyframes slide{
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-  10%{
-    filter: brightness(120%);
-  }
-  20%{
-    filter: brightness(100%);
-  }
-  30%{
-    filter: brightness(120%);
-  }
-  40%{
-    filter: brightness(100%);
-  }
-  50%{
-    filter: brightness(120%);
-  }
-  60%{
-    filter: brightness(100%);
-  }
-  70%{
-    filter: brightness(120%);
-  }
-  80%{
-    filter: brightness(100%);
-  }
-  90%{
-    filter: brightness(120%);
-  }
-  100% {
-    transform: translate3d(-1902px, 0, 0);
-    filter: brightness(100%);
-  }
-}
+        20% {
+          filter: brightness(100%);
+        }
 
-      </style>
-              <style>
-@keyframes bg-scrolling-reverse {
-  100% {
-    background-position: -50px 0px;
-    filter: brightness(100%);
-  }
-}
-@keyframes bg-scrolling {
-  0% {
-    background-position: -50px 0px;
-  }
-}
-/* Main styles */
-body {
-  background: url("https://raw.githubusercontent.com/the-ramenator/the-ramenator.github.io/main/assets/img/DHWBG.jpg") repeat 0 0;
-  animation: bg-scrolling-reverse 0.52s infinite;
-  animation-timing-function: linear;
-}
+        30% {
+          filter: brightness(120%);
+        }
 
-        </style>
-    </head>
+        40% {
+          filter: brightness(100%);
+        }
 
-    <body onload="countUP()">
+        50% {
+          filter: brightness(120%);
+        }
 
-            <div id="svgeee">
-  <div class="sliding-background"></div>
-</div>
+        60% {
+          filter: brightness(100%);
+        }
 
+        70% {
+          filter: brightness(120%);
+        }
+
+        80% {
+          filter: brightness(100%);
+        }
+
+        90% {
+          filter: brightness(120%);
+        }
+
+        100% {
+          transform: translate3d(-1902px, 0, 0);
+          filter: brightness(100%);
+        }
+      }
+    </style>
+    <style>
+      @keyframes bg-scrolling-reverse {
+        100% {
+          background-position: -50px 0px;
+          filter: brightness(100%);
+        }
+      }
+
+      @keyframes bg-scrolling {
+        0% {
+          background-position: -50px 0px;
+        }
+      }
+
+      /* Main styles */
+      body {
+        background: url("https://raw.githubusercontent.com/the-ramenator/the-ramenator.github.io/main/assets/img/DHWBG.jpg") repeat 0 0;
+        animation: bg-scrolling-reverse 0.52s infinite;
+        animation-timing-function: linear;
+      }
+    </style>
+  </head>
+
+  <body onload="countUP()">
+
+    <div id="svgeee">
+      <div class="sliding-background"></div>
+    </div>
+
+    </div>
+    <div class="mega-container">
+
+      <p id="timur" class="timur">Time: <span id="timer">0</span>s</p>
+      <div class="container">
+        <center>
+          <div id="text">Text</div>
+          <div id="option-buttons" class="btn-grid">
+            <button class="btn">Option 1</button>
+            <button class="btn">Option 2</button>
+          </div>
+        </center>
       </div>
-            <div class="mega-container">
-
-             <p id="timur" class="timur">Time: <span id="timer">0</span>s</p>
-        <div class="container">
-          <center>
-        <div id="text">Text</div>
-        <div id="option-buttons" class="btn-grid">
-          <button class="btn">Option 1</button>
-          <button class="btn">Option 2</button>
-        </div>
-          </center>
+      <div id="more-info">
+        <!--<br><br><p class="timur">Play a short <a href="https://kahoot.it/">Kahoot!</a></p>-->
       </div>
-        </div>
-      <script>
-        var number = 1;
+    </div>
+    <script>
+      document.getElementById('more-info').style.display = "none";
+      var number = 1;
 
-        function countUP() {
-          if (document.getElementById('text').innerHTML == `This is actually what happened to Daniel Hale Williams! Congratulations for getting to the end of the game. Thank you for playing. <br><br>Credits: Biography.com Editors. “Daniel Hale Williams.” The Biography.com Website, 23 Apr. 2021, <a target="_blank" href="https://www.biography.com/scientist/daniel-hale-williams">biography.com/scientist/daniel-hale-williams</a>.`) {
-            document.getElementById('timer').innerHTML = "";
-            if (number < 10) {
-              document.getElementById('timur').innerHTML = "You speedran the game in " + (number + 1) + " seconds!";
-            }
-            else if (number == 69){
-              document.getElementById('timur').innerHTML = "Time: 69s. Nice.";
-            }
-            else {
-              document.getElementById('timur').innerHTML = "You won the game in " + (number + 1) + " seconds!";
-            }
+      function countUP() {
+        if (document.getElementById('text').innerHTML == `This is actually what happened to Daniel Hale Williams! Congratulations for getting to the end of the game. Thank you for playing. <br><br>Credits: Biography.com Editors. “Daniel Hale Williams.” The Biography.com Website, 23 Apr. 2021, <a target="_blank" href="https://www.biography.com/scientist/daniel-hale-williams">biography.com/scientist/daniel-hale-williams</a>.`) {
+          document.getElementById('timer').innerHTML = "";
+          document.getElementById('more-info').style.display = "block";
+          if (number < 10) {
+            document.getElementById('timur').innerHTML = "You speedran the game in " + (number + 1) + " seconds!";
+          } else if (number == 69) {
+            document.getElementById('timur').innerHTML = "Time: 69s. Nice.";
           } else {
-            number = parseInt(document.getElementById('timer').innerText);
-            document.getElementById('timer').innerHTML = number + 1;
-
+            document.getElementById('timur').innerHTML = "You won the game in " + (number + 1) + " seconds!";
           }
+        } else {
+          number = parseInt(document.getElementById('timer').innerText);
+          document.getElementById('timer').innerHTML = number + 1;
         }
-        setInterval(countUP, 1000)
+      }
+      setInterval(countUP, 1000)
 
-      </script>
+      function learn() {
+        alert('hi');
+      }
+    </script>
 
-      <script>
-        const textElement = document.getElementById('text')
-        const optionButtonsElement = document.getElementById('option-buttons')
+    <script>
+      const textElement = document.getElementById('text')
+      const optionButtonsElement = document.getElementById('option-buttons')
+      let state = {}
 
-        let state = {}
+      function startGame() {
+        state = {}
+        showTextNode(1)
+      }
 
-        function startGame() {
-          state = {}
-          showTextNode(1)
+      function showTextNode(textNodeIndex) {
+        const textNode = textNodes.find(textNode => textNode.id === textNodeIndex)
+        textElement.innerHTML = textNode.text
+        while (optionButtonsElement.firstChild) {
+          optionButtonsElement.removeChild(optionButtonsElement.firstChild)
         }
-
-        function showTextNode(textNodeIndex) {
-          const textNode = textNodes.find(textNode => textNode.id === textNodeIndex)
-          textElement.innerHTML = textNode.text
-          while (optionButtonsElement.firstChild) {
-            optionButtonsElement.removeChild(optionButtonsElement.firstChild)
+        textNode.options.forEach(option => {
+          if (showOption(option)) {
+            const button = document.createElement('button')
+            button.innerText = option.text
+            button.classList.add('btn')
+            button.addEventListener('click', () => selectOption(option))
+            optionButtonsElement.appendChild(button)
           }
+        })
+      }
 
-          textNode.options.forEach(option => {
-            if (showOption(option)) {
-              const button = document.createElement('button')
-              button.innerText = option.text
-              button.classList.add('btn')
-              button.addEventListener('click', () => selectOption(option))
-              optionButtonsElement.appendChild(button)
+      function showOption(option) {
+        return option.requiredState == null || option.requiredState(state)
+      }
+
+      function selectOption(option) {
+        const nextTextNodeId = option.nextText
+        if (nextTextNodeId <= 0) {
+          return startGame()
+        }
+        state = Object.assign(state, option.setState)
+        showTextNode(nextTextNodeId)
+        console.log('hi');
+      }
+      const textNodes = [{
+          id: 1,
+          text: 'You have spontaneously appeared into this world on January 18, 1856. Your parents, Daniel Williams Jr. and Sarah Price Williams, have decided to name you Daniel Hale Williams. You have 6 siblings. 5 sisters and 1 brother.',
+          options: [{
+            text: 'Continue',
+            nextText: 2
+          }]
+        },
+        {
+          id: 2,
+          text: 'Your father has passed away. You are 10 years old. Do you want to:',
+          options: [{
+              text: 'Stay where you are',
+              nextText: 3
+            },
+            {
+              text: 'Go to Baltimore',
+              nextText: 4
             }
-          })
-        }
-
-        function showOption(option) {
-          return option.requiredState == null || option.requiredState(state)
-        }
-
-        function selectOption(option) {
-          const nextTextNodeId = option.nextText
-          if (nextTextNodeId <= 0) {
-            return startGame()
-          }
-          state = Object.assign(state, option.setState)
-          showTextNode(nextTextNodeId)
-          console.log('hi');
-        }
-
-        const textNodes = [{
-            id: 1,
-            text: 'You have spontaneously appeared into this world on January 18, 1856. Your parents, Daniel Williams Jr. and Sarah Price Williams, have decided to name you Daniel Hale Williams. You have 6 siblings. 5 sisters and 1 brother.',
-            options: [{
-              text: 'Continue',
-              nextText: 2
-            }]
-          },
-          {
-            id: 2,
-            text: 'Your father has passed away. You are 10 years old. Do you want to:',
-            options: [{
-                text: 'Stay where you are',
-                nextText: 3
-              },
-              {
-                text: 'Go to Baltimore',
-                nextText: 4
-              }
-            ]
-          },
-          {
-            id: 3,
-            text: 'You died an untimely death of tuberculosis.',
-            options: [{
-              text: 'Restart',
-              nextText: -1
-            }]
-          },
-          {
-            id: 4,
-            text: 'You become a shoemaker’s apprentice. Do you:',
-            options: [{
-                text: 'Decide to go back to your family, who moved to Illinois',
-                nextText: 5
-              },
-              {
-                text: 'Stay',
-                nextText: 6
-              }
-            ]
-          },
-          {
-            id: 6,
-            text: 'Your boss got put out of business by the landlord, and you get put out on the streets.',
-            options: [{
-              text: 'Restart',
-              nextText: -1
-            }]
-          },
-          {
-            id: 5,
-            text: 'You are now staying with your family. You have some free time. Do you:',
-            options: [{
-                text: 'A newspaper boy',
-                nextText: 7
-              },
-              {
-                text: 'Become a barber',
-                nextText: 8
-              }
-            ]
-          },
-          {
-            id: 7,
-            text: 'You could not find a job as a newspaper boy, so you decided to become a barber instead. ',
-            options: [{
-              text: 'Continue',
+          ]
+        },
+        {
+          id: 3,
+          text: 'You died an untimely death of tuberculosis.',
+          options: [{
+            text: 'Restart',
+            nextText: -1
+          }]
+        },
+        {
+          id: 4,
+          text: 'You become a shoemaker’s apprentice. Do you:',
+          options: [{
+              text: 'Decide to go back to your family, who moved to Illinois',
+              nextText: 5
+            },
+            {
+              text: 'Stay',
+              nextText: 6
+            }
+          ]
+        },
+        {
+          id: 6,
+          text: 'Your boss got put out of business by the landlord, and you get put out on the streets.',
+          options: [{
+            text: 'Restart',
+            nextText: -1
+          }]
+        },
+        {
+          id: 5,
+          text: 'You are now staying with your family. You have some free time. Do you:',
+          options: [{
+              text: 'A newspaper boy',
+              nextText: 7
+            },
+            {
+              text: 'Become a barber',
               nextText: 8
-            }]
-          },
-          {
-            id: 8,
-            text: 'You are making a solid wage as a barber, however you are feeling unhappy with your work. Do you:',
-            options: [{
-                text: 'Continue as a barber, but sacrifice your happiness.',
-                nextText: 9
-              },
-              {
-                text: 'Pursue your education to become a doctor',
-                nextText: 10
-              }
-            ]
-          },
-          {
-            id: 9,
-            text: 'Your payroll couldn’t put out your curiosity, so you decide to study to become a doctor anyway.',
-            options: [{
-              text: 'Continue',
+            }
+          ]
+        },
+        {
+          id: 7,
+          text: 'You could not find a job as a newspaper boy, so you decided to become a barber instead. ',
+          options: [{
+            text: 'Continue',
+            nextText: 8
+          }]
+        },
+        {
+          id: 8,
+          text: 'You are making a solid wage as a barber, however you are feeling unhappy with your work. Do you:',
+          options: [{
+              text: 'Continue as a barber, but sacrifice your happiness.',
+              nextText: 9
+            },
+            {
+              text: 'Pursue your education to become a doctor',
               nextText: 10
-            }]
-          },
-          {
-            id: 10,
-            text: 'You become an apprentice to Dr. Henry Palmer, and continue your studies at Chicago Medical University. After graduation, do you:',
-            options: [{
-                text: 'Stop being an apprentice and look for work elsewhere.',
-                nextText: 11
-              },
-              {
-                text: 'Continue with your studies',
-                nextText: 12
-              }
-            ]
-          },
-          {
-            id: 11,
-            text: 'You go back to your family, but they tell you to keep studying. You refuse and live an unfulfilling life. You died as a barber with a mild amount of savings. But that’s not how your life is supposed to go! Try again.',
-            options: [{
-              text: 'Restart',
-              nextText: -1
-            }]
-          },
-          {
-            id: 12,
-            text: 'You decided to switch from learning to teaching anatomy at your alma mater, or the university you had attended. You earned the name Dr. Dan, which is what your patients called you.',
-            options: [{
-              text: 'Continue',
-              nextText: 13
-            }]
-          },
-          {
-            id: 13,
-            text: 'Frustrated that black doctors were being refused positions in the staff, you decide to open Provident Hospital and Training School for Nurses. This was the United State’s first hospital that had a nursing and training program for a racially integrated staff.',
-            options: [{
-              text: 'Continue',
-              nextText: 14
-            }]
-          },
-          {
-            id: 14,
-            text: 'A patient with a stab wound in his chest is brought to you. Do you:',
-            options: [{
-                text: 'Operate on the man’s stab wound.',
-                nextText: 15
-              },
-              {
-                text: 'Refuse, saying it would be too risky. ',
-                nextText: 16
-              }
-            ]
-          },
-          {
-            id: 16,
-            text: 'Coward. The man needs you, so you have to operate on him anyways.',
-            options: [{
-              text: 'Continue',
+            }
+          ]
+        },
+        {
+          id: 9,
+          text: 'Your payroll couldn’t put out your curiosity, so you decide to study to become a doctor anyway.',
+          options: [{
+            text: 'Continue',
+            nextText: 10
+          }]
+        },
+        {
+          id: 10,
+          text: 'You become an apprentice to Dr. Henry Palmer, and continue your studies at Chicago Medical University. After graduation, do you:',
+          options: [{
+              text: 'Stop being an apprentice and look for work elsewhere.',
+              nextText: 11
+            },
+            {
+              text: 'Continue with your studies',
+              nextText: 12
+            }
+          ]
+        },
+        {
+          id: 11,
+          text: 'You go back to your family, but they tell you to keep studying. You refuse and live an unfulfilling life. You died as a barber with a mild amount of savings. But that’s not how your life is supposed to go! Try again.',
+          options: [{
+            text: 'Restart',
+            nextText: -1
+          }]
+        },
+        {
+          id: 12,
+          text: 'You decided to switch from learning to teaching anatomy at your alma mater, or the university you had attended. You earned the name Dr. Dan, which is what your patients called you.',
+          options: [{
+            text: 'Continue',
+            nextText: 13
+          }]
+        },
+        {
+          id: 13,
+          text: 'Frustrated that black doctors were being refused positions in the staff, you decide to open Provident Hospital and Training School for Nurses. This was the United State’s first hospital that had a nursing and training program for a racially integrated staff.',
+          options: [{
+            text: 'Continue',
+            nextText: 14
+          }]
+        },
+        {
+          id: 14,
+          text: 'A patient with a stab wound in his chest is brought to you. Do you:',
+          options: [{
+              text: 'Operate on the man’s stab wound.',
               nextText: 15
-            }]
-          },
-          {
-            id: 15,
-            text: 'The open-heart surgery was successful, and the man, James Cornish, survived the following years after the surgery. You decide to go somewhere else.',
-            options: [{
-                text: 'Move to Washington D.C.',
-                nextText: 17
-              },
-              {
-                text: 'Move to Wisconsin and settle down to reflect upon your achievements.',
-                nextText: 18
-              }
-            ]
-          },
-          {
-            id: 18,
-            text: 'No',
-            options: [{
-              text: 'Restart',
-              nextText: -1
-            }]
-          },
-          {
-            id: 17,
-            text: 'You continue to work at hospitals and fight against racism in the medical world. You meet two nice women. Do you marry:',
-            options: [{
-                text: 'Alice Johnson',
-                nextText: 19
-              },
-              {
-                text: 'Sally Goodman',
-                nextText: 20
-              }
-            ]
-          },
-          {
-            id: 20,
-            text: 'You marry Sally. A few months into the marriage, you realize that you don’t really love her. She has so many bad habits and keeps asking you for money. You decide to divorce her. You try and find Alice to begin a better relationship with her, but she has already married to somebody else. You become depressed because the love of your life is taken. You die a sad man. However, this is not what Daniel Hale Williams actually did, so you must go back and choose the correct answer.',
-            options: [{
-              text: 'Restart',
-              nextText: -1
-            }]
-          },
-          {
-            id: 19,
-            text: 'You marry Alice, and move to Chicago. You decide to resume your work at Cook County Hospital, then St. Luke’s. You become an important member of the American College of Surgeons. Do you:',
-            options: [{
-                text: 'Have a stroke and die five years later.',
-                nextText: 21
-              },
-              {
-                text: 'Divorce Alice because she was cheating on you.',
-                nextText: 22
-              }
-            ]
-          },
-          {
-            id: 21,
-            text: 'This is actually what happened to Daniel Hale Williams! Congratulations for getting to the end of the game. Thank you for playing. <br><br>Credits: Biography.com Editors. “Daniel Hale Williams.” The Biography.com Website, 23 Apr. 2021, <a target="_blank" href="https://www.biography.com/scientist/daniel-hale-williams">biography.com/scientist/daniel-hale-williams</a>.',
-            options: []
-          },
-          {
-            id: 22,
-            text: 'You thought wrong. He was just a colleague. You yelled at your ex-wife for no reason. You die as a sad and guilty man.',
-            options: [{
-              text: 'Restart',
-              nextText: -1
-            }]
-          }
-        ]
-
-        startGame()
-
-      </script>
-    </body>
+            },
+            {
+              text: 'Refuse, saying it would be too risky. ',
+              nextText: 16
+            }
+          ]
+        },
+        {
+          id: 16,
+          text: 'Coward. The man needs you, so you have to operate on him anyways.',
+          options: [{
+            text: 'Continue',
+            nextText: 15
+          }]
+        },
+        {
+          id: 15,
+          text: 'The open-heart surgery was successful, and the man, James Cornish, survived the following years after the surgery. You decide to go somewhere else.',
+          options: [{
+              text: 'Move to Washington D.C.',
+              nextText: 17
+            },
+            {
+              text: 'Move to Wisconsin and settle down to reflect upon your achievements.',
+              nextText: 18
+            }
+          ]
+        },
+        {
+          id: 18,
+          text: 'No',
+          options: [{
+            text: 'Restart',
+            nextText: -1
+          }]
+        },
+        {
+          id: 17,
+          text: 'You continue to work at hospitals and fight against racism in the medical world. You meet two nice women. Do you marry:',
+          options: [{
+              text: 'Alice Johnson',
+              nextText: 19
+            },
+            {
+              text: 'Sally Goodman',
+              nextText: 20
+            }
+          ]
+        },
+        {
+          id: 20,
+          text: 'You marry Sally. A few months into the marriage, you realize that you don’t really love her. She has so many bad habits and keeps asking you for money. You decide to divorce her. You try and find Alice to begin a better relationship with her, but she has already married to somebody else. You become depressed because the love of your life is taken. You die a sad man. However, this is not what Daniel Hale Williams actually did, so you must go back and choose the correct answer.',
+          options: [{
+            text: 'Restart',
+            nextText: -1
+          }]
+        },
+        {
+          id: 19,
+          text: 'You marry Alice, and move to Chicago. You decide to resume your work at Cook County Hospital, then St. Luke’s. You become an important member of the American College of Surgeons. Do you:',
+          options: [{
+              text: 'Have a stroke and die five years later.',
+              nextText: 21
+            },
+            {
+              text: 'Divorce Alice because she was cheating on you.',
+              nextText: 22
+            }
+          ]
+        },
+        {
+          id: 21,
+          text: 'This is actually what happened to Daniel Hale Williams! Congratulations for getting to the end of the game. Thank you for playing. <br><br>Credits: Biography.com Editors. “Daniel Hale Williams.” The Biography.com Website, 23 Apr. 2021, <a target="_blank" href="https://www.biography.com/scientist/daniel-hale-williams">biography.com/scientist/daniel-hale-williams</a>.',
+          options: []
+        },
+        {
+          id: 22,
+          text: 'You thought wrong. He was just a colleague. You yelled at your ex-wife for no reason. You die as a sad and guilty man.',
+          options: [{
+            text: 'Restart',
+            nextText: -1
+          }]
+        }
+      ]
+      startGame()
+    </script>
+  </body>
 
   </html>
