@@ -4,132 +4,140 @@
     <head>
       <title>Daniel Hale Williams - Text Game</title>
       <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+      <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js"></script>
+      <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/CustomEase3.min.js"></script>
       <style>
-        @font-face {
-          font-family: 'Product Sans';
-          font-style: normal;
-          font-weight: 400;
-          src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/productsans/v5/HYvgU2fE2nRJvZ5JFAumwegdm0LZdjqr5-oayXSOefg.woff2) format('woff2');
-        }
+body {
+ background-color: #013945;
+ overflow: hidden;
+ text-align:center;
+/*   display: flex; */
+  align-items: center;
+  justify-content: center; 
+}
 
-        * {
-          background: black;
-          color: white;
-          font-family: Product Sans;
-          text-align: center;
-          margin: 0;
-          padding: 0;
-          font-size: 20px;
+body,
+html {
+/*  height: 100%;
+ width: 100%; */
+ margin: 0;
+ padding: 0;
+}
 
-        }
-
-        .container {
-          width: 100%;
-          background: #481655;
-          height: 90vh;
-          position: relative;
-          top: 6vh;
-          border-radius: 0.5rem;
-        }
-
-        .btn {
-          position: relative;
-          top: 25vh;
-          width: 45%;
-          height: 40vh;
-          margin: 0.5rem;
-          border-radius: 1rem;
-          border: 2px solid white;
-          box-shadow: 0 5px #330B3C;
-
-        }
-
-        .btn:active {
-          box-shadow: 0 2px #330B3C;
-          transform: translateY(2px);
-        }
-
-        #text {
-          position: relative;
-          top: 20vh;
-          width: 65%;
-          left: 17%;
-          text-align: center;
-          background: #481655;
-
-        }
-
-        .btn-grid {
-          background: inherit;
-        }
-
-        p,
-        span,
-        a {
-          background: transparent;
-
-        }
-
-        .fade {
-          animation-name: fade;
-          animation-duration: 2s;
-
-        }
-
-        @keyframes fade {
-          0% {
-            opacity: 1;
-          }
-
-          50% {
-            opacity: 0;
-          }
-
-          100% {
-            opacity: 1;
-          }
-        }
-
-        .timur {
+svg {
+ width: 100%;
+ height: 100%;
+ visibility: hidden;
+ 
+}
+#pulseLine {
+	stroke: #C7F8E4;
+	stroke-width: 4px;
+	fill: none;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+      </style>
+      <style>
+        .mega-container{
           position: absolute;
-          top: 3vh;
-          left: 47vw;
-        }
+              font-family: 'Montserrat', Arial, sans-serif;
+    font-size: calc(7px + 1vw);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.02em;
+    text-transform: auto;
+          overflow: scroll;
+    text-shadow: 0 0 0.15em #1da9cc;
+    filter: blur(0.007em);
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto; 
+  width: 75%; /* Need a specific value to work */
 
-        .btn:nth-child(1) {
-          background: #2DA2AC;
-        }
+          top: 50px;
 
-        .btn:nth-child(1):hover {
-          background: #30ACB7;
         }
-
-        .btn:nth-child(2) {
-          background: #ECA82C;
+        .btn{
+          margin: 20px;
+          padding: 3px;
+          background: transparent;
+          border: 1px solid transparent;
+              font-family: 'Montserrat', Arial, sans-serif;
+    font-size: calc(7px + 1vw);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.02em;
+    text-transform: auto;
+          overflow: scroll;
+    text-shadow: 0 0 0.15em #1da9cc;
+    filter: blur(0.007em);
+          border-radius: 5px;
+          cursor: pointer;
         }
+        .btn:hover{
+              color: #fff;
+          border: 1px solid /*#C7F8E4*/ transparent;
+            animation-name: hover;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
 
-        .btn:nth-child(2):hover {
-          background: #F5AF2F;
+
         }
-
-        .timur:hover~.mega-container {
-          /* works, just not for elements affected by js. */
-          /* Here's a fiidle detailing some code i copied but can't get to work https://jsfiddle.net/ThinkingStiff/dWHzF/*/
-          /*background: white;*/
+        a{
+          color: #fff;
         }
-
+        @keyframes hover {
+          0%{
+             transform: translateY(0px);
+          }
+          50%{
+             transform: translateY(4px);
+          }
+          100%{
+             transform: translateY(0px);
+          }
+}
       </style>
     </head>
 
     <body onload="countUP()">
-      <div class="mega-container">
-      <div class="container">
+
+            <div id="svgeee">
+      <svg id="mainSVG" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+<defs>
+	<pattern id="sqrs" width="40" height="40" patternUnits="userSpaceOnUse" id="pulseBg" viewBox="0 0 40 40" >
+			<rect x="0" y="0" width="40" height="40" stroke="#FFF" fill="none"/>		
+	</pattern>
+      <filter id="glow" x="-100%" y="-100%" width="250%" height="250%">
+        <feGaussianBlur stdDeviation="8" result="coloredBlur" />
+        <feOffset dx="0" dy="0" result="offsetblur"></feOffset>
+        <feFlood id="glowAlpha" flood-color="#FFF" flood-opacity="1"></feFlood>
+        <feComposite in2="offsetblur" operator="in"></feComposite>
+        <feMerge>
+          <feMergeNode/>          
+          <feMergeNode in="SourceGraphic"></feMergeNode>
+        </feMerge>
+      </filter>	
+</defs>
+	<g filter="url(#glow)">
+	<rect fill="url(#sqrs)" width="800" height="600" opacity="0.1"/>
+<polyline id="pulseLine"/>
+		</g>
+</svg>
+      </div>
+            <div class="mega-container">
+
+             <p id="timur" class="timur">Time: <span id="timer">0</span>s</p>
+        <div class="container">
+          <center>
         <div id="text">Text</div>
-        <p id="timur" class="timur">Time: <span id="timer">0</span>s</p>
         <div id="option-buttons" class="btn-grid">
           <button class="btn">Option 1</button>
           <button class="btn">Option 2</button>
         </div>
+          </center>
       </div>
         </div>
       <script>
@@ -152,6 +160,41 @@
         setInterval(countUP, 1000)
 
       </script>
+      <script>
+        const select = s => document.querySelector(s),
+  selectAll = s =>  document.querySelectorAll(s);
+let	mainSVG = select('#mainSVG'),
+			pulseLine = select('#pulseLine'),
+			numPoints = 400,
+			width = numPoints * 2,
+		allPoints = []
+
+gsap.set('svg', {
+	visibility: 'visible'
+})
+
+for(let i = 0; i < numPoints; i++) {
+	let p = pulseLine.points.appendItem(mainSVG.createSVGPoint())
+	p.y = 220;
+	allPoints.push(p)
+}
+gsap.set(allPoints, {
+	x: i => (width - (i * (width / numPoints)))
+})
+CustomEase.create('pulse', 'M0,0 C0.051,0 0.076,0 0.076,0 0.11,0 0.144,0.011 0.158,0.038 0.181,0.083 0.184,0.114 0.194,0.164 0.206,0.217 0.234,0.208 0.241,0.152 0.252,0.065 0.263,-0.021 0.274,-0.108 0.28,-0.158 0.306,-0.152 0.309,-0.1 0.333,0.266 0.357,0.633 0.38,1 0.382,1.032 0.4,1.032 0.402,1 0.428,0.471 0.455,-0.056 0.481,-0.585 0.482,-0.617 0.5,-0.62 0.503,-0.588 0.528,-0.329 0.553,-0.07 0.578,0.188 0.586,0.258 0.619,0.279 0.636,0.223 0.649,0.179 0.662,0.135 0.675,0.091 0.69,0.041 0.715,0.029 0.736,0.061 0.752,0.088 0.768,0.114 0.784,0.141 0.798,0.164 0.818,0.167 0.832,0.144 0.849,0.118 0.867,0.093 0.884,0.067 0.91,0.026 0.922,0.021 0.945,0.011 0.962,0.003 0.99,0 1,0');
+
+gsap.to(allPoints, {
+	duration: 1,
+	y: '-=100',
+	stagger: {
+		each: 0.008,
+		repeat: -1,
+		repeatDelay: 0.3
+	},
+	ease: 'pulse'
+}).seek(1000)
+
+        </script>
       <script>
         const textElement = document.getElementById('text')
         const optionButtonsElement = document.getElementById('option-buttons')
