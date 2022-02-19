@@ -1,11 +1,11 @@
-<!DOCYPE html>
+;<!DOCYPE html>
   <html>
 
   <head>
     <title>Daniel Hale Williams - Text Game</title>
     <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
     <style>
-      body {
+            body {
         background-color: #013945;
         overflow: hidden;
         text-align: center;
@@ -21,22 +21,6 @@
         margin: 0;
         padding: 0;
       }
-
-      svg {
-        width: 100%;
-        height: 100%;
-        visibility: hidden;
-      }
-
-      #pulseLine {
-        stroke: #C7F8E4;
-        stroke-width: 4px;
-        fill: none;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-      }
-    </style>
-    <style>
       .mega-container {
         position: absolute;
         font-family: 'Montserrat', Arial, sans-serif;
@@ -54,7 +38,7 @@
         margin-right: auto;
         width: 75%;
         /* Need a specific value to work */
-        top: 50px;
+        top: 10vh;
       }
 
       .btn {
@@ -102,21 +86,20 @@
           transform: translateY(0px);
         }
       }
-
-      .svgeee {
-        overflow: hidden;
+      #bg{
+        animation: slide 80000s linear infinite;
       }
-
       .sliding-background {
         background: url("https://the-ramenator.github.io/assets/img/Heartbeat_Monitor.png") repeat-x;
         height: 360px;
-        width: 5072px;
-        animation: slide 10s linear infinite;
-        top: 200px;
+        width: 1000000vw;
+        animation: pulse 10s infinite;
+        top: 40vh;
+        background-size: 40vw auto;
         position: relative;
       }
 
-      @keyframes slide {
+      @keyframes pulse {
         0% {
           transform: translate3d(0, 0, 0);
         }
@@ -156,12 +139,19 @@
         90% {
           filter: brightness(120%);
         }
-
         100% {
-          transform: translate3d(-1902px, 0, 0);
           filter: brightness(100%);
         }
       }
+      @keyframes slide {
+        0% {
+          transform: translate3d(0, 0, 0);
+        }
+        100% {
+          transform: translate3d(-1000000vw, 0, 0);
+        }
+      }
+      /*Magic Window size: 597.16535433px*/
     </style>
     <style>
       @keyframes bg-scrolling-reverse {
@@ -188,7 +178,7 @@
 
   <body onload="countUP()">
 
-    <div id="svgeee">
+    <div id="bg">
       <div class="sliding-background"></div>
     </div>
 
