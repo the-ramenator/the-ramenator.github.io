@@ -1,11 +1,11 @@
-;<!DOCYPE html>
+<!DOCYPE html>
   <html>
 
   <head>
     <title>Daniel Hale Williams - Text Game</title>
     <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
     <style>
-            body {
+      body {
         background-color: #013945;
         overflow: hidden;
         text-align: center;
@@ -21,6 +21,7 @@
         margin: 0;
         padding: 0;
       }
+
       .mega-container {
         position: absolute;
         font-family: 'Montserrat', Arial, sans-serif;
@@ -86,9 +87,11 @@
           transform: translateY(0px);
         }
       }
-      #bg{
+
+      #bg {
         animation: slide 80000s linear infinite;
       }
+
       .sliding-background {
         background: url("https://the-ramenator.github.io/assets/img/Heartbeat_Monitor.png") repeat-x;
         height: 360px;
@@ -139,18 +142,22 @@
         90% {
           filter: brightness(120%);
         }
+
         100% {
           filter: brightness(100%);
         }
       }
+
       @keyframes slide {
         0% {
           transform: translate3d(0, 0, 0);
         }
+
         100% {
           transform: translate3d(-1000000vw, 0, 0);
         }
       }
+
       /*Magic Window size: 597.16535433px*/
     </style>
     <style>
@@ -176,12 +183,10 @@
     </style>
   </head>
 
-  <body onload="countUP()">
+  <body>
 
     <div id="bg">
       <div class="sliding-background"></div>
-    </div>
-
     </div>
     <div class="mega-container">
 
@@ -196,7 +201,8 @@
         </center>
       </div>
       <div id="more-info">
-        <!--<br><br><p class="timur">Play a short <a href="https://kahoot.it/">Kahoot!</a></p>-->
+        <br><br>
+        <p class="timur">Play a short <a href="https://kahoot.it/">Kahoot!</a></p>
       </div>
     </div>
     <script>
