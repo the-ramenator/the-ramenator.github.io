@@ -189,7 +189,8 @@
       <div class="sliding-background"></div>
     </div>
     <div class="mega-container">
-
+      <p id="wr" class="timur"></p>
+      <p id="score" class="timur"></p>
       <p id="timur" class="timur">Time: <span id="timer">0</span>s</p>
       <div class="container">
         <center>
@@ -208,28 +209,43 @@
     <script>
       document.getElementById('more-info').style.display = "none";
       var number = 1;
+      var interval;
 
       function countUP() {
         if (document.getElementById('text').innerHTML == `This is actually what happened to Daniel Hale Williams! Congratulations for getting to the end of the game. Thank you for playing. <br><br>Credits: Biography.com Editors. “Daniel Hale Williams.” The Biography.com Website, 23 Apr. 2021, <a target="_blank" href="https://www.biography.com/scientist/daniel-hale-williams">biography.com/scientist/daniel-hale-williams</a>.`) {
-          /*document.getElementById('timur').innerHTML = "";*/
+          var highscore;
+          if (!localStorage.getItem("highestscore")) {
+            localStorage.setItem('highestscore', number);
+            highscore = localStorage.getItem("highestscore");
+            document.getElementById('score').innerHTML = 'Highscore: ' + highscore;
+          } else {
+            highscore = localStorage.getItem("highestscore");
+            if (number < highscore) {
+              highscore = number;
+              localStorage.removeItem("highestscore");
+              localStorage.setItem('highestscore', number);
+              document.getElementById('score').innerHTML = 'Highscore: ' + highscore;
+            } else {
+              document.getElementById('score').innerHTML = 'Highscore: ' + highscore;
+            }
+          }
           document.getElementById('more-info').style.display = "block";
           if (number < 10) {
-            document.getElementById('timur').innerHTML = "You speedran the game in " + (number + 1) + " seconds!";
+            document.getElementById('timur').innerHTML = "You speedran the game in " + (number) + " seconds!";
           } else if (number == 69) {
             document.getElementById('timur').innerHTML = "Time: 69s. Nice.";
           } else {
-            document.getElementById('timur').innerHTML = "You won the game in " + (number + 1) + " seconds!";
+            document.getElementById('timur').innerHTML = "You won the game in " + (number) + " seconds!";
           }
+          clearInterval(interval);
+          interval = 0;
+          document.getElementById('wr').innerHTML = 'World Record: 2s';
         } else {
           number = parseInt(document.getElementById('timer').innerText);
           document.getElementById('timer').innerHTML = number + 1;
         }
       }
-      setInterval(countUP, 1000)
-
-      function learn() {
-        alert('hi');
-      }
+      interval = setInterval(countUP, 1000)
     </script>
 
     <script>
@@ -270,7 +286,6 @@
         }
         state = Object.assign(state, option.setState)
         showTextNode(nextTextNodeId)
-        console.log('hi');
       }
       const textNodes = [{
           id: 1,
