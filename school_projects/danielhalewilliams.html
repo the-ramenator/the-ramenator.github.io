@@ -1,6 +1,6 @@
 <!DOCYPE html>
   <html>
-
+<!-- Future idea: Add a haxxor mode where the correct answers are highlighted in green. Don't make it a button. Do something in the console lol. -->
   <head>
     <title>Daniel Hale Williams - Text Game</title>
     <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
@@ -54,33 +54,51 @@
         letter-spacing: 0.02em;
         text-transform: auto;
         overflow: scroll;
-        text-shadow: 0 0 0.5em #1da9cc;
+        text-shadow: 0 0 0.2em #1da9cc;
         filter: blur(0.007em);
         border-radius: 5px;
         cursor: pointer;
+        /*text-decoration: solid underline #fff 1px;*/
+        animation-name: hover;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+
       }
 
       .btn:hover {
         color: #fff;
         border: 1px solid
           /*#C7F8E4*/
-          transparent;
-        animation-name: hover;
-        animation-duration: 2s;
-        animation-iteration-count: infinite;
+          transparent;      
+        opacity: 0.75 !important;
       }
-
+      .btn:nth-child(2n) {
+        animation-delay: 0.75s;
+      }
       a {
         color: #fff;
       }
-
+      #timur{
+/*        animation-name: blink;
+        animation-duration: 6s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+      }
+      @keyframes blink{
+        50%{
+          opacity: 0.6;
+        }*/
+      }
       @keyframes hover {
         0% {
           transform: translateY(0px);
         }
 
         50% {
-          transform: translateY(4px);
+          transform: translateY(8px);
+          opacity: 0.3;
+          color: #F3FDFF;
         }
 
         100% {
@@ -180,6 +198,7 @@
         animation: bg-scrolling-reverse 0.52s infinite;
         animation-timing-function: linear;
       }
+      
     </style>
   </head>
 
@@ -217,16 +236,16 @@
           if (!localStorage.getItem("highestscore")) {
             localStorage.setItem('highestscore', number);
             highscore = localStorage.getItem("highestscore");
-            document.getElementById('score').innerHTML = 'Highscore: ' + highscore;
+            document.getElementById('score').innerHTML = 'Your Highscore: ' + highscore+'s';
           } else {
             highscore = localStorage.getItem("highestscore");
             if (number < highscore) {
               highscore = number;
               localStorage.removeItem("highestscore");
               localStorage.setItem('highestscore', number);
-              document.getElementById('score').innerHTML = 'Highscore: ' + highscore;
+              document.getElementById('score').innerHTML = 'Your Highscore: ' + highscore+'s';
             } else {
-              document.getElementById('score').innerHTML = 'Highscore: ' + highscore;
+              document.getElementById('score').innerHTML = 'Your Highscore: ' + highscore+'s';
             }
           }
           document.getElementById('more-info').style.display = "block";
