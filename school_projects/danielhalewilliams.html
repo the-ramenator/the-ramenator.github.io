@@ -1,9 +1,46 @@
 <!DOCYPE html>
   <html>
-<!-- Future idea: Add a haxxor mode where the correct answers are highlighted in green. Don't make it a button. Do something in the console lol. -->
+  <!-- Future idea: Add a haxxor mode where the correct answers are highlighted in green. Don't make it a button. Do something in the console lol. -->
+
   <head>
     <title>Daniel Hale Williams - Text Game</title>
     <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+    <style>
+      @media only screen and (max-width: 480px) {
+        .mega-container {
+          top: 20vh !important;
+          overflow: visible;
+        }
+
+        #text {
+          font-family: 'Montserrat', Arial, sans-serif;
+          font-size: 4vw;
+          font-weight: 700;
+          position: relative;
+        }
+
+        .btn {
+          font-family: 'Montserrat', Arial, sans-serif;
+          font-size: 4vw !important;
+          font-weight: 700;
+          margin: 3vw !important;
+        }
+
+        .timur {
+          color: red;
+        }
+
+        .sliding-background {
+          background: url("https://the-ramenator.github.io/assets/img/Heartbeat_Monitor.png") repeat-x;
+          height: 360px;
+          width: 1000000vw;
+          animation: pulse 10s infinite;
+          top: 50vh !important;
+          position: relative;
+          background-size: 80vw auto !important;
+        }
+      }
+    </style>
     <style>
       body {
         background-color: #013945;
@@ -63,24 +100,26 @@
         animation-duration: 3s;
         animation-iteration-count: infinite;
         animation-timing-function: ease-in-out;
-
       }
 
       .btn:hover {
         color: #fff;
         border: 1px solid
           /*#C7F8E4*/
-          transparent;      
+          transparent;
         opacity: 0.75 !important;
       }
+
       .btn:nth-child(2n) {
         animation-delay: 0.75s;
       }
+
       a {
         color: #fff;
       }
-      #timur{
-/*        animation-name: blink;
+
+      #timur {
+        /*        animation-name: blink;
         animation-duration: 6s;
         animation-iteration-count: infinite;
         animation-timing-function: ease-in-out;
@@ -90,6 +129,7 @@
           opacity: 0.6;
         }*/
       }
+
       @keyframes hover {
         0% {
           transform: translateY(0px);
@@ -198,7 +238,6 @@
         animation: bg-scrolling-reverse 0.52s infinite;
         animation-timing-function: linear;
       }
-      
     </style>
   </head>
 
@@ -222,7 +261,7 @@
       </div>
       <div id="more-info">
         <br><br>
-        <p class="timur">Play a short <a href="https://kahoot.it/">Kahoot!</a></p>
+        <p class="timur">Play a short <a href="https://kahoot.it/challenge/?quiz-id=46a854ec-84a3-4e0a-b12f-6332f39b9497&single-player=true/" target="_blank">Kahoot!</a></p>
       </div>
     </div>
     <script>
@@ -236,22 +275,22 @@
           if (!localStorage.getItem("highestscore")) {
             localStorage.setItem('highestscore', number);
             highscore = localStorage.getItem("highestscore");
-            document.getElementById('score').innerHTML = 'Your Highscore: ' + highscore+'s';
+            document.getElementById('score').innerHTML = 'Your Highscore: ' + highscore + 's';
           } else {
             highscore = localStorage.getItem("highestscore");
             if (number < highscore) {
               highscore = number;
               localStorage.removeItem("highestscore");
               localStorage.setItem('highestscore', number);
-              document.getElementById('score').innerHTML = 'Your Highscore: ' + highscore+'s';
+              document.getElementById('score').innerHTML = 'Your Highscore: ' + highscore + 's';
             } else {
-              document.getElementById('score').innerHTML = 'Your Highscore: ' + highscore+'s';
+              document.getElementById('score').innerHTML = 'Your Highscore: ' + highscore + 's';
             }
           }
           document.getElementById('more-info').style.display = "block";
           if (number < 10) {
             document.getElementById('timur').innerHTML = "You speedran the game in " + (number) + " seconds!";
-          } else if (number == 69) {
+          } else if (number == 68) {
             document.getElementById('timur').innerHTML = "Time: 69s. Nice.";
           } else {
             document.getElementById('timur').innerHTML = "You won the game in " + (number) + " seconds!";
@@ -286,8 +325,9 @@
         textNode.options.forEach(option => {
           if (showOption(option)) {
             const button = document.createElement('button')
-            button.innerText = option.text
+            button.innerHTML = option.text
             button.classList.add('btn')
+            /*<span style="color: lime;"></span>*/
             button.addEventListener('click', () => selectOption(option))
             optionButtonsElement.appendChild(button)
           }
