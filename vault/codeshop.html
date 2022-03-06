@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -8,6 +5,16 @@
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
 	  <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
     <style>
+      .broken-green-pixel {
+        background-color: #ff00ff;
+        width: 1px;
+        height: 1px;
+        position: fixed;
+        top: 126px;
+        left: 242px;
+        z-index: 9999;
+      }
+
       .buttons {
   display: inline-block;
   cursor: pointer;
@@ -109,6 +116,7 @@ font-family: 'Press Start 2P', cursive;
     </style>
     </head> 
   <body>
+  <span class="broken-green-pixel"></span>
     <center>
 <div id="hide1">
       <h1>The Codeshop</h1><br />

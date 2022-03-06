@@ -16,6 +16,16 @@
   <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 
   <style>
+    .broken-green-pixel {
+      background-color: #ff00ff;
+      width: 1px;
+      height: 1px;
+      position: fixed;
+      top: 126px;
+      left: 242px;
+      z-index: 9999;
+    }
+
     #background,
     .wave {
       bottom: 0;
@@ -272,7 +282,6 @@
     }
 
     .popupbottom {
-       !important;
       background-size: contain;
       background-repeat: no-repeat;
       width: 388px;
@@ -497,6 +506,7 @@
 </head>
 
 <body>
+  <span class="broken-green-pixel"></span>
   <div class="header">
     <a href="#"><img id="logo" src="https://1.bp.blogspot.com/-m7ykIRIQHk0/XztuO-__0RI/AAAAAAAAAOw/Y0V9oHPBJtcFLt2VeQNIQXQIrVhAJOgoQCLcBGAsYHQ/s1600/PicsArt_08-18-11.28.25.png" alt="Fancy Text Generator" title="Fancy Text Generatore"> </a>
     <div class="wave"></div>
