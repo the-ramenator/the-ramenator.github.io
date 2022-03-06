@@ -20,6 +20,16 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
   <style>
+    .broken-green-pixel {
+      background-color: #ff00ff;
+      width: 1px;
+      height: 1px;
+      position: fixed;
+      top: 126px;
+      left: 242px;
+      z-index: 9999;
+    }
+
     body,
     html {
       height: 100vh;
@@ -74,6 +84,7 @@
 </head>
 
 <body>
+  <span class="broken-green-pixel"></span>
   <center class="row">
     <a class="waves-effect waves-light btn" id="run-btn"><i class="material-icons right">code</i>Run</a>
     <a class="waves-effect waves-light btn" id="auto-run" onclick="autorun()"><i class="material-icons right">autorenew</i><span id="auto-run-text">Auto Run</span></a>

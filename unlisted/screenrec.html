@@ -10,6 +10,16 @@
     />
     <meta charset="UTF-8" />
     <style>
+      .broken-green-pixel {
+        background-color: #ff00ff;
+        width: 1px;
+        height: 1px;
+        position: fixed;
+        top: 126px;
+        left: 242px;
+        z-index: 9999;
+      }
+
       @font-face {
         font-family: 'Product Sans';
         font-style: normal;
@@ -97,6 +107,7 @@
   </head>
 
   <body>
+  <span class="broken-green-pixel"></span>
     <button class="recbutton" id="start">Start Recording</button>
     <button class="recbutton" id="stop" disabled>Stop Recording</button><br />
     <p>

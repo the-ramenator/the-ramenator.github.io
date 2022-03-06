@@ -5,6 +5,16 @@
   <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
   <title>404 - The Ramenator</title>
   <style>
+    .broken-green-pixel {
+      background-color: #ff00ff;
+      width: 1px;
+      height: 1px;
+      position: fixed;
+      top: 126px;
+      left: 242px;
+      z-index: 9999;
+    }
+
     @import 'https://fonts.googleapis.com/css?family=Inconsolata';
 
     html {
@@ -145,6 +155,7 @@
 </head>
 
 <body>
+  <span class="broken-green-pixel"></span>
   <div class="noise"></div>
   <div class="overlay"></div>
   <div class="terminal">

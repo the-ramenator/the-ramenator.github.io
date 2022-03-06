@@ -13,6 +13,15 @@
     />
 
     <style>
+      .broken-green-pixel {
+        background-color: #ff00ff;
+        width: 1px;
+        height: 1px;
+        position: fixed;
+        top: 126px;
+        left: 242px;
+        z-index: 9999;
+      }
       .socials {
         height: 50px;
         width: 50px;
@@ -129,6 +138,7 @@
     </style>
   </head>
   <body>
+    <span class="broken-green-pixel"></span>
     <style>
       body {
         background: #ecf3f3;
@@ -136,7 +146,6 @@
 
       .particle {
         position: absolute;
-        z-layer: -10;
         border-radius: 50%;
       }
 

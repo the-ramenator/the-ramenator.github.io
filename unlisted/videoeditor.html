@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -13,6 +10,19 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://sheeptester.github.io/javascripts/video/shit/openshit.css">
+    
+    <style>
+      .broken-green-pixel {
+        background-color: #ff00ff;
+        width: 1px;
+        height: 1px;
+        position: fixed;
+        top: 126px;
+        left: 242px;
+        z-index: 9999;
+      }
+    </style>
+    
     <script>
       // Helper functions for dancing with the DOM - from Ugwisha
 
@@ -2755,6 +2765,7 @@ class EaseIcon {
     </script>
   </head>
   <body>
+    <span class="broken-green-pixel"></span>
     <div class="main">
       <div class="panel" id="panel">
         <div class="menubar">
