@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <title>Distance Between Points Calculator - The Ramenator</title>
+  <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+
+  <style>
+    input {
+      width: 5%;
+    }
+  </style>
+</head>
+
+<body>
+  (<input type="number" id="x1" placeholder="x1" />,<input type="number" id="y1" placeholder="y1" />)<br />
+  (<input type="number" id="x2" placeholder="x2" />,<input type="number" id="y2" placeholder="y2" />)<br /><br />
+  <button onclick="calc()">Calculate Distance!</button><br />
+  <p>Your distance is: <span id="result"></span></p>
+  <p>Formula: &Sqrt;(x<sub>2</sub>-x<sub>1</sub>)<sup>2</sup>+(y<sub>2</sub>-y<sub>1</sub>)<sup>2</sup></p>
+<!--   <button onclick="clear()">Clear Previous Distances</button> -->
+  <p>Previous Distances:<br><span id="prev"></span></p>
+</body>
+
+<script>
+  function calc() {
+    var y2 = parseInt(
+      document.getElementById('y2').value
+    );
+    var y1 = parseInt(
+      document.getElementById('y1').value
+    );
+    var x1 = parseInt(
+      document.getElementById('x1').value
+    );
+    var x2 = parseInt(
+      document.getElementById('x2').value
+    );
+    var yval = (y2-y1)*(y2-y1);
+    var xval = (x2-x1)*(x2-x1);
+    var total = Math.sqrt(yval+xval);
+    var date = new Date;
+    var seconds = date.getSeconds();
+    var minutes = date.getMinutes();
+    var hour = date.getHours();
+    var time = hour+':'+minutes+':'+seconds;
+ document.getElementById('result').innerHTML = 'd = '+total;
+    document.getElementById('prev').innerHTML += '<b>d = '+total+'</b> at <i>'+time+'</i><br>';
+  }
+  function clear() {
+    document.getElementById('prev').innerHTML += 'no';
+  }
+</script>
+
+</html>
