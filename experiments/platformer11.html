@@ -3575,7 +3575,7 @@ var app = new Vue({
             for(var i in this.stages[this.current_stage].objs) { app.collision_check(app.stages[app.current_stage].objs[i]); };
             
             // Grav stuff
-            //this.grav_mode = !this.input.SHIFT; // Hold shift to turn off gravity
+            this.grav_mode = !this.input.SHIFT; // Hold shift to turn off gravity
             if(this.grav_mode) {
                 // Jumping
                 var jump = this.input.SPACE || this.input.W_KEY;
