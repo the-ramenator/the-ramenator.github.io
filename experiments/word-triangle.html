@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@800&display=swap" rel="stylesheet">
+    <title>Word Triangle - The Ramenator</title>
+    <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+    <style>
+        body {
+            background: linear-gradient(40deg, #003984, #004e69);
+            background-size: 400% 400%;
+
+            -webkit-animation: AnimationName 30s ease infinite;
+            -moz-animation: AnimationName 30s ease infinite;
+            animation: AnimationName 30s ease infinite;
+            font-family: 'Nunito';
+        }
+
+        @-webkit-keyframes AnimationName {
+            0% {
+                background-position: 92% 0%;
+            }
+
+            50% {
+                background-position: 9% 100%;
+            }
+
+            100% {
+                background-position: 92% 0%;
+            }
+        }
+
+        @-moz-keyframes AnimationName {
+            0% {
+                background-position: 92% 0%;
+            }
+
+            50% {
+                background-position: 9% 100%;
+            }
+
+            100% {
+                background-position: 92% 0%;
+            }
+        }
+
+        @keyframes AnimationName {
+            0% {
+                background-position: 92% 0%;
+            }
+
+            50% {
+                background-position: 9% 100%;
+            }
+
+            100% {
+                background-position: 92% 0%;
+            }
+        }
+
+        ::placeholder {
+            color: rgb(255, 255, 255, 0.5);
+        }
+
+
+
+        #input {
+            width: 75%;
+            position: absolute;
+            left: 12.5%;
+            top: 40%;
+            color: #FFF;
+            background: #458DAD;
+            padding: 20px;
+            font-family: inherit;
+            font-size: 20px;
+            border: 0;
+            color: white;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px,
+                rgba(0, 0, 0, 0.1) 0px 2px 4px 0px,
+                rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+            transition: all 1s ease-out;
+        }
+
+        #input:focus {
+            -webkit-filter: brightness(110%);
+            -webkit-transition: all 1s ease;
+            -moz-transition: all 1s ease;
+            -o-transition: all 1s ease;
+            -ms-transition: all 1s ease;
+            transition: all 1s ease;
+        }
+
+        #button {
+            position: absolute;
+            left: 47.5%;
+            width: 5%;
+            top: 60%;
+            text-align: center;
+            font-size: 26px;
+            border: 0;
+            border-radius: 5px;
+            font-family: inherit;
+            background: #49A7BD;
+            color: white;
+            transition: all 0.5s ease-out;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-bottom: 2px;
+            padding-top: 2px;
+            cursor: pointer;
+            filter: brightness(100%);
+        }
+
+        #button:hover {
+            filter: brightness(110%);
+        }
+
+        #result {
+            color: white;
+            /*width: 50%;*/
+            left: 25%;
+            position: absolute;
+            top: 60%;
+            border-radius: 0.25rem;
+            cursor: copy;
+            font-size: 20px;
+        }
+
+        h1,
+        h3 {
+            text-align: center;
+            color: #FFF;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1>Word Triangle</h1>
+    <h3>The Ramenator</h3>
+    <button id="button" onclick="make()">
+        Go!
+    </button>
+
+    <input id="input" placeholder="Please enter a string..."></input>
+    <p onclick="copy()" id="result"></p>
+    <script>
+        document.addEventListener('keydown', function (e) {
+            if (e.keyCode == 13) {
+                make()
+            }
+        });
+        var copytext;
+        function make() {
+            //triangle js
+            var word = document.getElementById('input').value;
+            var length = word.length;
+            var result = document.getElementById('result');
+            result.innerHTML = "";
+            copytext = "";
+            for (let i = 0; i < length; i++) {
+                result.innerHTML = result.innerHTML + word.substring(0, i + 1) + '<br>';
+                copytext = copytext + word.substring(0, i + 1) + '\r\n';
+            }
+            for (let n = length - 1; n > 0; n--) {
+                result.innerHTML = result.innerHTML + word.substring(0, n) + '<br>';
+                copytext = copytext + word.substring(0, n) + '\r\n';
+            }
+            //opacity js
+            var myopacity = 0;
+
+            function MyFadeFunction() {
+                if (myopacity < 1) {
+                    myopacity += .004;
+                    setTimeout(function () { MyFadeFunction() }, 10);
+                }
+                document.getElementById('result').style.opacity = myopacity;
+            }
+            if (document.getElementById('result').innerHTML != '') {
+                //height stuff
+                document.getElementById('input').style.top = "20%";
+                document.getElementById('button').style.top = "40%";
+                MyFadeFunction();
+            }
+        }
+        function copy() {
+            navigator.clipboard.writeText(copytext);
+        }
+    </script>
+</body>
+
+</html>
