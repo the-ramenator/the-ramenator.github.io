@@ -155,6 +155,7 @@
             }
         });
         var copytext;
+        /*Weird loop variable names because it breaks the code i think...?*/
         function make() {
             //triangle js
             var word = document.getElementById('input').value;
@@ -162,13 +163,13 @@
             var result = document.getElementById('result');
             result.innerHTML = "";
             copytext = "";
-            for (let i = 0; i < length; i++) {
-                result.innerHTML = result.innerHTML + word.substring(0, i + 1) + '<br>';
-                copytext = copytext + word.substring(0, i + 1) + '\r\n';
+            for (let randomstringthatnobodysgonnauselol = 0; randomstringthatnobodysgonnauselol < length; randomstringthatnobodysgonnauselol++) {
+                result.innerHTML = result.innerHTML + word.substring(0, randomstringthatnobodysgonnauselol + 1) + '<br>';
+                copytext = copytext + word.substring(0, randomstringthatnobodysgonnauselol + 1) + '\r\n';
             }
-            for (let n = length - 1; n > 0; n--) {
-                result.innerHTML = result.innerHTML + word.substring(0, n) + '<br>';
-                copytext = copytext + word.substring(0, n) + '\r\n';
+            for (let randomstringthatnobodysgonnauselol2 = length - 1; randomstringthatnobodysgonnauselol2 > 0; randomstringthatnobodysgonnauselol2--) {
+                result.innerHTML = result.innerHTML + word.substring(0, randomstringthatnobodysgonnauselol2) + '<br>';
+                copytext = copytext + word.substring(0, randomstringthatnobodysgonnauselol2) + '\r\n';
             }
             //opacity js
             var myopacity = 0;
