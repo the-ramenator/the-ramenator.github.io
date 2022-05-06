@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -151,11 +152,10 @@
     <script>
         document.addEventListener('keydown', function (e) {
             if (e.keyCode == 13) {
-                make()
+                make();
             }
         });
         var copytext;
-        /*For some reason, entering single letters followed by a space in phrases like "i think" (i is the letter and space), it adds an extra one of those letters to the beginning and end. That's a problem for another time i think...?*/
         function make() {
             //triangle js
             var word = document.getElementById('input').value;
@@ -164,12 +164,18 @@
             result.innerHTML = "";
             copytext = "";
             for (let i = 0; i < length; i++) {
+                if(word.charAt(i) == ' '){}
+                else{
                 result.innerHTML = result.innerHTML + word.substring(0, i + 1) + '<br>';
                 copytext = copytext + word.substring(0, i + 1) + '\r\n';
+                }
             }
             for (let n = length - 1; n > 0; n--) {
+                if(word.charAt(n) == ' '){}
+                else{
                 result.innerHTML = result.innerHTML + word.substring(0, n) + '<br>';
                 copytext = copytext + word.substring(0, n) + '\r\n';
+                }
             }
             //opacity js
             var myopacity = 0;
