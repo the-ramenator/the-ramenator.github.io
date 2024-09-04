@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
   <title>Grade Calculator</title>
@@ -567,7 +565,7 @@
   </div>
   <script>
           let catCount = 0;
-
+//When adding catCount to the classname it takes the current number of categories existing, not the category it's apart of
 function addData(e) {
   let earned;
   let max;
@@ -585,10 +583,10 @@ function addData(e) {
   let newRow = table.insertRow(table.rows.length);
   var newcell = newRow.insertCell(0);
   newcell.innerHTML = earned;
-  newcell.className = "tableEarned" + catCount;
+  newcell.className = "tableEarned" + e;
   newcell = newRow.insertCell(1);
   newcell.innerHTML = max;
-  newcell.className = "tableMax" + catCount;
+  newcell.className = "tableMax" + e;
   newRow.insertCell(2).innerHTML =
     '<button onclick="deleteData(this)" class="action-btn">Delete</button>';
   clearInputs(e);
@@ -609,7 +607,6 @@ document.getElementsByClassName('t-max').addEventListener("keypress", function(e
 function deleteData(button) {
   let row = button.parentNode.parentNode;
   row.parentNode.removeChild(row);
-  console.log(row);
 }
 
 function clearInputs(e) {
@@ -757,7 +754,6 @@ function removeCategory(e) {
 let categories = [];
 let categoryNums = [];
 let weights = [];
-let catTotal = 0;
 let earnedSum = 0;
 let maxSum = 0;
 let finalGrade = 100;
@@ -777,13 +773,18 @@ function calculate() {
         maxSum +
         Number(document.getElementsByClassName("tableMax" + i)[n].innerHTML);
     }
+    console.log("Earned "+i+" Sum: "+earnedSum);
+    console.log("Max "+i+" Sum: "+maxSum);
     let c_earned = Number(document.getElementsByClassName("c-earned")[i].value);
     let c_max = Number(document.getElementsByClassName("c-max")[i].value);
     let catWeight = Number(
       document.getElementsByClassName("c-weight")[i].value
     );
+    console.log("Category "+i+" Weight: "+catWeight);
 
     let totalGrade = ((earnedSum + c_earned) / (maxSum + c_max)) * catWeight;
+          earnedSum = 0;
+    maxSum = 0;
     if (isNaN(totalGrade)) {
       totalGrade = 0;
     }
@@ -856,7 +857,6 @@ function back(){
  categories = [];
  categoryNums = [];
  weights = [];
- catTotal = 0;
  earnedSum = 0;
  maxSum = 0;
  finalGrade = 100;
