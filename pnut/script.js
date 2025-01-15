@@ -5,8 +5,6 @@ var config = {
     width: window.innerWidth,
     height: window.innerHeight,
     zoom: 1,
-    tileBias: 150,
-    overlapBias: 150,
     physics: {
         default: 'arcade',
         arcade: {
@@ -41,7 +39,6 @@ function preload() {
     this.load.audio('cavemp3', 'cave.mp3');
     this.load.audio('diemp3', 'die.mp3');
     this.load.audio('grasslandsmp3', 'grasslands.mp3');
-    // this.load.audio('intromp3', 'intro.mp3');
     this.load.audio('jumpmp3', 'jump.mp3');
     this.load.audio('victorymp3', 'victory.mp3');
     this.load.audio('doormp3', 'door.mp3');
@@ -64,6 +61,7 @@ let acornmp3,diemp3,jumpmp3,victorymp3,doormp3,intromp3,grasslandsmp3,cavemp3;
 
 let playerx;
 function create() {
+    this.physics.world.TILE_BIAS = 150;
     const mg3 = this.add.tileSprite(0, 2000, 1800, 2000, 'bg').setScrollFactor(0.1).setScale(6);
     const mg6 = this.add.tileSprite(0, 1250, 5000, 460, 'mg6').setScrollFactor(0.2).setScale(3);
     const mg5 = this.add.tileSprite(0, 1700, 7000, 465, 'mg5').setScrollFactor(0.3).setScale(3);
@@ -267,7 +265,7 @@ let luhvictory = false;
 function victory(player,block){
     if(score >= 29 && luhvictory == false){
         if(score == 30){
-            console.log('easter egg');
+            console.log('bro might be the goat');
         }
         luhvictory = true;
         luhdoor.anims.play('open', true);
@@ -293,7 +291,7 @@ function fadeOutEffect() {
     fadeTarget.style.display = 'block';
     fadeTarget.style.opacity = 0;
     setTimeout(function (){
-        fadeTarget.style.opacity = 1; 
+       fadeTarget.style.opacity = 1; 
     }, 200);
 }
 
@@ -334,3 +332,4 @@ function detectMusic(pos){
 const musicInterval = setInterval(function() {
     detectMusic(playerx);
 }, 1000);
+
