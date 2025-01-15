@@ -1,3 +1,7 @@
+<!-- Stuff to try and add
+IF IM GONNA SAVE THE ACORNS
+- Figure out a way to save the collected acorns to a list so they don't spawn back in when you reset
+-->
 <!DOCTYPE html>
 <html>
     <head>
@@ -205,6 +209,12 @@
                 text-shadow: 0px 0px 7px #fff;
                 cursor: pointer;
             }
+            #soundimg{
+                height: 1em;
+                width: auto;
+                filter: drop-shadow(5px 5px 5px #fff) invert(100%);
+                
+            }
             #overlay{
                 z-index: 1000;
                 background: rgba(0,0,0,0.5);
@@ -246,7 +256,7 @@
             <div id='stars'></div>
             <button id='btn' onclick='grah()'></button>
             <button id='sound' onclick='toggleSound()'>
-                <i class="fa-solid fa-volume-xmark"></i>
+                <img src='https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/district/real/novolume.webp' id='soundimg'>
         </div>
         <div id='game-container'>
             <span id='score'>Acorns: 0/29 &nbsp;</span>
@@ -284,14 +294,14 @@
 
             function toggleSound(){
                 if(soundOn == false){
-                    document.getElementById('sound').innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+                    document.getElementById('soundimg').src = 'https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/district/real/volume.webp';//'<i class="fa-solid fa-volume-high"></i>';
                     soundOn = true;
                     localStorage.setItem('soundOn',soundOn);
                     intro.play();
 
                 }
                 else{
-                    document.getElementById('sound').innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+                    document.getElementById('soundimg').src = 'https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/district/real/novolume.webp';//'<i class="fa-solid fa-volume-xmark"></i>';
                     soundOn = false;
                     localStorage.setItem('soundOn',soundOn);
                     intro.pause();
