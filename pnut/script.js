@@ -230,7 +230,7 @@ function update() {
         if((this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)).isDown){
             reset();
         }
-        else if((this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T)).isDown){
+        /*   else if((this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T)).isDown){
             player.setPosition(12000, 2000+shift);
         }
         else if((this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E)).isDown){
@@ -246,7 +246,7 @@ function update() {
             else{
                 hitboxes.setVisible(true);
             }
-        }
+        }*/
     }
 }
 function collectAcorn (player, acorn){
@@ -291,7 +291,7 @@ function fadeOutEffect() {
     fadeTarget.style.display = 'block';
     fadeTarget.style.opacity = 0;
     setTimeout(function (){
-       fadeTarget.style.opacity = 1; 
+        fadeTarget.style.opacity = 1; 
     }, 200);
 }
 
@@ -332,4 +332,3 @@ function detectMusic(pos){
 const musicInterval = setInterval(function() {
     detectMusic(playerx);
 }, 1000);
-
