@@ -7,7 +7,7 @@ IF IM GONNA SAVE THE ACORNS
     <head>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Jacquard+12&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Rubik+Dirt&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Jacquard+12&family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser-arcade-physics.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -27,10 +27,6 @@ IF IM GONNA SAVE THE ACORNS
                 font-size: 115%;
                 font-style: normal;
                 user-select: none;
-            }
-            h1{
-                font-size: 200%;
-                margin-bottom: 1em;
             }
             #title-container{
                 height: 100vh;
@@ -213,7 +209,7 @@ IF IM GONNA SAVE THE ACORNS
                 height: 1em;
                 width: auto;
                 filter: drop-shadow(5px 5px 5px #fff) invert(100%);
-                
+
             }
             #overlay{
                 z-index: 1000;
@@ -233,9 +229,14 @@ IF IM GONNA SAVE THE ACORNS
                 color: white;
                 font-size: 200%;
             }
+            #credits h1{
+                font-size: 250%;
+                margin-bottom: 0.5em;
+            }
             #credits p{
                 margin-bottom: 0.5em;
                 font-size: 100%;
+                font-family: "Spectral", serif;
             }
             #credits button{
                 background: black;
@@ -264,13 +265,13 @@ IF IM GONNA SAVE THE ACORNS
         <div id='end-container'>
             <div id='credits'>
                 <h1>Credits</h1>
-                <p><u>Art/Game Assets</u>: Maanas Kudrimoti</p>
-                <p><u>Programming</u>: Neil Daniel</p>
-                <p><u>Music/Sound Design</u>: Zachary Rainisch</p>
-                <p><u>Writers</u>: Maanas Kudrimoti & Neil Daniel</p>
-                <p><u>Sponsor</u>: Ms. Miller</p>
-                <p><u>Software Used</u>: 8bit art maker & Tiled</p>
-                <p><u>Special Thanks</u>: ???</p>
+                <p>Art/Game Assets: Maanas Kudrimoti</p>
+                <p>Programming: Neil Daniel</p>
+                <p>Music/Sound Design: Zachary Rainisch</p>
+                <p>Writers: Maanas Kudrimoti & Neil Daniel</p>
+                <p>Sponsor: Ms. Miller</p>
+                <p>Software Used: 8bit art maker & Tiled</p>
+                <p>Special Thanks: ???</p>
                 <br><br><br>
                 <button onclick='location.reload()'>Play Again</button>
             </div>
