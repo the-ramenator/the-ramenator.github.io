@@ -254,7 +254,7 @@ function collectAcorn (player, acorn){
     if(acorn.visible){
         acorn.setVisible(false);
         score += 1;
-        scoreText.innerHTML = 'Acorns: ' + score + '/29 &nbsp;';
+        scoreText.innerHTML = 'Acorns: ' + score + '/30 &nbsp;';
         player.anims.play('right', true);
         if(luhsoundOn == 'true'){
             acornmp3.play();
@@ -263,10 +263,7 @@ function collectAcorn (player, acorn){
 }
 let luhvictory = false;
 function victory(player,block){
-    if(score >= 29 && luhvictory == false){
-        if(score == 30){
-            console.log('bro might be the goat');
-        }
+    if(score >= 24 && luhvictory == false){
         luhvictory = true;
         luhdoor.anims.play('open', true);
         if(luhsoundOn == 'true'){
@@ -310,7 +307,7 @@ function death() {
 function reset(){
     gameOver = false;
     score = 0;
-    scoreText.innerHTML = 'Acorns: ' + score + '/29 &nbsp;';
+    scoreText.innerHTML = 'Acorns: ' + score + '/30 &nbsp;';
     acorngroup.setVisible(true);
     player.setPosition(300, 3475);
     player.body.setGravityY(1000);
