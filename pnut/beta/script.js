@@ -246,6 +246,7 @@ class Main extends Phaser.Scene {
         this.tileset = this.level.addTilesetImage('Tileset C3', 'tiles'); //try to use a tile extruder for this
         this.mainlayer = this.level.createLayer('Tile Layer 1', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(1);
         try{this.backround = this.level.createLayer('Backround', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(0);} catch(error){}
+        //torches        try{this.backround = this.level.createLayer('Backround', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(0);} catch(error){}
         try{this.background = this.level.createLayer('Background', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(0);}catch(error){}
         try{this.lilypads = this.level.createLayer('Lilypads', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(1);}catch(error){}
         try{this.foreground = this.level.createLayer('ForwardLayer', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(3);}catch(error){}
@@ -257,22 +258,85 @@ class Main extends Phaser.Scene {
         leveloffsetx = 0;
         leveloffsety = 0;
 
+        const objoffsets = {
+            Door: {
+                x: -64,
+                y: -64
+            },
+            Acorns: {
+                x: -16,
+                y: -105
+            },
+            WatDam: {
+                x: -60,
+                y: -50
+            },
+            Deco: {
+                x: -63,
+                y: -65
+            },
+            RegDam: {
+                x: -25,
+                y: -110
+            },            
+            ObjectHitboxes: {
+                x: -7615,
+                y: -3080
+            },
+            HorizontalRegClouds: {
+                x: -0,
+                y: -0
+            },
+            VerticalRegClouds: {
+                x: -0,
+                y: -0
+            },
+            HorizontalRegHitboxes: {
+                x: -0,
+                y: -0
+            },
+            VerticalRegHitboxes: {
+                x: -0,
+                y: -0
+            },
+            DamageClouds: {
+                x: -13200,
+                y: -400
+            },
+            DamageHitboxes: {
+                x: -0,
+                y: -0
+            },
+            LeafDam: {
+                x: -64, //-320?
+                y: -100
+            },
+        };
+
         let objectLayers = this.level.getObjectLayerNames();
         for (let layerName of objectLayers) {
             console.log(layerName);
-            leveloffsetx = -16+this.level.getObjectLayer(layerName,this.tileset).objects[this.level.getObjectLayer(layerName,this.tileset).objects.length-1].x;
-            leveloffsety = -105+this.level.getObjectLayer(layerName,this.tileset).objects[this.level.getObjectLayer(layerName,this.tileset).objects.length-1].y;
+            leveloffsetx = objoffsets[layerName]['x'] + this.level.getObjectLayer(layerName,this.tileset).objects[this.level.getObjectLayer(layerName,this.tileset).objects.length-1].x;
+            leveloffsety = objoffsets[layerName]['y'] + this.level.getObjectLayer(layerName,this.tileset).objects[this.level.getObjectLayer(layerName,this.tileset).objects.length-1].y;
             window['this.'+layerName] = this.level.getObjectLayer(layerName,this.tileset);
             window['this.'+layerName+'group'] = this.physics.add.group();
             window['this.'+layerName].objects.forEach(object => {
                 var newObject = this.add.sprite((object.x-leveloffsetx), (object.y-leveloffsety), 'tilesheet', (object.gid-1));
-                if(layerName == 'Acorns'){
+                if(layerName == 'placeholderforacornslayernamebcmaanaschangedtheacornscalinginsidetiledsoidontactuallyhavetomanuallydothisanymore'){
                     newObject.setScale(0.4);
+                    console.log('Acorns:' + newObject.x + ', ' + newObject.y);
                 }
                 else{
                     newObject.scaleX = object.width/128;
                     newObject.scaleY = (object.height/128);
                 }
+             /*   if(layerName == 'DamageHitboxes'){
+                    console.log('DamageHitbox:' + newObject.x + ', ' + newObject.y);
+                }
+                else if(layerName == 'DamageClouds'){
+                    console.log('DamageCloud:' + newObject.x + ', ' + newObject.y);
+
+                }*/
                 window['this.'+layerName+'group'].add(newObject);
             });         
         }
@@ -285,21 +349,24 @@ class Main extends Phaser.Scene {
         this.hitboxes.setTileIndexCallback(91, this.death, null, this);
         this.physics.add.collider(this.player, this.hitboxes);
         this.hitboxes.setCollisionByExclusion([-1]);
+
         try{
             window['this.HorizontalRegHitboxesgroup'].children.iterate(child => {
                 child.body.setImmovable(true); 
                 child.body.setAllowGravity(false);
-                child.body.setVelocityX(150);
+                child.body.setVelocityX(30);
                 setInterval(this.touchingCloud, 100, this.player, child, false);
             });
             window['this.VerticalRegHitboxesgroup'].children.iterate(child => {
                 child.body.setImmovable(true); 
                 child.body.setAllowGravity(false);
-                child.body.setVelocityY(50);
+                child.body.setVelocityY(30);
                 setInterval(this.touchingCloud, 100, this.player, child, false);
             });
             this.physics.add.collider(this.player, window['this.HorizontalRegHitboxesgroup'], this.touchingCloud, null, this, true);
+            window['this.HorizontalRegHitboxesgroup'].setVisible(false);
             this.physics.add.collider(this.player, window['this.VerticalRegHitboxesgroup'], this.touchingCloud, null, this, true);
+            window['this.VerticalRegHitboxesgroup'].setVisible(false);
 
         }catch(error){}
         try{
@@ -308,15 +375,19 @@ class Main extends Phaser.Scene {
                 child.body.setAllowGravity(false);
             });
             this.physics.add.collider(this.player, window['this.ObjectHitboxesgroup']);
+            window['this.ObjectHitboxesgroup'].setVisible(false);
 
         }catch(error){}
         try{this.physics.add.overlap(this.player, window['this.Acornsgroup'], this.collectAcorn, null, this);}catch(error){}
-        try{this.physics.add.overlap(this.player, window['this.RegDamgroup'], this.death, null, this);}catch(error){}
-        try{this.physics.add.overlap(this.player, window['this.LeafDamgroup'], this.death, null, this);}catch(error){}
-        try{this.physics.add.overlap(this.player, window['this.WatDamgroup'], this.death, null, this);}catch(error){}
+        try{this.physics.add.overlap(this.player, window['this.RegDamgroup'], this.death, null, this);
+            window['this.RegDamgroup'].setVisible(false);}catch(error){}
+        try{this.physics.add.overlap(this.player, window['this.LeafDamgroup'], this.death, null, this);
+            window['this.LeafDamgroup'].setVisible(false);}catch(error){}
+        try{this.physics.add.overlap(this.player, window['this.WatDamgroup'], this.death, null, this);
+            window['this.WatDamgroup'].setVisible(false);}catch(error){}
         try{this.physics.add.overlap(this.player, window['this.Doorgroup'], this.victory, null, this);}catch(error){}
-        try{this.physics.add.overlap(this.player, window['this.DamageHitboxesgroup'], this.death, null, this);}catch(error){}
-        try{this.physics.add.overlap(this.player, window['this.LeafDamgroup'], this.death, null, this);}catch(error){}
+        try{this.physics.add.overlap(this.player, window['this.DamageHitboxesgroup'], this.death, null, this);
+            window['this.DamageHitboxesgroup'].setVisible(false);}catch(error){}
         this.cameras.main.setBounds(0, 0,128*xworldbounds[key], 128*yworldbounds[key]);
         this.physics.world.setBounds(0, 0, 128*xworldbounds[key], 128*yworldbounds[key]);
         this.minimap.setBounds(0, 0,128*xworldbounds[key], 128*yworldbounds[key]);
@@ -344,6 +415,9 @@ class Main extends Phaser.Scene {
             });
         }
 
+    }
+    test(){
+        console.log('touchedbranch');
     }
     handleAnimateTiles(scene, delta){
         scene.animatedTiles.forEach(tile => {
