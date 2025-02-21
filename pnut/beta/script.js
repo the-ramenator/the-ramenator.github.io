@@ -44,7 +44,6 @@ class Main extends Phaser.Scene {
         for (let i = 1; i < 5; i++) {
             this.load.image(('jungle'+i), ('backgrounds/jungle'+i+'.png'));
         }
-        //this.load.scenePlugin('AnimatedTiles', 'https://raw.githubusercontent.com/nkholski/phaser-animated-tiles/master/dist/AnimatedTiles.js', 'animatedTiles', 'animatedTiles');
 
         this.gameWidth = this.sys.game.canvas.width;
         this.gameHeight = this.sys.game.canvas.height;
@@ -116,8 +115,8 @@ class Main extends Phaser.Scene {
             this.minimap.scrollX = this.player.x
             this.minimap.scrollY = this.player.y
             this.cursors = this.input.keyboard.createCursorKeys();
-
-            if(Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X)) && cooldownOver == true){
+            let dashKey = Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X)) ||Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K))
+            if(dashKey && cooldownOver == true){
                 if (this.cursors.right.isDown || (this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)).isDown) {
                     this.player.anims.play('dash');
                     dashing = true;
@@ -215,7 +214,6 @@ class Main extends Phaser.Scene {
                 window['this.'+layerName+'group'].clear(true);
                 window['this.'+layerName+'group'].destroy();
                 window['this.'+layerName+'group'] = null;
-                //console.log(layerName + ' destoyed');
             }
             this.level.destroy();
 
@@ -256,21 +254,17 @@ class Main extends Phaser.Scene {
         this.hitboxes = this.level.createLayer('Hitboxes', this.tileset, xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(10);
 
 
-        leveloffsetx = 0;//this.level.getObjectLayer('Acorns',this.tileset).objects[this.acorns.objects.length-1].x;
-        leveloffsety = 0;//this.level.getObjectLayer('Acorns',this.tileset).objects[this.acorns.objects.length-1].y;
+        leveloffsetx = 0;
+        leveloffsety = 0;
 
         let objectLayers = this.level.getObjectLayerNames();
         for (let layerName of objectLayers) {
-            if(layerName == 'Acorns'){
-                leveloffsetx = -16+this.level.getObjectLayer(layerName,this.tileset).objects[this.level.getObjectLayer(layerName,this.tileset).objects.length-1].x;
-                leveloffsety = -105+this.level.getObjectLayer(layerName,this.tileset).objects[this.level.getObjectLayer(layerName,this.tileset).objects.length-1].y;
-            }
-            //leveloffsetx = xmapoffsets[key]*128-10;
-            //leveloffsety = ymapoffsets[key]*128-200;
+            console.log(layerName);
+            leveloffsetx = -16+this.level.getObjectLayer(layerName,this.tileset).objects[this.level.getObjectLayer(layerName,this.tileset).objects.length-1].x;
+            leveloffsety = -105+this.level.getObjectLayer(layerName,this.tileset).objects[this.level.getObjectLayer(layerName,this.tileset).objects.length-1].y;
             window['this.'+layerName] = this.level.getObjectLayer(layerName,this.tileset);
             window['this.'+layerName+'group'] = this.physics.add.group();
             window['this.'+layerName].objects.forEach(object => {
-                //console.log(layerName+': '+(object.gid-1)+ ' || x: '+object.x+' || y: '+object.y);
                 var newObject = this.add.sprite((object.x-leveloffsetx), (object.y-leveloffsety), 'tilesheet', (object.gid-1));
                 if(layerName == 'Acorns'){
                     newObject.setScale(0.4);
@@ -283,6 +277,49 @@ class Main extends Phaser.Scene {
             });         
         }
 
+        this.player.setPosition(128*playerxoffsets[key],128*playeryoffsets[key]);
+        this.hitboxes.setVisible(false);
+        this.hitboxes.setTileIndexCallback(88, this.victory, null, this);
+        this.hitboxes.setTileIndexCallback(89, this.death, null, this);
+        this.hitboxes.setTileIndexCallback(90, this.death, null, this);
+        this.hitboxes.setTileIndexCallback(91, this.death, null, this);
+        this.physics.add.collider(this.player, this.hitboxes);
+        this.hitboxes.setCollisionByExclusion([-1]);
+        try{
+            window['this.HorizontalRegHitboxesgroup'].children.iterate(child => {
+                child.body.setImmovable(true); 
+                child.body.setAllowGravity(false);
+                child.body.setVelocityX(150);
+                setInterval(this.touchingCloud, 100, this.player, child, false);
+            });
+            window['this.VerticalRegHitboxesgroup'].children.iterate(child => {
+                child.body.setImmovable(true); 
+                child.body.setAllowGravity(false);
+                child.body.setVelocityY(50);
+                setInterval(this.touchingCloud, 100, this.player, child, false);
+            });
+            this.physics.add.collider(this.player, window['this.HorizontalRegHitboxesgroup'], this.touchingCloud, null, this, true);
+            this.physics.add.collider(this.player, window['this.VerticalRegHitboxesgroup'], this.touchingCloud, null, this, true);
+
+        }catch(error){}
+        try{
+            window['this.ObjectHitboxesgroup'].children.iterate(child => {
+                child.body.setImmovable(true); 
+                child.body.setAllowGravity(false);
+            });
+            this.physics.add.collider(this.player, window['this.ObjectHitboxesgroup']);
+
+        }catch(error){}
+        try{this.physics.add.overlap(this.player, window['this.Acornsgroup'], this.collectAcorn, null, this);}catch(error){}
+        try{this.physics.add.overlap(this.player, window['this.RegDamgroup'], this.death, null, this);}catch(error){}
+        try{this.physics.add.overlap(this.player, window['this.LeafDamgroup'], this.death, null, this);}catch(error){}
+        try{this.physics.add.overlap(this.player, window['this.WatDamgroup'], this.death, null, this);}catch(error){}
+        try{this.physics.add.overlap(this.player, window['this.Doorgroup'], this.victory, null, this);}catch(error){}
+        try{this.physics.add.overlap(this.player, window['this.DamageHitboxesgroup'], this.death, null, this);}catch(error){}
+        try{this.physics.add.overlap(this.player, window['this.LeafDamgroup'], this.death, null, this);}catch(error){}
+        this.cameras.main.setBounds(0, 0,128*xworldbounds[key], 128*yworldbounds[key]);
+        this.physics.world.setBounds(0, 0, 128*xworldbounds[key], 128*yworldbounds[key]);
+        this.minimap.setBounds(0, 0,128*xworldbounds[key], 128*yworldbounds[key]);
 
         this.animatedTiles = [];
         const tileData = this.tileset.tileData;
@@ -307,32 +344,6 @@ class Main extends Phaser.Scene {
             });
         }
 
-        this.player.setPosition(128*playerxoffsets[key],128*playeryoffsets[key]);
-        this.hitboxes.setVisible(false);
-        this.hitboxes.setTileIndexCallback(88, this.victory, null, this);
-        this.hitboxes.setTileIndexCallback(89, this.death, null, this);
-        this.hitboxes.setTileIndexCallback(90, this.death, null, this);
-        this.hitboxes.setTileIndexCallback(91, this.death, null, this);
-        this.physics.add.collider(this.player, this.hitboxes);
-        this.hitboxes.setCollisionByExclusion([-1]);
-        this.physics.add.collider(this.player, this.hitboxes);
-        try{
-            window['this.MovingHitboxesgroup'].children.iterate(child => {
-                child.body.setImmovable(true); 
-                child.body.setAllowGravity(false);
-                child.body.setVelocityX(450);
-                setInterval(this.touchingCloud, 100, this.player, child, false);
-            });
-            this.physics.add.collider(this.player, window['this.MovingHitboxesgroup'], this.touchingCloud, null, this, true);
-
-        }catch(error){}
-        try{this.physics.add.overlap(this.player, window['this.Acornsgroup'], this.collectAcorn, null, this);}catch(error){}
-        try{this.physics.add.overlap(this.player, window['this.ObjectHitboxesgroup'], this.death, null, this);}catch(error){}
-        try{this.physics.add.overlap(this.player, window['this.RegDamgroup'], this.death, null, this);}catch(error){}
-        try{this.physics.add.overlap(this.player, window['this.Doorgroup'], this.victory, null, this);}catch(error){}
-        this.cameras.main.setBounds(0, 0,128*xworldbounds[key], 128*yworldbounds[key]);
-        this.physics.world.setBounds(0, 0, 128*xworldbounds[key], 128*yworldbounds[key]);
-        this.minimap.setBounds(0, 0,128*xworldbounds[key], 128*yworldbounds[key]);
     }
     handleAnimateTiles(scene, delta){
         scene.animatedTiles.forEach(tile => {
