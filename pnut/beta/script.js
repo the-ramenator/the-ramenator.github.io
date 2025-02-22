@@ -6,7 +6,7 @@ const xworldbounds = [0, 32, 70, 42, 82, 46, 74, 132, 119, 101, 206];
 const yworldbounds = [0, 15, 14, 82, 12, 14, 28, 26, 37, 42, 110];
 const playerxoffsets = [0,4,5,6,6,1,3,9.5,8,5,7];
 const playeryoffsets = [0,8,6,7,5,11,21,14,30,15,18];
-let key = 1;
+let key = 6;
 let gameOver = false;
 let luhvictory = false;
 let dashing = false;
@@ -23,6 +23,7 @@ class Main extends Phaser.Scene {
     constructor ()
     {
         super('Main');
+
     }
 
     preload (){
@@ -30,6 +31,9 @@ class Main extends Phaser.Scene {
 
         this.load.spritesheet('pnut', 'pnut.png', {frameWidth: 128, frameHeight: 161});
         this.load.spritesheet('tilesheet', 'OfficialTileset.png', {frameWidth: 128, frameHeight: 128});
+        this.load.spritesheet('waterDeath', 'waterDeath.png', {frameWidth: 128, frameHeight: 64});
+        this.load.spritesheet('leafDeath', 'leafDeath.png', {frameWidth: 128, frameHeight: 128});
+        this.load.spritesheet('door', 'door.png', {frameWidth: 128, frameHeight: 256});
         this.load.image('tiles', 'OfficialTileset.png');
         this.load.image('regdam', 'damageblock.png');
         this.load.image('acornimg', 'acorn.webp')
@@ -93,6 +97,15 @@ class Main extends Phaser.Scene {
                 end: 24
             }),
             duration: 120
+        });
+        this.anims.create({
+            key: 'open',
+            frames: this.anims.generateFrameNumbers('door', {
+                start: 0,
+                end: 5
+            }),
+            frameRate: 3,
+            repeat: 0
         });
 
         this.player.setBounce(0);
@@ -172,7 +185,7 @@ class Main extends Phaser.Scene {
                         jumpmp3.play();
                     }
                 } else if (this.canDoubleJump) {
-                    this.canDoubleJump = false; //should be false
+                    this.canDoubleJump = true; //should be false
                     this.player.body.setVelocityY(-525*1.5);
                     if(luhsoundOn == 'true'){
                         jumpmp3.play();
@@ -202,6 +215,7 @@ class Main extends Phaser.Scene {
             }
         }
     }
+
     loadLevel(key){
         try{
             this.bg1.destroy();
@@ -246,7 +260,7 @@ class Main extends Phaser.Scene {
         this.tileset = this.level.addTilesetImage('Tileset C3', 'tiles'); //try to use a tile extruder for this
         this.mainlayer = this.level.createLayer('Tile Layer 1', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(1);
         try{this.backround = this.level.createLayer('Backround', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(0);} catch(error){}
-        //torches        try{this.backround = this.level.createLayer('Backround', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(0);} catch(error){}
+        //torches, lava, fish layer check discrod        try{this.backround = this.level.createLayer('Backround', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(0);} catch(error){}
         try{this.background = this.level.createLayer('Background', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(0);}catch(error){}
         try{this.lilypads = this.level.createLayer('Lilypads', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(1);}catch(error){}
         try{this.foreground = this.level.createLayer('ForwardLayer', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(3);}catch(error){}
@@ -261,7 +275,7 @@ class Main extends Phaser.Scene {
         const objoffsets = {
             Door: {
                 x: -64,
-                y: -64
+                y: 0
             },
             Acorns: {
                 x: -16,
@@ -320,27 +334,30 @@ class Main extends Phaser.Scene {
             leveloffsety = objoffsets[layerName]['y'] + this.level.getObjectLayer(layerName,this.tileset).objects[this.level.getObjectLayer(layerName,this.tileset).objects.length-1].y;
             window['this.'+layerName] = this.level.getObjectLayer(layerName,this.tileset);
             window['this.'+layerName+'group'] = this.physics.add.group();
-            window['this.'+layerName].objects.forEach(object => {
-                var newObject = this.add.sprite((object.x-leveloffsetx), (object.y-leveloffsety), 'tilesheet', (object.gid-1));
-                if(layerName == 'placeholderforacornslayernamebcmaanaschangedtheacornscalinginsidetiledsoidontactuallyhavetomanuallydothisanymore'){
-                    newObject.setScale(0.4);
-                    console.log('Acorns:' + newObject.x + ', ' + newObject.y);
-                }
-                else{
+            if(layerName == 'Door'){
+                var loadedDoor = false;
+                window['this.'+layerName].objects.forEach(object => {
+                    if(loadedDoor == false){
+                        var doorleveloffsetx = leveloffsetx;
+                        var doorleveloffsety = leveloffsety;
+                        if(key == 7){
+                            doorleveloffsety -= 128;
+                        }
+                        var newObject = this.add.sprite((object.x-doorleveloffsetx), (object.y-doorleveloffsety), 'door');
+                        window['this.'+layerName+'group'].add(newObject);
+                        loadedDoor = true;
+                    }
+                });
+            }
+            else{
+                window['this.'+layerName].objects.forEach(object => {
+                    var newObject = this.add.sprite((object.x-leveloffsetx), (object.y-leveloffsety), 'tilesheet', (object.gid-1));
                     newObject.scaleX = object.width/128;
-                    newObject.scaleY = (object.height/128);
-                }
-             /*   if(layerName == 'DamageHitboxes'){
-                    console.log('DamageHitbox:' + newObject.x + ', ' + newObject.y);
-                }
-                else if(layerName == 'DamageClouds'){
-                    console.log('DamageCloud:' + newObject.x + ', ' + newObject.y);
-
-                }*/
-                window['this.'+layerName+'group'].add(newObject);
-            });         
+                    newObject.scaleY = object.height/128;
+                    window['this.'+layerName+'group'].add(newObject);
+                });         
+            }
         }
-
         this.player.setPosition(128*playerxoffsets[key],128*playeryoffsets[key]);
         this.hitboxes.setVisible(false);
         this.hitboxes.setTileIndexCallback(88, this.victory, null, this);
@@ -373,8 +390,11 @@ class Main extends Phaser.Scene {
             window['this.ObjectHitboxesgroup'].children.iterate(child => {
                 child.body.setImmovable(true); 
                 child.body.setAllowGravity(false);
+                child.body.checkCollision.down = false;
+                child.body.checkCollision.right = false;
+                child.body.checkCollision.left = false;
             });
-            this.physics.add.collider(this.player, window['this.ObjectHitboxesgroup']);
+           this.physics.add.collider(this.player, window['this.ObjectHitboxesgroup']);
             window['this.ObjectHitboxesgroup'].setVisible(false);
 
         }catch(error){}
@@ -416,10 +436,7 @@ class Main extends Phaser.Scene {
         }
 
     }
-    test(){
-        console.log('touchedbranch');
-    }
-    handleAnimateTiles(scene, delta){
+   handleAnimateTiles(scene, delta){
         scene.animatedTiles.forEach(tile => {
             if (!tile.tileAnimationData){return}
             else{
@@ -461,7 +478,9 @@ class Main extends Phaser.Scene {
     victory(player,block){
         if(score >= 0 && luhvictory == false){
             luhvictory = true;
-            //luhdoor.anims.play('open', true);
+            if(key != 8){
+                block.anims.play('open', true);
+            }
             if(luhsoundOn == 'true'){
                 doormp3.play();
             }
@@ -478,7 +497,7 @@ class Main extends Phaser.Scene {
                 key ++;
                 scene.loadLevel(key);
                 luhvictory = false;
-            }, 500);
+            }, 1500);
         }
     }
     death(player, block) {
