@@ -6,7 +6,7 @@ const xworldbounds = [0, 32, 70, 42, 82, 46, 74, 132, 119, 101, 206];
 const yworldbounds = [0, 15, 14, 82, 12, 14, 28, 26, 37, 42, 110];
 const playerxoffsets = [0,4,5,6,6,1,3,9.5,8,5,7];
 const playeryoffsets = [0,8,6,7,5,11,21,14,30,15,18];
-let key = 1;
+let key = 4;
 let gameOver = false;
 let luhvictory = false;
 let dashing = false;
@@ -60,7 +60,14 @@ class Main extends Phaser.Scene {
         this.physics.world.TILE_BIAS = 150;
         //new TileSprite(scene, x, y, width, height, textureKey, [frameKey])
         this.player = this.physics.add.sprite(128*playerxoffsets[key],128*playeryoffsets[key], 'pnut').setScale(0.6).setDepth(2);
-
+        scene.tweens.add({
+            targets: this.player,
+            alpha: { from: 1, to: 0 },
+            ease: 'Sine.InOut',
+            delay: 0,
+            duration: 10,
+            repeat: 0
+        });
         this.anims.create({
             key: 'left',
             frames: this.anims.generateFrameNumbers('pnut', {
@@ -185,7 +192,7 @@ class Main extends Phaser.Scene {
                         jumpmp3.play();
                     }
                 } else if (this.canDoubleJump) {
-                    this.canDoubleJump = false; //should be false
+                    this.canDoubleJump = true; //should be false
                     this.player.body.setVelocityY(-525*1.5);
                     if(luhsoundOn == 'true'){
                         jumpmp3.play();
@@ -215,8 +222,20 @@ class Main extends Phaser.Scene {
             }
         }
     }
-
+    fishDeath(player,block){
+        if(block.index == 91){
+            this.death(this.player, block);
+        }
+    }
     loadLevel(key){
+        scene.tweens.add({
+            targets: this.player,
+            alpha: { from: 0, to: 1 },
+            ease: 'Sine.InOut',
+            delay: 0,
+            duration: 500,
+            repeat: 0
+        });
         try{
             this.bg1.destroy();
             this.bg2.destroy();
@@ -229,6 +248,14 @@ class Main extends Phaser.Scene {
                 window['this.'+layerName+'group'].destroy();
                 window['this.'+layerName+'group'] = null;
             }
+            scene.tweens.add({
+                targets: this.level,
+                alpha: { from: 1, to: 0},
+                ease: 'Sine.InOut',
+                delay: 5000,
+                duration: 1000,
+                repeat: 0
+            });
             this.level.destroy();
 
         }catch(error){}
@@ -260,12 +287,17 @@ class Main extends Phaser.Scene {
         this.tileset = this.level.addTilesetImage('Tileset C3', 'tiles'); //try to use a tile extruder for this
         this.mainlayer = this.level.createLayer('Tile Layer 1', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(1);
         try{this.backround = this.level.createLayer('Backround', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(0);} catch(error){}
-        //torches, lava, fish layer check discrod        try{this.backround = this.level.createLayer('Backround', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(0);} catch(error){}
+        try{this.torch = this.level.createLayer('Torch', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(0);}catch(error){}
         try{this.background = this.level.createLayer('Background', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(0);}catch(error){}
         try{this.lilypads = this.level.createLayer('Lilypads', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(1);}catch(error){}
         try{this.foreground = this.level.createLayer('ForwardLayer', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(3);}catch(error){}
         try{this.treeholes = this.level.createLayer('TreeHoles', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(3);}catch(error){}
         try{this.leaves = this.level.createLayer('Leaves', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(3);}catch(error){}
+        try{this.lava = this.level.createLayer('Lava', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(3);}catch(error){}
+        try{this.fishhitboxes = this.level.createLayer('FishHitboxes', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(3);
+            this.physics.add.overlap(this.player, this.fishhitboxes, this.fishDeath, null, this)
+            this.fishhitboxes.setVisible(false);
+           }catch(error){}
         this.hitboxes = this.level.createLayer('Hitboxes', this.tileset, xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(10);
 
 
@@ -290,7 +322,7 @@ class Main extends Phaser.Scene {
                 y: -65
             },
             RegDam: {
-                x: -25,
+                x: -40,
                 y: -110
             },            
             ObjectHitboxes: {
@@ -394,7 +426,7 @@ class Main extends Phaser.Scene {
                 child.body.checkCollision.right = false;
                 child.body.checkCollision.left = false;
             });
-           this.physics.add.collider(this.player, window['this.ObjectHitboxesgroup']);
+            this.physics.add.collider(this.player, window['this.ObjectHitboxesgroup']);
             window['this.ObjectHitboxesgroup'].setVisible(false);
 
         }catch(error){}
@@ -420,7 +452,6 @@ class Main extends Phaser.Scene {
                     tileRow.forEach(tile => {
                         if(tile != null){
                             if (tile.index-1 == parseInt(tileid)){
-                                //console.log(tileData[tileid].animation)
                                 this.animatedTiles.push({
                                     tile,
                                     tileAnimationData: tileData[tileid].animation,
@@ -436,7 +467,7 @@ class Main extends Phaser.Scene {
         }
 
     }
-   handleAnimateTiles(scene, delta){
+    handleAnimateTiles(scene, delta){
         scene.animatedTiles.forEach(tile => {
             if (!tile.tileAnimationData){return}
             else{
@@ -484,7 +515,17 @@ class Main extends Phaser.Scene {
             if(luhsoundOn == 'true'){
                 doormp3.play();
             }
-            console.log('you vicot !')
+            console.log('you vicot !');
+            try{            scene.tweens.add({
+                targets: this.player,
+                alpha: { from: 1, to: 0 },
+                ease: 'Sine.InOut',
+                delay: 2000,
+                duration: 500,
+                repeat: 0
+            });
+               }
+            catch(error){}
             setTimeout(() => {
                 if(luhsoundOn == 'true'){
                     victorymp3.play();
@@ -497,7 +538,7 @@ class Main extends Phaser.Scene {
                 key ++;
                 scene.loadLevel(key);
                 luhvictory = false;
-            }, 1500);
+            }, 2500);
         }
     }
     death(player, block) {
