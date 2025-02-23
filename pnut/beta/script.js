@@ -6,7 +6,7 @@ const xworldbounds = [0, 32, 70, 42, 82, 46, 74, 132, 119, 101, 206];
 const yworldbounds = [0, 15, 14, 82, 12, 14, 28, 26, 37, 42, 110];
 const playerxoffsets = [0,4,5,6,6,1,3,9.5,8,5,7];
 const playeryoffsets = [0,8,6,7,5,11,21,14,30,15,18];
-let key = 4;
+let key = 1;
 let gameOver = false;
 let luhvictory = false;
 let dashing = false;
@@ -192,7 +192,7 @@ class Main extends Phaser.Scene {
                         jumpmp3.play();
                     }
                 } else if (this.canDoubleJump) {
-                    this.canDoubleJump = true; //should be false
+                    this.canDoubleJump = false; //should be false
                     this.player.body.setVelocityY(-525*1.5);
                     if(luhsoundOn == 'true'){
                         jumpmp3.play();
