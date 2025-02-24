@@ -1,11 +1,11 @@
 // look up cameraFilter property for tilesprite minimap
-
 const xmapoffsets = [0,-8, -1, -12, -11, -13, -3, 0, -5, 0, 0]; //0,0 at the beginning added for referencing
 const ymapoffsets = [0,-15, -15, -11, -13, -3, -12, -6, -10, -15, 0];
 const xworldbounds = [0, 32, 70, 42, 82, 46, 74, 132, 119, 101, 206];
 const yworldbounds = [0, 15, 14, 82, 12, 14, 28, 26, 37, 42, 110];
 const playerxoffsets = [0,4,5,6,6,1,3,9.5,8,5,7];
 const playeryoffsets = [0,8,6,7,5,11,21,14,30,15,18];
+let unlockedLevels;
 let key = 1;
 let gameOver = false;
 let luhvictory = false;
@@ -18,6 +18,40 @@ var scoreText = document.getElementById('score');
 let leveloffsetx, leveloffsety;
 let scene;
 let objectData = {};
+let clickedButton = false;
+function gridLevels() {
+    let unlockedLevels;
+    if(localStorage.getItem('unlockedLevels')){
+        var string = localStorage.getItem('unlockedLevels');
+        unlockedLevels = string.split(",");
+        for (let i = 0; i < unlockedLevels.length; i++) {
+            unlockedLevels[i] = parseInt(unlockedLevels[i]);
+        }
+    }
+    else{
+        unlockedLevels = [1,0,0,0,0,0,0,0,0,0];
+    }
+    for (let i = 1; i < 11; i++) {
+        this.obj = document.createElement("img");
+        this.obj.src = 'https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/state/level-icons/levelselect'+i+'.webp';
+        this.obj.id = i;
+        if(unlockedLevels[i-1] == 0){
+            this.obj.classList.add("disabled");   
+        }
+        else{
+            this.obj.addEventListener("click", function() {
+                clickedButton = this.id;
+                document.getElementById('homescreen-container').style.display = 'none';
+            });
+        }
+        this.obj.height = 0.125*window.innerHeight;
+        this.obj.width = 0.125*window.innerHeight;
+        document.getElementById('levels').appendChild(this.obj);
+    }
+}
+gridLevels();
+
+
 class Main extends Phaser.Scene {
 
     constructor ()
@@ -60,6 +94,16 @@ class Main extends Phaser.Scene {
         this.physics.world.TILE_BIAS = 150;
         //new TileSprite(scene, x, y, width, height, textureKey, [frameKey])
         this.player = this.physics.add.sprite(128*playerxoffsets[key],128*playeryoffsets[key], 'pnut').setScale(0.6).setDepth(2);
+        if(localStorage.getItem('unlockedLevels')){
+            var string = localStorage.getItem('unlockedLevels');
+            unlockedLevels = string.split(",");
+            for (let i = 0; i < unlockedLevels.length; i++) {
+                unlockedLevels[i] = parseInt(unlockedLevels[i]);
+            }
+        }
+        else{
+            unlockedLevels = [0,0,0,0,0,0,0,0,0,0];
+        }
         scene.tweens.add({
             targets: this.player,
             alpha: { from: 1, to: 0 },
@@ -131,6 +175,10 @@ class Main extends Phaser.Scene {
     }
     update(time, delta){
         if (gameOver == false){
+            if(clickedButton != false){
+                this.loadLevel(clickedButton);
+                clickedButton = false;
+            }
             this.handleAnimateTiles(this, delta);
             this.minimap.scrollX = this.player.x
             this.minimap.scrollY = this.player.y
@@ -192,7 +240,7 @@ class Main extends Phaser.Scene {
                         jumpmp3.play();
                     }
                 } else if (this.canDoubleJump) {
-                    this.canDoubleJump = false; //should be false
+                    this.canDoubleJump = true; //should be false
                     this.player.body.setVelocityY(-525*1.5);
                     if(luhsoundOn == 'true'){
                         jumpmp3.play();
@@ -236,6 +284,8 @@ class Main extends Phaser.Scene {
             duration: 500,
             repeat: 0
         });
+        unlockedLevels[key-1] = 1;
+        localStorage.setItem('unlockedLevels',unlockedLevels);
         try{
             this.bg1.destroy();
             this.bg2.destroy();
