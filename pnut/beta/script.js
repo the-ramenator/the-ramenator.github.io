@@ -20,6 +20,7 @@ let scene;
 let objectData = {};
 let clickedButton = false;
 function gridLevels() {
+    document.getElementById('levels').innerHTML = '';
     let unlockedLevels;
     if(localStorage.getItem('unlockedLevels')){
         var string = localStorage.getItem('unlockedLevels');
@@ -42,6 +43,7 @@ function gridLevels() {
             this.obj.addEventListener("click", function() {
                 clickedButton = this.id;
                 document.getElementById('homescreen-container').style.display = 'none';
+                document.getElementById('game-container').style.display = 'block';
             });
         }
         this.obj.height = 0.125*window.innerHeight;
@@ -166,7 +168,7 @@ class Main extends Phaser.Scene {
         this.cameras.main.startFollow(this.player);
         this.cameras.main.zoomTo(0.7, 2000, Phaser.Math.Easing.Back.Out); 
 
-        this.minimap = this.cameras.add(0, 0, 200, 100).setZoom(0.05).setName('mini');
+        // this.minimap = this.cameras.add(0, this.gameHeight-100, 200, 100).setZoom(0.05).setName('mini');
 
         this.loadLevel(key);
         this.debug = this.physics.world.createDebugGraphic();
@@ -180,8 +182,8 @@ class Main extends Phaser.Scene {
                 clickedButton = false;
             }
             this.handleAnimateTiles(this, delta);
-            this.minimap.scrollX = this.player.x
-            this.minimap.scrollY = this.player.y
+            //     this.minimap.scrollX = this.player.x
+            //   this.minimap.scrollY = this.player.y
             this.cursors = this.input.keyboard.createCursorKeys();
             let dashKey = Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X)) ||Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K))
             if(dashKey && cooldownOver == true){
@@ -240,7 +242,7 @@ class Main extends Phaser.Scene {
                         jumpmp3.play();
                     }
                 } else if (this.canDoubleJump) {
-                    this.canDoubleJump = false; //should be false
+                    this.canDoubleJump = true; //should be false
                     this.player.body.setVelocityY(-525*1.5);
                     if(luhsoundOn == 'true'){
                         jumpmp3.play();
@@ -492,7 +494,7 @@ class Main extends Phaser.Scene {
             window['this.DamageHitboxesgroup'].setVisible(false);}catch(error){}
         this.cameras.main.setBounds(0, 0,128*xworldbounds[key], 128*yworldbounds[key]);
         this.physics.world.setBounds(0, 0, 128*xworldbounds[key], 128*yworldbounds[key]);
-        this.minimap.setBounds(0, 0,128*xworldbounds[key], 128*yworldbounds[key]);
+        //this.minimap.setBounds(0, 0,128*xworldbounds[key], 128*yworldbounds[key]);
 
         this.animatedTiles = [];
         const tileData = this.tileset.tileData;
