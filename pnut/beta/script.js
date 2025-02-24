@@ -1,4 +1,5 @@
 // look up cameraFilter property for tilesprite minimap
+
 const xmapoffsets = [0,-8, -1, -12, -11, -13, -3, 0, -5, 0, 0]; //0,0 at the beginning added for referencing
 const ymapoffsets = [0,-15, -15, -11, -13, -3, -12, -6, -10, -15, 0];
 const xworldbounds = [0, 32, 70, 42, 82, 46, 74, 132, 119, 101, 206];
