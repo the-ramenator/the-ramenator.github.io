@@ -13,7 +13,190 @@
             *{
                 margin: 0;
                 padding: 0;
+                overflow: hidden;
+                transition: 0.25s;
+                /* font-family: "Rubik Dirt", serif;
+                font-weight: 400;
+                font-style: normal; */
+                font-family: "Jacquard 12", serif;
+                font-weight: 400;
+                font-size: 115%;
+                font-style: normal;
+                user-select: none;
             }
+            #title-container{
+                height: 100vh;
+                width: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                animation-timing-function: ease-in-out;
+            }
+            #btn{
+                position: absolute;
+                top: 75%;
+                left: 50%;
+                cursor: pointer;
+                animation: pulse 2s ease-in-out infinite;
+                filter: drop-shadow(5px 5px 5px #000);
+                background: transparent;
+                border: none;
+                background-image: url("https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/district/real/startbtn.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                width: 290px;
+                height: 220px;
+
+            }
+            #title{
+                position: absolute;
+                top: 25%;
+                left: 50%;
+                animation: pulse 10s ease-in-out infinite;
+                transform: translate(-50%,-50%);
+                filter: drop-shadow(5px 5px 5px #000);
+                background-image: url("https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/district/real/title.webp");
+                background-repeat: no-repeat;
+                background-size: cover;
+                width: 660px;
+                height: 250px;
+            }
+            #btn:hover{
+                filter: brightness(90%) drop-shadow(5px 5px 5px #000);
+            }
+            #stars{
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 1;
+                animation: scale 5s ease-in-out infinite;
+                background-image: url("https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/district/real/stars.webp");
+                background-repeat: no-repeat;
+                background-size: cover;
+                width: calc(987px*1.75);
+                height: calc(603px*1.75);
+            }
+            #game-container{
+                display: none;
+            }
+
+            @keyframes scale{
+                0%{
+                    transform: scale(1);
+                }
+                50%{
+                    transform: scale(0.98);
+                }
+                100%{
+                    transform: scale(1);
+                }     
+            }
+            @keyframes pulse{
+                0%{
+                    transform: translate(-50%,-50%) scale(0.9);
+                }
+                50%{
+                    transform: translate(-50%,-50%) scale(1);
+                }
+                100%{
+                    transform: translate(-50%,-50%) scale(0.9);
+                }
+            }
+            #part-cont{
+                background: transparent;
+                width: 100%;
+                position: absolute;
+                height: 100vh;
+                overflow: hidden;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                animation: scale 7s ease-in-out infinite;
+                animation-delay: 3s;
+
+            }
+            #title,#btn{
+                z-index: 3;
+            }
+            .particle{
+                position: absolute !important;
+                border-radius: 25%;
+                background: #fff;
+            }
+            #circle{
+                position:absolute;
+                transform:translate(-50%,-50%);
+                height:35px;
+                width:35px;
+                border-radius:50%;
+                background: rgba(0,0,0,0.5);
+                z-index: 5;
+            }
+            @keyframes animParticle {
+                0% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+                50%{
+                    transform: scale(0);
+                    opacity: 0;
+                }
+                100% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
+            #end-container{
+                height: 100vh;
+                width: 100%;
+                background: black;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 7;
+                transition: opacity 1.5s ease;
+                display: none;
+                opacity: 0;
+            }
+            #credits{
+                color: white;
+                animation: credits 15s linear;
+                animation-fill-mode: forwards;
+                position: absolute;
+                width: 100%;
+                height: auto;
+                left: 0;
+                z-index: 8;
+                text-align: center;
+                top: 25%;
+            }
+            @keyframes credits {
+                0% {
+                    top: 125%;
+                }
+                100% {
+                    top: 10%;
+                }
+            }
+            #sound{
+                border: 0;
+                background: transparent;
+                color: white;
+                font-size: 300%;
+                position: absolute;
+                top: 1em;
+                right: 1em;
+                z-index: 10;
+                text-shadow: 0px 0px 7px #fff;
+                cursor: pointer;
+            }
+            #soundimg{
+                height: 1em;
+                width: auto;
+                filter: drop-shadow(5px 5px 5px #fff) invert(100%);
+
+            }
+
             #score{
                 position: absolute;
                 top: 1em;
@@ -22,11 +205,217 @@
                 font-size: 200%;
                 text-shadow: 4px 4px 2px #000000;
             }
+            #overlay{
+                z-index: 1000;
+                background: rgba(0,0,0,0.5);
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                cursor: pointer;
+            }
+            #overlay span{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+                color: white;
+                font-size: 200%;
+            }
+            #credits h1{
+                font-size: 250%;
+                margin-bottom: 0.5em;
+            }
+            #credits p{
+                margin-bottom: 0.5em;
+                font-size: 100%;
+                font-family: "Spectral", serif;
+            }
+            #credits button{
+                background: black;
+                border: 6px solid white;
+                color: white;
+                padding: 20px 15px;
+                cursor: pointer;
+                font-size: 200%;
+            }
+            #level-select{
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                z-index: 100;
+                animation-timing-function: ease-in-out;
+            }
+            #homescreen-container{
+                height: 100vh;
+                width: 100%;
+                background: white;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-image: url("https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/district/real/titlebg.webp");
+                background-repeat: no-repeat;
+                background-size: cover;
+                z-index: 0;
+
+            }
+            #levels{
+                display: grid;
+                grid-template-columns: auto auto auto auto auto;
+                background-color: rgba(0,0,0,0);
+                padding: 10px;
+                width: 75%;
+                height: 30vh;
+                position: absolute;
+                top: 37.5vh;
+                left: 12.5%;
+                row-gap: 5vh;
+            }
+            #levels img{
+                display: block;
+                margin: auto;
+                filter: drop-shadow(5px 5px 5px #222);
+                cursor: pointer;
+                animation: scale 2s ease-in-out infinite;
+            }
+            #levels .disabled{
+                display: block;
+                margin: auto;
+                filter: drop-shadow(5px 5px 5px #222) grayscale(100%);
+                cursor: not-allowed;
+                animation: scale 2s ease-in-out infinite;
+            }
+            #levels img:hover{
+                filter: drop-shadow(5px 5px 5px #222) brightness(70%);
+            }
+            #levels .disabled:hover{
+                filter: drop-shadow(5px 5px 5px #222) grayscale(100%) brightness(70%);
+            }
         </style>
     </head>
-    <body>
-        <span id='score'>Acorns: 0 &nbsp;</span>
-        <script src='script.js'></script>
+    <body>        
+        <div id='overlay' onclick='engage()'><span>Click to engage</span></div>
+        <div id='homescreen-container'>
+            <div id='stars'></div>
+            <button id='sound' onclick='toggleSound()'>
+                <img src='https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/district/real/novolume.webp' id='soundimg'>
+            </button>
+            <div id='part-cont'><div id='particles'></div></div>
+            <div id="circle"></div>
 
+            <div id='title-container'>
+                <div id='title'></div>
+                <button id='btn' onclick='levelSelect()'></button>
+            </div>
+            <div id='level-select'>
+                <button onclick='levelSelect()'><h1 style='color:gray;font-size:300%;'>levelSelct</h1></button>
+                <div id='levels'>
+
+                </div>
+
+            </div>
+        </div>
+        <div id='game-container'>
+            <span id='score'>Acorns: 0/30 &nbsp;</span>
+        </div>
+        <script src='script.js'></script>
+        <script>
+            let soundOn = false;
+            localStorage.setItem('soundOn',soundOn);
+
+            let intro;
+            function setupAudio() {
+                intro = document.createElement("AUDIO");
+
+                if (intro.canPlayType("audio/mpeg")) {
+                    intro.setAttribute("src","https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/district/real/intro.mp3");
+                }
+                intro.setAttribute("loop", "loop");
+                document.getElementById('homescreen-container').appendChild(intro);
+            }
+            setupAudio();
+
+            function toggleSound(){
+                if(soundOn == false){
+                    document.getElementById('soundimg').src = 'https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/district/real/volume.webp';//'<i class="fa-solid fa-volume-high"></i>';
+                    soundOn = false; //should be true
+                    localStorage.setItem('soundOn',soundOn);
+                    //intro.play();
+
+                }
+                else{
+                    document.getElementById('soundimg').src = 'https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/district/real/novolume.webp';//'<i class="fa-solid fa-volume-xmark"></i>';
+                    soundOn = false;
+                    localStorage.setItem('soundOn',soundOn);
+                    intro.pause();
+                }
+            }
+            document.getElementById('level-select').style.transform = "translate(100%,0)";
+            let selectActive = false;
+            function levelSelect(){
+                let luhduration = 500;
+                if(selectActive == false){
+                    let selectFrames = [
+                        { transform: "translate(100%,0)" },
+                        { transform: "translate(0,0)" },
+                    ];
+                    let selectTiming = {
+                        duration: luhduration,
+                        iterations: 1,
+                    };
+                    document.getElementById('level-select').style.transform = "translate(0,0)";
+                    document.getElementById('level-select').animate(selectFrames, selectTiming);
+
+                    let titleFrames = [
+                        { transform: "translate(0,0)" },
+                        { transform: "translate(-100%,0)" },
+                    ];
+                    let titleTiming = {
+                        duration: luhduration,
+                        iterations: 1,
+                    };
+                    document.getElementById('title-container').style.transform = "translate(-100%,0)";
+                    document.getElementById('title-container').animate(titleFrames, titleTiming);
+                    selectActive = true
+                }
+                else{
+                    let selectFrames = [
+                        { transform: "translate(0,0)" },
+                        { transform: "translate(100%,0)" },
+                    ];
+                    let selectTiming = {
+                        duration: luhduration,
+                        iterations: 1,
+                    };
+                    document.getElementById('level-select').style.transform = "translate(100%,0)";
+                    document.getElementById('level-select').animate(selectFrames, selectTiming);
+
+                    let titleFrames = [
+                        { transform: "translate(-100%,0)" },
+                        { transform: "translate(0,0)" },
+                    ];
+                    let titleTiming = {
+                        duration: luhduration,
+                        iterations: 1,
+                    };
+                    document.getElementById('title-container').style.transform = "translate(0%,0)";
+                    document.getElementById('title-container').animate(titleFrames, titleTiming);
+                    selectActive = false;
+                }
+            }
+            /*
+                document.getElementById('title-container').style.display = 'none';
+                document.getElementById('game-container').style.display = 'block';
+                intro.pause();
+            */
+            function engage(){
+                document.getElementById('overlay').style.display = 'none';
+                toggleSound();
+            }
+
+        </script>
     </body>
 </html>
