@@ -218,11 +218,11 @@
                 background-color: rgba(0,0,0,0);
                 padding: 10px;
                 width: 75%;
-                height: 30vh;
+                height: 40vh;
                 position: absolute;
-                top: 37.5vh;
+                top: 30vh;
                 left: 12.5%;
-                row-gap: 5vh;
+                row-gap: 10vh;
             }
             #levels img{
                 display: block;
@@ -235,7 +235,6 @@
                 display: block;
                 margin: auto;
                 filter: drop-shadow(5px 5px 5px #222) grayscale(100%);
-                /*                filter: hue-rotate(-90deg) brightness(150%);  for green*/
                 cursor: not-allowed;
                 animation: scale 2s ease-in-out infinite;
             }
@@ -245,7 +244,15 @@
             #levels .disabled:hover{
                 filter: drop-shadow(5px 5px 5px #222) grayscale(100%) brightness(70%);
             }
-
+            #levels .completed{
+                display: block;
+                margin: auto;
+                filter: drop-shadow(5px 5px 5px #222) hue-rotate(-90deg) brightness(150%) saturate(200%);
+                animation: scale 2s ease-in-out infinite;
+            }
+            #levels .completed:hover{
+                filter: drop-shadow(5px 5px 5px #222) hue-rotate(-90deg) brightness(100%) saturate(200%);
+            }
             #pause-bg, #credits-bg {
                 display: none;
                 position: fixed; 
@@ -303,6 +310,9 @@
                 background: transparent;
                 border: none;
                 cursor: pointer;
+                color: white;
+                text-shadow: 0px 0px 5px #FFF;
+                font-size: 200%;
             }
             #creditsbtn img:hover{
                 filter: brightness(70%);
@@ -327,7 +337,10 @@
                 height: 100vh;
                 background: black;
                 transition: 1s;
-                z-index: 1000;
+                z-index: 0;
+            }
+            canvas{
+                z-index: -10;
             }
         </style>
     </head>
@@ -349,8 +362,8 @@
                 <button id='levelbtn' onclick='levelSelect()'>
                     <img src='https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/state/back.png'>
                 </button>
-                <button id='creditsbtn' onclick='credits()'>
-                    <img src='https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/state/back.png'>
+                <button id='creditsbtn' onclick='credits()'>Credits
+                    <!-- <img src='https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/state/back.png'> -->
                 </button>
                 <div id='credits-bg'>
                     <div id='credits-content'>
@@ -364,7 +377,7 @@
         </div>
         <div id='game-container'>
             <div id='fader'></div>
-            <span id='score'>Acorns: 0/30 &nbsp;</span>
+            <span id='score'>Acorns: 0 &nbsp;</span>
             <div id='alert'>
                 <span>You're missing <span id='onlyHave'></span> acorns!</span>
             </div>
@@ -506,6 +519,35 @@
                 document.getElementById('overlay').style.display = 'none';
                 toggleSound();
             }
+            function random(min, max, fixed) {
+                return (Math.random() * (max - min) + min).toFixed(fixed);
+            }
+            function newParticle() {
+                this.obj = document.createElement("div");
+                this.obj.classList.add("particle");
+                this.obj.style.top = (2650 * Math.random()) - window.innerHeight + 'px';
+                this.obj.style.left = (window.innerWidth * Math.random()) + 'px';
+                this.obj.style.animation = "animParticle " + random(3, 10, 2) + "s linear infinite";
+                this.obj.style.animationDelay = random(0, 10, 2) + 's';
+                var dim = random(5, 15, 0);
+                this.obj.style.height = dim + 'px';
+                this.obj.style.width = dim + 'px';
+                document.getElementById('particles').appendChild(this.obj);
+            }
+            var dot = [];
+            for (var i = 0; i < random(300, 500, 0); i++) {
+                dot.push(new newParticle());
+            }
+            const cursorSmall = document.getElementById('circle');
+            const positionElement = (e)=> {
+                const mouseY = e.clientY;
+                const mouseX = e.clientX;
+
+                cursorSmall.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+            }
+
+            window.addEventListener('mousemove', positionElement)
+
         </script>
     </body>
 </html>
