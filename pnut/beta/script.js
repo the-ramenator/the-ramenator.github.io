@@ -278,7 +278,7 @@ class Main extends Phaser.Scene {
                             jumpmp3.play();
                         }
                     } else if (this.canDoubleJump) {
-                        this.canDoubleJump = true; //should be false
+                        this.canDoubleJump = false; //should be false
                         this.player.body.setVelocityY(-525*1.5);
                         if(luhsoundOn == 'true'){
                             jumpmp3.play();
