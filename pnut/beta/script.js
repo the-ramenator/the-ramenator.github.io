@@ -7,6 +7,7 @@ const yworldbounds = [0, 15, 14, 82, 12, 14, 28, 26, 37, 42, 110];
 const playerxoffsets = [0,4,5,6,6,1,3,9.5,8,5,7];
 const playeryoffsets = [0,8,6,7,5,11,21,14,30,15,18];
 const acornTotals = [3,6,5,4,8,8,9,8,19,27];
+let acornsSaved;
 let unlockedLevels;
 let key=1;
 let gameOver = false;
@@ -21,13 +22,14 @@ let leveloffsetx, leveloffsety;
 let scene;
 let objectData = {};
 let clickedButton = false;
+let victoryCalled = false;
 
 document.getElementById("alert").style.opacity = 0;
 document.getElementById("fader").style.opacity = 0;
+//document.getElementById("fader").style.display = 'none';
 
 function gridLevels() {
     document.getElementById('levels').innerHTML = '';
-    let unlockedLevels;
     if(localStorage.getItem('unlockedLevels')){
         var string = localStorage.getItem('unlockedLevels');
         unlockedLevels = string.split(",");
@@ -37,6 +39,16 @@ function gridLevels() {
     }
     else{
         unlockedLevels = [1,0,0,0,0,0,0,0,0,0];
+    }
+    if(localStorage.getItem('acornsSaved')){
+        var string = localStorage.getItem('acornsSaved');
+        acornsSaved = string.split(",");
+        for (let i = 0; i < acornsSaved.length; i++) {
+            acornsSaved[i] = parseInt(acornsSaved[i]);
+        }
+    }
+    else{
+        acornsSaved = [0,0,0,0,0,0,0,0,0,0];
     }
     for (let i = 1; i < 11; i++) {
         this.obj = document.createElement("img");
@@ -52,6 +64,9 @@ function gridLevels() {
                 document.getElementById('homescreen-container').style.display = 'none';
                 document.getElementById('game-container').style.display = 'block';
             });
+        }
+        if(acornTotals[i-1] == acornsSaved[i-1]){
+            this.obj.classList.add("completed");
         }
         this.obj.height = 0.125*window.innerHeight;
         this.obj.width = 0.125*window.innerHeight;
@@ -300,7 +315,10 @@ class Main extends Phaser.Scene {
         }
     }
     loadLevel(key){
+        luhvictory = false;
+        //     document.getElementById("fader").style.display = 'block';
         document.getElementById("fader").style.opacity = 1;
+        scoreText.innerHTML = 'Acorns: ' + score + '/'+acornTotals[key-1]+'&nbsp;';
         scene.tweens.add({
             targets: this.player,
             alpha: { from: 0, to: 1 },
@@ -326,6 +344,10 @@ class Main extends Phaser.Scene {
             setTimeout(() => {
                 document.getElementById("fader").style.opacity = 0;
             }, 1000);
+            /*    setTimeout(() => {
+                document.getElementById("fader").style.display = 'none';
+            }, 2000);*/
+
 
             this.level.destroy();
 
@@ -578,7 +600,7 @@ class Main extends Phaser.Scene {
     collectAcorn (player, acorn){
         acorn.destroy();
         score += 1;
-        scoreText.innerHTML = 'Acorns: ' + score + '&nbsp;';
+        scoreText.innerHTML = 'Acorns: ' + score + '/'+acornTotals[key-1]+'&nbsp;';
         player.anims.play('right', true);
         if(luhsoundOn == 'true'){
             acornmp3.play();
@@ -587,6 +609,7 @@ class Main extends Phaser.Scene {
     victory(player,block){
         let requiredAcorns = Math.floor(acornTotals[key-1]*0.75);
         if(requiredAcorns-score <= 0 && luhvictory == false){
+            victoryCalled = true;
             luhvictory = true;
             if(key != 8){
                 block.anims.play('open', true);
@@ -615,15 +638,19 @@ class Main extends Phaser.Scene {
                     grasslandsmp3.pause();
                     cavemp3.pause();
                 }
+                // document.getElementById("fader").style.display = 'block';
                 document.getElementById("fader").style.opacity = 1;
+                acornsSaved[key-1] = score;
+                localStorage.setItem('acornsSaved',acornsSaved);
+                score = 0;
             }, 2000);
             setTimeout(() => {
                 key ++;
                 scene.loadLevel(key);
-                luhvictory = false;
+                victoryCalled = false;
             }, 2500);
         }
-        else{
+        else if(victoryCalled == false){
             if(requiredAcorns-score <= 0){
                 //seems to be tweaking so this is a fallback
             }
