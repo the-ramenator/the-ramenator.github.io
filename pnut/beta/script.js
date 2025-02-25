@@ -6,8 +6,9 @@ const xworldbounds = [0, 32, 70, 42, 82, 46, 74, 132, 119, 101, 206];
 const yworldbounds = [0, 15, 14, 82, 12, 14, 28, 26, 37, 42, 110];
 const playerxoffsets = [0,4,5,6,6,1,3,9.5,8,5,7];
 const playeryoffsets = [0,8,6,7,5,11,21,14,30,15,18];
+const acornTotals = [3,6,5,4,8,8,9,8,19,27];
 let unlockedLevels;
-let key = 1;
+let key=1;
 let gameOver = false;
 let luhvictory = false;
 let dashing = false;
@@ -43,6 +44,7 @@ function gridLevels() {
         else{
             this.obj.addEventListener("click", function() {
                 clickedButton = this.id;
+                key = parseInt(this.id);
                 document.getElementById('homescreen-container').style.display = 'none';
                 document.getElementById('game-container').style.display = 'block';
             });
@@ -177,98 +179,100 @@ class Main extends Phaser.Scene {
 
     }
     update(time, delta){
-        if (gameOver == false){
-            if(clickedButton != false){
-                this.loadLevel(clickedButton);
-                clickedButton = false;
-            }
-            this.handleAnimateTiles(this, delta);
-            //     this.minimap.scrollX = this.player.x
-            //   this.minimap.scrollY = this.player.y
-            this.cursors = this.input.keyboard.createCursorKeys();
-            let dashKey = Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X)) ||Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K))
-            if(dashKey && cooldownOver == true){
-                if (this.cursors.right.isDown || (this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)).isDown) {
-                    this.player.anims.play('dash');
-                    dashing = true;
-                    this.player.setVelocityX(4000);
-                    cooldownOver = false;
-                    setTimeout(() => {
-                        this.player.setVelocityX(0);
-                        dashing = false;
-                        this.player.setTint(0xaaaaaa);
-                    },120);
-                    setTimeout(() => {
-                        cooldownOver = true;
-                        this.player.clearTint();
-                    },300);
+        if(document.getElementById('pause-bg').style.display == 'none'){
+            if (gameOver == false){
+                if(clickedButton != false){
+                    this.loadLevel(clickedButton);
+                    clickedButton = false;
                 }
-                else if (this.cursors.left.isDown || (this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)).isDown) {
-                    this.player.anims.play('dash');
-                    dashing = true;
-                    this.player.setVelocityX(-4000);
-                    cooldownOver = false;
-                    setTimeout(() => {
-                        this.player.setVelocityX(0);
-                        dashing = false;
-                        this.player.setTint(0xaaaaaa);
-                    },120);
-                    setTimeout(() => {
-                        cooldownOver = true;
-                        this.player.clearTint();
-                    },300);
-                }
-
-            }
-            if ((this.cursors.left.isDown || (this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)).isDown) && dashing == false) {
-                this.player.setVelocityX(-460+cloudVelocity);
-                this.player.anims.play('left', true);
-            } else if ((this.cursors.right.isDown || (this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)).isDown) && dashing == false) {
-                this.player.setVelocityX(460+cloudVelocity);
-                this.player.anims.play('right', true);
-            } else {
-                if(dashing == false){
-                    this.player.setVelocityX(cloudVelocity);
-                    this.player.anims.play('neutral');
-                }
-            }
-
-            var didPressJump = Phaser.Input.Keyboard.JustDown(this.cursors.up) || Phaser.Input.Keyboard.JustDown(this.cursors.space) || Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W));
-
-            if (didPressJump) {
-                if (this.player.body.blocked.down) {
-                    this.canDoubleJump = true;
-                    this.player.body.setVelocityY(-675*1.5);
-                    if(luhsoundOn == 'true'){
-                        jumpmp3.play();
+                this.handleAnimateTiles(this, delta);
+                //     this.minimap.scrollX = this.player.x
+                //   this.minimap.scrollY = this.player.y
+                this.cursors = this.input.keyboard.createCursorKeys();
+                let dashKey = Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X)) ||Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K))
+                if(dashKey && cooldownOver == true){
+                    if (this.cursors.right.isDown || (this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)).isDown) {
+                        this.player.anims.play('dash');
+                        dashing = true;
+                        this.player.setVelocityX(4000);
+                        cooldownOver = false;
+                        setTimeout(() => {
+                            this.player.setVelocityX(0);
+                            dashing = false;
+                            this.player.setTint(0xaaaaaa);
+                        },120);
+                        setTimeout(() => {
+                            cooldownOver = true;
+                            this.player.clearTint();
+                        },300);
                     }
-                } else if (this.canDoubleJump) {
-                    this.canDoubleJump = false; //should be false
-                    this.player.body.setVelocityY(-525*1.5);
-                    if(luhsoundOn == 'true'){
-                        jumpmp3.play();
+                    else if (this.cursors.left.isDown || (this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)).isDown) {
+                        this.player.anims.play('dash');
+                        dashing = true;
+                        this.player.setVelocityX(-4000);
+                        cooldownOver = false;
+                        setTimeout(() => {
+                            this.player.setVelocityX(0);
+                            dashing = false;
+                            this.player.setTint(0xaaaaaa);
+                        },120);
+                        setTimeout(() => {
+                            cooldownOver = true;
+                            this.player.clearTint();
+                        },300);
+                    }
+
+                }
+                if ((this.cursors.left.isDown || (this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)).isDown) && dashing == false) {
+                    this.player.setVelocityX(-460+cloudVelocity);
+                    this.player.anims.play('left', true);
+                } else if ((this.cursors.right.isDown || (this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)).isDown) && dashing == false) {
+                    this.player.setVelocityX(460+cloudVelocity);
+                    this.player.anims.play('right', true);
+                } else {
+                    if(dashing == false){
+                        this.player.setVelocityX(cloudVelocity);
+                        this.player.anims.play('neutral');
                     }
                 }
-            }
-            if((this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)).isDown){
-                this.reset(this.player);
-            }
+
+                var didPressJump = Phaser.Input.Keyboard.JustDown(this.cursors.up) || Phaser.Input.Keyboard.JustDown(this.cursors.space) || Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W));
+
+                if (didPressJump) {
+                    if (this.player.body.blocked.down) {
+                        this.canDoubleJump = true;
+                        this.player.body.setVelocityY(-675*1.5);
+                        if(luhsoundOn == 'true'){
+                            jumpmp3.play();
+                        }
+                    } else if (this.canDoubleJump) {
+                        this.canDoubleJump = true; //should be false
+                        this.player.body.setVelocityY(-525*1.5);
+                        if(luhsoundOn == 'true'){
+                            jumpmp3.play();
+                        }
+                    }
+                }
+                if((this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)).isDown){
+                    this.reset(this.player);
+                }
 
 
-            if(Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.N))){
-                if(key < 10){
-                    key++;
+                if(Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.N))){
+                    if(key < 10){
+                        key++;
+                    }
+                    this.loadLevel(key)
                 }
-                this.loadLevel(key)
-            }
-            if(Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H))){
-                if(this.hitboxes.visible){
-                    this.hitboxes.setVisible(false);
-                    this.debug.setVisible(false);
-                }
-                else{
-                    this.hitboxes.setVisible(true);
-                    this.debug.setVisible(true);
+                if(Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H))){
+                    if(this.hitboxes.visible){
+                        this.hitboxes.setVisible(false);
+                        this.debug.setVisible(false);
+                    }
+                    else{
+                        this.hitboxes.setVisible(true);
+                        this.debug.setVisible(true);
+                    }
                 }
             }
         }
@@ -347,6 +351,7 @@ class Main extends Phaser.Scene {
         try{this.treeholes = this.level.createLayer('TreeHoles', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(3);}catch(error){}
         try{this.leaves = this.level.createLayer('Leaves', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(3);}catch(error){}
         try{this.lava = this.level.createLayer('Lava', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(3);}catch(error){}
+        try{this.deco = this.level.createLayer('Deco', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(3);}catch(error){}
         try{this.fishhitboxes = this.level.createLayer('FishHitboxes', this.tileset,xmapoffsets[key]*128,ymapoffsets[key]*128).setDepth(3);
             this.physics.add.overlap(this.player, this.fishhitboxes, this.fishDeath, null, this)
             this.fishhitboxes.setVisible(false);
