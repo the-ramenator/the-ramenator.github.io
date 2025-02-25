@@ -235,7 +235,7 @@
                 display: block;
                 margin: auto;
                 filter: drop-shadow(5px 5px 5px #222) grayscale(100%);
-/*                filter: hue-rotate(-90deg) brightness(150%);  for green*/
+                /*                filter: hue-rotate(-90deg) brightness(150%);  for green*/
                 cursor: not-allowed;
                 animation: scale 2s ease-in-out infinite;
             }
@@ -246,7 +246,7 @@
                 filter: drop-shadow(5px 5px 5px #222) grayscale(100%) brightness(70%);
             }
 
-            #pause-bg {
+            #pause-bg, #credits-bg {
                 display: none;
                 position: fixed; 
                 z-index: 1; 
@@ -258,7 +258,7 @@
                 background-color: rgb(0,0,0);
                 background-color: rgba(0,0,0,0.4);
             }
-            #pause-content {
+            #pause-content, #credits-content {
                 background-color: transparent;
                 width: 60%;
                 position: absolute;
@@ -295,6 +295,40 @@
             #levelbtn img:hover{
                 filter: brightness(70%);
             }
+            #creditsbtn{
+                position: absolute;
+                top: 0;
+                right: 0;
+                margin: 7vh;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+            }
+            #creditsbtn img:hover{
+                filter: brightness(70%);
+            }
+            #alert{
+                width: 30%;
+                height: 5vh;
+                margin-top: 7vh;
+                position: absolute;
+                left: 35%;
+                top: 0;
+                background: rgb(0,0,0);
+                background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(255,230,131,1) 10%, rgba(255,212,40,1) 50%, rgba(255,230,131,1) 90%, rgba(0,0,0,0) 100%);
+                text-align: center;
+                transition: 0.5s;
+            }
+            #fader{
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: black;
+                transition: 1s;
+                z-index: 1000;
+            }
         </style>
     </head>
     <body>
@@ -315,12 +349,25 @@
                 <button id='levelbtn' onclick='levelSelect()'>
                     <img src='https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/state/back.png'>
                 </button>
+                <button id='creditsbtn' onclick='credits()'>
+                    <img src='https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/state/back.png'>
+                </button>
+                <div id='credits-bg'>
+                    <div id='credits-content'>
+                        <button id='credits-close'>close</button>
+                        <h1>Credits</h1>
+                    </div>
+                </div>
                 <div id='levels'>
                 </div>
             </div>
         </div>
         <div id='game-container'>
+            <div id='fader'></div>
             <span id='score'>Acorns: 0/30 &nbsp;</span>
+            <div id='alert'>
+                <span>You're missing <span id='onlyHave'></span> acorns!</span>
+            </div>
             <button id="pause"><img src='https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/state/pause.png'></button>
             <div id="pause-bg">
                 <button id="unpause"><img src='https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/state/play.png'></button>
@@ -350,10 +397,19 @@
                 document.getElementById("pause-bg").style.display = "none";
                 document.getElementById("pause").style.display = "block";
             }
+            document.getElementById("creditsbtn").onclick = function() {
+                document.getElementById("credits-bg").style.display = "block";
+            }
+            document.getElementById("credits-close").onclick = function() {
+                document.getElementById("credits-bg").style.display = "none";
+            }
             window.onclick = function(event) {
                 if (event.target == document.getElementById("pause-bg")) {
                     document.getElementById("pause-bg").style.display = "none";
                     document.getElementById("pause").style.display = "block";
+                }
+                else if (event.target == document.getElementById("credits-bg")) {
+                    document.getElementById("credits-bg").style.display = "none";
                 }
             }
 
@@ -449,13 +505,6 @@
             function engage(){
                 document.getElementById('overlay').style.display = 'none';
                 toggleSound();
-            }
-            function returnHome(){
-                //maybe move this into script.js??
-                //  document.getElementById('game-container').style.display = 'none';
-                //                document.getElementById('homescreen-container').style.display = 'block';
-                //              document.getElementById("pause-bg").style.display = "none";
-                location.reload();
             }
         </script>
     </body>
