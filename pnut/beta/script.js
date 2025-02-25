@@ -21,6 +21,10 @@ let leveloffsetx, leveloffsety;
 let scene;
 let objectData = {};
 let clickedButton = false;
+
+document.getElementById("alert").style.opacity = 0;
+document.getElementById("fader").style.opacity = 0;
+
 function gridLevels() {
     document.getElementById('levels').innerHTML = '';
     let unlockedLevels;
@@ -55,6 +59,14 @@ function gridLevels() {
     }
 }
 gridLevels();
+
+function returnHome(){
+    document.getElementById('game-container').style.display = 'none';
+    document.getElementById('homescreen-container').style.display = 'block';
+    document.getElementById("pause-bg").style.display = "none";
+    gridLevels();
+}
+
 
 
 class Main extends Phaser.Scene {
@@ -166,7 +178,12 @@ class Main extends Phaser.Scene {
 
         this.player.setBounce(0);
         this.player.setCollideWorldBounds(true);
-        this.player.body.setGravityY(1800);
+        if(key == 7){
+            this.player.body.setGravityY(1200);
+        }
+        else{
+            this.player.body.setGravityY(1800);
+        }
 
         this.cameras.main.startFollow(this.player);
         this.cameras.main.zoomTo(0.7, 2000, Phaser.Math.Easing.Back.Out); 
@@ -283,6 +300,7 @@ class Main extends Phaser.Scene {
         }
     }
     loadLevel(key){
+        document.getElementById("fader").style.opacity = 1;
         scene.tweens.add({
             targets: this.player,
             alpha: { from: 0, to: 1 },
@@ -305,17 +323,19 @@ class Main extends Phaser.Scene {
                 window['this.'+layerName+'group'].destroy();
                 window['this.'+layerName+'group'] = null;
             }
-            scene.tweens.add({
-                targets: this.level,
-                alpha: { from: 1, to: 0},
-                ease: 'Sine.InOut',
-                delay: 5000,
-                duration: 1000,
-                repeat: 0
-            });
+            setTimeout(() => {
+                document.getElementById("fader").style.opacity = 0;
+            }, 1000);
+
             this.level.destroy();
 
         }catch(error){}
+        if(key == 7){
+            this.player.body.setGravityY(1200);
+        }
+        else{
+            this.player.body.setGravityY(1800);
+        }
         let scaley = 1.75*(this.gameHeight/512);
         let scalex = scaley;
         if(key > 0 && key < 5 || key == 7){
@@ -565,7 +585,8 @@ class Main extends Phaser.Scene {
         }    
     }
     victory(player,block){
-        if(score >= 0 && luhvictory == false){
+        let requiredAcorns = Math.floor(acornTotals[key-1]*0.75);
+        if(requiredAcorns-score <= 0 && luhvictory == false){
             luhvictory = true;
             if(key != 8){
                 block.anims.play('open', true);
@@ -573,30 +594,47 @@ class Main extends Phaser.Scene {
             if(luhsoundOn == 'true'){
                 doormp3.play();
             }
-            console.log('you vicot !');
-            try{            scene.tweens.add({
-                targets: this.player,
-                alpha: { from: 1, to: 0 },
-                ease: 'Sine.InOut',
-                delay: 2000,
-                duration: 500,
-                repeat: 0
-            });
-               }
+            try{            
+                scene.tweens.add({
+                    targets: this.player,
+                    alpha: { from: 1, to: 0 },
+                    ease: 'Sine.InOut',
+                    delay: 2000,
+                    duration: 500,
+                    repeat: 0
+                });
+            }
             catch(error){}
+            document.getElementById("alert").style.opacity = 0;
+
+
             setTimeout(() => {
                 if(luhsoundOn == 'true'){
                     victorymp3.play();
                     clearInterval(musicInterval);
                     grasslandsmp3.pause();
                     cavemp3.pause();
-                } 
+                }
+                document.getElementById("fader").style.opacity = 1;
             }, 2000);
             setTimeout(() => {
                 key ++;
                 scene.loadLevel(key);
                 luhvictory = false;
             }, 2500);
+        }
+        else{
+            if(requiredAcorns-score <= 0){
+                //seems to be tweaking so this is a fallback
+            }
+            else{
+                document.getElementById("onlyHave").innerHTML = requiredAcorns-score;
+                document.getElementById("alert").style.opacity = 1;
+                setTimeout(() => {
+                    document.getElementById("alert").style.opacity = 0;
+                }, 500);
+
+            }
         }
     }
     death(player, block) {
@@ -615,7 +653,12 @@ class Main extends Phaser.Scene {
     reset(player){
         gameOver = false;
         player.setPosition(128*playerxoffsets[key],128*playeryoffsets[key]);
-        player.body.setGravityY(1800);
+        if(key == 7){
+            player.body.setGravityY(1200);
+        }
+        else{
+            player.body.setGravityY(1800);
+        }
         player.clearTint();
     }
     touchingCloud(luhplayer, cloud, fromCloud){
