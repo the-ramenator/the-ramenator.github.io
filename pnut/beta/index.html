@@ -32,7 +32,7 @@
                 left: 0;
                 animation-timing-function: ease-in-out;
             }
-            #btn{
+            #startbtn{
                 position: absolute;
                 top: 75%;
                 left: 50%;
@@ -145,38 +145,6 @@
                     opacity: 1;
                 }
             }
-            #end-container{
-                height: 100vh;
-                width: 100%;
-                background: black;
-                position: absolute;
-                top: 0;
-                left: 0;
-                z-index: 7;
-                transition: opacity 1.5s ease;
-                display: none;
-                opacity: 0;
-            }
-            #credits{
-                color: white;
-                animation: credits 15s linear;
-                animation-fill-mode: forwards;
-                position: absolute;
-                width: 100%;
-                height: auto;
-                left: 0;
-                z-index: 8;
-                text-align: center;
-                top: 25%;
-            }
-            @keyframes credits {
-                0% {
-                    top: 125%;
-                }
-                100% {
-                    top: 10%;
-                }
-            }
             #sound{
                 border: 0;
                 background: transparent;
@@ -220,23 +188,6 @@
                 left: 50%;
                 transform: translate(-50%,-50%);
                 color: white;
-                font-size: 200%;
-            }
-            #credits h1{
-                font-size: 250%;
-                margin-bottom: 0.5em;
-            }
-            #credits p{
-                margin-bottom: 0.5em;
-                font-size: 100%;
-                font-family: "Spectral", serif;
-            }
-            #credits button{
-                background: black;
-                border: 6px solid white;
-                color: white;
-                padding: 20px 15px;
-                cursor: pointer;
                 font-size: 200%;
             }
             #level-select{
@@ -284,6 +235,7 @@
                 display: block;
                 margin: auto;
                 filter: drop-shadow(5px 5px 5px #222) grayscale(100%);
+/*                filter: hue-rotate(-90deg) brightness(150%);  for green*/
                 cursor: not-allowed;
                 animation: scale 2s ease-in-out infinite;
             }
@@ -308,70 +260,79 @@
             }
             #pause-content {
                 background-color: transparent;
-                margin: auto;
-                padding: 20px;
-                border: 1px solid #888;
-                width: 80%;
+                width: 60%;
                 position: absolute;
                 height: 80vh;
                 top: 10vh;
-                left: 10%;
+                left: 20%;
                 color:#fff;
-            }
-            #unpause {
-                color: #fff;
-                float: right;
-                font-size: 50px;
-                font-weight: bold;
+                border: 1px solid white;
             }
 
-            #unpause:hover,
-            #unpause:focus {
-                color: #000;
-                text-decoration: none;
-                cursor: pointer;
-            }
-            #pause{
+            #pause, #unpause{
                 color: white;
-                background: black;
-                border: 1px solid white;;
-                border-radius: 25%;
                 cursor: pointer;
                 position: absolute;
                 top: 7vh;
                 right: 7vh;
+                background: transparent;
+                border: none;
+                filter: drop-shadow(0px 0px 5px #222);
                 width: 7vh;
-                height: 7vh;
+                height: 10vh;
+            }
+            #pause img, #unpause img{
+                width: auto;
+                height: 8.5vh;
+                border: none;
+            }
+            #levelbtn{
+                background: transparent;
+                border: none;
+                margin: 7vh;
+                cursor: pointer;
+            }
+            #levelbtn img:hover{
+                filter: brightness(70%);
             }
         </style>
     </head>
     <body>
         <div id='overlay' onclick='engage()'><span>Click to engage</span></div>
         <div id='homescreen-container'>
-            <div id='stars'></div>
-            <button id='sound' onclick='toggleSound()'>
-                <img src='https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/district/real/novolume.webp' id='soundimg'>
-            </button>
+            <!-- <div id='stars'></div> -->
             <div id='part-cont'><div id='particles'></div></div>
             <div id="circle"></div>
 
             <div id='title-container'>
                 <div id='title'></div>
-                <button id='btn' onclick='levelSelect()'></button>
+                <button id='sound' onclick='toggleSound()'>
+                    <img src='https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/district/real/novolume.webp' id='soundimg'>
+                </button>
+                <button id='startbtn' onclick='levelSelect()'></button>
             </div>
             <div id='level-select'>
-                <button onclick='levelSelect()'><h1 style='color:gray;font-size:300%;'>levelSelct</h1></button>
+                <button id='levelbtn' onclick='levelSelect()'>
+                    <img src='https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/state/back.png'>
+                </button>
                 <div id='levels'>
-
                 </div>
             </div>
         </div>
         <div id='game-container'>
             <span id='score'>Acorns: 0/30 &nbsp;</span>
-            <button id="pause"><b>| |</b></button>
+            <button id="pause"><img src='https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/state/pause.png'></button>
             <div id="pause-bg">
+                <button id="unpause"><img src='https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/state/play.png'></button>
                 <div id="pause-content">
-                    <span id="unpause">></span>
+                    <p style='text-align: center;font-family: "Times New Roman", Times, serif;'>
+                        <b>A/D or Arrow Keys</b> to move
+                        <br>
+                        <b>Space, W or Up Arrow</b> to jump/double jump
+                        <br>
+                        <b>K or X</b> to dash
+                        <br>
+                    </p>
                     <button onclick='returnHome()'>Go to homepage</button>
                 </div>
 
@@ -380,15 +341,19 @@
         </div>
         <script src='script.js'></script>
         <script>
+            document.getElementById("pause-bg").style.display = "none";
             document.getElementById("pause").onclick = function() {
                 document.getElementById("pause-bg").style.display = "block";
+                document.getElementById("pause").style.display = "none";
             }
             document.getElementById("unpause").onclick = function() {
                 document.getElementById("pause-bg").style.display = "none";
+                document.getElementById("pause").style.display = "block";
             }
             window.onclick = function(event) {
                 if (event.target == document.getElementById("pause-bg")) {
                     document.getElementById("pause-bg").style.display = "none";
+                    document.getElementById("pause").style.display = "block";
                 }
             }
 
@@ -409,8 +374,9 @@
             setupAudio();
 
             function toggleSound(){
+                console.log('soundtoggled');
                 if(soundOn == false){
-                    document.getElementById('soundimg').src = 'https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/district/real/volume.webp';//'<i class="fa-solid fa-volume-high"></i>';
+                    document.getElementById('soundimg').src = 'https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/district/real/volume.webp';
                     soundOn = false; //should be true
                     localStorage.setItem('soundOn',soundOn);
                     //intro.play();
@@ -485,9 +451,10 @@
                 toggleSound();
             }
             function returnHome(){
-              //  document.getElementById('game-container').style.display = 'none';
-//                document.getElementById('homescreen-container').style.display = 'block';
-  //              document.getElementById("pause-bg").style.display = "none";
+                //maybe move this into script.js??
+                //  document.getElementById('game-container').style.display = 'none';
+                //                document.getElementById('homescreen-container').style.display = 'block';
+                //              document.getElementById("pause-bg").style.display = "none";
                 location.reload();
             }
         </script>
