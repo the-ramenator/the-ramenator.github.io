@@ -3,7 +3,7 @@
 const xmapoffsets = [0,-8, -1, -12, -11, -13, -3, 0, -5, 0, 0]; //0,0 at the beginning added for referencing
 const ymapoffsets = [0,-15, -15, -11, -13, -3, -12, -6, -10, -15, 0];
 const xworldbounds = [0, 32, 70, 42, 82, 46, 74, 132, 119, 101, 206];
-const yworldbounds = [0, 15, 14, 82, 12, 14, 28, 26, 37, 42, 110];
+const yworldbounds = [0, 14, 14, 10, 12, 14, 28, 26, 37, 42, 110];
 const playerxoffsets = [0,4,5,6,6,1,3,9.5,8,5,7];
 const playeryoffsets = [0,8,6,7,5,11,21,14,30,15,18];
 const acornTotals = [3,6,5,4,8,8,9,8,19,27];
@@ -23,6 +23,7 @@ let scene;
 let objectData = {};
 let clickedButton = false;
 let victoryCalled = false;
+
 
 document.getElementById("alert").style.opacity = 0;
 document.getElementById("fader").style.opacity = 0;
@@ -63,6 +64,8 @@ function gridLevels() {
                 key = parseInt(this.id);
                 document.getElementById('homescreen-container').style.display = 'none';
                 document.getElementById('game-container').style.display = 'block';
+                document.getElementById("pause").style.display = "block";    
+
             });
         }
         if(acornTotals[i-1] == acornsSaved[i-1]){
@@ -79,6 +82,7 @@ function returnHome(){
     document.getElementById('game-container').style.display = 'none';
     document.getElementById('homescreen-container').style.display = 'block';
     document.getElementById("pause-bg").style.display = "none";
+    document.getElementById("pause").style.display = "none";    
     gridLevels();
 }
 
@@ -203,9 +207,10 @@ class Main extends Phaser.Scene {
         this.cameras.main.startFollow(this.player);
         this.cameras.main.zoomTo(0.7, 2000, Phaser.Math.Easing.Back.Out); 
 
-        // this.minimap = this.cameras.add(0, this.gameHeight-100, 200, 100).setZoom(0.05).setName('mini');
+        this.minimap = this.cameras.add(0, this.gameHeight-yworldbounds[key]*10, xworldbounds[key]*10, yworldbounds[key]*10).setZoom(0.07).setName('mini');     
 
         this.loadLevel(key);
+
         this.debug = this.physics.world.createDebugGraphic();
         this.debug.setVisible(false);
 
@@ -218,8 +223,8 @@ class Main extends Phaser.Scene {
                     clickedButton = false;
                 }
                 this.handleAnimateTiles(this, delta);
-                //     this.minimap.scrollX = this.player.x
-                //   this.minimap.scrollY = this.player.y
+                this.minimap.scrollX = this.player.x
+                this.minimap.scrollY = this.player.y
                 this.cursors = this.input.keyboard.createCursorKeys();
                 let dashKey = Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X)) ||Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K))
                 if(dashKey && cooldownOver == true){
@@ -278,7 +283,7 @@ class Main extends Phaser.Scene {
                             jumpmp3.play();
                         }
                     } else if (this.canDoubleJump) {
-                        this.canDoubleJump = false; //should be false
+                        this.canDoubleJump = true; //should be false
                         this.player.body.setVelocityY(-525*1.5);
                         if(luhsoundOn == 'true'){
                             jumpmp3.play();
@@ -366,15 +371,32 @@ class Main extends Phaser.Scene {
             this.bg3 = this.add.tileSprite(-this.gameWidth/5, -this.gameHeight/5, 1.3*128*xworldbounds[key], 512, 'sky3').setScrollFactor(0.3).setScale(scalex,scaley); 
             this.bg4 = this.add.tileSprite(-this.gameWidth/5, -this.gameHeight/5, 1.4*128*xworldbounds[key], 512, 'sky4').setScrollFactor(0.4).setScale(scalex,scaley); 
             this.bg1.originY = this.bg2.originY = this.bg3.originY = this.bg4.originY = this.bg1.originX = this.bg2.originX = this.bg3.originX = this.bg4.originX = 0;
+            this.minimap.ignore(this.bg1);
+            this.minimap.ignore(this.bg2);
+            this.minimap.ignore(this.bg3);
+            this.minimap.ignore(this.bg4);
 
 
         }
         else if(key >= 5 && key < 10){
-            this.bg1 = this.add.tileSprite(-this.gameWidth/5, -this.gameHeight/5, 1.1*128*xworldbounds[key], 512, 'jungle1').setScrollFactor(0.1).setScale(scalex,scaley); 
-            this.bg2 = this.add.tileSprite(-this.gameWidth/5, -this.gameHeight/5, 1.2*128*xworldbounds[key], 512, 'jungle2').setScrollFactor(0.2).setScale(scalex,scaley); 
-            this.bg3 = this.add.tileSprite(-this.gameWidth/5, -this.gameHeight/5, 1.3*128*xworldbounds[key], 512, 'jungle3').setScrollFactor(0.3).setScale(scalex,scaley); 
-            this.bg4 = this.add.tileSprite(-this.gameWidth/5, -this.gameHeight/5, 1.4*128*xworldbounds[key], 512, 'jungle4').setScrollFactor(0.4).setScale(scalex,scaley); 
+            if(key == 8){
+                this.bg1 = this.add.tileSprite(-this.gameWidth/5, -this.gameHeight/5, 1.1*128*xworldbounds[key], 512, 'jungle1').setScrollFactor(0.1).setScale(scalex*1.6,scaley*1.6); 
+                this.bg2 = this.add.tileSprite(-this.gameWidth/5, -this.gameHeight/5, 1.2*128*xworldbounds[key], 512, 'jungle2').setScrollFactor(0.2).setScale(scalex*1.7,scaley*1.7); 
+                this.bg3 = this.add.tileSprite(-this.gameWidth/5, -this.gameHeight/5, 1.3*128*xworldbounds[key], 512, 'jungle3').setScrollFactor(0.3).setScale(scalex*1.8,scaley*1.8); 
+                this.bg4 = this.add.tileSprite(-this.gameWidth/5, -this.gameHeight/5, 1.4*128*xworldbounds[key], 512, 'jungle4').setScrollFactor(0.4).setScale(scalex*1.9,scaley*1.9); 
+
+            }
+            else{
+                this.bg1 = this.add.tileSprite(-this.gameWidth/5, -this.gameHeight/5, 1.1*128*xworldbounds[key], 512, 'jungle1').setScrollFactor(0.1).setScale(scalex*1.3,scaley*1.3); 
+                this.bg2 = this.add.tileSprite(-this.gameWidth/5, -this.gameHeight/5, 1.2*128*xworldbounds[key], 512, 'jungle2').setScrollFactor(0.2).setScale(scalex*1.4,scaley*1.4); 
+                this.bg3 = this.add.tileSprite(-this.gameWidth/5, -this.gameHeight/5, 1.3*128*xworldbounds[key], 512, 'jungle3').setScrollFactor(0.3).setScale(scalex*1.5,scaley*1.5); 
+                this.bg4 = this.add.tileSprite(-this.gameWidth/5, -this.gameHeight/5, 1.4*128*xworldbounds[key], 512, 'jungle4').setScrollFactor(0.4).setScale(scalex*1.6,scaley*1.6); 
+            }
             this.bg1.originY = this.bg2.originY = this.bg3.originY = this.bg4.originY = this.bg1.originX = this.bg2.originX = this.bg3.originX = this.bg4.originX = 0;
+            this.minimap.ignore(this.bg1);
+            this.minimap.ignore(this.bg2);
+            this.minimap.ignore(this.bg3);
+            this.minimap.ignore(this.bg4);
 
         }
         else{
@@ -542,7 +564,7 @@ class Main extends Phaser.Scene {
             window['this.DamageHitboxesgroup'].setVisible(false);}catch(error){}
         this.cameras.main.setBounds(0, 0,128*xworldbounds[key], 128*yworldbounds[key]);
         this.physics.world.setBounds(0, 0, 128*xworldbounds[key], 128*yworldbounds[key]);
-        //this.minimap.setBounds(0, 0,128*xworldbounds[key], 128*yworldbounds[key]);
+        this.minimap.setBounds(0, 0,128*xworldbounds[key], 128*yworldbounds[key]);
 
         this.animatedTiles = [];
         const tileData = this.tileset.tileData;
@@ -565,6 +587,13 @@ class Main extends Phaser.Scene {
 
             });
         }
+
+   /*     let color = 0xffff00;
+        let alpha = 0.5;
+        this.minimapBorder = this.add.graphics();
+        this.minimapBorder.fillStyle(color, alpha);
+        this.minimapBorder.fillRect(32 * i, 32 * i, 256, 256);*/
+
 
     }
     handleAnimateTiles(scene, delta){
@@ -640,7 +669,9 @@ class Main extends Phaser.Scene {
                 }
                 // document.getElementById("fader").style.display = 'block';
                 document.getElementById("fader").style.opacity = 1;
-                acornsSaved[key-1] = score;
+                if(acornsSaved[key-1] <= score){
+                    acornsSaved[key-1] = score;
+                }
                 localStorage.setItem('acornsSaved',acornsSaved);
                 score = 0;
             }, 2000);
