@@ -314,6 +314,22 @@
                 text-shadow: 0px 0px 5px #FFF;
                 font-size: 200%;
             }
+            #resetbtn{
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                margin: 7vh;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                color: white;
+                text-shadow: 0px 0px 5px #FFF;
+                font-size: 200%;
+            }
+            #resetbtn:hover, #creditsbtn:hover{
+                color: #dae5db;
+                text-shadow: 0px 0px 5px #000;
+            }
             #creditsbtn img:hover{
                 filter: brightness(70%);
             }
@@ -362,6 +378,7 @@
                 <button id='levelbtn' onclick='levelSelect()'>
                     <img src='https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/state/back.png'>
                 </button>
+                <button id='resetbtn' onclick='hardReset()'>Reset</button>
                 <button id='creditsbtn' onclick='credits()'>Credits
                     <!-- <img src='https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/state/back.png'> -->
                 </button>
@@ -518,6 +535,14 @@
             function engage(){
                 document.getElementById('overlay').style.display = 'none';
                 toggleSound();
+            }
+            function hardReset(){
+                var prompt = confirm("This will reset all progress. Are you sure?");
+                if(prompt == true){
+                    localStorage.removeItem('unlockedLevels');
+                    localStorage.removeItem('acornsSaved');
+                    location.reload();
+                }
             }
             function random(min, max, fixed) {
                 return (Math.random() * (max - min) + min).toFixed(fixed);
