@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>The Ramenator</title>
-        <link rel="icon" type="image/png" href="homepage-assets/favicon.png"/>
+        <link rel="icon" type="image/png" href="assets/homepage/favicon.png"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +23,7 @@
             .bgcontainer{
                 height: 100vh;
                 width: 100%;
-                background-image: url('homepage-assets/new-contrast.png');
+                background-image: url('assets/homepage/new-contrast.png');
                 z-index: -10;
                 /* animation: scale 25s linear infinite; */
             }
@@ -600,7 +600,7 @@
         <div class='bgcontainer'></div>
         <div class='container'>
             <div id='particles'></div>
-            <img src='homepage-assets/flower.jpg' class='flower'>
+            <img src='assets/homepage/flower.jpg' class='flower'>
             <div id='graphics'>
             </div>
             <div class='texts'>
@@ -747,13 +747,11 @@
             for (var i = 0; i < random(100, 300, 0); i++) {
                 dot.push(new newParticle());
             }
-
-            // RANDOMLY place 4-5 images in different empty spots given like 10 different designs, all squareish
             let xval = [5, 23, 80, 95];
             let yval = [10, 30, 60, 90];
             function generateGraphic(index){
                 this.obj = document.createElement("img");
-                this.obj.src = 'homepage-assets/'+random(1,9,0)+'.png';
+                this.obj.src = 'assets/homepage/'+random(1,9,0)+'.png';
                 this.obj.style.left = xval[index]+'vw';
                 this.obj.style.top = yval[index]+'vh';
                 this.obj.style.height = random(75,150,0)+'px';
