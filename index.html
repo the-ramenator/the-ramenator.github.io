@@ -32,7 +32,7 @@
                 text-decoration: none;
                 underline: none;
                 color: inherit;
-                transition: inherit;x   
+                transition: inherit;
             }
             @keyframes scale {
                 0% {
@@ -175,6 +175,15 @@
                     "ROND" 0;
                 /* text-shadow: 0px 0px 5px #F9E6FF; */
             }
+            #circle{
+                position:absolute;
+                transform:translate(-50%,-50%);
+                height:35px;
+                width:35px;
+                border-radius:50%;
+                background: rgba(139,134,126,0.25); /*rgba(255,159,216,0.5)*/
+                z-index: 3;
+            }
             .circle1{
                 height: 350px;
                 width: 350px;
@@ -256,25 +265,22 @@
                 box-shadow: inset 0px 0px 20px rgba(139,134,126,0.25), 0px 0px 20px rgba(139,134,126,0.25);
                 animation: rotate 8s linear infinite;
                 animation-direction: reverse;
+            }
+            .position{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
 
             }
             .antirotate-right{
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%,-50%);
                 animation: rotate 16s linear infinite;
+                animation-play-state: running;
             }
-
             .antirotate-left{
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%,-50%);
+                animation-play-state: running;
                 animation: rotate 5.33s linear infinite;
-                /* animation-direction: reverse; */
             }
-
             .rotatecirclecont:hover{
                 animation-play-state: paused;
                 color: white !important;
@@ -594,11 +600,75 @@
                 left: 90vw;
                 animation-delay: 4s;
             }
+            #modal {
+                display: none;
+                position: fixed;
+                z-index: 1;
+                padding-top: 100px;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgba(0,0,0,0);
+            }
+
+            .modal-content {
+                position: relative;
+                background-color: #000;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100vh;
+                position: absolute;
+                top: 0;
+                left: 0;
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+                animation: scalein 0.4s ease-in;
+                color: #fff;
+                font-family: "Doto", sans-serif;
+                font-optical-sizing: auto;
+                font-weight: 900;
+                font-style: normal;
+                text-shadow: 0px 0px 5px #FFF;
+            }
+
+
+            @keyframes scalein {
+                from {scale: 0; opacity:0} 
+                to {scale: 1; opacity:1}
+            }
+
+            .close {
+                color: white;
+                float: right;
+                font-size: 40px;
+                font-weight: bold;
+                cursor: pointer;
+                padding: 50px;
+                z-index: 11;
+            }
+            .modal-content h1{
+                font-size: 3rem;
+                margin-top: 10vh;
+                text-align: center;
+                width: 100%;
+                position: absolute;
+                z-index: 10;
+            }
+            .modal-content p{
+                text-align: center;
+                position: absolute;
+                width: 100%;
+                margin-top: 20vh;
+                z-index: 10;
+            }
         </style>
     </head>
     <body>
         <div class='bgcontainer'></div>
         <div class='container'>
+            <div id="circle"></div>
             <div id='particles'></div>
             <img src='assets/homepage/flower.jpg' class='flower'>
             <div id='graphics'>
@@ -630,17 +700,17 @@
                 <div class='circle2'></div>
                 <div class='rotatecircle1cont rotatecirclecont'>
                     <div class='rotatecircle icon'>
-                        <span class='icon antirotate-right'><i class="fa fa-info icon"></i></span>
+                        <span class='icon position antirotate-right'><i title="About Me" class="fa fa-info icon"></i></span>
                     </div>
                 </div>
                 <div class='rotatecircle2cont rotatecirclecont'>
                     <div class=' rotatecircle icon'>
-                        <span class='icon antirotate-right'><i class="fa fa-folder icon"></i></span>
+                        <span class='icon position antirotate-right'><i title="Projects" class="fa fa-folder icon"></i></span>
                     </div>
                 </div>
                 <div class='rotatecircle5cont rotatecirclecont'>
-                    <div class=' rotatecircle icon'>
-                        <span class='icon antirotate-right'><i class="fa fa-bars icon"></i></span>
+                    <div class='rotatecircle icon' id='menu'>
+                        <span class='icon position antirotate-right'><i title="Menu" class="fa fa-bars icon"></i></span>
                     </div>
                 </div>
             </div>
@@ -648,22 +718,22 @@
                 <div class='circle3'></div>
                 <div class='rotatecircle6cont rotatecirclecont'>
                     <div class='rotatecircle icon'>
-                        <span class='icon antirotate-left'><i class="fa fa-envelope icon"></i></span>
+                        <span class='icon position antirotate-left'><i title="Contact Me" class="fa fa-envelope icon"></i></span>
                     </div>
                 </div>
                 <div class='rotatecircle7cont rotatecirclecont'>
                     <div class='rotatecircle icon'>
-                        <span class='icon antirotate-left'><i class="fa fa-github icon"></i></span>
+                        <span class='icon position antirotate-left'><a href='https://github.com/the-ramenator/the-ramenator.github.io' target='_blank'><i title="Github" class="fa fa-github icon"></i></a></span>
                     </div>
                 </div>
                 <div class='rotatecircle3cont rotatecirclecont'>
                     <div class='rotatecircle icon'>
-                        <span class='icon antirotate-left'><i class="fa fa-paper-plane icon"></i></span>
+                        <span class='icon position antirotate-left'><i title="Filler Icon" class="fa fa-question icon"></i></span>
                     </div>
                 </div>
                 <div class='rotatecircle4cont rotatecirclecont'>
                     <div class='rotatecircle icon'>
-                        <span class='icon antirotate-left'><i class="fa fa-gamepad icon"></i></span>
+                        <span class='icon position antirotate-left'><i title="Games" class="fa fa-gamepad icon"></i></span>
                     </div>
                 </div              
                     </div>
@@ -679,7 +749,23 @@
                 <div class='line outer thick line-outer-thick'></div>
             </div>
         </div>
+        <div id="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h1>Menu</h1>
+                <p>Nothing here yet</p>
+            </div>
+
+        </div>
+
         <script>
+            document.getElementById("menu").onclick = function() {
+                document.getElementById("modal").style.display = "block";
+                document.getElementById("menu").style.zIndex = 1;
+            }
+            document.getElementsByClassName("close")[0].onclick = function() {
+                document.getElementById("modal").style.display = "none";
+            }
             var date0 = new Date(2020, 6, 4); // 1 Jan 2015
             var date1 = new Date(); // 1 Feb 2015
 
@@ -716,10 +802,24 @@
                 let element = document.getElementsByClassName("rotatecirclecont")[i];
                 element.addEventListener('mouseover', () => {
                     element.style.zIndex = '1000';
+                    element.style.animationPlayState = 'paused';
+                    element.querySelectorAll('div').forEach(div => {
+                        div.style.animationPlayState = 'paused';
+                    });
+                    element.querySelectorAll('span').forEach(span => {
+                        span.style.animationPlayState = 'paused';
+                    });
                 });
 
                 element.addEventListener('mouseout', () => {
-                    element.style.zIndex = '3';
+                    element.style.zIndex = '1';
+                    element.style.animationPlayState = 'running';
+                    element.querySelectorAll('div').forEach(div => {
+                        div.style.animationPlayState = 'running';
+                    });
+                    element.querySelectorAll('span').forEach(span => {
+                        span.style.animationPlayState = 'running';
+                    });
                 });
             }
 
@@ -747,6 +847,8 @@
             for (var i = 0; i < random(100, 300, 0); i++) {
                 dot.push(new newParticle());
             }
+
+            // RANDOMLY place 4-5 images in different empty spots given like 10 different designs, all squareish
             let xval = [5, 23, 80, 95];
             let yval = [10, 30, 60, 90];
             function generateGraphic(index){
@@ -765,6 +867,15 @@
             for (var i = 0; i < 4; i++) {
                 graphics.push(new generateGraphic(i));
             }
+
+            const cursorSmall = document.getElementById('circle');
+            const positionElement = (e)=> {
+                const mouseY = e.clientY;
+                const mouseX = e.clientX;
+                cursorSmall.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+            }
+            window.addEventListener('mousemove', positionElement)
+
         </script>
     </body>
 </html>
