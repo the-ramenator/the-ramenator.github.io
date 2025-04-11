@@ -230,7 +230,7 @@
                 position: absolute; 
                 border: 6px dotted rgba(139,134,126,0.75);
                 border-radius: 50%;
-                animation: rotate 40s linear infinite;
+                animation: rotate 30s linear infinite;
                 box-shadow: inset 0px 0px 20px rgba(139,134,126,0.25), 0px 0px 20px rgba(139,134,126,0.25);
                 z-index: -1;
             }
@@ -279,7 +279,7 @@
             }
             .antirotate-left{
                 animation-play-state: running;
-                animation: rotate 5.33s linear infinite;
+                animation: rotate 6.06s linear infinite;
             }
             .rotatecirclecont:hover{
                 animation-play-state: paused;
@@ -319,7 +319,7 @@
                 left: calc(50% - 325px);
                 transform: translate(-50%,-50%);
                 position: absolute; 
-                animation: rotate 16s linear infinite;
+                animation: rotate 25s linear infinite;
                 transform-origin: 362px 37px;
                 animation-direction: reverse;
 
@@ -332,7 +332,7 @@
                 left: calc(50% + 325px);
                 transform: translate(-50%,-50%);
                 position: absolute; 
-                animation: rotate 16s linear infinite;
+                animation: rotate 25s linear infinite;
                 transform-origin: -293px 37px;
                 animation-direction: reverse;
 
@@ -356,7 +356,7 @@
                 left: 50%;
                 transform: translate(-50%,-50%);
                 position: absolute; 
-                animation: rotate 16s linear infinite;
+                animation: rotate 25s linear infinite;
                 transform-origin: 37px 372px;
                 animation-direction: reverse;
 
@@ -369,7 +369,7 @@
                 left: 50%;
                 transform: translate(-50%,-50%);
                 position: absolute; 
-                animation: rotate 16s linear infinite;
+                animation: rotate 25s linear infinite;
                 transform-origin: 37px -288px;
                 animation-direction: reverse;
             }
@@ -725,7 +725,7 @@
                 </div>
                 <div class='rotatecircle5cont rotatecirclecont' id='menucont'>
                     <div class='rotatecircle icon' id='menu'>
-                        <span class='icon position antirotate-right' id='menuanti'><i title="Menu" class="fa fa-bars icon"></i></span>
+                        <span class='icon position antirotate-right' id='menuanti'><i title="Menu" id='menuicon' class="fa fa-bars icon"></i></span>
                     </div>
                 </div>
             </div>
@@ -786,6 +786,9 @@
                     document.getElementById("menucont").style.left = window.innerWidth-40 + 'px';
                     document.getElementById("menucont").style.transform = 'translate(-100%,-0%)';
                     document.getElementById("menuanti").style.animation = 'none';
+                    document.getElementById('menuicon').classList.remove('fa-bars')
+                    document.getElementById('menuicon').classList.add('fa-close');
+
                     menuon = true;
                 }
                 else{
@@ -797,7 +800,8 @@
                     document.getElementById('menu').style.animationDirection = 'reverse';
                     document.getElementById("menucont").style.transform = 'translate(-50%,-50%)';
                     document.getElementById("menuanti").style.animation = 'rotate 16s linear infinite';
-
+                    document.getElementById('menuicon').classList.add('fa-bars')
+                    document.getElementById('menuicon').classList.remove('fa-close');
                     setTimeout(function() {
                         menuon = false;
                         document.getElementById("modal").style.display = "none";
