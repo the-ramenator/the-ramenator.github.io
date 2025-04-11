@@ -611,6 +611,7 @@
                 height: 100%;
                 overflow: auto;
                 background-color: rgba(0,0,0,0);
+                overflow: hidden;
             }
 
             .modal-content {
@@ -618,35 +619,40 @@
                 background-color: #000;
                 margin: 0;
                 padding: 0;
-                width: 100%;
-                height: 100vh;
+                /* width: 100%; */
+                /* height: 100vh; */
                 position: absolute;
                 top: 0;
                 left: 0;
                 box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-                animation: scalein 0.4s ease-in;
+                animation: scalein 1s ease-in;
                 color: #fff;
                 font-family: "Doto", sans-serif;
                 font-optical-sizing: auto;
                 font-weight: 900;
                 font-style: normal;
                 text-shadow: 0px 0px 5px #FFF;
+                animation-fill-mode: forwards;
             }
-
-
             @keyframes scalein {
-                from {scale: 0; opacity:0} 
-                to {scale: 1; opacity:1}
-            }
-
-            .close {
-                color: white;
-                float: right;
-                font-size: 40px;
-                font-weight: bold;
-                cursor: pointer;
-                padding: 50px;
-                z-index: 11;
+                0% {
+                    height: 0;
+                    width: 0;
+                    transform: translate(-50%,-50%);
+                    border-radius: 50%;
+                } 
+                30%{
+                    height: 200em;
+                    width: 200em;
+                    transform: translate(-50%,-50%);
+                    border-radius: 50%;
+                }
+                100% {
+                    height: 100vh;
+                    width: 100%;
+                    transform: translate(0%,0%);
+                    border-radius: 0%;
+                }
             }
             .modal-content h1{
                 font-size: 3rem;
@@ -663,10 +669,19 @@
                 margin-top: 20vh;
                 z-index: 10;
             }
+            #redcircle{
+                background: red;
+                height: 10px;
+                width: 10px;
+                position: absolute;
+                z-index: 100;
+            }
         </style>
     </head>
     <body>
         <div class='bgcontainer'></div>
+        <div id='redcircle'></div>
+
         <div class='container'>
             <div id="circle"></div>
             <div id='particles'></div>
@@ -708,9 +723,9 @@
                         <span class='icon position antirotate-right'><i title="Projects" class="fa fa-folder icon"></i></span>
                     </div>
                 </div>
-                <div class='rotatecircle5cont rotatecirclecont'>
+                <div class='rotatecircle5cont rotatecirclecont' id='menucont'>
                     <div class='rotatecircle icon' id='menu'>
-                        <span class='icon position antirotate-right'><i title="Menu" class="fa fa-bars icon"></i></span>
+                        <span class='icon position antirotate-right' id='menuanti'><i title="Menu" class="fa fa-bars icon"></i></span>
                     </div>
                 </div>
             </div>
@@ -750,8 +765,7 @@
             </div>
         </div>
         <div id="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
+            <div id='modal-content' class="modal-content">
                 <h1>Menu</h1>
                 <p>Nothing here yet</p>
             </div>
@@ -759,15 +773,41 @@
         </div>
 
         <script>
+            let menutop = (window.innerHeight*0.5+167-45)+'px';
+            let menuleft = (window.innerWidth*0.5+167+45)+'px';
+            let menuon = false;
             document.getElementById("menu").onclick = function() {
-                document.getElementById("modal").style.display = "block";
-                document.getElementById("menu").style.zIndex = 1;
+                if(menuon == false){
+                    document.getElementById("modal").style.display = "block";
+                    document.getElementById('menucont').style.animation = 'none';
+                    document.getElementById('menu').style.animation = 'none';
+                    document.getElementById('menucont').style.zIndex = '10'
+                    document.getElementById("menucont").style.top = '40px';
+                    document.getElementById("menucont").style.left = window.innerWidth-40 + 'px';
+                    document.getElementById("menucont").style.transform = 'translate(-100%,-0%)';
+                    document.getElementById("menuanti").style.animation = 'none';
+                    menuon = true;
+                }
+                else{
+                    document.getElementById("modal-content").style.opacity = '0';
+                    document.getElementById("menucont").style.top = menutop;
+                    document.getElementById("menucont").style.left = menuleft;
+                    document.getElementById('menucont').style.animation = 'rotate 16s linear infinite';
+                    document.getElementById('menu').style.animation = 'rotate 8s linear infinite';
+                    document.getElementById('menu').style.animationDirection = 'reverse';
+                    document.getElementById("menucont").style.transform = 'translate(-50%,-50%)';
+                    document.getElementById("menuanti").style.animation = 'rotate 16s linear infinite';
+
+                    setTimeout(function() {
+                        menuon = false;
+                        document.getElementById("modal").style.display = "none";
+                        document.getElementById("modal-content").style.opacity = '1';
+                    }, 750);
+
+                }
             }
-            document.getElementsByClassName("close")[0].onclick = function() {
-                document.getElementById("modal").style.display = "none";
-            }
-            var date0 = new Date(2020, 6, 4); // 1 Jan 2015
-            var date1 = new Date(); // 1 Feb 2015
+            var date0 = new Date(2020, 6, 4);
+            var date1 = new Date();
 
             var numberOfDays = Math.ceil((date1 - date0) / 8.64e7); // 31
 
@@ -801,25 +841,29 @@
             for (let i = 0; i < document.getElementsByClassName("rotatecirclecont").length; i++) {
                 let element = document.getElementsByClassName("rotatecirclecont")[i];
                 element.addEventListener('mouseover', () => {
-                    element.style.zIndex = '1000';
-                    element.style.animationPlayState = 'paused';
-                    element.querySelectorAll('div').forEach(div => {
-                        div.style.animationPlayState = 'paused';
-                    });
-                    element.querySelectorAll('span').forEach(span => {
-                        span.style.animationPlayState = 'paused';
-                    });
+                    if(menuon == false){
+                        element.style.zIndex = '1000';
+                        element.style.animationPlayState = 'paused';
+                        element.querySelectorAll('div').forEach(div => {
+                            div.style.animationPlayState = 'paused';
+                        });
+                        element.querySelectorAll('span').forEach(span => {
+                            span.style.animationPlayState = 'paused';
+                        });
+                    }
                 });
 
                 element.addEventListener('mouseout', () => {
-                    element.style.zIndex = '1';
-                    element.style.animationPlayState = 'running';
-                    element.querySelectorAll('div').forEach(div => {
-                        div.style.animationPlayState = 'running';
-                    });
-                    element.querySelectorAll('span').forEach(span => {
-                        span.style.animationPlayState = 'running';
-                    });
+                    if(menuon == false){
+                        element.style.zIndex = '1';
+                        element.style.animationPlayState = 'running';
+                        element.querySelectorAll('div').forEach(div => {
+                            div.style.animationPlayState = 'running';
+                        });
+                        element.querySelectorAll('span').forEach(span => {
+                            span.style.animationPlayState = 'running';
+                        });
+                    }
                 });
             }
 
