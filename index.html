@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -37,13 +36,13 @@
             }
             @keyframes scale {
                 0% {
-                    transform: scale(1,1);
+                    transform: scale(1) translate(-50%,-50%);
                 }
                 50% {
-                    transform: scale(2,2);    
+                    transform: scale(1.15) translate(-50%,-50%);    
                 }
                 100% {
-                    transform: scale(1,1);    
+                    transform: scale(1) translate(-50%,-50%);    
                 }
             }
             @keyframes gradient-animation {
@@ -276,6 +275,7 @@
                 border: 10px solid #b4b3a9 !important; 
                 outline: 5px solid rgb(158, 157, 148) !important;
                 animation-fill-mode: forwards;
+                animation: scale 5s ease-in-out infinite;
             }
             .rotatecirclefilled:hover{
                 filter: hue-rotate(300deg) saturate(600%) brightness(70%);
@@ -684,25 +684,121 @@
                 position: absolute;
                 z-index: 10;
             }
-            .modal-content p{
-                text-align: center;
+            .menucont{
                 position: absolute;
-                width: 100%;
-                margin-top: 20vh;
-                z-index: 10;
-            }
-            #redcircle{
-                background: red;
-                height: 10px;
-                width: 10px;
-                position: absolute;
+                border: 1px solid white; 
+                height: auto;
+                width: auto;
+                background: black;
                 z-index: 100;
+                outline: 1px solid transparent;
+                animation: float 5s ease-in-out infinite;
+                border-radius: 0px;
+                font-size: 1.5em;
+                transition: 0.75s;
+                cursor: pointer;
+                text-align: center;
+                transform: translate(-50%,-50%);
+            }
+            #menucont1{
+                top: 30%;
+                left: 65%;
+                padding: 4vh 4em 4vh 4em; 
+            }
+            #menucont2{
+                top: 70%;
+                left: 80%;
+                padding: 4vh 4em 4vh 4em; 
+                animation-delay: 3s;
+            }
+            #menucont3{
+                top: 90%;
+                left: 50%;
+                padding: 4vh 5em 4vh 5em; 
+                animation-delay: 1s;
+            }
+            #menucont4{
+                top: 80%;
+                left: 30%;
+                padding: 4vh 5em 4vh 5em; 
+                animation-delay: 4s;
+            }
+            #menucont5{
+                top: 40%;
+                left: 20%;
+                padding: 4vh 5em 4vh 5em; 
+                animation-delay: 2s;
+            }
+            .menucont:hover{
+                box-shadow: inset 0px 0px 20px #fff, 0px 0px 20px #fff;
+                outline-offset: 10px;
+                outline: 1px solid white;
+                /* border-radius: 10px; */
+                background: white;
+                color: black;
+                text-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+
+            }
+            .rightstar{
+                position: absolute;
+                top: 50%;
+                left: 100%;
+                transform: translate(-12px,-50%);
+                height: 25px;
+                width: auto;
+                filter: invert(100%) brightness(200%);
+            }
+            .menucont:hover .rightstar{
+                transform: translate(-1px,-50%);
+            }
+            .leftstar{
+                position: absolute;
+                top: 50%;
+                left: 0%;
+                transform: translate(-12px,-50%);
+                height: 25px;
+                width: auto;
+                filter: invert(100%) brightness(200%);
+            }
+            .menucont:hover .leftstar{
+                transform: translate(-24px,-50%);
+            }
+            .menuobject{
+                position: absolute;
+                transform: translate(-50%,-50%);
+                width: 100%;
+            }
+            svg{
+                position: absolute;
+            }
+            #alert{
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 16px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(5px);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                height: 7vh;
+                width: 20%;
+                top: 5%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+                position: absolute;
+                font-family: "Doto", sans-serif;
+                font-optical-sizing: auto;
+                font-weight: 900;
+                font-style: normal;
+                text-shadow: 0px 0px 15px #f00;
+                font-size: 1.5em;
+                color: red;
+                text-align: center;
+                z-index: 50;
+                line-height: 7vh;
+                opacity: 0;
             }
         </style>
     </head>
     <body>
         <div class='bgcontainer'></div>
-        <div id='redcircle'></div>
 
         <div class='container'>
             <div id="circle"></div>
@@ -717,6 +813,7 @@
                 <span id='date'></span>
             </div>
             <!-- <div class='menu'><i class="fa fa-bars icon"></i></div> -->
+            <div id='alert'>Planet Destroyed!</div>
             <div class='layer1'>
                 <div class='main-circle' onclick='showName()'>
                     <div class='center-circle' id='center-circle'></div>
@@ -745,7 +842,7 @@
                         <span class='icon position antirotate-right'><i title="Projects" class="fa fa-folder icon"></i></span>
                     </div>
                 </div>
-                <div class='rotatecircle5cont rotatecirclecont' id='menucont'>
+                <div class='rotatecircle5cont rotatecirclecont' id='menucontbtn'>
                     <div class='rotatecircle icon' id='menu'>
                         <span class='icon position antirotate-right' id='menuanti'><i title="Menu" id='menuicon' class="fa fa-bars icon"></i></span>
                     </div>
@@ -788,8 +885,40 @@
         </div>
         <div id="modal">
             <div id='modal-content' class="modal-content">
-                <h1>Menu</h1>
-                <p>Nothing here yet</p>
+                <div id='modal-container'>
+                    <h1>Menu</h1>
+                    <svg width="0" height="0"><line id='menuline1' stroke-dasharray="10,10" x1="0" y1="0" x2="0" y2="0" stroke="white"/></svg>
+                    <svg width="0" height="0"><line id='menuline2' stroke-dasharray="10,10" x1="0" y1="0" x2="0" y2="0" stroke="white"/></svg>
+                    <svg width="0" height="0"><line id='menuline3' stroke-dasharray="10,10" x1="0" y1="0" x2="0" y2="0" stroke="white"/></svg>
+                    <svg width="0" height="0"><line id='menuline4' stroke-dasharray="10,10" x1="0" y1="0" x2="0" y2="0" stroke="white"/></svg>
+                    <svg width="0" height="0"><line id='menuline5' stroke-dasharray="10,10" x1="0" y1="0" x2="0" y2="0" stroke="white"/></svg>
+
+                    <div id='menucont1' class='menucont'>
+                        <img class='leftstar' src='assets/homepage/star.png'>
+                        <img class='rightstar' src='assets/homepage/star.png'>
+                        <div class='menuobject'>Projects</div>
+                    </div>
+                    <div id='menucont2' class='menucont'>
+                        <img class='leftstar' src='assets/homepage/star.png'>
+                        <img class='rightstar' src='assets/homepage/star.png'>
+                        <div class='menuobject'>About Me</div>
+                    </div>
+                    <div id='menucont3' class='menucont'>
+                        <img class='leftstar' src='assets/homepage/star.png'>
+                        <img class='rightstar' src='assets/homepage/star.png'>
+                        <div class='menuobject'>Other thing?</div>
+                    </div>
+                    <div id='menucont4' class='menucont'>
+                        <img class='leftstar' src='assets/homepage/star.png'>
+                        <img class='rightstar' src='assets/homepage/star.png'>
+                        <div class='menuobject'>More thing?</div>
+                    </div>
+                    <div id='menucont5' class='menucont'>
+                        <img class='leftstar' src='assets/homepage/star.png'>
+                        <img class='rightstar' src='assets/homepage/star.png'>
+                        <div class='menuobject'>Extra thing?</div>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -798,34 +927,73 @@
             let menutop;
             let menuleft;//cant set bc what if the user resizes 
             let menuon = false;
+            let redrawlines = setInterval(function () {
+                let x1 = window.innerWidth/2;
+                let y1 = window.innerHeight/2;
+                for (let i = 1; i < 6; i++) {
+                    let rect = document.getElementById("menucont"+i).getBoundingClientRect();
+                    var luhtop;
+                    var luhleft;
+                    if(i == 1 || i == 5){
+                        luhtop = rect.bottom;
+                    }
+                    else{
+                        luhtop = rect.top;
+                    }
+                    if(i == 4 || i == 5){
+                        luhleft = rect.right;
+                    }
+                    else if(i == 1 || i == 2){
+                        luhleft = rect.left;
+                    }
+                    else{
+                        luhleft = document.getElementById("menucont3").offsetWidth/2 + rect.left;
+                    }
+                    document.getElementById("menuline"+i).setAttribute("x1", x1);
+                    document.getElementById("menuline"+i).setAttribute("y1", y1);
+                    document.getElementById("menuline"+i).setAttribute("x2", luhleft);
+                    document.getElementById("menuline"+i).setAttribute("y2", luhtop);
+                }
+
+            }, 100);
+            document.getElementById("modal-container").style.opacity = '0';
             document.getElementById("menu").onclick = function() {
                 if(menuon == false){
+                    document.getElementById("circle").style.display = "none";
                     document.getElementById("modal").style.display = "block";
-                    document.getElementById('menucont').style.animation = 'none';
+                    document.getElementById('menucontbtn').style.animation = 'none';
                     document.getElementById('menu').style.animation = 'none';
-                    document.getElementById('menucont').style.zIndex = '10'
-                    document.getElementById("menucont").style.top = '40px';
-                    document.getElementById("menucont").style.left = window.innerWidth-40 + 'px';
-                    document.getElementById("menucont").style.transform = 'translate(-100%,-0%)';
+                    document.getElementById('menucontbtn').style.zIndex = '10'
+                    document.getElementById("menucontbtn").style.top = '40px';
+                    document.getElementById("menucontbtn").style.left = window.innerWidth-40 + 'px';
+                    document.getElementById("menucontbtn").style.transform = 'translate(-100%,-0%)';
                     document.getElementById("menuanti").style.animation = 'none';
                     document.getElementById('menuicon').classList.remove('fa-bars')
                     document.getElementById('menuicon').classList.add('fa-close');
                     document.getElementById('particles').querySelectorAll('div').forEach(div => {
                         div.style.zIndex = '1000';
                     });
-
+                    document.body.querySelectorAll('svg').forEach(svg => {
+                        svg.setAttribute("width", window.innerWidth);
+                        svg.setAttribute("height", window.innerHeight);
+                    });
+                    setTimeout(function() {
+                        document.getElementById("modal-container").style.opacity = '1';
+                    },1000);
                     menuon = true;
                 }
                 else{
+                    document.getElementById("circle").style.display = "block";
+                    document.getElementById("modal-container").style.opacity = '0';
                     menutop = (window.innerHeight*0.5+167-45)+'px';
                     menuleft = (window.innerWidth*0.5+167+45)+'px';
                     document.getElementById("modal-content").style.opacity = '0';
-                    document.getElementById("menucont").style.top = menutop;
-                    document.getElementById("menucont").style.left = menuleft;
-                    document.getElementById('menucont').style.animation = 'rotate 16s linear infinite';
+                    document.getElementById("menucontbtn").style.top = menutop;
+                    document.getElementById("menucontbtn").style.left = menuleft;
+                    document.getElementById('menucontbtn').style.animation = 'rotate 16s linear infinite';
                     document.getElementById('menu').style.animation = 'rotate 8s linear infinite';
                     document.getElementById('menu').style.animationDirection = 'reverse';
-                    document.getElementById("menucont").style.transform = 'translate(-50%,-50%)';
+                    document.getElementById("menucontbtn").style.transform = 'translate(-50%,-50%)';
                     document.getElementById("menuanti").style.animation = 'rotate 16s linear infinite';
                     document.getElementById('menuicon').classList.add('fa-bars')
                     document.getElementById('menuicon').classList.remove('fa-close');
@@ -877,7 +1045,11 @@
                     element.style.animation = 'destroy 0.5s ease-in-out';
                     setTimeout(function() {
                         element.style.display = 'none';
+                        document.getElementById("alert").style.opacity = '1';
                     }, 500);
+                    setTimeout(function() {
+                        document.getElementById("alert").style.opacity = '0';
+                    }, 2000);
                 });
             }
             for (let i = 0; i < document.getElementsByClassName("rotatecirclecont").length; i++) {
