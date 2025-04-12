@@ -3,7 +3,7 @@
     <head>
         <title>The Ramenator</title>
         <link rel="icon" type="image/png" href="assets/homepage/favicon.png"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +18,7 @@
                 height: 100vh;
                 width: 100%;
                 overflow: hidden;
-                user-select: none; 
+                user-select: none;
             }
             .bgcontainer{
                 height: 100vh;
@@ -577,8 +577,14 @@
 
             .flower{
                 width: 100vw;
-                height: auto;
-                opacity: 0.03;
+                height: 100%;
+                opacity: 0.05;
+                background-image: url("assets/homepage/flower.jpg");
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-repeat: no-repeat;
+                background-size: cover;
             }
             .texts{
                 font-family: "Reenie Beanie", cursive;
@@ -713,7 +719,7 @@
             }
             #menucont3{
                 top: 90%;
-                left: 50%;
+                left: 55%;
                 padding: 4vh 5em 4vh 5em; 
                 animation-delay: 1s;
             }
@@ -729,7 +735,13 @@
                 padding: 4vh 5em 4vh 5em; 
                 animation-delay: 2s;
             }
-            .menucont:hover{
+            #menucont6{
+                top: 20%;
+                left: 40%;
+                padding: 4vh 5em 4vh 5em; 
+                animation-delay: 2s;
+            }
+            .menucont:hover, .menucont:active{
                 box-shadow: inset 0px 0px 20px #fff, 0px 0px 20px #fff;
                 outline-offset: 10px;
                 outline: 1px solid white;
@@ -737,7 +749,6 @@
                 background: white;
                 color: black;
                 text-shadow: 0px 0px 5px rgba(0,0,0,0.5);
-
             }
             .rightstar{
                 position: absolute;
@@ -748,7 +759,7 @@
                 width: auto;
                 filter: invert(100%) brightness(200%);
             }
-            .menucont:hover .rightstar{
+            .menucont:hover .rightstar,.menucont:active .rightstar {
                 transform: translate(-1px,-50%);
             }
             .leftstar{
@@ -760,7 +771,7 @@
                 width: auto;
                 filter: invert(100%) brightness(200%);
             }
-            .menucont:hover .leftstar{
+            .menucont:hover .leftstar,.menucont:active .leftstar{
                 transform: translate(-24px,-50%);
             }
             .menuobject{
@@ -795,6 +806,90 @@
                 line-height: 7vh;
                 opacity: 0;
             }
+            /* MOBILE */
+            @media only screen and (max-width: 600px) {
+                .layer1{
+                    transform: scale(0.75) translate(-50%,-50%);
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                }
+                .layer2{
+                    transform: scale(0.5) translate(-50%,-50%);
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                }
+                .layer3{
+                    transform: scale(0.55) translate(-50%,-50%);
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                }
+                .layer4{
+                    transform: scale(0.65) translate(-50%,-50%);
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                }
+                .layer5{
+                    transform: scale(0.75) translate(-50%,-50%);
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                }
+                #circle{
+                    visibility: none;
+                }
+                /* .circle4,.circle3,.circle2,.circle1,.line{
+                z-index: -100;
+                display: none;
+                }*/
+                .menucont{
+                    font-size: 1em;
+                }
+
+                #menucont1{
+                    top: 35%;
+                    left: 75%;
+                    padding: 2vh 4em 2vh 2em; 
+                }
+                #menucont2{
+                    top: 60%;
+                    left: 80%;
+                    padding: 2vh 4em 2vh 2em; 
+                }
+                #menucont3{
+                    top: 70%;
+                    left: 55%;
+                    padding: 2vh 5em 2vh 5em; 
+                }
+                #menucont4{
+                    top: 60%;
+                    left: 30%;
+                    padding: 2vh 5em 2vh 5em; 
+                }
+                #menucont5{
+                    top: 40%;
+                    left: 20%;
+                    padding: 2vh 5em 2vh 5em; 
+                }
+                #menucont6{
+                    top: 30%;
+                    left: 40%;
+                    padding: 2vh 5em 2vh 5em; 
+                }
+                .menuobject{
+                    text-align: center;
+                }
+                .menuspecial{
+                    margin-left: 1em;
+                }
+                .texts{
+                    font-size: 1.5em;
+                }
+            }
+
         </style>
     </head>
     <body>
@@ -803,7 +898,7 @@
         <div class='container'>
             <div id="circle"></div>
             <div id='particles'></div>
-            <img src='assets/homepage/flower.jpg' class='flower'>
+            <div class='flower'></div>
             <div id='graphics'>
             </div>
             <div class='texts'>
@@ -886,37 +981,43 @@
         <div id="modal">
             <div id='modal-content' class="modal-content">
                 <div id='modal-container'>
-                    <h1>Menu</h1>
+                    <!-- <h1>Menu</h1> -->
                     <svg width="0" height="0"><line id='menuline1' stroke-dasharray="10,10" x1="0" y1="0" x2="0" y2="0" stroke="white"/></svg>
                     <svg width="0" height="0"><line id='menuline2' stroke-dasharray="10,10" x1="0" y1="0" x2="0" y2="0" stroke="white"/></svg>
                     <svg width="0" height="0"><line id='menuline3' stroke-dasharray="10,10" x1="0" y1="0" x2="0" y2="0" stroke="white"/></svg>
                     <svg width="0" height="0"><line id='menuline4' stroke-dasharray="10,10" x1="0" y1="0" x2="0" y2="0" stroke="white"/></svg>
                     <svg width="0" height="0"><line id='menuline5' stroke-dasharray="10,10" x1="0" y1="0" x2="0" y2="0" stroke="white"/></svg>
+                    <svg width="0" height="0"><line id='menuline6' stroke-dasharray="10,10" x1="0" y1="0" x2="0" y2="0" stroke="white"/></svg>
 
                     <div id='menucont1' class='menucont'>
                         <img class='leftstar' src='assets/homepage/star.png'>
                         <img class='rightstar' src='assets/homepage/star.png'>
-                        <div class='menuobject'>Projects</div>
+                        <div class='menuobject menuspecial'>Projects</div>
                     </div>
                     <div id='menucont2' class='menucont'>
                         <img class='leftstar' src='assets/homepage/star.png'>
                         <img class='rightstar' src='assets/homepage/star.png'>
-                        <div class='menuobject'>About Me</div>
+                        <div class='menuobject menuspecial'>About Me</div>
                     </div>
                     <div id='menucont3' class='menucont'>
                         <img class='leftstar' src='assets/homepage/star.png'>
                         <img class='rightstar' src='assets/homepage/star.png'>
-                        <div class='menuobject'>Other thing?</div>
+                        <div class='menuobject'>Contact</div>
                     </div>
                     <div id='menucont4' class='menucont'>
                         <img class='leftstar' src='assets/homepage/star.png'>
                         <img class='rightstar' src='assets/homepage/star.png'>
-                        <div class='menuobject'>More thing?</div>
+                        <div class='menuobject'>Games</div>
                     </div>
                     <div id='menucont5' class='menucont'>
                         <img class='leftstar' src='assets/homepage/star.png'>
                         <img class='rightstar' src='assets/homepage/star.png'>
-                        <div class='menuobject'>Extra thing?</div>
+                        <div class='menuobject'>Resume</div>
+                    </div>
+                    <div id='menucont6' class='menucont'>
+                        <img class='leftstar' src='assets/homepage/star.png'>
+                        <img class='rightstar' src='assets/homepage/star.png'>
+                        <div class='menuobject'>Filler</div>
                     </div>
                 </div>
             </div>
@@ -930,12 +1031,16 @@
             let redrawlines = setInterval(function () {
                 let x1 = window.innerWidth/2;
                 let y1 = window.innerHeight/2;
-                for (let i = 1; i < 6; i++) {
+                for (let i = 1; i < 7; i++) {
+
                     let rect = document.getElementById("menucont"+i).getBoundingClientRect();
                     var luhtop;
                     var luhleft;
-                    if(i == 1 || i == 5){
+                    if(i == 1 || i == 6){
                         luhtop = rect.bottom;
+                    }
+                    else if(i == 5 || i == 2){
+                        luhtop = rect.top + document.getElementById("menucont"+i).offsetHeight/2;
                     }
                     else{
                         luhtop = rect.top;
@@ -953,6 +1058,9 @@
                     document.getElementById("menuline"+i).setAttribute("y1", y1);
                     document.getElementById("menuline"+i).setAttribute("x2", luhleft);
                     document.getElementById("menuline"+i).setAttribute("y2", luhtop);
+
+                    document.getElementById("menuline"+i).setAttribute("stroke-dasharray", "10,7");
+
                 }
 
             }, 100);
@@ -1052,7 +1160,7 @@
                     localStorage.setItem('homepagePlanetsDestroyed',counter)
                     setTimeout(function() {
                         if(counter > 1){
-                         document.getElementById("alert").innerHTML = counter+' planets destroyed';   
+                            document.getElementById("alert").innerHTML = counter+' planets destroyed';   
                         }
                         else{
                             document.getElementById("alert").innerHTML = '1 planet destroyed';
@@ -1122,7 +1230,6 @@
                 dot.push(new newParticle());
             }
 
-            // RANDOMLY place 4-5 images in different empty spots given like 10 different designs, all squareish
             let xval = [5, 23, 80, 95];
             let yval = [10, 30, 60, 90];
             function generateGraphic(index){
