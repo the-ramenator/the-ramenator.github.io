@@ -274,7 +274,7 @@
                 box-shadow: none !important;
                 border: 10px solid #b4b3a9 !important; 
                 outline: 5px solid rgb(158, 157, 148) !important;
-                animation-fill-mode: forwards;
+                /* animation-fill-mode: forwards; */
                 animation: scale 5s ease-in-out infinite;
             }
             .rotatecirclefilled:hover{
@@ -778,8 +778,8 @@
                 backdrop-filter: blur(5px);
                 border: 1px solid rgba(255, 255, 255, 0.3);
                 height: 7vh;
-                width: 20%;
-                top: 5%;
+                width: 15em;
+                top: 7%;
                 left: 50%;
                 transform: translate(-50%,-50%);
                 position: absolute;
@@ -787,9 +787,9 @@
                 font-optical-sizing: auto;
                 font-weight: 900;
                 font-style: normal;
-                text-shadow: 0px 0px 15px #f00;
+                text-shadow: 0px 0px 15px #b02424;
                 font-size: 1.5em;
-                color: red;
+                color: #b02424;
                 text-align: center;
                 z-index: 50;
                 line-height: 7vh;
@@ -813,7 +813,7 @@
                 <span id='date'></span>
             </div>
             <!-- <div class='menu'><i class="fa fa-bars icon"></i></div> -->
-            <div id='alert'>Planet Destroyed!</div>
+            <div id='alert'>0 planets destroyed</div>
             <div class='layer1'>
                 <div class='main-circle' onclick='showName()'>
                     <div class='center-circle' id='center-circle'></div>
@@ -1039,17 +1039,33 @@
                     }, 800);
                 }
             }
+            let counter = 0;
+            if(localStorage.getItem('homepagePlanetsDestroyed')){
+                counter = parseInt(localStorage.getItem('homepagePlanetsDestroyed'));
+            }
             for (let i = 0; i < document.getElementsByClassName("rotatecirclefilled").length; i++) {
                 let element = document.getElementsByClassName("rotatecirclefilled")[i];
                 element.addEventListener('click', () => {
-                    element.style.animation = 'destroy 0.5s ease-in-out';
+                    element.style.animation = 'destroy 0.75s ease-in-out';
+                    element.style.opacity = '0';
+                    counter ++;
+                    localStorage.setItem('homepagePlanetsDestroyed',counter)
                     setTimeout(function() {
-                        element.style.display = 'none';
+                        if(counter > 1){
+                         document.getElementById("alert").innerHTML = counter+' planets destroyed';   
+                        }
+                        else{
+                            document.getElementById("alert").innerHTML = '1 planet destroyed';
+                        }
                         document.getElementById("alert").style.opacity = '1';
                     }, 500);
                     setTimeout(function() {
                         document.getElementById("alert").style.opacity = '0';
                     }, 2000);
+                    setTimeout(function() {
+                        element.style.opacity = '1';
+                        element.style.animation = 'none';
+                    }, 7500);
                 });
             }
             for (let i = 0; i < document.getElementsByClassName("rotatecirclecont").length; i++) {
