@@ -806,6 +806,7 @@
                 line-height: 7vh;
                 opacity: 0;
             }
+
             /* MOBILE */
             @media only screen and (max-width: 600px) {
                 .layer1{
@@ -889,7 +890,89 @@
                     font-size: 1.5em;
                 }
             }
+            .info-modal {
+                display: none;
+                position: fixed;
+                z-index: 100;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background-color: rgb(0,0,0);
+                background-color: rgba(0,0,0,0.4);
+            }
 
+            .info-modal-content {
+                margin: 20vh auto;
+                padding: 20px;
+                width: 40%;
+                height: 60vh;
+                background: rgba(255, 255, 255, 0.22);
+                border-radius: 16px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+                backdrop-filter: blur(7.2px);
+                -webkit-backdrop-filter: blur(7.2px);
+                border: 5px solid rgba(255, 255, 255, 0.07);
+                font-family: "Doto", sans-serif;
+                font-optical-sizing: auto;
+                font-weight: 500;
+                font-size: 1.5em;
+                letter-spacing: -0.1em;
+                animation: scaleinfo 0.5s ease-in;
+                color: #fff;
+            }
+
+            #info-close {
+                color: #fff;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+                margin: 20px;
+            }
+            .info-modal-content h1{
+                font-family: "Doto", sans-serif;
+                font-optical-sizing: auto;
+                font-weight: 900;
+                text-shadow: 0px 0px 20px #555;
+            }
+            .info-modal-content ul{
+                margin: 40px;
+                text-shadow: 0px 0px 20px #555;
+                list-style-type: circle;
+            }
+            .info-modal-content li{
+                margin-bottom: 30px;
+            }
+            .info-modal-content li::marker {
+                color: white;
+            }
+            #info-close:hover,
+            #info-close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+            @keyframes scaleinfo {
+                0% {
+                    opacity: 0;
+                    height: 0;
+                    width: 0;
+                    border-radius: 50%;
+                    transform: translate(0%,50%);
+                } 
+                50%{
+                    opacity: 0;
+                    border-radius: 50%;
+                }
+                100% {
+                    transform: translate(0%,0%);
+                    opacity: 1;
+                    width: 40%;
+                    height: 60vh;
+                    border-radius: 16px;
+                }
+            }
         </style>
     </head>
     <body>
@@ -951,7 +1034,7 @@
                     </div>
                 </div>
                 <div class='rotatecircle3cont rotatecirclecont'>
-                    <div class='rotatecircle icon'>
+                    <div class='rotatecircle icon' id='info'>
                         <span class='icon position antirotate-left'><i title="About Me" class="fa fa-info icon"></i></span>
                     </div>
                 </div>
@@ -978,6 +1061,19 @@
                 <div class='line outer thick line-outer-thick'></div>
             </div>
         </div>
+        <div id="info-modal" class="info-modal">
+            <div class="info-modal-content">
+                <span id="info-close">&times;</span>
+                <h1 style='text-align: center; color: white; margin-top: 30px;'>What is this?</h1>
+                <ul>
+                    <li>My name is Neil Daniel. </li>
+                    <li>I'm a sophomore in high school, and this is my portfolio website.</li>
+                    <li>I've been coding since 5th grade.</li>
+                    <li>Most of my important projects are gonna be listed under the projects page</li>
+                </ul>
+            </div>
+
+        </div>
         <div id="modal">
             <div id='modal-content' class="modal-content">
                 <div id='modal-container'>
@@ -990,9 +1086,11 @@
                     <svg width="0" height="0"><line id='menuline6' stroke-dasharray="10,10" x1="0" y1="0" x2="0" y2="0" stroke="white"/></svg>
 
                     <div id='menucont1' class='menucont'>
-                        <img class='leftstar' src='assets/homepage/star.png'>
-                        <img class='rightstar' src='assets/homepage/star.png'>
-                        <div class='menuobject menuspecial'>Projects</div>
+                        <a href='experiments.html'>
+                            <img class='leftstar' src='assets/homepage/star.png'>
+                            <img class='rightstar' src='assets/homepage/star.png'>
+                            <div class='menuobject menuspecial'>Projects</div>
+                        </a>
                     </div>
                     <div id='menucont2' class='menucont'>
                         <img class='leftstar' src='assets/homepage/star.png'>
@@ -1025,8 +1123,31 @@
         </div>
 
         <script>
+            document.getElementById("info").onclick = function() {
+                document.getElementById("info-modal").style.display = "block";
+            }
+
+            document.getElementById("info-close").onclick = function() {
+                document.getElementById("info-modal").style.opacity = '0';
+                setTimeout(function() {
+                    document.getElementById("info-modal").style.display = "none";
+                    document.getElementById("info-modal").style.opacity = '1';
+                },1000);
+
+            }
+
+            window.onclick = function(event) {
+                if (event.target == document.getElementById("info-modal")) {
+                    document.getElementById("info-modal").style.opacity = '0';
+                    setTimeout(function() {
+                        document.getElementById("info-modal").style.display = "none";
+                        document.getElementById("info-modal").style.opacity = '1';
+                    },1000);                
+                }
+            }
+
             let menutop;
-            let menuleft;//cant set bc what if the user resizes 
+            let menuleft;
             let menuon = false;
             let redrawlines = setInterval(function () {
                 let x1 = window.innerWidth/2;
