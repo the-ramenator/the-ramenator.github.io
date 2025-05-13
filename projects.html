@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Projects</title>
+        <link rel="icon" type="image/png" href="assets/homepage/favicon.png"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap" rel="stylesheet">
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+                transition: 0.75s;
+                /* scroll-behavior: smooth */
+            }
+            body{
+                height: 100vh;
+                width: 100%;
+                overflow: hidden;
+                user-select: none;
+                font-family: "Inconsolata", monospace;
+                background: black;
+                scrollbar-width: none;
+
+            }
+            body::-webkit-scrollbar,#container1::-webkit-scrollbar, #container2::-webkit-scrollbar, #container3::-webkit-scrollbar,#maincontainer::-webkit-scrollbar {
+                display: none
+            }
+
+            #maincontainer{
+                margin-top: 0vh;
+                display: flex;
+                align-items: flex-start;
+                scrollbar-width: none;
+                overflow: hidden;
+            }
+            #container1, #container2, #container3{
+                background: rgba(25,25,25,1);
+                display: grid;
+                grid-template-columns: auto;
+                width: 33.33%;
+                height: 100vh;
+                overflow: scroll;
+                scrollbar-width: none;
+                min-height: 0
+            }
+
+            .card{
+                background-color: #f1f1f1;
+                border: 1px solid black;
+                font-size: 30px;
+                text-align: center; 
+                margin: 5px;
+                position: relative;
+                top: 0;
+                cursor: pointer;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                transition: 0.5s;
+            }
+            .title{
+                font-size: 0.75em;
+                position: absolute;
+                margin: 20px;
+                transition: 0.75s;
+
+            }
+            .date{
+                font-size: 0.75em;
+                position: absolute;
+                margin: 20px;
+                transition: 0.75s;
+            }
+            .desc{
+                font-size: 0.6em;
+                position: absolute;
+                margin: 20px;
+                transition: 0.75s;
+                width: calc(100% - 40px);
+                text-align: left;
+                color: white;
+                height: 20%;
+            }
+            .hover-bg{
+                width: 100%;
+                height: 100%;
+                transition: 1s;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+
+            .home{
+                top: 0%;
+                left: 0%;
+                margin: 8vh 7vw;
+                z-index: 101;
+                text-decoration: none;
+                color: white;
+                text-align: center;
+                position: absolute; 
+                font-size: 3.5rem;
+                height: 50px;
+                width: 70px;
+                box-shadow: 0 0 20px 5px rgba(255,255,255, 1);
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 16px;
+                box-shadow: 0 0px 75px rgba(0, 0, 0, 1);
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+                border: 3px solid rgba(255, 255, 255, 0.3);
+            }
+            .home:hover{
+                color: black;               
+                text-shadow: 0 0 5px black;
+
+
+            }
+            .home i{
+                transform: translate(-50%,-15%);
+                position: absolute;
+            }
+            #follow{
+                position: absolute;
+                z-index: 100;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 16px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                transition: 0.5s;
+                pointer-events: none;
+                user-select: none;
+                height: 35px;
+                border-radius: 50%;
+                text-align: center;
+                margin-top: 15px;
+                color: white;
+                font-size: 1.5em;
+                line-height: 35px;
+            }
+            #filters{
+                /* top: 5vh;
+                left: 50%;
+                transform: translate(-50%,-50%);*/
+            }
+            #search{
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 16px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+                border: 1px solid rgba(255, 255, 255, 0.37);
+                padding: 10px;
+                padding-left: 15px;
+                width: 25vw;
+                color: white;
+                font-size: 1.2em;
+                text-shadow: 0 0 1px white;
+                font-family: "Inconsolata", monospace;
+                z-index: 101;
+                position: absolute;
+
+
+            }
+            #filter{
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 16px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+                border: 1px solid rgba(255, 255, 255, 0.37);
+                padding: 10px;
+                padding-left: 15px;
+                width: 8vw;
+                color: white;
+                font-size: 1.2em;
+                text-shadow: 0 0 1px white;
+                font-family: "Inconsolata", monospace;
+                position: absolute;
+                z-index: 101;
+
+            }
+            #filter option{
+                color: black;
+            }
+            #loader{
+                height: 100vh;
+                width: 100%;
+                top: 0;
+                left: 0;
+                position: absolute;
+                background: black;
+                z-index: 1001;
+            }
+            #loader h1{
+                font-family: "Inconsolata", monospace;
+                position: absolute;
+                color: white;
+                transform: translate(-50%,-50%);
+                font-size: 10rem;
+                top: 50%;
+                left: 50%;
+            }
+        </style>   
+    </head>
+    <body>
+        <!-- 
+        6. Have a title screen that flashes on with a classy title and then fades off in a cool way
+        -->
+        <div id='loader'>
+            <h1>Projects</h1>
+        </div>
+        <a class='home' href='index.html'><i>⌂</i></a>
+            <div id='follow'><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+            <div id='maincontainer'>
+                <div id='container1'></div>
+                <div id='container2'></div>
+                <div id='container3'></div>
+            </div>
+            <div id='filters'>
+                <input type="text" id="search" onkeyup="search()" onclick='activateSearch()' placeholder="Search.." value='⌕'>
+                <select id="filter">
+                    <option value="title" autofocus>By Title</option>
+                    <option value="date">By Date</option>
+                </select>
+            </div>
+            <script>
+                const cards = {
+                    projects: [
+                        { 
+                            title: "Directory of Everything", 
+                            date: "December 2020",
+                            link: "https://the-ramenator.github.io/experiments",
+                            img: "assets/project-previews/experiments.png",
+                            desc: "Running total of every coding experiment I've done. Started keeping track in December of 2020 (began coding in July). "
+                        },
+                        { 
+                            title: "Pnut's Little Adventure", 
+                            date: "March 2025",
+                            link: "https://the-ramenator.github.io/pnut",
+                            img: "assets/project-previews/pnut.png",
+                            desc: "Short platformer game made for GASTC. Won first place in state for digital game design"
+                        },
+                        { 
+                            title: "Cherry Bomb", 
+                            date: "June 2024",
+                            link: "https://the-ramenator.github.io/experiments/cherrybomb.html",
+                            img: "assets/project-previews/cherrybomb.png",
+                            desc: "Small cherry blossom themed CSS experment. Made in ~2 days w/ assets from Canva"
+                        },
+                        { 
+                            title: "Grade Calculator", 
+                            date: "September 2025",
+                            link: "https://the-ramenator.github.io/experiments/gradecalculator.html",
+                            img: "assets/project-previews/gradecalculator.png",
+                            desc: "Small client-side project dedicated to aesthetically predicting grades based off the Infinite Campus grading weights."
+                        },
+                        { 
+                            title: "Andrims", 
+                            date: "July 2022",
+                            link: "https://andrims.com/",
+                            img: "assets/project-previews/andrims.png",
+                            desc: "Website design for andrims.com. Main page was finished auxiliary pages were not"
+                        },
+                        { 
+                            title: "DHW Text Game", 
+                            date: "February 2022",
+                            link: "https://the-ramenator.github.io/school_projects/danielhalewilliams.html",
+                            img: "assets/project-previews/danielhalewilliams.png",
+                            desc: "Short quiz on the life of surgeon Daniel Hale Williams as part of a school Black History Month project."
+                        },
+                        { 
+                            title: "Xhosa Research Project", 
+                            date: "October 2021",
+                            link: "https://the-ramenator.github.io/school_projects/xhosa.html",
+                            img: "assets/project-previews/xhosa.png",
+                            desc: "Overview and list of important aspects regarding the Xhosa tribe in Southern Africa as part of a school project."
+                        },
+                        { 
+                            title: "Platformer 11", 
+                            date: "May 2021",
+                            link: "https://the-ramenator.github.io/experiments/platformer11.html",
+                            img: "assets/project-previews/platformer11.png",
+                            desc: "Forked (can't find original creator) in May 2021 and expanded upon in May 2022"
+                        }
+
+                    ]
+                };
+                let searchKey = document.getElementById('search');
+                let optionsKey = document.getElementById('filter');
+                optionsKey.style.visibility = 'hidden';
+                searchKey.style.cursor = 'pointer';
+                searchKey.style.width = '50px';
+                searchKey.style.height = '50px';
+                searchKey.style.padding = '5px';
+                searchKey.style.textAlign = 'center';
+                searchKey.style.fontSize = '2.5em';
+                searchKey.style.lineHeight = '100px';
+                searchKey.style.left = '92vw';
+                searchKey.style.top = '7vh';
+                searchKey.style.transform = 'translate(0%,0%)';
+
+                let isActive = false;
+                function activateSearch(){
+                    if(isActive == false){
+                        isActive = true;
+
+                        optionsKey.style.visibility = 'visible';
+                        optionsKey.style.top = '7vh';
+                        optionsKey.style.left = '90.5%'; //62.5
+                        optionsKey.style.transform = 'translate(-50%,0%)';
+                        searchKey.disabled = false;
+                        searchKey.style.cursor = 'pointer';
+                        searchKey.style.width = '20%';
+                        searchKey.style.height = '35px';
+                        searchKey.style.paddingLeft = '15px';
+                        searchKey.style.textAlign = 'left';
+                        searchKey.style.fontSize = '1.2em';
+                        searchKey.style.lineHeight = '100px';
+                        searchKey.style.left = '75%'; //43.75
+                        searchKey.style.top = '7vh';
+                        searchKey.style.transform = 'translate(-50%,0%)';
+                        searchKey.value = '';
+                    }
+
+                }
+
+                function random(min, max, fixed) {
+                    return (Math.random() * (max - min) + min).toFixed(fixed);
+                }
+                let follow = document.getElementById('follow');
+                function newCard(index, cont) {
+                    var obj = document.createElement("div");
+                    obj.classList.add("card");
+                    obj.style.height = random(30,45,1) + 'vh';
+                    obj.style.width = 'auto';
+
+                    color = 'white';
+                    obj.classList.add("black");
+                    shadow = '0 0 20px #000';
+                    bgimage = "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 59%, rgba(0, 0, 0, 0.65) 100%), url('"+cards.projects[index].img+"')";
+                    hoverbg = "linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 1) 100%), url('"+cards.projects[index].img+"')";
+
+                    var title = document.createElement("span");
+                    title.innerHTML = cards.projects[index].title;
+                    title.classList.add("title");
+                    title.style.color = color; 
+                    title.style.textShadow = shadow; 
+                    title.style.left = '0';
+                    title.style.bottom = '0';
+
+                    var date = document.createElement("span");
+                    date.innerHTML = cards.projects[index].date;
+                    date.classList.add("date");
+                    date.style.color = color; 
+                    date.style.textShadow = shadow;
+                    date.style.right = '0';
+                    date.style.bottom = '0';
+
+                    var desc = document.createElement("span");
+                    desc.innerHTML = cards.projects[index].desc;
+                    desc.classList.add('desc');
+                    desc.style.left = '0';
+                    desc.style.bottom = '0';
+                    desc.style.opacity = '0';
+
+                    var hover = document.createElement("div");
+                    hover.classList.add("hover-bg");
+                    hover.style.backgroundImage = hoverbg;
+                    hover.style.opacity = '0';
+
+                    obj.style.backgroundImage = bgimage;
+                    obj.onclick = function(){
+                        window.open(cards.projects[index].link, '_blank');
+                    };
+
+                    obj.addEventListener('mouseover', () => {
+                        obj.style.transform = "scale(0.955)";
+                        obj.style.outlineOffset = "10px";
+                        obj.style.outline = "2px solid white";
+                        hover.style.opacity = '1';
+                        desc.style.opacity = '1';
+                        date.style.bottom = '25%';
+                        title.style.bottom = '25%';
+                        follow.innerHTML = '↗';
+                        follow.style.width = '40px';
+                        follow.style.borderRadius = '10px'
+                        follow.style.border = '3px solid rgba(255, 255, 255, 0.3)';
+
+                    });
+                    obj.addEventListener('mouseout', () => {
+                        obj.style.transform = "scale(1)";
+                        obj.style.outlineOffset = "0px";
+                        obj.style.outline = "none";
+                        hover.style.opacity = '0';
+                        desc.style.opacity = '0';
+                        date.style.bottom = '0';
+                        title.style.bottom = '0';
+                        follow.innerHTML = '';
+                        follow.style.width = '35px';
+                        follow.style.borderRadius = '50%';
+                        follow.style.border = '1px solid rgba(255, 255, 255, 0.3)';
+
+
+                    });
+                    obj.appendChild(hover);
+                    obj.appendChild(title);
+                    obj.appendChild(date);
+                    obj.appendChild(desc);
+                    obj.id = 'card'+i;
+                    document.getElementById('container'+cont).appendChild(obj);
+
+                }
+                var cardsArray = [];
+                for (var i = 0; i < cards.projects.length; i++) {
+                    var mod = (i%3)+1;
+                    cardsArray.push(new newCard(i, mod));
+                }
+                let savedHeights = [];
+
+                for (var i = 0; i < cards.projects.length; i++) {
+                    savedHeights.push(document.getElementById("maincontainer").getElementsByClassName("card")[i].style.height);
+                }
+
+                function search(){
+                    var search = document.getElementById("search");
+                    var filter = search.value.toUpperCase();
+                    var cont = document.getElementById("maincontainer");
+                    var searchCards = cont.getElementsByClassName("card");
+                    var type = document.getElementById("filter").value;
+                    let contHeight;
+                    for (let i = 0; i < searchCards.length; i++) {
+                        var a = searchCards[i].getElementsByClassName(type)[0];
+                        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            // searchCards[i].style.display = "block";
+                            setTimeout(function(){
+                                searchCards[i].style.opacity = "1";
+                                searchCards[i].style.height = savedHeights[i];
+                                searchCards[i].style.margin = "5px";
+                                searchCards[i].getElementsByClassName("title")[0].style.margin = '20px';
+                                searchCards[i].getElementsByClassName("date")[0].style.margin = '20px';
+                                searchCards[i].getElementsByClassName("desc")[0].style.margin = '20px';
+                                searchCards[i].style.pointerEvents = "auto";
+                            }, 1);
+
+                        } else {
+                            searchCards[i].style.opacity = "0";
+                            searchCards[i].style.height = "0px";
+                            searchCards[i].style.margin = "0px";
+                            searchCards[i].style.pointerEvents = "none";
+                            searchCards[i].getElementsByClassName("title")[0].style.margin = '0px';
+                            searchCards[i].getElementsByClassName("date")[0].style.margin = '0px';
+                            searchCards[i].getElementsByClassName("desc")[0].style.margin = '0px';
+                            // save heights to array; add the css property that doesnt allow interactin
+
+                            setTimeout(function(){
+                                // searchCards[i].style.display = "none";
+                            }, 375);
+                        }
+                    }
+
+                }
+                function luhscroll(el){
+                    if(el.scrollTop+window.innerHeight < el.scrollHeight && !el.matches(':hover')){
+                        el.scrollTo(0, el.scrollTop+1);
+                    }
+                }
+                setTimeout(function(){
+                    setInterval(luhscroll, random(50,150,0), document.getElementById('container1'));
+                    setInterval(luhscroll, random(50,150,0), document.getElementById('container2'));
+                    setInterval(luhscroll, random(50,150,0), document.getElementById('container3'));
+                }, 1000);
+                const positionElement = (e)=> {
+                    const mouseY = e.clientY;
+                    const mouseX = e.clientX;
+                    follow.style.transform = `translate3d(${mouseX-17}px, ${mouseY-35}px, 0)`;
+                }
+                setTimeout(function(){
+                    document.getElementById('loader').style.opacity = '0';
+                }, 750);
+
+                setTimeout(function(){
+                    document.getElementById('loader').style.display = 'none';
+                }, 1500);
+                window.addEventListener('mousemove', positionElement)
+            </script>
+    </body>
+
+</html>
