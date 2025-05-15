@@ -1,0 +1,827 @@
+<!-- https://www.boomlings.com/database/accounts/accountManagement.php -->
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport"
+            content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <meta id="meta-title" property="og:title" content="Geometry Dash Account Registration">
+        <meta id="meta-desc" property="og:description"
+            content="Enjoy this fanmade Geometry Dash Account Registration website!">
+        <meta id="meta-image" name="og:image" content="assets/robtop-redesign/gd_icon.png" itemprop="image">
+        <title>Account Management</title>
+        <link rel="icon" type="image/png" href="assets/robtop-redesign/gd_icon.png" />
+        <link href="https://fonts.googleapis.com/css2?family=Mynerve&family=Shantell+Sans&display=swap" rel="stylesheet">
+        <style>
+            @font-face {font-family: Pusab; src: url('assets/robtop-redesign/Pusab.ttf')}
+            html, body {
+                height: 100%;
+                width: 100%;
+                padding: 0;
+                margin: 0;
+                overflow: hidden;
+                font-family: Pusab, Arial;
+                user-select: none;
+            }
+            .container{
+                width: 100%;
+                height: 100%;
+                background: #000;
+                z-index:-100;
+            }
+            .container-bg{
+                position: absolute;
+                top: 0;
+                left: 0;  
+                opacity: 0.2;
+                background: url("assets/robtop-redesign/bg_slanted.png") repeat-x;
+                height: 1080px;
+                width: 7680px;
+                animation: slide 60s linear infinite;
+                z-index: 1;
+                /*Size: 1920x1080 (width is 4 times the width)*/
+            }
+            .icon{
+                z-index:60;
+                margin-top: 2em;
+                margin-left: 2em;
+                position: absolute;
+                height: 2.5vw;
+                width: 2.5vw; /*40px*/
+            }
+            .logo{
+                width: 80%;
+                left: 10%;
+                top: 7%;
+                height: auto;
+                position: relative;
+                z-index: 10;
+            }
+            .user,.pass{
+                position: relative;
+            }
+            .user{
+                top: 15%;
+                width: 65%;
+                left: 17.5%;
+            }
+            .pass{
+                top:25%;
+                width: 65%;
+                left: 17.5%;
+            }
+
+            .robtop{
+                z-index:60;
+                margin-top: 1.8em;
+                margin-left: 5em;
+                position: absolute;
+                height: auto;
+                width: 9vw; /*50px*/
+            }
+
+            .footer-marquee{
+                font-family: Arial, Helvetica, sans-serif;
+                position: absolute;
+                bottom: 0;
+                z-index: 50;
+                width: 100%;
+                color: gray;
+                transition: 0.2s;
+            }
+            .footer-marquee:hover{
+                color: white;
+            }
+            .help-text{
+                font-family: 'Shantell Sans', cursive;
+                color: white;
+                font-size: 1.5em;
+                position: absolute;
+                left: 105%;
+                top: 42%;
+            }
+            .ltr-h{
+                animation: ltr-h 4s ease-in-out infinite;
+                opacity:0;
+                position: absolute;
+            }
+            .ltr-e{
+                animation: ltr-e 4s ease-in-out infinite;
+                animation-delay: 0.05s;
+                opacity:0;
+                position: absolute;
+            }
+            .ltr-l{
+                animation: ltr-l 4s ease-in-out infinite;
+                animation-delay: 0.1s;
+                opacity:0;
+                position: absolute;
+            }
+            .ltr-p{
+                animation: ltr-p 4s ease-in-out infinite;
+                animation-delay: 0.15s;
+                opacity:0;
+                position: absolute;
+            }
+            .to-help{
+                position: absolute;
+                left: 105%;
+                top: 42%;
+                width: 3em;
+            }
+            .to-login{
+                position: absolute;
+                left: -12%;
+                top: 42%;
+                width: 3em;
+            }
+            .login{
+                border-width: 2.5vh;
+                border-style: solid;
+                border-radius: 3vh;
+                background-color: #995533;
+                border-image: url('assets/robtop-redesign/gd_brownbox.png') 10% round;
+                height: 60%;
+                width: 50%;
+                position: absolute;
+                z-index: 3;
+                left: 25%;
+                top: 20%;
+                animation-fill-mode: forwards;
+            }
+            .help-modal{
+                transform: translateX(175%);
+                animation-fill-mode: forwards;
+                text-align: center;
+            }
+            .login-out{
+                animation-name: move-out-login;
+                animation-duration: .6s;
+            }
+
+            .help-in{
+                animation-name: move-in-help;
+                animation-duration: .6s;
+            }
+
+            .login-in{
+                animation-name: move-in-login;
+                animation-duration: .6s;
+            }
+
+            .help-out{
+                animation-name: move-out-help;
+                animation-duration: .6s;
+            }
+            .actions{
+                position: absolute;
+                top: 80%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 100%;
+            }
+            .submit{
+                position: relative;
+                bottom: 0%;
+                height: 8vh;
+                width: auto;
+            }
+
+            .help{
+                position: relative;
+                top: 100%;
+                height: 8vh;
+                width: auto;
+            }
+
+            p {
+                font-family: aller, helvetica, arial;
+                color: white;
+                font-size: 2.9vh;
+                word-break: break-word;
+            }
+
+            h1, h2, h3 {
+                font-family: Pusab, Arial;
+                font-weight: normal;
+                margin: 0% 0%;
+                letter-spacing: -0.01em;
+                -webkit-text-size-adjust: 100%;
+                -webkit-text-stroke-color: black;
+            }
+
+            h1 {
+                color: white;
+                font-size: 320%;
+                line-height: 100%;
+                white-space: nowrap;
+                -webkit-text-stroke-width: 0.25vh;
+                text-shadow: 0.375vh 0.375vh 0vh rgba(0, 0, 0, 0.3);
+            }
+
+            h2 {
+                font-size: 8vh;
+                -webkit-text-stroke-width: 0.265vh;
+                background: -webkit-linear-gradient(#FDA00C, #FFE348);
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+                -webkit-background-clip: text;
+                -webkit-filter: drop-shadow(0.25vh 0.25vh rgba(0, 0, 0, 0.25));
+                filter: drop-shadow(0.25vh 0.25vh rgba(0, 0, 0, 0.25));
+                text-shadow: none !important;
+            }
+
+            h3, input[type=text], input[type=password], input[type=number], .h3Size {
+                font-size: 3.5vh;
+                color: white;
+                -webkit-text-stroke-width: 0.14vh;
+                -webkit-text-stroke-color: black;
+                text-shadow: 0.2vh 0.2vh 0.02vh rgba(0, 0, 0, 0.3);
+            }
+
+            a {
+                text-decoration: none;
+                color: inherit;
+                -webkit-text-stroke-width: inherit;
+                -webkit-text-stroke-color: inherit;
+                text-shadow: inherit;
+            }
+
+            input[type=text], input[type=password], input[type=number] {
+                padding-left: 1.2%;
+                border-radius: 1vh;
+                margin-top: 1%;
+                font-size: 5vh !important;
+                font-family: Pusab, Arial;
+                background: #ab603b;
+                border: none;
+                padding: 0.25em;
+            }
+            ::placeholder {
+                color: rgba(206,132,95,1);
+                /*opacity: 0.5;*/
+                -webkit-text-stroke-width: 1px;
+                -webkit-text-stroke-color: black;
+                text-shadow: 0;
+
+            }
+            input:focus, textarea:focus {
+                outline: none;
+            }
+            .break{
+                background: transparent;
+                height: 1.75vw;
+            }
+
+            .credits{
+                z-index:60;
+                float: right;
+                right: 2em;
+                margin-top: 1.75em;
+                position: absolute;
+                height: 5vw; /*70px*/
+                width: auto;
+            }
+
+
+            .special-hover{
+                font-size: 3vw;
+            }
+
+
+            .credits:hover, input:hover, .bounce:hover{
+                animation: bounceButton 0.25s ease-in-out forwards; /*0.25*/
+            }
+            /* button:hover, .logo:hover, .icon:hover,.robtop:hover, h1:hover, span:hover,  */
+            .pointer{
+                cursor: pointer;
+            }
+            .none{
+                display: none;
+            }
+            .help-modal{
+                padding: 0 !important;
+            }
+            .action-container-1,.action-container-2{
+                padding: 0px;
+                position: relative;
+                width: 100%;
+                left: 0;
+                display: flex;
+                height: 25vh;
+                text-align: center;
+            }
+            .action-container-1{
+                top: 2vh;
+            }
+            .action-container-2{
+                top: 7vh;
+            }
+            .action-1{
+                width: 33.33%;
+                height: auto;
+                margin-left: 1em;
+                margin-right: 1em;
+                margin-top: 1em;
+                background: transparent;
+                border-radius: 1em;
+                text-align: center;
+                position: relative;
+                display: grid;
+                place-items: center;
+            }
+            .action-2{
+                width: 33.33%;
+                height: auto;
+                margin: 1em;
+                background: transparent;
+                border-radius: 1em;
+                text-align: center;
+                transition: 0.2s;
+                position: relative;
+                display: grid;
+                place-items: center;
+            }
+            /*.action-2 i, .action-1 i{
+            color: white;
+            -webkit-text-fill-color: white;
+            -webkit-text-stroke-width: 2px;
+            -webkit-text-stroke-color: black;
+            position: relative;
+            top: 12.5vh;
+            transform: translate(0%,-75%);
+            font-size: 3em;
+            }
+            */
+            .actions-img{
+                position: absolute;
+                top: -5%;
+                /*  left: 50%;
+                transform: translate3d(-50%,-50%,0);*/
+                width: 6vw;
+                height: auto;
+                cursor: pointer;
+                z-index: 21;
+            }
+            .actions-span{
+                color: white;
+                -webkit-text-fill-color: white;
+                -webkit-text-stroke-width: 2px;
+                -webkit-text-stroke-color: black;
+                font-size: 1.75em;
+                z-index: 22;
+                position: absolute;
+                bottom: 15%;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            #loading-icon{
+                animation: rotate 1s linear infinite;
+                display: none;
+                z-index: 99;
+                height: 130px;
+                width: 130px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+            }
+            @keyframes rotate{
+                0%{
+                    transform: translate(-25%,-25%) rotate(0deg);
+                }
+                100%{
+                    transform: translate(-25%,-25%) rotate(360deg);
+                }
+            }
+            @keyframes slide{
+                0% {
+                    transform: translate3d(0, 0, 0);
+                }
+                100% {
+                    transform: translate3d(-5760px, 0, 0);
+                }
+            }
+            @keyframes bounceButton {
+                0% {
+                    transform: scale(1);
+                }
+                50% {
+                    transform: scale(1.03); /*1.12*/
+                }
+                75% {
+                    transform: scale(1.01); /*1.06*/
+                }
+                100% {
+                    transform: scale(1.02); /*1.1*/
+                }
+            }
+
+
+            @keyframes move-in-help {
+                0%{
+                    visibility: visible;
+                    transform: translateX(175%);
+                }
+                100%{
+                    transform:translateX(0%);
+                }
+            }
+            @keyframes move-in-login {
+                0%{
+                    transform: translateX(-175%);
+                    visibility: visible;
+                }
+                100%{
+                    transform:translateX(0%);
+                }
+            }
+            @keyframes move-out-help {
+                0%{
+                    transform: translateX(0%);
+                }
+                100%{
+                    transform:translateX(175%);
+                    visibility:hidden;
+                }
+            }
+            @keyframes move-out-login {
+                0%{
+                    transform: translateX(0%);
+                }
+                100%{
+                    transform:translateX(-175%);
+                    visibility:hidden;
+                }
+            }
+            @keyframes ltr-h {
+                0%{
+                    transform: rotate(0deg) translate(0,0);
+                    opacity:0;
+                }
+                20%{
+                    opacity: 0;
+                }
+                50%{
+                    transform: rotate(40deg) translate(100%,-200%);
+                    opacity:1;
+                }
+                80%{
+                    opacity: 0;
+                }
+                100%{
+                    transform: rotate(0deg) translate(0,0);
+                    opacity:0;
+                }
+            }
+            @keyframes ltr-e {
+                0%{
+                    transform: rotate(0deg) translate(0,0);
+                    opacity:0;
+                }
+                20%{
+                    opacity: 0;
+                }
+                50%{
+                    transform: rotate(60deg) translate(200%,-200%);
+                    opacity:1;
+                }
+                80%{
+                    opacity: 0;
+                }
+                100%{
+                    transform: rotate(0deg) translate(0,0);
+                    opacity:0;
+                }
+            }
+            @keyframes ltr-l {
+                0%{
+                    transform: rotate(0deg) translate(0,0);
+                    opacity:0;
+                }
+                20%{
+                    opacity: 0;
+                }
+                50%{
+                    transform: rotate(120deg) translate(-0%,-250%);
+                    opacity:1;
+                }
+                80%{
+                    opacity: 0;
+                }
+                100%{
+                    transform: rotate(0deg) translate(0,0);
+                    opacity:0;
+                }
+            }
+            @keyframes ltr-p {
+                0%{
+                    transform: rotate(0deg) translate(0,0);
+                    opacity:0;
+                }
+                20%{
+                    opacity: 0;
+                }
+                50%{
+                    transform: rotate(150deg) translate(-0%,-250%);
+                    opacity:1;
+                }
+                80%{
+                    opacity: 0;
+                }
+                100%{
+                    transform: rotate(0deg) translate(0,0);
+                    opacity:0;
+                }
+            }
+            @media only screen and (max-height: 750px) {
+
+            }
+            @media only screen and (min-width: 900px) {
+
+                h1{
+                    -webkit-text-stroke-width: 0.15vw;
+                }
+            }
+
+            @media only screen and (max-width: 899px) {
+                .login{
+                    /*calc(100% - (10%+5vw))*/
+                    height: calc(80% - (10%+5vw));
+                    width: calc(60% - (10%+5vw));
+                    border-width: 3vw;
+                    border-radius: 3vw;
+                    position: absolute;
+                    z-index: 3;
+                    left: 20%;
+                    top: 20%;
+                }
+                .to-help{
+                    left: 110%;
+                }
+                .to-login{
+                    left: -20%;
+                }
+                .actions-img{
+                    width: 9vw;
+                    height: auto;
+                }
+                .break, .none{
+                    display: block;
+                    height: 3vh;
+                }
+
+                .none-650{
+                    display: none;
+                }
+
+                .icon{
+                    height: 5.25vw;
+                    width: 5.25vw;
+                }
+                .robtop{
+                    height: auto;
+                    margin-left: 6em;
+                    width: 20vw;
+                }
+                .credits{
+                    height: 8.25vw;
+                    width: auto;
+                }
+            }
+            @media only screen and (max-width: 500px) {
+                .submit{
+                    position: relative;
+                    top: 0%;
+                    width: 50%;
+                    height: auto;
+                    left: 0%;
+                }
+                .actions{
+                    position: relative;
+                    top: 40%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 100%;
+                }
+                .user{
+                    top: 15%;
+                    width: 65%;
+                    left: 17.5%;
+                }
+                .pass{
+                    top:25%;
+                    width: 65%;
+                    left: 17.5%;
+                }
+                .to-help{
+                    position: absolute;
+                    left: 50%;
+                    top: 90%;
+                    width: 3em;
+                }
+                .to-login{
+                    position: absolute;
+                    left: -12%;
+                    top: 42%;
+                    width: 3em;
+                }
+                .login{
+                    /*calc(100% - (10%+5vw))*/
+                    height: calc(90% - (10%+5vw));
+                    width: calc(90% - (10%+5vw));
+                    border-width: 5vw;
+                    border-radius: 5vw;
+                    position: absolute;
+                    z-index: 3;
+                    left: 5%;
+                    top: 12.5%;
+                }
+                .break, .none{
+                    display: block;
+                    height: 5vh;
+                }
+
+                .none-650{
+                    display: none;
+                }
+
+                .special-hover{
+                    font-size: 350%;
+                    -webkit-text-stroke-width: 0.4vw;
+                }
+                .icon{
+                    height: 10vw;
+                    width: 10vw;
+                }
+                .robtop{
+                    height: auto;
+                    width: 36vw;  
+                }
+                .credits{
+                    height: 11vw;
+                    width: auto;
+                }
+            }
+            #credits{
+                font-family: Arial;
+                color: white;
+                background: black;
+                overflow: scroll;
+                height: 100vh;
+            }
+            #credits a{
+                color: #84dfff;
+                text-decoration: underline
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div id='container' class='container'>
+            <div class='container-bg'></div>
+            <img class='icon' src='assets/robtop-redesign/gd_icon.png'>
+            <img class='robtop' src='assets/robtop-redesign/gd_robtop.webp'>
+
+
+            <center>
+                <img id='loading-icon' src='assets/robtop-redesign/gd_loading.png'>
+            </center>
+            <div class='login' id='login-modal'>
+                <img class='logo' src='assets/robtop-redesign/gd_logo.png'>
+                <input type='text' placeholder='username' class='user'><br>
+                <input type='password' placeholder='password' class='pass'><br>
+                <center class='actions'>
+
+                    <img src='assets/robtop-redesign/gd_submit.png' onclick='load()' class='submit pointer bounce'>
+                </center>
+                <div class='to-the-help'>
+                    <img src='assets/robtop-redesign/gd_back_flip.png' id='to-help' class='bounce pointer to-help' onclick='moveinhelp()'>
+                    <span class='help-text'>
+                        <span class='ltr-h'>H</span>
+                        <span class='ltr-e'>E</span>
+                        <span class='ltr-l'>L</span>
+                        <span class='ltr-p'>P</span>
+                    </span>
+                </div>
+            </div>
+
+
+
+
+
+            <div class='login help-modal' id='help-modal'>
+                <h1 style='position: relative; top: 0%; font-size: 350%;'>Help</h1>
+                <img src='assets/robtop-redesign/gd_back.png' id='to-login' class='pointer bounce to-login' onclick='moveouthelp()'>
+                <div class='actions-container'>
+                    <div class='action-container-1'>
+                        <div class='action-1'>
+                            <img src='assets/robtop-redesign/gd_register_account.png' class='actions-img bounce'>
+                            <span class='actions-span'>Register Account</span>
+                        </div>
+                        <div class='action-1'>
+                            <img src='assets/robtop-redesign/gd_invalid_email.png' class='actions-img bounce'>
+                            <span class='actions-span'>Invalid Email</span>
+                        </div>
+                        <div class='action-1'>
+                            <img src='assets/robtop-redesign/gd_resend_activation.png' class='actions-img bounce'>
+                            <span class='actions-span'>Resend Activation</span>
+                        </div>
+                    </div>
+                    <div class='action-container-2'>
+                        <div class='action-2'>
+                            <img src='assets/robtop-redesign/gd_acc_lock.png' class='actions-img bounce'>
+                            <span class='actions-span'>Forgot Username</span>
+
+                        </div>
+                        <div class='action-2'>
+                            <img src='assets/robtop-redesign/gd_pass_lock.png' class='actions-img bounce'>
+                            <span class='actions-span'>Forgot Password</span>
+                        </div>
+                        <div class='action-2'>
+                            <img src='assets/robtop-redesign/gd_settings.png' class='actions-img bounce'>
+                            <span class='actions-span'>Account Settings</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a onclick='credits()' target='_blank'><img class='credits bounce pointer' src='assets/robtop-redesign/gd_credits.png'></a>
+        </div>
+        <div id='credits'>
+            <a onclick='credits()'>Go Back</a>
+            <h1>Credits</h1>
+            <p>Ok, so I (Half-Cooked Ramen) made this when I was extremely bored and I saw that rob's account registration/login
+                page
+                sucked. So (FOR FUN) I remade it.</p>
+            <p>There are a whole bunch of people I need to credit, because I used their assets or their code, so here's the
+                list.
+                If I used your assets and you want the assets taken down, dm me on discord: Half-Cooked Ramen#7300</p>
+            <h2>Background Thumbnails</h2>
+            <p>All background images are from Nexus GD's videos except the Black Flag image, which is from Just A GD Player's
+                Black Flag upload.</p>
+            <h2>Game Assets</h2>
+            <p>The game's logo, the credits icon, and the base image for the login modal, are all from GD Colon's site, <a
+                                                                                                                            href='https://gdbrowser.com'>GD Browser</a>.</p>
+            <p>The game's icon is from <a href='https://en.wikipedia.org/wiki/Geometry_Dash'>Wikipedia</a>.</p>
+            <p>Rob's logo is from <a href='https://geometry-dash.fandom.com/wiki/Robert_Topala'>the fan wiki</a>.</p>
+
+            <h2>Code</h2>
+            <p>The code and file for the pusab font are from GD Colon's <a href='https://gdbrowser.com'>GD Browser</a>. So is
+                the
+                code for the modal and the inputs because I was too lazy to make it myself.</p><br><br>
+            <p>I (Half-Cooked Ramen) am in NO WAY pretending to be RobTop Games and I am not affiliated with
+                Geometry Dash other than by playing the game. I just remade this because I was bored and I thought this site could
+                use a rework.</p>
+            <br><br>
+            <p>btw here's what the site looked like before for comparison</p>
+            <img style='height: auto; width: 50%;' src='assets/robtop-redesign/original_gd_account_site.png'>
+        </div>
+        <script>
+            function moveinhelp() {
+                var login = document.getElementById("login-modal");
+                login.classList.remove("login-in");
+                login.classList.add("login-out");
+                var login = document.getElementById("help-modal");
+                login.classList.remove("help-out");
+                login.classList.add("help-in");
+            }
+            function moveouthelp() {
+                var login = document.getElementById("login-modal");
+                login.classList.remove("login-out");
+                login.classList.add("login-in");
+                var login = document.getElementById("help-modal");
+                login.classList.remove("help-in");
+                login.classList.add("help-out");
+            }
+
+            function load() {
+                var icon = document.getElementById('loading-icon');
+                var content = document.getElementById('login-modal');
+                var contentInfo = document.getElementById('login-modal').innerHTML;
+                icon.style.display = 'block';
+                content.innerHTML = '';
+                setTimeout(() => {
+                    icon.style.display = 'none';
+                    content.innerHTML = contentInfo;
+                    alert('You pressed the submit button!');
+                }, 500)
+            }
+            document.getElementById('container').style.display = 'block';
+            document.getElementById('credits').style.display = 'none';
+            function credits() {
+                if (document.getElementById('container').style.display == 'block') {
+                    document.getElementById('container').style.display = 'none';
+                    document.getElementById('credits').style.display = 'block';
+                }
+                else {
+                    document.getElementById('container').style.display = 'block';
+                    document.getElementById('credits').style.display = 'none';
+                }
+            }
+        </script>
+        <script src="https://kit.fontawesome.com/47cf17b263.js" crossorigin="anonymous"></script>
+    </body>
+
+</html>
