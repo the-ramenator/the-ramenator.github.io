@@ -9,12 +9,12 @@
         <meta id="meta-title" property="og:title" content="Geometry Dash Account Registration">
         <meta id="meta-desc" property="og:description"
             content="Enjoy this fanmade Geometry Dash Account Registration website!">
-        <meta id="meta-image" name="og:image" content="assets/robtop-redesign/gd_icon.png" itemprop="image">
+        <meta id="meta-image" name="og:image" content="/assets/robtop-redesign/gd_icon.png" itemprop="image">
         <title>Account Management</title>
-        <link rel="icon" type="image/png" href="assets/robtop-redesign/gd_icon.png" />
+        <link rel="icon" type="image/png" href="/assets/robtop-redesign/gd_icon.png" />
         <link href="https://fonts.googleapis.com/css2?family=Mynerve&family=Shantell+Sans&display=swap" rel="stylesheet">
         <style>
-            @font-face {font-family: Pusab; src: url('assets/robtop-redesign/Pusab.ttf')}
+            @font-face {font-family: Pusab; src: url('/assets/robtop-redesign/Pusab.ttf')}
             html, body {
                 height: 100%;
                 width: 100%;
@@ -35,7 +35,7 @@
                 top: 0;
                 left: 0;  
                 opacity: 0.2;
-                background: url("assets/robtop-redesign/bg_slanted.png") repeat-x;
+                background: url("/assets/robtop-redesign/bg_slanted.png") repeat-x;
                 height: 1080px;
                 width: 7680px;
                 animation: slide 60s linear infinite;
@@ -141,7 +141,7 @@
                 border-style: solid;
                 border-radius: 3vh;
                 background-color: #995533;
-                border-image: url('assets/robtop-redesign/gd_brownbox.png') 10% round;
+                border-image: url('/assets/robtop-redesign/gd_brownbox.png') 10% round;
                 height: 60%;
                 width: 50%;
                 position: absolute;
@@ -682,23 +682,23 @@
 
         <div id='container' class='container'>
             <div class='container-bg'></div>
-            <img class='icon' src='assets/robtop-redesign/gd_icon.png'>
-            <img class='robtop' src='assets/robtop-redesign/gd_robtop.webp'>
+            <img class='icon' src='/assets/robtop-redesign/gd_icon.png'>
+            <img class='robtop' src='/assets/robtop-redesign/gd_robtop.webp'>
 
 
             <center>
-                <img id='loading-icon' src='assets/robtop-redesign/gd_loading.png'>
+                <img id='loading-icon' src='/assets/robtop-redesign/gd_loading.png'>
             </center>
             <div class='login' id='login-modal'>
-                <img class='logo' src='assets/robtop-redesign/gd_logo.png'>
+                <img class='logo' src='/assets/robtop-redesign/gd_logo.png'>
                 <input type='text' placeholder='username' class='user'><br>
                 <input type='password' placeholder='password' class='pass'><br>
                 <center class='actions'>
 
-                    <img src='assets/robtop-redesign/gd_submit.png' onclick='load()' class='submit pointer bounce'>
+                    <img src='/assets/robtop-redesign/gd_submit.png' onclick='load()' class='submit pointer bounce'>
                 </center>
                 <div class='to-the-help'>
-                    <img src='assets/robtop-redesign/gd_back_flip.png' id='to-help' class='bounce pointer to-help' onclick='moveinhelp()'>
+                    <img src='/assets/robtop-redesign/gd_back_flip.png' id='to-help' class='bounce pointer to-help' onclick='moveinhelp()'>
                     <span class='help-text'>
                         <span class='ltr-h'>H</span>
                         <span class='ltr-e'>E</span>
@@ -714,40 +714,40 @@
 
             <div class='login help-modal' id='help-modal'>
                 <h1 style='position: relative; top: 0%; font-size: 350%;'>Help</h1>
-                <img src='assets/robtop-redesign/gd_back.png' id='to-login' class='pointer bounce to-login' onclick='moveouthelp()'>
+                <img src='/assets/robtop-redesign/gd_back.png' id='to-login' class='pointer bounce to-login' onclick='moveouthelp()'>
                 <div class='actions-container'>
                     <div class='action-container-1'>
                         <div class='action-1'>
-                            <img src='assets/robtop-redesign/gd_register_account.png' class='actions-img bounce'>
+                            <img src='/assets/robtop-redesign/gd_register_account.png' class='actions-img bounce'>
                             <span class='actions-span'>Register Account</span>
                         </div>
                         <div class='action-1'>
-                            <img src='assets/robtop-redesign/gd_invalid_email.png' class='actions-img bounce'>
+                            <img src='/assets/robtop-redesign/gd_invalid_email.png' class='actions-img bounce'>
                             <span class='actions-span'>Invalid Email</span>
                         </div>
                         <div class='action-1'>
-                            <img src='assets/robtop-redesign/gd_resend_activation.png' class='actions-img bounce'>
+                            <img src='/assets/robtop-redesign/gd_resend_activation.png' class='actions-img bounce'>
                             <span class='actions-span'>Resend Activation</span>
                         </div>
                     </div>
                     <div class='action-container-2'>
                         <div class='action-2'>
-                            <img src='assets/robtop-redesign/gd_acc_lock.png' class='actions-img bounce'>
+                            <img src='/assets/robtop-redesign/gd_acc_lock.png' class='actions-img bounce'>
                             <span class='actions-span'>Forgot Username</span>
 
                         </div>
                         <div class='action-2'>
-                            <img src='assets/robtop-redesign/gd_pass_lock.png' class='actions-img bounce'>
+                            <img src='/assets/robtop-redesign/gd_pass_lock.png' class='actions-img bounce'>
                             <span class='actions-span'>Forgot Password</span>
                         </div>
                         <div class='action-2'>
-                            <img src='assets/robtop-redesign/gd_settings.png' class='actions-img bounce'>
+                            <img src='/assets/robtop-redesign/gd_settings.png' class='actions-img bounce'>
                             <span class='actions-span'>Account Settings</span>
                         </div>
                     </div>
                 </div>
             </div>
-            <a onclick='credits()' target='_blank'><img class='credits bounce pointer' src='assets/robtop-redesign/gd_credits.png'></a>
+            <a onclick='credits()' target='_blank'><img class='credits bounce pointer' src='/assets/robtop-redesign/gd_credits.png'></a>
         </div>
         <div id='credits'>
             <a onclick='credits()'>Go Back</a>
@@ -776,7 +776,7 @@
                 use a rework.</p>
             <br><br>
             <p>btw here's what the site looked like before for comparison</p>
-            <img style='height: auto; width: 50%;' src='assets/robtop-redesign/original_gd_account_site.png'>
+            <img style='height: auto; width: 50%;' src='/assets/robtop-redesign/original_gd_account_site.png'>
         </div>
         <script>
             function moveinhelp() {
