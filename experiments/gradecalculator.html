@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
     <title>Grade Calculator</title>
-    <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"/>
+    <link rel="icon" type="image/png" href="assets/homepage/favicon.png"/>
     <meta name="author" content="The Ramenator">
     <meta name="title" content="Grade Calculator">
     <meta name="description" content="Formatted to be based off of Infinite Campus">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1471513671800-b09c87e1497c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+    <meta property="og:image" content="assets/gradecalc/originalForest.avif" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <head>
@@ -626,7 +626,7 @@
         </style>
     </head>
     <body>
-        <img id='background' class='background' src='https://images.unsplash.com/photo-1471513671800-b09c87e1497c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'>
+        <img id='background' class='background' src='assets/gradecalc/originalForest.avif'>
 
         <h1 class='title' id='title'>How Cooked Is Your Grade?</h1>
         <button id='modalbtn' class='help'>?</button>
@@ -915,7 +915,7 @@ document.getElementsByClassName('t-max').addEventListener("keypress", function(e
 
             function calculate() {
                 for (let i = 0; i <= catCount; i++) {
-                    let cname = document.getElementsByClassName("c-name")[i].value;
+                    let cname = document.getElementsByClassName("c-name")[i].innerHTML;
                     categories.push(cname);
                     for (let n = 0; n < document.getElementsByClassName("tableEarned" + i).length; n++) {
                         earnedSum =
@@ -953,15 +953,14 @@ document.getElementsByClassName('t-max').addEventListener("keypress", function(e
                 }
                 display(finalGrade);
             }
-            let originalForest = 'https://images.unsplash.com/photo-1471513671800-b09c87e1497c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
-            let forestFire =
-                "https://images.unsplash.com/photo-1602980085374-7e743fff3cc6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
-            let reallyBadForestFire = 'https://images.unsplash.com/photo-1511027643875-5cbb0439c8f1?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
-            let smokyForest = 'https://images.unsplash.com/photo-1574627934266-7c5bcc4fb950?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
-            let happyForest = 'https://images.unsplash.com/photo-1500534623283-312aade485b7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
-            let okForest = 'https://images.unsplash.com/photo-1504406242839-6e462b3ccb91?q=80&w=1968&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+            let originalForest = 'assets/gradecalc/originalForest.avif';
+            let forestFire = "assets/gradecalc/forestFire.avif";
+            let reallyBadForestFire = 'assets/gradecalc/reallyBadForestFire.avif';
+            let smokyForest = 'assets/gradecalc/smokyForest.avif';
+            let happyForest = 'assets/gradecalc/happyForest.avif';
+            let okForest = 'assets/gradecalc/okForest.avif';
+            let houseOnFire = 'assets/gradecalc/houseOnFire.avif';
             document.getElementById("display").style.display = "none";
-            let houseOnFire = 'https://images.unsplash.com/photo-1473260079709-83c808703435?q=80&w=1920&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
             function display(e) {
                 document.getElementById("container").style.visibility = "hidden";
                 document.getElementById("title").style.display = "none";
@@ -1038,6 +1037,7 @@ document.getElementsByClassName('t-max').addEventListener("keypress", function(e
                     document.getElementById("percentmodal").style.display = "none";
                 }
             }
+
         </script>
     </body>
 </html>
