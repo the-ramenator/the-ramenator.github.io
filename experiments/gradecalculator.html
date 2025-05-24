@@ -1,597 +1,735 @@
 <!DOCTYPE html>
 <html>
-  <title>Grade Calculator</title>
-	<link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"/>
-  <meta name="author" content="The Ramenator">
-  <meta name="title" content="Grade Calculator">
-  <meta name="description" content="Formatted to be based off of Infinite Campus">
-<meta property="og:image" content="https://images.unsplash.com/photo-1471513671800-b09c87e1497c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+    <title>Grade Calculator</title>
+    <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png"/>
+    <meta name="author" content="The Ramenator">
+    <meta name="title" content="Grade Calculator">
+    <meta name="description" content="Formatted to be based off of Infinite Campus">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1471513671800-b09c87e1497c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <head>
-    <style>
-        @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
-      * {
-        font-family: "Montserrat", sans-serif;
-        font-optical-sizing: auto;
-        font-weight: <weight>;
-        font-style: normal;
-        margin: 0;
-        padding: 0;
-        transition: 0.5s;
-      }
-      .icon::before {
-        display: inline-block;
-        text-rendering: auto;
-        -webkit-font-smoothing: antialiased;
-      }
-      body {
-        background-color: #000000;
-        overflow: hidden;
-      }
-      h1,
-      h2,
-      p,
-      table {
-        cursor: default;
-        user-select: none;
-      }
-      span {
-        cursor: inherit;
-      }
-      .background {
-        height: 100vh;
-        object-fit: cover;
-        width: 100%;
-        z-index: -10;
-        position: absolute;
-        left: 0px;
-        top: 0px;
-      }
-      .title {
-        text-align: center;
-        color: white;
-        margin-top: 20px;
-        font-size: 300%;
-        text-shadow: 0px 0px 15px rgba(0, 0, 0, 1);
-      }
-      .container {
-        width: 100%;
-        height: 70vh;
-        position: absolute;
-        top: 15vh;
-        left: 0;
-        background: transparent;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding-top: 10px;
-        padding-bottom: 10px;
-      }
-      .category {
-        height: 70vh;
-        width: 70vh;
-        margin: 10px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 16px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.01);
-        backdrop-filter: blur(6.2px);
-        border: 3px solid rgba(255, 255, 255, 0.1);
-        text-align: center;
-        padding: 5px;
-      }
+    <head>
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+            * {
+                font-family: "Montserrat", sans-serif;
+                font-optical-sizing: auto;
+                font-weight: <weight>;
+                font-style: normal;
+                margin: 0;
+                padding: 0;
+                transition: 0.5s;
+            }
+            .icon::before {
+                display: inline-block;
+                text-rendering: auto;
+                -webkit-font-smoothing: antialiased;
+            }
+            body {
+                background-color: #000000;
+                overflow: hidden;
+            }
+            h1,
+            h2,
+            p,
+            table {
+                cursor: default;
+                user-select: none;
+            }
+            span {
+                cursor: inherit;
+            }
+            .background {
+                height: 100vh;
+                object-fit: cover;
+                width: 100%;
+                z-index: -10;
+                position: absolute;
+                left: 0px;
+                top: 0px;
+            }
+            .title {
+                text-align: center;
+                color: white;
+                margin-top: 20px;
+                font-size: 300%;
+                text-shadow: 0px 0px 15px rgba(0, 0, 0, 1);
+            }
+            .container {
+                width: 100%;
+                height: 70vh;
+                position: absolute;
+                top: 15vh;
+                left: 0;
+                background: transparent;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+            .category {
+                height: 70vh;
+                width: 70vh;
+                margin: 10px;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 16px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.01);
+                backdrop-filter: blur(6.2px);
+                border: 3px solid rgba(255, 255, 255, 0.1);
+                text-align: center;
+                padding: 5px;
+            }
 
-      #plus {
-        height: 20vh;
-        width: 20vh;
-        margin-left: 20px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 16px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.01);
-        backdrop-filter: blur(3px);
-        cursor: pointer;
-        transition: 0.5s;
-      }
-      #plus:hover {
-        background: rgba(255, 255, 255, 0.01);
-      }
-      #plus span {
-        color: white;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 10vh;
-        text-shadow: 0px 0px 15px rgba(0, 0, 0, 1);
-      }
-      input {
-        padding: 12px 20px;
-        margin: 8px 0;
-        box-sizing: border-box;
-        border: none;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 16px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(5px);
-        color: white;
-        text-align: center;
-        transition: 0.15s;
-        border: 0px solid rgba(255, 255, 255, 0.24);
-      }
-      input::-webkit-outer-spin-button,
-      input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-      }
-      input[type="number"] {
-        -moz-appearance: textfield;
-      }
-      .c-name {
-        width: 75%;
-        font-weight: bold;
-      }
-      input:focus {
-        outline-style: none;
-        box-shadow: none;
-        color: white;
-        border: 2px solid rgba(255, 255, 255, 0.24);
-      }
-      input::placeholder {
-        color: #f0f0f0;
-      }
-      .current {
-        float: left;
-        font-weight: bold;
-        margin-top: 30px;
-        margin-left: 30px;
-        color: white;
-        font-size: 120%;
-        text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
-      }
-      .pts {
-        width: 25%;
-        margin-top: 20px;
-      }
-      .line {
-        width: 80%;
-        height: 1px;
-        background: rgba(255, 255, 255, 0.75);
-        margin-left: calc(10% - 10px);
-        margin-top: 30px;
-        margin-bottom: 30px;
-      }
-      .weight {
-        width: 20%;
-        margin-top: 20px;
-      }
-      table {
-        border-collapse: collapse;
-        margin-bottom: 20px;
-        width: 75%;
-        text-align: center;
-        margin-left: calc(12.5% - 10px);
-        transition: 0.5;
-      }
+            #plus {
+                height: 20vh;
+                width: 20vh;
+                margin-left: 20px;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 16px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.01);
+                backdrop-filter: blur(3px);
+                cursor: pointer;
+                transition: 0.5s;
+            }
+            #plus:hover {
+                background: rgba(255, 255, 255, 0.01);
+            }
+            #plus span {
+                color: white;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 10vh;
+                text-shadow: 0px 0px 15px rgba(0, 0, 0, 1);
+            }
+            input {
+                padding: 12px 20px;
+                margin: 8px 0;
+                box-sizing: border-box;
+                border: none;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 16px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(5px);
+                color: white;
+                text-align: center;
+                transition: 0.15s;
+                border: 0px solid rgba(255, 255, 255, 0.24);
+            }
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+            input[type="number"] {
+                -moz-appearance: textfield;
+            }
+            .c-name {
+                width: 75%;
+                font-weight: bold;
+            }
 
-      th,
-      td {
-        padding: 8px;
-        color: white;
-      }
-      tr:nth-child(odd) {
-        background-color: rgba(255, 255, 255, 0.2);
-      }
-      tr:nth-child(even) {
-        background-color: rgba(255, 255, 255, 0.1);
-      }
+            input:focus {
+                outline-style: none;
+                box-shadow: none;
+                color: white;
+                border: 2px solid rgba(255, 255, 255, 0.24);
+            }
+            input::placeholder {
+                color: #f0f0f0;
+            }
+            .current {
+                float: left;
+                font-weight: bold;
+                margin-top: 30px;
+                margin-left: 30px;
+                color: white;
+                font-size: 120%;
+                text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+            }
+            .pts {
+                width: 25%;
+                margin-top: 20px;
+            }
+            .line {
+                width: 80%;
+                height: 1px;
+                background: rgba(255, 255, 255, 0.75);
+                margin-left: calc(10% - 10px);
+                margin-top: 30px;
+                margin-bottom: 30px;
+            }
+            .weight {
+                width: 20%;
+                margin-top: 20px;
+            }
+            table {
+                border-collapse: collapse;
+                margin-bottom: 20px;
+                width: 75%;
+                text-align: center;
+                margin-left: calc(12.5% - 10px);
+                transition: 0.5;
+            }
 
-      .headings {
-        margin: 10px;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(6.2px);
-        border-top-right-radius: 0px;
-        border-top-left-radius: 0px;
-        border: 2px solid rgba(255, 255, 255, 0.24);
-        text-align: center;
-        padding: 5px;
-      }
-      table input {
-        padding: 4px 0px;
-        margin: 0px 0;
-        box-sizing: border-box;
-        border: none;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 8px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(5px);
-        color: white;
-        text-align: center;
-        transition: 0.15s;
-        border: 0px solid rgba(255, 255, 255, 0.24);
-        width: 100%;
-      }
-      .assignments {
-        overflow-y: scroll;
-        height: 25vh;
-      }
-      .add {
-        padding: 12px 20px;
-        margin: 8px 0;
-        box-sizing: border-box;
-        border: none;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 16px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(5px);
-        color: white;
-        font-weight: bold;
-        text-align: center;
-        transition: 0.15s;
-        border: 0px solid rgba(255, 255, 255, 0.24);
-        cursor: pointer;
-      }
-      .add:hover {
-        background: rgba(255, 255, 255, 0.01);
-      }
-      .calculate {
-        padding: 12px 20px;
-        margin: 8px 0;
-        box-sizing: border-box;
-        border: none;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 16px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(5px);
-        color: white;
-        font-weight: bold;
-        text-align: center;
-        transition: 0.15s;
-        border: 3px solid rgba(255, 255, 255, 0.24);
-        cursor: pointer;
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        transform: translate(-50%, 25%);
-      }
-      .calculate:hover {
-        background: rgba(255, 255, 255, 0.01);
-      }
-      .help {
-        padding: 12px 16px;
-        margin: 20px 0;
-        box-sizing: border-box;
-        border: none;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 16px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(5px);
-        color: white;
-        font-weight: bold;
-        text-align: center;
-        transition: 0.15s;
-        border: 3px solid rgba(255, 255, 255, 0.24);
-        cursor: pointer;
-        position: absolute;
-        top: 0%;
-        left: 100%;
-        transform: translate(-150%, 0%);
-      }
-      .calculate:hover {
-        background: rgba(255, 255, 255, 0.01);
-      }
-      .action-btn {
-        padding: 6px 10px;
-        margin: 4px 0;
-        box-sizing: border-box;
-        border: none;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 8px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(5px);
-        color: white;
-        font-weight: bold;
-        text-align: center;
-        transition: 0.15s;
-        border: 0px solid rgba(255, 255, 255, 0.24);
-        cursor: pointer;
-        transition: 0.5s;
-      }
+            th,
+            td {
+                padding: 8px;
+                color: white;
+            }
+            tr:nth-child(odd) {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+            tr:nth-child(even) {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
 
-      .action-btn:hover {
-        background: rgba(255, 255, 255, 0.01);
-      }
+            .headings {
+                margin: 10px;
+                background: rgba(255, 255, 255, 0.2);
+                backdrop-filter: blur(6.2px);
+                border-top-right-radius: 0px;
+                border-top-left-radius: 0px;
+                border: 2px solid rgba(255, 255, 255, 0.24);
+                text-align: center;
+                padding: 5px;
+            }
+            table input {
+                padding: 4px 0px;
+                margin: 0px 0;
+                box-sizing: border-box;
+                border: none;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 8px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(5px);
+                color: white;
+                text-align: center;
+                transition: 0.15s;
+                border: 0px solid rgba(255, 255, 255, 0.24);
+                width: 100%;
+            }
+            .assignments {
+                overflow-y: scroll;
+                height: 25vh;
+            }
+            .add {
+                padding: 8px 20px;
+                margin: 8px 0;
+                box-sizing: border-box;
+                border: none;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 12px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(5px);
+                color: white;
+                font-weight: bold;
+                text-align: center;
+                transition: 0.15s;
+                border: 0px solid rgba(255, 255, 255, 0.24);
+                cursor: pointer;
+            }
+            .add:hover {
+                background: rgba(255, 255, 255, 0.01);
+            }
+            .calculate {
+                padding: 12px 20px;
+                margin: 8px 0;
+                box-sizing: border-box;
+                border: none;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 16px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(5px);
+                color: white;
+                font-weight: bold;
+                text-align: center;
+                transition: 0.15s;
+                border: 3px solid rgba(255, 255, 255, 0.24);
+                cursor: pointer;
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translate(-50%, 25%);
+            }
+            .calculate:hover {
+                background: rgba(255, 255, 255, 0.01);
+            }
+            .help {
+                padding: 12px 16px;
+                margin: 20px 0;
+                box-sizing: border-box;
+                border: none;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 16px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(5px);
+                color: white;
+                font-weight: bold;
+                text-align: center;
+                transition: 0.15s;
+                border: 3px solid rgba(255, 255, 255, 0.24);
+                cursor: pointer;
+                position: absolute;
+                top: 0%;
+                left: 100%;
+                transform: translate(-150%, 0%);
+            }
+            .percent {
+                padding: 12px 16px;
+                margin: 20px 0;
+                box-sizing: border-box;
+                border: none;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 16px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(5px);
+                color: white;
+                font-weight: bold;
+                text-align: center;
+                transition: 0.15s;
+                border: 3px solid rgba(255, 255, 255, 0.24);
+                cursor: pointer;
+                position: absolute;
+                top: -15vh;
+                left: 20px;
+            }
+            .calculate:hover {
+                background: rgba(255, 255, 255, 0.01);
+            }
+            .action-btn {
+                padding: 6px 10px;
+                margin: 4px 0;
+                box-sizing: border-box;
+                border: none;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 8px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(5px);
+                color: white;
+                font-weight: bold;
+                text-align: center;
+                transition: 0.15s;
+                border: 0px solid rgba(255, 255, 255, 0.24);
+                cursor: pointer;
+                transition: 0.5s;
+            }
 
-      .close-btn {
-        background: transparent;
-        border: transparent;
-        color: white;
-        text-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
-        font-size: 100%;
-        float: right;
-        margin-right: 15px;
-        margin-top: 10px;
-        font-weight: bold;
-        cursor: pointer;
-      }
-      .slash {
-        color: white;
-        margin: 5px;
-        font-size: 120%;
-        font-weight: bold;
-      }
-      .headings {
-        font-weight: bold;
-        text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
-      }
-      .display-text {
-        text-align: center;
-        width: 100%;
-        color: white;
-        text-shadow: 0px 0px 14px rgba(0, 0, 0, 1);
-        font-size: 500%;
-        position: absolute;
-        top: 40%;
-        transform: translate(0%, -50%);
-      }
-      .display-undertext {
-        text-align: center;
-        width: 100%;
-        color: white;
-        text-shadow: 0px 0px 14px rgba(0, 0, 0, 1);
-        font-size: 300%;
-        position: absolute;
-        top: 60%;
-        transform: translate(0%, -50%);
-      }
+            .action-btn:hover {
+                background: rgba(255, 255, 255, 0.01);
+            }
 
-      /* Modal */
-      .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        padding-top: 100px;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgb(0, 0, 0);
-        background-color: rgba(0, 0, 0, 0.4);
-      }
+            .close-btn {
+                background: transparent;
+                border: transparent;
+                color: white;
+                text-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
+                font-size: 100%;
+                float: right;
+                margin-right: 15px;
+                margin-top: 10px;
+                font-weight: bold;
+                cursor: pointer;
+            }
+            .slash {
+                color: white;
+                margin: 5px;
+                font-size: 120%;
+                font-weight: bold;
+            }
+            .headings {
+                font-weight: bold;
+                text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+            }
+            .display-text {
+                text-align: center;
+                width: 100%;
+                color: white;
+                text-shadow: 0px 0px 14px rgba(0, 0, 0, 1);
+                font-size: 500%;
+                position: absolute;
+                top: 40%;
+                transform: translate(0%, -50%);
+            }
+            .display-undertext {
+                text-align: center;
+                width: 100%;
+                color: white;
+                text-shadow: 0px 0px 14px rgba(0, 0, 0, 1);
+                font-size: 300%;
+                position: absolute;
+                top: 60%;
+                transform: translate(0%, -50%);
+            }
 
-      .modal-content {
-        position: relative;
-        margin: auto;
-        padding: 0;
-        width: 50%;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        -webkit-animation-name: animatetop;
-        -webkit-animation-duration: 0.4s;
-        animation-name: animatetop;
-        animation-duration: 0.4s;
-      }
+            /* Modal */
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1;
+                padding-top: 100px;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgb(0, 0, 0);
+                background-color: rgba(0, 0, 0, 0.4);
+            }
 
-      @keyframes animatetop {
-        from {
-          top: -300px;
-          opacity: 0;
-        }
-        to {
-          top: 0;
-          opacity: 1;
-        }
-      }
-      .close {
-        color: white;
-        float: right;
-        font-size: 38px;
-        transition: 0.2s;
-      }
+            .modal-content {
+                position: relative;
+                margin: auto;
+                padding: 0;
+                width: 50%;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                -webkit-animation-name: animatetop;
+                -webkit-animation-duration: 0.4s;
+                animation-name: animatetop;
+                animation-duration: 0.4s;
+            }
 
-      .close:hover,
-      .close:focus {
-        color: #cccccc;
-        text-decoration: none;
-        cursor: pointer;
-      }
+            @keyframes animatetop {
+                from {
+                    top: -300px;
+                    opacity: 0;
+                }
+                to {
+                    top: 0;
+                    opacity: 1;
+                }
+            }
+            .close {
+                color: white;
+                float: right;
+                font-size: 38px;
+                transition: 0.2s;
+            }
 
-      .modal-body {
-        padding: 20px 30px;
-        color: white;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 16px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(10px);
-        border: 3px solid rgba(255, 255, 255, 0.3);
-      }
+            .close:hover,
+            .close:focus {
+                color: #cccccc;
+                text-decoration: none;
+                cursor: pointer;
+            }
 
-      .back {
-        padding: 12px 20px;
-        margin: 20px 0;
-        box-sizing: border-box;
-        border: none;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 16px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(5px);
-        color: white;
-        font-weight: bold;
-        text-align: center;
-        transition: 0.15s;
-        border: 3px solid rgba(255, 255, 255, 0.24);
-        cursor: pointer;
-        position: absolute;
-        top: 80%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-      .back:hover {
-        background: rgba(255, 255, 255, 0.01);
-      }
+            .modal-body {
+                padding: 20px 30px;
+                color: white;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 16px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(10px);
+                border: 3px solid rgba(255, 255, 255, 0.3);
+            }
 
-/*Resize for phones*/
-@media only screen and (max-width: 600px) {
-.title {
-        text-align: center;
-        color: white;
-        margin-top: 70px;
-        font-size: 140%;
-        text-shadow: 0px 0px 15px rgba(0, 0, 0, 1);
-      }
-    .container {
-        width: 100%;
-        height: 70vh;
-        position: absolute;
-        top: 15vh;
-        left: 0;
-        background: transparent;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        flex-flow: column;
-      }
-      .category {
-        height: 23vh; 
-        justify-content: space-around; 
-        width: 70vw;
-        margin: 10px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 16px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.01);
-        backdrop-filter: blur(6.2px);
-        border: 3px solid rgba(255, 255, 255, 0.1);
-        text-align: center;
-        padding: 5px;
-        overflow-y: scroll;
-      }
-    .modal-content {
-        position: relative;
-        margin: auto;
-        padding: 0;
-        width: 80%;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        -webkit-animation-name: animatetop;
-        -webkit-animation-duration: 0.4s;
-        animation-name: animatetop;
-        animation-duration: 0.4s;
-      }
-    .display-text {
-        text-align: center;
-        width: 100%;
-        color: white;
-        text-shadow: 0px 0px 14px rgba(0, 0, 0, 1);
-        font-size: 300%;
-        position: absolute;
-        top: 40%;
-        transform: translate(0%, -50%);
-      }
-      .display-undertext {
-        text-align: center;
-        width: 100%;
-        color: white;
-        text-shadow: 0px 0px 14px rgba(0, 0, 0, 1);
-        font-size: 200%;
-        position: absolute;
-        top: 60%;
-        transform: translate(0%, -50%);
-      }
-    
-}
-    </style>
-  </head>
-<body>
-  <img id='background' class='background' src='https://images.unsplash.com/photo-1471513671800-b09c87e1497c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'>
+            .back {
+                padding: 12px 20px;
+                margin: 20px 0;
+                box-sizing: border-box;
+                border: none;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 16px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(5px);
+                color: white;
+                font-weight: bold;
+                text-align: center;
+                transition: 0.15s;
+                border: 3px solid rgba(255, 255, 255, 0.24);
+                cursor: pointer;
+                position: absolute;
+                top: 80%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            .back:hover {
+                background: rgba(255, 255, 255, 0.01);
+            }
+            .leftarrow{
+                display: none;
+            }
+            .rightarrow{
+                display: none;
+            }
+            .categoryname{
+                font-weight: bold;
+                text-align: center;
+                margin-top: 15px;
+                color: white;
+                font-size: 150%;
+                text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75);
+                width: 100%;
+            }
+            /*Resize for phones*/
+            @media only screen and (max-width: 600px) {
+                body{
+                    width:100vw;
+                    height:100vh;
+                    overflow: scroll;
+                    border: 4px solid green;
+                }
+                .title {
+                    text-align: center;
+                    color: white;
+                    margin-top: 70px;
+                    font-size: 140%;
+                    text-shadow: 0px 0px 15px rgba(0, 0, 0, 1);
+                }
+                .container {
+                    width: 300vw;
+                    height: 70vh;
+                    position: absolute;
+                    top: 15vh;
+                    left: 0;
+                    background: rgba(255,0,0,0.8);
+                    display: flex;
+                    align-items: left;
+                    justify-content: left;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                    flex-flow: row;
+                }
+                .category {
+                    height: 70vh; 
+                    justify-content: space-around; 
+                    width: 90vw;
+                    margin: 10px;
+                    background: rgba(255, 255, 255, 0.2);
+                    border-radius: 16px;
+                    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.01);
+                    backdrop-filter: blur(6.2px);
+                    border: 3px solid rgba(255, 255, 255, 0.1);
+                    text-align: center;
+                    padding: 5px;
+                    overflow: scroll;
+                }
+                .modal-content {
+                    position: relative;
+                    margin: auto;
+                    padding: 0;
+                    width: 80%;
+                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                    -webkit-animation-name: animatetop;
+                    -webkit-animation-duration: 0.4s;
+                    animation-name: animatetop;
+                    animation-duration: 0.4s;
+                }
+                #plus {
+                    width: 45px;
+                    height: 45px;
+                    padding: 12px 20px;
+                    margin: 8px 0;
+                    box-sizing: border-box;
+                    border: none;
+                    background: rgba(255, 255, 255, 0.2);
+                    border-radius: 16px;
+                    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                    backdrop-filter: blur(5px);
+                    color: white;
+                    font-weight: bold;
+                    text-align: center;
+                    transition: 0.15s;
+                    border: 3px solid rgba(255, 255, 255, 0.24);
+                    cursor: pointer;
+                    position: absolute;
+                    top: 100%;
+                    left: 75%;
+                    transform: translate(-50%, 25%);
+                }
+                #plus span{
+                    font-size: 5vh;
+                }
+                .calculate {
+                    position: absolute;
+                    top: 100%;
+                    left: 40%;
+                    transform: translate(-50%, 25%);
+                }
+                .display-text {
+                    text-align: center;
+                    width: 100%;
+                    color: white;
+                    text-shadow: 0px 0px 14px rgba(0, 0, 0, 1);
+                    font-size: 300%;
+                    position: absolute;
+                    top: 40%;
+                    transform: translate(0%, -50%);
+                }
+                .display-undertext {
+                    text-align: center;
+                    width: 100%;
+                    color: white;
+                    text-shadow: 0px 0px 14px rgba(0, 0, 0, 1);
+                    font-size: 200%;
+                    position: absolute;
+                    top: 60%;
+                    transform: translate(0%, -50%);
+                }
+                .help {
+                    position: absolute;
+                    top: 0%;
+                    left: 0%;
+                    transform: translate(50%, 0%);
+                }
 
-  <h1 class='title' id='title'>How Cooked Is Your Grade?</h1>
-    <button id='modalbtn' class='help'>?</button>
-<div id="helpmodal" class="modal">
-  <div class="modal-content">
-    <div class="modal-body">
-      <span style='user-select: none;'class="close">&times;</span>
-      <h1>Help</h1>
-      <p>This grade calculator is based off of <em>Infinite Campus</em>.</p>
-      <p>To use it, type in:
-      <ol style='margin-left: 30px;'>
-        <li>The name of the category</li>
-        <li>The current & max grade in points</li>
-        <li>The weight of the category</li>
-      </ol>
-      <br>
-      Then, use the table to input individual assignments as needed.<br>To enter data for different grade categories, press the <b>&plus;</b> sign. When you're done, hit the calculate button at the bottom. 
-      </p>
-    </div>
-  </div>
+                .rightarrow, .leftarrow{
+                    padding: 12px 16px;
+                    margin: 20px 0;
+                    box-sizing: border-box;
+                    border: none;
+                    background: rgba(255, 255, 255, 0.2);
+                    border-radius: 16px;
+                    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                    backdrop-filter: blur(5px);
+                    color: white;
+                    font-weight: bold;
+                    text-align: center;
+                    transition: 0.15s;
+                    border: 3px solid rgba(255, 255, 255, 0.24);
+                    cursor: pointer;
+                    display: block;
+                }
+                .leftarrow{
+                    position: absolute;
+                    top: 0%;
+                    left: 100%;
+                    transform: translate(-300%, 0%);
 
-</div>
-<!--  End Modal  -->
-  <div class='container' id='container'>
-    <div class='category'>
-      <input class='c-name' placeholder='Category Name' value='Assessment Tasks'>
-      <p class='current'>Current Grade:</p>
-      <input class='c-earned pts' placeholder='Earned pts' type='number'>
-      <span class='slash'>/</span>
-      <input class='c-max pts' placeholder='Max pts' type='number'>
-      <p class='current' style='margin-left: 20%;'>Weight:</p>
-      <input class='c-weight weight' placeholder='#' type='number' value='25'>
-      <div class='line'></div>
-      <div class='assignments'>
-        <table class='atable'>
-          <tr class='headings'>
-            <td style='width: 33%;'>Earned Pts</td>
-            <td style='width: 33%;'>Max Pts</td>
-            <td style='width: 33%;'>Actions</td>
-          </tr>
-          <tr>
-            <td><input class='t-earned' id='e0' type="number"></td>
-            <td><input class='t-max' id='m0' type="number"></td>
-            <td>&nbsp;</td>
-          </tr>
-        </table>
-      </div>
-      <button onclick="addData(0)" class='add'>Add Assignment</button>
-    </div>
-    <div class='divider'></div>
+                }
+                .rightarrow{
+                    position: absolute;
+                    top: 0%;
+                    left: 100%;
+                    transform: translate(-150%, 0%);
 
-    <div id='plus' onclick='newCategory()'><span>＋</span></div>
-    <button onclick="calculate()" class='calculate'>Calculate Deep Fry Quotient</button>
+                }
 
-  </div>
-  <div class='display' id='display'>
-    <h1 class='display-text'>Your new grade is a <span id='grade'></span>%</h1>
-    <p class='display-undertext'>You're <span id='display-message'>completely deep fried</span>!</p>
-     <button onclick="back()" class='back'>Back</button>
-  </div>
-  <script>
-          let catCount = 0;
-//When adding catCount to the classname it takes the current number of categories existing, not the category it's apart of
-function addData(e) {
-  let earned;
-  let max;
-  if (document.getElementsByClassName("t-earned")[e].value === "") {
-    earned = 0;
-  } else {
-    earned = document.getElementsByClassName("t-earned")[e].value;
-  }
-  if (document.getElementsByClassName("t-max")[e].value === "") {
-    max = 0;
-  } else {
-    max = document.getElementsByClassName("t-max")[e].value;
-  }
-  let table = document.getElementsByClassName("atable")[e];
-  let newRow = table.insertRow(table.rows.length);
-  var newcell = newRow.insertCell(0);
-  newcell.innerHTML = earned;
-  newcell.className = "tableEarned" + e;
-  newcell = newRow.insertCell(1);
-  newcell.innerHTML = max;
-  newcell.className = "tableMax" + e;
-  newRow.insertCell(2).innerHTML =
-    '<button onclick="deleteData(this)" class="action-btn">Delete</button>';
-  clearInputs(e);
-}
-/*document.getElementsByClassName('t-earned').addEventListener("keypress", function(event,e) {
+            }
+            #percent{
+                padding: 12px 20px;
+                margin: 8px 0;
+                box-sizing: border-box;
+                border: none;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 16px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(5px);
+                color: white;
+                text-align: center;
+                transition: 0.15s;
+                border: 0px solid rgba(255, 255, 255, 0.24);
+                width: 20%;
+            }
+        </style>
+    </head>
+    <body>
+        <img id='background' class='background' src='https://images.unsplash.com/photo-1471513671800-b09c87e1497c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'>
+
+        <h1 class='title' id='title'>How Cooked Is Your Grade?</h1>
+        <button id='modalbtn' class='help'>?</button>
+        <button class='leftarrow'>&larr;</button>
+        <button class='rightarrow'>&rarr;</button>
+
+        <div id="helpmodal" class="modal">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <span style='user-select: none;'class="close">&times;</span>
+                    <h1>Help</h1>
+                    <p>This grade calculator is based off of <em>Infinite Campus</em>.</p>
+                    <p>To use it, type in:
+                        <ol style='margin-left: 30px;'>
+                            <li>The name of the category</li>
+                            <li>The current & max grade in points</li>
+                            <li>The weight of the category</li>
+                        </ol>
+                        <br>
+                        Then, use the table to input individual assignments as needed.<br>To enter data for different grade categories, press the <b>&plus;</b> sign. When you're done, hit the calculate button at the bottom. 
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        <div id="percentmodal" class="modal">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <span style='user-select: none;'class="close">&times;</span>
+                    <p style='margin-top: 5vh;text-align: center;'><b>What is <input id='percent' type='number' onkeyup='percentage()' placeholder='Percent'> % of my grade?</b></p><br><br>
+                    <h2 style='text-align: center; margin-bottom: 5vh;' id='percent-output'>___ points</h3>
+                </div>
+            </div>
+
+        </div>
+        <!--  End Modal  -->
+        <div class='container' id='container'>
+            <button class='percent' id='percent-btn' >Find % of grade</button>
+            <div class='category'>
+                <!-- <input class='c-name' placeholder='Category Name' value='Assessment Tasks' disabled> -->
+                <p class='c-name categoryname'>Assesment Tasks</p>
+                <p class='current'>Current Grade:</p>
+                <input class='c-earned pts' placeholder='Earned pts' type='number'>
+                <span class='slash'>/</span>
+                <input class='c-max pts' placeholder='Max pts' type='number'>
+                <p class='current' style='margin-left: 20%;'>Weight:</p>
+                <input class='c-weight weight' placeholder='#' type='number' value='25'>
+                <div class='line'></div>
+                <div class='assignments'>
+                    <table class='atable'>
+                        <tr class='headings'>
+                            <td style='width: 33%;'>Earned Pts</td>
+                            <td style='width: 33%;'>Max Pts</td>
+                            <td style='width: 33%;'>Actions</td>
+                        </tr>
+                        <tr>
+                            <td><input class='t-earned' id='e0' type="number"></td>
+                            <td><input class='t-max' id='m0' type="number"></td>
+                            <td><button onclick="addData(0)" class='add'>Add</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class='divider'></div>
+
+            <div id='plus' onclick='newCategory()'><span>＋</span></div>
+            <button onclick="calculate()" class='calculate'>Calculate Deep Fry Quotient</button>
+
+        </div>
+        <div class='display' id='display'>
+            <h1 class='display-text'>Your new grade is a <span id='grade'></span>%</h1>
+            <p class='display-undertext'>You're <span id='display-message'>completely deep fried</span>!</p>
+            <button onclick="back()" class='back'>Back</button>
+        </div>
+        <script>
+            let catCount = 0;
+            //When adding catCount to the classname it takes the current number of categories existing, not the category it's apart of
+            function addData(e) {
+                let earned;
+                let max;
+                if (document.getElementsByClassName("t-earned")[e].value === "") {
+                    earned = 0;
+                } else {
+                    earned = document.getElementsByClassName("t-earned")[e].value;
+                }
+                if (document.getElementsByClassName("t-max")[e].value === "") {
+                    max = 0;
+                } else {
+                    max = document.getElementsByClassName("t-max")[e].value;
+                }
+                let table = document.getElementsByClassName("atable")[e];
+                let newRow = table.insertRow(table.rows.length);
+                var newcell = newRow.insertCell(0);
+                newcell.innerHTML = earned;
+                newcell.className = "tableEarned" + e;
+                newcell = newRow.insertCell(1);
+                newcell.innerHTML = max;
+                newcell.className = "tableMax" + e;
+                newRow.insertCell(2).innerHTML =
+                    '<button onclick="deleteData(this)" class="action-btn">Delete</button>';
+                clearInputs(e);
+            }
+            /*document.getElementsByClassName('t-earned').addEventListener("keypress", function(event,e) {
   if (event.keyCode == 13) {
     //addData(e);
     alert(document.activeElement.id);
@@ -604,282 +742,302 @@ document.getElementsByClassName('t-max').addEventListener("keypress", function(e
   }
 });*/
 
-function deleteData(button) {
-  let row = button.parentNode.parentNode;
-  row.parentNode.removeChild(row);
-}
+            function deleteData(button) {
+                let row = button.parentNode.parentNode;
+                row.parentNode.removeChild(row);
+            }
 
-function clearInputs(e) {
-  // Clear input fields
-  document.getElementsByClassName("t-earned")[e].value = "";
-  document.getElementsByClassName("t-max")[e].value = "";
-}
+            function clearInputs(e) {
+                // Clear input fields
+                document.getElementsByClassName("t-earned")[e].value = "";
+                document.getElementsByClassName("t-max")[e].value = "";
+            }
 
-function newCategory() {
-  catCount = catCount + 1;
-  //Category div
-  let newCat = document.createElement("div");
-  newCat.classList.add("category");
-  //Close btn
-  let closeBtn = document.createElement("button");
-  closeBtn.textContent = "✕";
-  closeBtn.classList.add("close-btn");
-  closeBtn.setAttribute("onclick", "removeCategory(this.parentNode)");
-  newCat.appendChild(closeBtn);
-  //Title input
-  let title = document.createElement("INPUT");
-  title.setAttribute("type", "text");
-  title.classList.add("c-name");
-  title.placeholder = "Category Name";
-  if(catCount == 1){
-    title.value = "Classwork";
-  }
-  else if(catCount == 2){
-    title.value = "Quizzes, Tests & Projects";
-  }
-  newCat.appendChild(title);
-  //Current
-  let current = document.createElement("p");
-  current.innerText = "Current Grade:";
-  current.classList.add("current");
-  newCat.append(current);
-  //Earned pts input
-  let cEarned = document.createElement("INPUT");
-  cEarned.setAttribute("type", "number");
-  cEarned.classList.add("c-earned");
-  cEarned.classList.add("pts");
-  cEarned.placeholder = "Earned pts";
-  newCat.appendChild(cEarned);
-  //Slash span
-  let slash = document.createElement("span");
-  slash.innerText = "/";
-  slash.classList.add("slash");
-  newCat.appendChild(slash);
-  //Max pts input
-  let cMax = document.createElement("INPUT");
-  cMax.setAttribute("type", "number");
-  cMax.classList.add("c-max");
-  cMax.classList.add("pts");
-  cMax.placeholder = "Max pts";
-  newCat.appendChild(cMax);
-  //Weight
-  let weight = document.createElement("p");
-  weight.innerText = "Current Grade:";
-  weight.classList.add("current");
-  weight.style.marginLeft = "20%";
-  newCat.append(weight);
-  //Weight input
-  let cWeight = document.createElement("INPUT");
-  cWeight.setAttribute("type", "number");
-  cWeight.classList.add("c-weight");
-  cWeight.classList.add("weight");
-  cWeight.placeholder = "#";
-  if(catCount == 1){
-    cWeight.value = 45;
-  }
-  else if(catCount == 2){
-    cWeight.value = 30;
-  }
-  newCat.appendChild(cWeight);
-  //Line
-  let line = document.createElement("div");
-  line.classList.add("line");
-  newCat.append(line);
-  //Table
-  let atable = document.createElement("table");
-  atable.classList.add("atable");
-  let headingRow = document.createElement("tr");
-  let inputRow = document.createElement("tr");
-  //Headings
-  headingRow.classList.add("headings");
-  let h1 = document.createElement("td");
-  h1.style.width = "33%";
-  h1.innerText = "Earned Pts";
-  let h2 = document.createElement("td");
-  h2.style.width = "33%";
-  h2.innerText = "Max Pts";
-  let h3 = document.createElement("td");
-  h3.style.width = "33%";
-  h3.innerText = "Actions";
-  headingRow.appendChild(h1);
-  headingRow.appendChild(h2);
-  headingRow.appendChild(h3);
-  atable.appendChild(headingRow);
-  //Input Earned
-  let tEarned = document.createElement("INPUT");
-  tEarned.setAttribute("type", "number");
-  //tEarned.setAttribute("id", "e"+catCount);
-  tEarned.classList.add("t-earned");
-  let ttEarned = document.createElement("th");
-  ttEarned.appendChild(tEarned);
-  inputRow.appendChild(ttEarned);
-  //Input Max
-  let tMax = document.createElement("INPUT");
-  tMax.setAttribute("type", "number");
-  //tMax.setAttribute("id", "m"+catCount);
-  tMax.classList.add("t-max");
-  let ttMax = document.createElement("th");
-  ttMax.appendChild(tMax);
-  inputRow.appendChild(ttMax);
-  //Add table rows
-  let assignmentsDiv = document.createElement("div");
-  assignmentsDiv.classList.add("assignments");
-  atable.appendChild(inputRow);
-  assignmentsDiv.append(atable);
-  newCat.append(assignmentsDiv);
-  //Add button
-  let addBtn = document.createElement("button");
-  addBtn.textContent = "Add Assignment";
-  addBtn.classList.add("add");
-  addBtn.setAttribute("onclick", "addData(" + catCount + ")");
-  newCat.appendChild(addBtn);
-  //Append element
-  const element = document.getElementById("container");
-  element.insertBefore(newCat, document.getElementsByClassName("divider")[0]);
-  if (catCount < 2) {
-    document.getElementById("plus").style.display = "block";
-  } else {
-    document.getElementById("plus").style.display = "none";
-  }
-}
+            function newCategory() {
+                catCount = catCount + 1;
+                //Category div
+                let newCat = document.createElement("div");
+                newCat.classList.add("category");
+                //Close btn
+                let closeBtn = document.createElement("button");
+                closeBtn.textContent = "✕";
+                closeBtn.classList.add("close-btn");
+                closeBtn.setAttribute("onclick", "removeCategory(this.parentNode)");
+                newCat.appendChild(closeBtn);
+                //Title input
+                let title = document.createElement("p");//document.createElement("INPUT");
+                //title.setAttribute("type", "text");
+                title.classList.add("c-name");
+                title.classList.add("categoryname");
+                // title.placeholder = "Category Name";
+                if(catCount == 1){
+                    title.innerHTML = "Classwork";
+                    //title.disabled = true;
+                }
+                else if(catCount == 2 && document.getElementsByClassName("categoryname")[1].innerHTML == 'Classwork'){
+                    title.innerHTML = "Quizzes, Tests & Projects";
+                    // title.disabled = true;
+                }
+                else if(catCount == 2 && document.getElementsByClassName("categoryname")[2].innerHTML == 'Quizzes, Tests & Projects'){
+                    title.innerHTML = "Classwork";
+                    // title.disabled = true;
+                }
+                newCat.appendChild(title);
+                //Current
+                let current = document.createElement("p");
+                current.innerText = "Current Grade:";
+                current.classList.add("current");
+                newCat.append(current);
+                //Earned pts input
+                let cEarned = document.createElement("INPUT");
+                cEarned.setAttribute("type", "number");
+                cEarned.classList.add("c-earned");
+                cEarned.classList.add("pts");
+                cEarned.placeholder = "Earned pts";
+                newCat.appendChild(cEarned);
+                //Slash span
+                let slash = document.createElement("span");
+                slash.innerText = "/";
+                slash.classList.add("slash");
+                newCat.appendChild(slash);
+                //Max pts input
+                let cMax = document.createElement("INPUT");
+                cMax.setAttribute("type", "number");
+                cMax.classList.add("c-max");
+                cMax.classList.add("pts");
+                cMax.placeholder = "Max pts";
+                newCat.appendChild(cMax);
+                //Weight
+                let weight = document.createElement("p");
+                weight.innerText = "Current Grade:";
+                weight.classList.add("current");
+                weight.style.marginLeft = "20%";
+                newCat.append(weight);
+                //Weight input
+                let cWeight = document.createElement("INPUT");
+                cWeight.setAttribute("type", "number");
+                cWeight.classList.add("c-weight");
+                cWeight.classList.add("weight");
+                cWeight.placeholder = "#";
+                if(catCount == 1){
+                    cWeight.value = 45;
+                }
+                else if(catCount == 2){
+                    cWeight.value = 30;
+                }
+                newCat.appendChild(cWeight);
+                //Line
+                let line = document.createElement("div");
+                line.classList.add("line");
+                newCat.append(line);
+                //Table
+                let atable = document.createElement("table");
+                atable.classList.add("atable");
+                let headingRow = document.createElement("tr");
+                let inputRow = document.createElement("tr");
+                //Headings
+                headingRow.classList.add("headings");
+                let h1 = document.createElement("td");
+                h1.style.width = "33%";
+                h1.innerText = "Earned Pts";
+                let h2 = document.createElement("td");
+                h2.style.width = "33%";
+                h2.innerText = "Max Pts";
+                let h3 = document.createElement("td");
+                h3.style.width = "33%";
+                h3.innerText = "Actions";
+                headingRow.appendChild(h1);
+                headingRow.appendChild(h2);
+                headingRow.appendChild(h3);
+                atable.appendChild(headingRow);
+                //Input Earned
+                let tEarned = document.createElement("INPUT");
+                tEarned.setAttribute("type", "number");
+                //tEarned.setAttribute("id", "e"+catCount);
+                tEarned.classList.add("t-earned");
+                let ttEarned = document.createElement("th");
+                ttEarned.appendChild(tEarned);
+                inputRow.appendChild(ttEarned);
+                //Input Max
+                let tMax = document.createElement("INPUT");
+                tMax.setAttribute("type", "number");
+                //tMax.setAttribute("id", "m"+catCount);
+                tMax.classList.add("t-max");
+                let ttMax = document.createElement("th");
+                ttMax.appendChild(tMax);
+                inputRow.appendChild(ttMax);
+                //Add table rows
+                let assignmentsDiv = document.createElement("div");
+                assignmentsDiv.classList.add("assignments");
+                atable.appendChild(inputRow);
+                assignmentsDiv.append(atable);
+                newCat.append(assignmentsDiv);
+                //Add button
+                let addBtn = document.createElement("button");
+                addBtn.textContent = "Add";
+                addBtn.classList.add("add");
+                addBtn.setAttribute("onclick", "addData(" + catCount + ")");
+                inputRow.appendChild(addBtn);
+                //Append element
+                const element = document.getElementById("container");
+                element.insertBefore(newCat, document.getElementsByClassName("divider")[0]);
+                if (catCount < 2) {
+                    document.getElementById("plus").style.display = "block";
+                } else {
+                    document.getElementById("plus").style.display = "none";
+                }
+            }
 
-function removeCategory(e) {
-  catCount = catCount - 1;
-  if (catCount < 2) {
-    document.getElementById("plus").style.display = "block";
-    e.remove();
-  }
-}
+            function removeCategory(e) {
+                catCount = catCount - 1;
+                if (catCount < 2) {
+                    document.getElementById("plus").style.display = "block";
+                    e.remove();
+                }
+            }
 
-let categories = [];
-let categoryNums = [];
-let weights = [];
-let earnedSum = 0;
-let maxSum = 0;
-let finalGrade = 100;
-function calculate() {
-  for (let i = 0; i <= catCount; i++) {
-    let cname = document.getElementsByClassName("c-name")[i].value;
-    categories.push(cname);
-    for (
-      let n = 0;
-      n < document.getElementsByClassName("tableEarned" + i).length;
-      n++
-    ) {
-      earnedSum =
-        earnedSum +
-        Number(document.getElementsByClassName("tableEarned" + i)[n].innerHTML);
-      maxSum =
-        maxSum +
-        Number(document.getElementsByClassName("tableMax" + i)[n].innerHTML);
-    }
-    console.log("Earned "+i+" Sum: "+earnedSum);
-    console.log("Max "+i+" Sum: "+maxSum);
-    let c_earned = Number(document.getElementsByClassName("c-earned")[i].value);
-    let c_max = Number(document.getElementsByClassName("c-max")[i].value);
-    let catWeight = Number(
-      document.getElementsByClassName("c-weight")[i].value
-    );
-    console.log("Category "+i+" Weight: "+catWeight);
+            let categories = [];
+            let categoryNums = [];
+            let weights = [];
+            let earnedSum = 0;
+            let maxSum = 0;
+            let finalGrade = 100;
+            function percentage(){
+                let value = Number(document.getElementById('percent').value);
+                let percentTotal = 0;
+                for (let i = 0; i <= catCount; i++) {
+                    let c_max = Number(document.getElementsByClassName("c-max")[i].value);
+                    let catWeight = Number(document.getElementsByClassName("c-weight")[i].value);
+                    percentTotal += (catWeight/100)*c_max;
+                }
+                document.getElementById('percent-output').innerHTML = (value/100)*percentTotal + ' points';
+            }
 
-    let totalGrade = ((earnedSum + c_earned) / (maxSum + c_max)) * catWeight;
-          earnedSum = 0;
-    maxSum = 0;
-    if (isNaN(totalGrade)) {
-      totalGrade = 0;
-    }
-    weights.push(catWeight);
-    categoryNums.push(totalGrade);
-  }
-  let gradeSum = categoryNums.reduce(
-    (accumulator, current) => accumulator + current
-  );
-  let weightSum = weights.reduce(
-    (accumulator, current) => accumulator + current
-  );
-  finalGrade = (gradeSum / weightSum)*100;
-    if(!isFinite(finalGrade)){
-    finalGrade = 100;   
-  }
-  display(finalGrade);
-}
-let originalForest = 'https://images.unsplash.com/photo-1471513671800-b09c87e1497c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
-let forestFire =
-  "https://images.unsplash.com/photo-1602980085374-7e743fff3cc6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
-let reallyBadForestFire = 'https://images.unsplash.com/photo-1511027643875-5cbb0439c8f1?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
-let smokyForest = 'https://images.unsplash.com/photo-1574627934266-7c5bcc4fb950?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
-let happyForest = 'https://images.unsplash.com/photo-1500534623283-312aade485b7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
-let okForest = 'https://images.unsplash.com/photo-1504406242839-6e462b3ccb91?q=80&w=1968&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
-document.getElementById("display").style.display = "none";
-let houseOnFire = 'https://images.unsplash.com/photo-1473260079709-83c808703435?q=80&w=1920&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
-function display(e) {
-  document.getElementById("container").style.visibility = "hidden";
-  document.getElementById("title").style.display = "none";
-  document.getElementById("display").style.display = "block";
-  
-  document.getElementById('grade').innerHTML = e.toFixed(2);
-  if(e >= 90){
-    document.getElementById('display-message').innerHTML = 'doing pretty good';
-    document.getElementById("background").src = happyForest;
-  }
-  else if(e >= 80){
-    document.getElementById('display-message').innerHTML = 'lightly toasted';
-    document.getElementById("background").src = smokyForest;
-  }
-  else if(e >= 70){
-    document.getElementById('display-message').innerHTML = 'kinda boiled';
-    document.getElementById("background").src = okForest;
-  }
-  else if(e.toFixed(0) == 69){
-      document.getElementById('display-message').innerHTML = 'an idiot sandwich';
-      document.getElementById("background").src = forestFire;
-  }
-  else if(e >= 60){
-    document.getElementById('display-message').innerHTML = 'heavily charred';
-    document.getElementById("background").src = forestFire;
-  }
-  else if(e >= 50){
-    document.getElementById('display-message').innerHTML = 'completely deep fried';
-    document.getElementById("background").src = reallyBadForestFire;
-  }
-  else if(e < 50){
-    document.getElementById('display-message').innerHTML = 'utterly blackened';
-    document.getElementById("background").src = houseOnFire;
-  }
-}
+            function calculate() {
+                for (let i = 0; i <= catCount; i++) {
+                    let cname = document.getElementsByClassName("c-name")[i].value;
+                    categories.push(cname);
+                    for (let n = 0; n < document.getElementsByClassName("tableEarned" + i).length; n++) {
+                        earnedSum =
+                            earnedSum +
+                            Number(document.getElementsByClassName("tableEarned" + i)[n].innerHTML);
+                        maxSum =
+                            maxSum +
+                            Number(document.getElementsByClassName("tableMax" + i)[n].innerHTML);
+                    }
+                    let c_earned = Number(document.getElementsByClassName("c-earned")[i].value);
+                    let c_max = Number(document.getElementsByClassName("c-max")[i].value);
+                    let catWeight = Number(
+                        document.getElementsByClassName("c-weight")[i].value
+                    );
+                    console.log("Category "+i+" Weight: "+catWeight);
 
-function back(){
-    document.getElementById("container").style.visibility = "visible";
-  document.getElementById("title").style.display = "block";
-  document.getElementById("display").style.display = "none";
-  
-  document.getElementById("background").src = originalForest;
- categories = [];
- categoryNums = [];
- weights = [];
- earnedSum = 0;
- maxSum = 0;
- finalGrade = 100;
-}
+                    let totalGrade = ((earnedSum + c_earned) / (maxSum + c_max)) * catWeight;
+                    earnedSum = 0;
+                    maxSum = 0;
+                    if (isNaN(totalGrade)) {
+                        totalGrade = 0;
+                    }
+                    weights.push(catWeight);
+                    categoryNums.push(totalGrade);
+                }
+                let gradeSum = categoryNums.reduce(
+                    (accumulator, current) => accumulator + current
+                );
+                let weightSum = weights.reduce(
+                    (accumulator, current) => accumulator + current
+                );
+                finalGrade = (gradeSum / weightSum)*100;
+                if(!isFinite(finalGrade)){
+                    finalGrade = 100;   
+                }
+                display(finalGrade);
+            }
+            let originalForest = 'https://images.unsplash.com/photo-1471513671800-b09c87e1497c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+            let forestFire =
+                "https://images.unsplash.com/photo-1602980085374-7e743fff3cc6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+            let reallyBadForestFire = 'https://images.unsplash.com/photo-1511027643875-5cbb0439c8f1?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+            let smokyForest = 'https://images.unsplash.com/photo-1574627934266-7c5bcc4fb950?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+            let happyForest = 'https://images.unsplash.com/photo-1500534623283-312aade485b7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+            let okForest = 'https://images.unsplash.com/photo-1504406242839-6e462b3ccb91?q=80&w=1968&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+            document.getElementById("display").style.display = "none";
+            let houseOnFire = 'https://images.unsplash.com/photo-1473260079709-83c808703435?q=80&w=1920&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+            function display(e) {
+                document.getElementById("container").style.visibility = "hidden";
+                document.getElementById("title").style.display = "none";
+                document.getElementById("display").style.display = "block";
 
-var modal = document.getElementById("helpmodal");
+                document.getElementById('grade').innerHTML = e.toFixed(2);
+                if(e >= 90){
+                    document.getElementById('display-message').innerHTML = 'doing pretty good';
+                    document.getElementById("background").src = happyForest;
+                }
+                else if(e >= 80){
+                    document.getElementById('display-message').innerHTML = 'lightly toasted';
+                    document.getElementById("background").src = smokyForest;
+                }
+                else if(e >= 70){
+                    document.getElementById('display-message').innerHTML = 'kinda boiled';
+                    document.getElementById("background").src = okForest;
+                }
+                else if(e.toFixed(0) == 69){
+                    document.getElementById('display-message').innerHTML = 'an idiot sandwich';
+                    document.getElementById("background").src = forestFire;
+                }
+                else if(e >= 60){
+                    document.getElementById('display-message').innerHTML = 'heavily charred';
+                    document.getElementById("background").src = forestFire;
+                }
+                else if(e >= 50){
+                    document.getElementById('display-message').innerHTML = 'completely deep fried';
+                    document.getElementById("background").src = reallyBadForestFire;
+                }
+                else if(e < 50){
+                    document.getElementById('display-message').innerHTML = 'utterly blackened';
+                    document.getElementById("background").src = houseOnFire;
+                }
+            }
 
-var btn = document.getElementById("modalbtn");
+            function back(){
+                document.getElementById("container").style.visibility = "visible";
+                document.getElementById("title").style.display = "block";
+                document.getElementById("display").style.display = "none";
 
-var span = document.getElementsByClassName("close")[0];
+                document.getElementById("background").src = originalForest;
+                categories = [];
+                categoryNums = [];
+                weights = [];
+                earnedSum = 0;
+                maxSum = 0;
+                finalGrade = 100;
+            }
 
-btn.onclick = function() {
-  modal.style.display = "block";
-}
 
-span.onclick = function() {
-  modal.style.display = "none";
-}
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-  </script>
-</body>
+            document.getElementById("modalbtn").onclick = function() {
+                document.getElementById("helpmodal").style.display = "block";
+            }
+
+            document.getElementsByClassName("close")[0].onclick = function() {
+                document.getElementById("helpmodal").style.display = "none";
+            }
+            window.onclick = function(event) {
+                if (event.target == document.getElementById("helpmodal")) {
+                    document.getElementById("helpmodal").style.display = "none";
+                }
+            }
+
+            document.getElementById("percent-btn").onclick = function() {
+                document.getElementById("percentmodal").style.display = "block";
+            }
+
+            document.getElementsByClassName("close")[1].onclick = function() {
+                document.getElementById("percentmodal").style.display = "none";
+            }
+            window.onclick = function(event) {
+                if (event.target == document.getElementById("percentmodal")) {
+                    document.getElementById("percentmodal").style.display = "none";
+                }
+            }
+        </script>
+    </body>
 </html>
