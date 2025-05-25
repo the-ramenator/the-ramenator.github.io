@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -187,7 +188,6 @@
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%,-50%);
-                color: white;
                 font-size: 200%;
             }
             #level-select{
@@ -365,9 +365,21 @@
                 text-shadow: 0px 0px 5px #FFF;
                 font-size: 200%;
             }
-            #resetbtn:hover, #creditsbtn:hover{
+            #resetbtn:hover, #creditsbtn:hover, #devbtn:hover{
                 color: #dae5db;
                 text-shadow: 0px 0px 5px #000;
+            }
+            #devbtn{
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                margin: 7vh;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                color: white;
+                text-shadow: 0px 0px 5px #FFF;
+                font-size: 200%;
             }
             #creditsbtn img:hover{
                 filter: brightness(70%);
@@ -421,7 +433,7 @@
         </style>
     </head>
     <body>
-        <div id='overlay' onclick='engage()'><span>Click to engage</span></div>
+        <div id='loading'><div id='overlay'><span style='color: gray;'>Loading...</span></div></div>
         <div id='homescreen-container'>
             <!-- <div id='stars'></div> -->
             <div id='part-cont'><div id='particles'></div></div>
@@ -439,6 +451,7 @@
                     <img src='https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/state/back.png'>
                 </button>
                 <button id='resetbtn' onclick='hardReset()'>Reset</button>
+                <button id='devbtn' onclick='devMode()'>Dev Mode Off</button>
                 <button id='creditsbtn' onclick='credits()'>Credits
                 </button>
                 <div id='credits-bg'>
@@ -469,7 +482,7 @@
             <div id="pause-bg">
                 <button id="unpause"><img src='https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/state/play.png'></button>
                 <div id="pause-content">
-                    <h1>Paused</h1>
+                    <h1 id='paused-title'>Paused</h1>
                     <p><br><br>
                         <b>A/D or Arrow Keys</b> to move
                         <br>
@@ -479,9 +492,10 @@
                         <br>
                         <b>R</b> to restart the level
                         <br>
+                        <span id='dev-paused'></span>
                     </p>
                     <button onclick='returnHome()'>Go to homepage</button>
-                     <!--               <button onclick='toggleSound()'>
+                    <!--               <button onclick='toggleSound()'>
                     <img src='https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/district/real/novolume.webp' id='soundimgpause'>
                 </button>-->
                 </div>
@@ -492,6 +506,16 @@
         <script src='script.js'></script>
         <script>
             document.getElementById("pause-bg").style.display = "none";
+            document.addEventListener('keydown', function(event) {
+                if(event.key == 'p' && document.getElementById('game-container').style.display == 'block' && document.getElementById("pause-bg").style.display == "none"){
+                    document.getElementById("pause-bg").style.display = "block";
+                    document.getElementById("pause").style.display = "none";
+                }
+                else if(event.key == 'p' && document.getElementById('game-container').style.display == 'block' && document.getElementById("pause-bg").style.display == "block"){
+                    document.getElementById("pause-bg").style.display = "none";
+                    document.getElementById("pause").style.display = "block";
+                }
+            });
             document.getElementById("pause").onclick = function() {
                 document.getElementById("pause-bg").style.display = "block";
                 document.getElementById("pause").style.display = "none";
@@ -549,14 +573,14 @@
             function toggleSound(){
                 if(soundOn == false){
                     document.getElementById('soundimg').src = 'https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/district/real/volume.webp';
-// document.getElementById('soundimgpause').src = 'https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/district/real/volume.webp';
+                    // document.getElementById('soundimgpause').src = 'https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/district/real/volume.webp';
                     soundOn = true; //should be true
                     localStorage.setItem('soundOn',soundOn);
                     intro.play();
                 }
                 else{
                     document.getElementById('soundimg').src = 'https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/district/real/novolume.webp';//'<i class="fa-solid fa-volume-xmark"></i>';
-// document.getElementById('soundimgpause').src = 'https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/district/real/novolume.webp';
+                    // document.getElementById('soundimgpause').src = 'https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/district/real/novolume.webp';
                     soundOn = false;
                     localStorage.setItem('soundOn',soundOn);
                     intro.pause();
@@ -617,8 +641,8 @@
             }
             document.getElementById('game-container').style.display = 'none';
             /*  document.getElementById('game-container').style.display = 'block';
-                intro.pause();
-            */
+        intro.pause();
+        */
             function engage(){
                 document.getElementById('overlay').style.display = 'none';
                 toggleSound();
@@ -626,10 +650,33 @@
             function hardReset(){
                 var prompt = confirm("This will reset all progress. Are you sure?");
                 if(prompt == true){
-                    localStorage.removeItem('unlockedLevels');
-                    localStorage.removeItem('acornsSaved');
+                    localStorage.clear();
                     location.reload();
                 }
+            }
+            if(localStorage.getItem('devmode') == 'true'){
+                document.getElementById('devbtn').innerHTML = 'Dev Mode Off';
+                devMode();
+            }
+            else if(localStorage.getItem('devmode') == 'false' || !localStorage.getItem('devmode')){
+                document.getElementById('devbtn').innerHTML = 'Dev Mode On';
+                devMode();
+            }
+            function devMode(){
+                var elm = document.getElementById('devbtn');
+                if(elm.innerHTML == 'Dev Mode Off'){
+                    elm.innerHTML = 'Dev Mode On';
+                    localStorage.setItem('devmode', true);
+                    document.getElementById('paused-title').innerHTML = 'Paused/Dev Mode On'
+                    document.getElementById('dev-paused').innerHTML = '<b style="font-size: 75%">Infinite jump<br>view hitboxes with "H"<br>all levels unlocked</b>';
+                }
+                else{
+                    elm.innerHTML = 'Dev Mode Off';
+                    localStorage.setItem('devmode', false);
+                    document.getElementById('paused-title').innerHTML = 'Paused';
+                    document.getElementById('dev-paused').innerHTML = '';
+                }
+                gridLevels();
             }
             function random(min, max, fixed) {
                 return (Math.random() * (max - min) + min).toFixed(fixed);
@@ -659,7 +706,11 @@
             }
 
             window.addEventListener('mousemove', positionElement)
-
+            window.onload = function() {
+                setTimeout(function() {
+                    document.getElementById('loading').innerHTML = "<div id='overlay' onclick='engage()'><span style='color: white;'>Click to engage</span></div>";
+                }, 500);
+            };
         </script>
     </body>
 </html>
