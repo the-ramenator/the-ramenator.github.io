@@ -25,6 +25,7 @@ let clickedButton = false;
 let victoryCalled = false;
 
 let cavemp3, grasslandsmp3, cloudsmp3, junglemp3, beachmp3;
+let deathmp3;
 
 document.getElementById("alert").style.opacity = 0;
 document.getElementById("fader").style.opacity = 0;
@@ -56,7 +57,7 @@ function gridLevels() {
         this.obj = document.createElement("img");
         this.obj.src = 'https://raw.githubusercontent.com/the-ramenator/dcsdtechfair2025/refs/heads/main/state/level-icons/levelselect'+i+'.webp';
         this.obj.id = i;
-        if(unlockedLevels[i-1] == 0){
+        if(unlockedLevels[i-1] == 0 && localStorage.getItem('devmode') == 'false'){
             this.obj.classList.add("disabled");   
         }
         else{
@@ -151,6 +152,7 @@ class Main extends Phaser.Scene {
     create (){
         this.jumpmp3 = this.sound.add('jumpmp3');
         this.deathmp3 = this.sound.add('deathmp3');
+        deathmp3 = this.deathmp3;
         this.acornmp3 = this.sound.add('acornmp3');
         this.victorymp3 = this.sound.add('victorymp3');
         this.dashmp3 = this.sound.add('dashmp3');
@@ -349,7 +351,12 @@ class Main extends Phaser.Scene {
                             this.jumpmp3.play();
                         }
                     } else if (this.canDoubleJump) {
-                        this.canDoubleJump = false; //should be false
+                        if(localStorage.getItem('devmode') == 'true'){
+                            this.canDoubleJump = true;
+                        }
+                        else{
+                            this.canDoubleJump = false; //should be false
+                        }
                         this.player.body.setVelocityY(-525*1.5);
                         if(luhsoundOn == 'true'){
                             this.jumpmp3.play();
@@ -361,13 +368,13 @@ class Main extends Phaser.Scene {
                 }
 
 
-                /*    if(Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.N))){
+                if(Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.N)) && localStorage.getItem('devmode') == 'true'){
                     if(key < 10){
                         key++;
                     }
                     this.loadLevel(key)
                 }
-                if(Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H))){
+                if(Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H))&& localStorage.getItem('devmode') == 'true'){
                     if(this.hitboxes.visible){
                         this.hitboxes.setVisible(false);
                         this.debug.setVisible(false);
@@ -376,7 +383,7 @@ class Main extends Phaser.Scene {
                         this.hitboxes.setVisible(true);
                         this.debug.setVisible(true);
                     }
-                }*/
+                }
             }
         }
     }
@@ -822,13 +829,15 @@ class Main extends Phaser.Scene {
         }
     }
     death(player, block) {
+        // console.log(this.deathmp3);
+        // console.log(this);
         gameOver = true;
         player.setTint(0xff0000);
         player.anims.play('neutral');
         player.setVelocity(0);
         player.body.setGravityY(0);
-        if(luhsoundOn == 'true'){
-            this.deathmp3.play();
+        if(luhsoundOn == 'true' && deathmp3){
+            deathmp3.play();
         }
         const myTimeout = setTimeout(() => {
             scene.reset(player); 
@@ -860,6 +869,7 @@ var config = {
     width: window.innerWidth,
     height: window.innerHeight,
     zoom: 1,
+    smoothing: true,
     physics: {
         default: 'arcade',
         arcade: {
@@ -870,3 +880,4 @@ var config = {
 
 };
 var game = new Phaser.Game(config);
+//https://docs.phaser.io/api-documentation/namespace/display-canvas-smoothing
