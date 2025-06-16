@@ -16,7 +16,7 @@
                 transition: 0.75s;
                 /* scroll-behavior: smooth */
             }
-            body{
+            #totalcontainer{
                 height: 100vh;
                 width: 100%;
                 overflow: hidden;
@@ -45,9 +45,8 @@
                 height: 100vh;
                 overflow: scroll;
                 scrollbar-width: none;
-                min-height: 0
+                min-height: 0;
             }
-
             .card{
                 background-color: #f1f1f1;
                 border: 1px solid black;
@@ -94,35 +93,21 @@
                 background-size: cover;
             }
 
-            .home{
+
+            .home img{
                 top: 0%;
                 left: 0%;
                 margin: 8vh 7vw;
                 z-index: 101;
-                text-decoration: none;
-                color: white;
-                text-align: center;
                 position: absolute; 
-                font-size: 3.5rem;
-                height: 50px;
-                width: 70px;
-                box-shadow: 0 0 20px 5px rgba(255,255,255, 1);
-                background: rgba(255, 255, 255, 0.3);
-                border-radius: 16px;
-                box-shadow: 0 0px 75px rgba(0, 0, 0, 1);
-                backdrop-filter: blur(5px);
-                -webkit-backdrop-filter: blur(5px);
-                border: 3px solid rgba(255, 255, 255, 0.3);
-            }
-            .home:hover{
-                color: black;               
-                text-shadow: 0 0 5px black;
-
-
-            }
-            .home i{
                 transform: translate(-50%,-15%);
                 position: absolute;
+                height: 70px;
+                width: auto;
+                box-shadow: 0 0 20px 5px rgba(0,0,0, 0.5);
+            }
+            .home img:hover{
+                filter: hue-rotate(360deg) brightness(100%) contrast(150%);
             }
             #follow{
                 position: absolute;
@@ -144,11 +129,6 @@
                 font-size: 1.5em;
                 line-height: 35px;
             }
-            #filters{
-                /* top: 5vh;
-                left: 50%;
-                transform: translate(-50%,-50%);*/
-            }
             #search{
                 background: rgba(255, 255, 255, 0.2);
                 border-radius: 16px;
@@ -165,7 +145,7 @@
                 font-family: "Inconsolata", monospace;
                 z-index: 101;
                 position: absolute;
-
+                box-shadow: 0 0 20px 5px rgba(0,0,0, 0.5);
 
             }
             #filter{
@@ -178,13 +158,13 @@
                 padding: 10px;
                 padding-left: 15px;
                 width: 8vw;
-                color: white;
+                color: black;
                 font-size: 1.2em;
                 text-shadow: 0 0 1px white;
                 font-family: "Inconsolata", monospace;
                 position: absolute;
                 z-index: 101;
-
+                box-shadow: 0 0 20px 5px rgba(0,0,0, 0.5);
             }
             #filter option{
                 color: black;
@@ -197,6 +177,7 @@
                 position: absolute;
                 background: black;
                 z-index: 1001;
+                overflow: hidden;
             }
             #loader h1{
                 font-family: "Inconsolata", monospace;
@@ -207,295 +188,399 @@
                 top: 50%;
                 left: 50%;
             }
+            @media screen and (max-width: 600px) {
+                #totalcontainer{
+                    overflow-y: scroll;
+                    overflow-x: hidden;
+                    width: 100vw;
+                }
+                #maincontainer{
+                    display: initial;
+                    scrollbar-width: none;
+                    overflow: visible;
+                    height: 300vh;
+                }
+                #container1, #container2, #container3{
+                    display: initial;
+                    width: 100%;
+                    height: 100vh;
+                    overflow: visible;
+                }
+                #loader h1{
+                    font-size: 5rem;
+                }
+                .home img{
+                    top: 0%;
+                    left: 0%;
+                    margin: 8vh 7vw;
+                    z-index: 101;
+                    position: absolute; 
+                    transform: translate(-50%,-15%);
+                    position: absolute;
+                    height: 50px;
+                    width: auto;
+                    box-shadow: 0 0 20px 5px rgba(0,0,0, 0.5);
+
+                }
+            }
+
         </style>   
     </head>
     <body>
         <!-- 
-        6. Have a title screen that flashes on with a classy title and then fades off in a cool way
+        1. Make it such that the cards get shifted to the main container while hiding the 3 container containers (possibly inside a different div???)
+        2. Make it such that on mobile the cards have to be pressed to reveal a "go" and once clicked then you go type shit
         -->
         <div id='loader'>
             <h1>Projects</h1>
         </div>
-        <a class='home' href='index.html'><i>⌂</i></a>
-            <div id='follow'><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        <a class='home' href='index.html'><img src='assets/homepage/favicon.png'></a>
+        <div id='filters'>
+            <input type="text" id="search" onkeyup="search()" onclick='activateSearch()' placeholder="Search.." value='⌕'>
+            <select id="filter">
+                <option value="title" autofocus>By Title</option>
+                <option value="date">By Date</option>
+            </select>
+        </div>
+        <div id='follow'><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        <div id='totalcontainer'>
             <div id='maincontainer'>
                 <div id='container1'></div>
                 <div id='container2'></div>
                 <div id='container3'></div>
             </div>
-            <div id='filters'>
-                <input type="text" id="search" onkeyup="search()" onclick='activateSearch()' placeholder="Search.." value='⌕'>
-                <select id="filter">
-                    <option value="title" autofocus>By Title</option>
-                    <option value="date">By Date</option>
-                </select>
-            </div>
-            <script>
-                const cards = {
-                    projects: [
-                        { 
-                            title: "Directory of Everything", 
-                            date: "December 2020",
-                            link: "https://the-ramenator.github.io/experiments",
-                            img: "assets/project-previews/experiments.png",
-                            desc: "Running total of every coding experiment I've done. Started keeping track in December of 2020 (began coding in July). "
-                        },
-                        { 
-                            title: "Pnut's Little Adventure", 
-                            date: "March 2025",
-                            link: "https://the-ramenator.github.io/pnut",
-                            img: "assets/project-previews/pnut.png",
-                            desc: "Short platformer game made for GASTC. Won first place in state for digital game design"
-                        },
-                        { 
-                            title: "Cherry Bomb", 
-                            date: "June 2024",
-                            link: "https://the-ramenator.github.io/experiments/cherrybomb.html",
-                            img: "assets/project-previews/cherrybomb.png",
-                            desc: "Small cherry blossom themed CSS experment. Made in ~2 days w/ assets from Canva"
-                        },
-                        { 
-                            title: "Grade Calculator", 
-                            date: "September 2024",
-                            link: "https://the-ramenator.github.io/experiments/gradecalculator.html",
-                            img: "assets/project-previews/gradecalculator.png",
-                            desc: "Small client-side project dedicated to aesthetically predicting grades based off the Infinite Campus grading weights."
-                        },
-                        { 
-                            title: "Andrims", 
-                            date: "July 2022",
-                            link: "https://andrims.com/",
-                            img: "assets/project-previews/andrims.png",
-                            desc: "Website design for andrims.com. Main page was finished. Auxiliary pages were not"
-                        },
-                        { 
-                            title: "DHW Text Game", 
-                            date: "February 2022",
-                            link: "https://the-ramenator.github.io/school_projects/danielhalewilliams.html",
-                            img: "assets/project-previews/danielhalewilliams.png",
-                            desc: "Short quiz on the life of surgeon Daniel Hale Williams as part of a school Black History Month project."
-                        },
-                        { 
-                            title: "Xhosa Research Project", 
-                            date: "October 2021",
-                            link: "https://the-ramenator.github.io/school_projects/xhosa.html",
-                            img: "assets/project-previews/xhosa.png",
-                            desc: "Overview and list of important aspects regarding the Xhosa tribe in Southern Africa as part of a school project."
-                        },
-                        { 
-                            title: "Platformer 11", 
-                            date: "May 2021",
-                            link: "https://the-ramenator.github.io/experiments/platformer11.html",
-                            img: "assets/project-previews/platformer11.png",
-                            desc: "Forked (can't find original creator) in May 2021 and expanded upon in May 2022"
-                        },
-                        { 
-                            title: "GD Account Redesign", 
-                            date: "February 2023",
-                            link: "https://the-ramenator.github.io/experiments/robtop-redesign.html",
-                            img: "assets/project-previews/robtop-redesign.png",
-                            desc: "Redesign of the Geometry Dash account sign-in page w/ CSS"
-                        }
-                    ]
-                };
-                let searchKey = document.getElementById('search');
-                let optionsKey = document.getElementById('filter');
-                optionsKey.style.visibility = 'hidden';
-                searchKey.style.cursor = 'pointer';
-                searchKey.style.width = '50px';
-                searchKey.style.height = '50px';
-                searchKey.style.padding = '5px';
-                searchKey.style.textAlign = 'center';
-                searchKey.style.fontSize = '2.5em';
-                searchKey.style.lineHeight = '100px';
-                searchKey.style.left = '92vw';
-                searchKey.style.top = '7vh';
-                searchKey.style.transform = 'translate(0%,0%)';
+            <div id='mobile-container'></div>
 
-                let isActive = false;
-                function activateSearch(){
-                    if(isActive == false){
-                        isActive = true;
+        </div>
+        <script>
+            const cards = {
+                projects: [
+                    { 
+                        title: "Everything Catalogue", 
+                        date: "Dec 2020",
+                        link: "https://the-ramenator.github.io/experiments",
+                        img: "assets/project-previews/experiments.png",
+                        desc: "Running total of every coding experiment I've done. Started keeping track in December of 2020 (began coding in July). "
+                    },
+                    { 
+                        title: "Pnut's Little Adventure", 
+                        date: "Mar 2025",
+                        link: "https://the-ramenator.github.io/pnut",
+                        img: "assets/project-previews/pnut.png",
+                        desc: "Short platformer game made for GASTC. Won first place in state for digital game design"
+                    },
+                    { 
+                        title: "Cherry Bomb", 
+                        date: "Jun 2024",
+                        link: "https://the-ramenator.github.io/experiments/cherrybomb.html",
+                        img: "assets/project-previews/cherrybomb.png",
+                        desc: "Small cherry blossom themed CSS experment. Made in ~2 days w/ assets from Canva"
+                    },
+                    { 
+                        title: "Grade Calculator", 
+                        date: "Sep 2024",
+                        link: "https://the-ramenator.github.io/experiments/gradecalculator.html",
+                        img: "assets/project-previews/gradecalculator.png",
+                        desc: "Small client-side project dedicated to aesthetically predicting grades based off the Infinite Campus grading weights."
+                    },
+                    { 
+                        title: "Andrims", 
+                        date: "Jul 2022",
+                        link: "https://andrims.com/",
+                        img: "assets/project-previews/andrims.png",
+                        desc: "Website design for andrims.com. Main page was finished. Auxiliary pages were not"
+                    },
+                    { 
+                        title: "DHW Text Game", 
+                        date: "Feb 2022",
+                        link: "https://the-ramenator.github.io/school_projects/danielhalewilliams.html",
+                        img: "assets/project-previews/danielhalewilliams.png",
+                        desc: "Short quiz on the life of surgeon Daniel Hale Williams as part of a school Black History Month project."
+                    },
+                    { 
+                        title: "Xhosa Report", 
+                        date: "Oct 2021",
+                        link: "https://the-ramenator.github.io/school_projects/xhosa.html",
+                        img: "assets/project-previews/xhosa.png",
+                        desc: "Overview and list of important aspects regarding the Xhosa tribe in Southern Africa as part of a school project."
+                    },
+                    { 
+                        title: "Platformer 11", 
+                        date: "May 2021",
+                        link: "https://the-ramenator.github.io/experiments/platformer11.html",
+                        img: "assets/project-previews/platformer11.png",
+                        desc: "Forked (can't find original creator) in May 2021 and expanded upon in May 2022"
+                    },
+                    { 
+                        title: "GD Account Redesign", 
+                        date: "Feb 2023",
+                        link: "https://the-ramenator.github.io/experiments/robtop-redesign.html",
+                        img: "assets/project-previews/robtop-redesign.png",
+                        desc: "Redesign of the Geometry Dash account sign-in page w/ CSS"
+                    }
+                ]
+            };
+            let onMobile = false;
+            function checkMobile(){
+                if(window.innerWidth >= 600){
+                    onMobile = false;
+                }
+                else{
+                    onMobile = true;
+                }
+            }
+            checkMobile();
+            window.addEventListener('resize', checkMobile);
 
-                        optionsKey.style.visibility = 'visible';
+            let searchKey = document.getElementById('search');
+            let optionsKey = document.getElementById('filter');
+            optionsKey.style.visibility = 'hidden';
+            searchKey.style.cursor = 'pointer';
+            searchKey.style.width = '50px';
+            searchKey.style.height = '50px';
+            searchKey.style.padding = '5px';
+            searchKey.style.textAlign = 'center';
+            searchKey.style.fontSize = '2.5em';
+            searchKey.style.lineHeight = '100px';
+            searchKey.style.right = '8vw';
+            searchKey.style.top = '7vh';
+            searchKey.style.transform = 'translate(0%,0%)';
+
+            let isActive = false;
+            function activateSearch(){
+                if(isActive == false){
+                    isActive = true
+                    optionsKey.style.visibility = 'visible';
+                    optionsKey.style.top = '7vh';
+                    optionsKey.style.transform = 'translate(-50%,0%)';
+                    searchKey.disabled = false;
+                    searchKey.style.cursor = 'pointer';
+                    if(onMobile == true){
+                        searchKey.style.width = '35%';
+                        searchKey.style.left = '50%';
+                        optionsKey.style.width = '20%';
                         optionsKey.style.top = '7vh';
-                        optionsKey.style.left = '90.5%'; //62.5
-                        optionsKey.style.transform = 'translate(-50%,0%)';
-                        searchKey.disabled = false;
-                        searchKey.style.cursor = 'pointer';
-                        searchKey.style.width = '20%';
-                        searchKey.style.height = '35px';
-                        searchKey.style.paddingLeft = '15px';
-                        searchKey.style.textAlign = 'left';
-                        searchKey.style.fontSize = '1.2em';
-                        searchKey.style.lineHeight = '100px';
-                        searchKey.style.left = '75%'; //43.75
-                        searchKey.style.top = '7vh';
-                        searchKey.style.transform = 'translate(-50%,0%)';
-                        searchKey.value = '';
+                        optionsKey.style.left = '85.5%'; //62.5
+
                     }
+                    else{
+                        searchKey.style.width = '20%';
+                        searchKey.style.left = '75%'; //43.75
+                        optionsKey.style.left = '90.5%'; //62.5
 
+                    }
+                    searchKey.style.height = '35px';
+                    searchKey.style.paddingLeft = '15px';
+                    searchKey.style.textAlign = 'left';
+                    searchKey.style.fontSize = '1.2em';
+                    searchKey.style.lineHeight = '100px';
+                    searchKey.style.top = '7vh';
+                    searchKey.style.transform = 'translate(-50%,0%)';
+                    searchKey.value = '';
                 }
+            }
 
-                function random(min, max, fixed) {
-                    return (Math.random() * (max - min) + min).toFixed(fixed);
-                }
-                let follow = document.getElementById('follow');
-                function newCard(index, cont) {
-                    var obj = document.createElement("div");
-                    obj.classList.add("card");
-                    obj.style.height = random(30,45,1) + 'vh';
-                    obj.style.width = 'auto';
+            function random(min, max, fixed) {
+                return (Math.random() * (max - min) + min).toFixed(fixed);
+            }
+            let follow = document.getElementById('follow');
+            let clickCount = {};
+            let lastClicked;
+            function newCard(index, cont) {
+                var obj = document.createElement("div");
+                obj.classList.add("card");
+                obj.style.height = random(30,45,1) + 'vh';
+                obj.style.width = 'auto';
 
-                    color = 'white';
-                    obj.classList.add("black");
-                    shadow = '0 0 20px #000';
-                    bgimage = "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 59%, rgba(0, 0, 0, 0.65) 100%), url('"+cards.projects[index].img+"')";
-                    hoverbg = "linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 1) 100%), url('"+cards.projects[index].img+"')";
+                color = 'white';
+                obj.classList.add("black");
+                shadow = '0 0 20px #000';
+                bgimage = "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 59%, rgba(0, 0, 0, 0.65) 100%), url('"+cards.projects[index].img+"')";
+                hoverbg = "linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 1) 100%), url('"+cards.projects[index].img+"')";
 
-                    var title = document.createElement("span");
-                    title.innerHTML = cards.projects[index].title;
-                    title.classList.add("title");
-                    title.style.color = color; 
-                    title.style.textShadow = shadow; 
-                    title.style.left = '0';
-                    title.style.bottom = '0';
+                var title = document.createElement("span");
+                title.innerHTML = cards.projects[index].title;
+                title.classList.add("title");
+                title.style.color = color; 
+                title.style.textShadow = shadow; 
+                title.style.left = '0';
+                title.style.bottom = '0';
 
-                    var date = document.createElement("span");
-                    date.innerHTML = cards.projects[index].date;
-                    date.classList.add("date");
-                    date.style.color = color; 
-                    date.style.textShadow = shadow;
-                    date.style.right = '0';
-                    date.style.bottom = '0';
+                var date = document.createElement("span");
+                date.innerHTML = cards.projects[index].date;
+                date.classList.add("date");
+                date.style.color = color; 
+                date.style.textShadow = shadow;
+                date.style.right = '0';
+                date.style.bottom = '0';
 
-                    var desc = document.createElement("span");
-                    desc.innerHTML = cards.projects[index].desc;
-                    desc.classList.add('desc');
-                    desc.style.left = '0';
-                    desc.style.bottom = '0';
-                    desc.style.opacity = '0';
+                var desc = document.createElement("span");
+                desc.innerHTML = cards.projects[index].desc;
+                desc.classList.add('desc');
+                desc.style.left = '0';
+                desc.style.bottom = '0';
+                desc.style.opacity = '0';
 
-                    var hover = document.createElement("div");
-                    hover.classList.add("hover-bg");
-                    hover.style.backgroundImage = hoverbg;
-                    hover.style.opacity = '0';
+                var hover = document.createElement("div");
+                hover.classList.add("hover-bg");
+                hover.style.backgroundImage = hoverbg;
+                hover.style.opacity = '0';
 
-                    obj.style.backgroundImage = bgimage;
-                    obj.onclick = function(){
-                        window.open(cards.projects[index].link, '_blank');
-                    };
-
-                    obj.addEventListener('mouseover', () => {
-                        obj.style.transform = "scale(0.955)";
-                        obj.style.outlineOffset = "10px";
-                        obj.style.outline = "2px solid white";
-                        hover.style.opacity = '1';
-                        desc.style.opacity = '1';
-                        date.style.bottom = '25%';
-                        title.style.bottom = '25%';
-                        follow.innerHTML = '↗';
-                        follow.style.width = '40px';
-                        follow.style.borderRadius = '10px'
-                        follow.style.border = '3px solid rgba(255, 255, 255, 0.3)';
-
-                    });
-                    obj.addEventListener('mouseout', () => {
-                        obj.style.transform = "scale(1)";
-                        obj.style.outlineOffset = "0px";
-                        obj.style.outline = "none";
-                        hover.style.opacity = '0';
-                        desc.style.opacity = '0';
-                        date.style.bottom = '0';
-                        title.style.bottom = '0';
-                        follow.innerHTML = '';
-                        follow.style.width = '35px';
-                        follow.style.borderRadius = '50%';
-                        follow.style.border = '1px solid rgba(255, 255, 255, 0.3)';
-
-
-                    });
-                    obj.appendChild(hover);
-                    obj.appendChild(title);
-                    obj.appendChild(date);
-                    obj.appendChild(desc);
-                    obj.id = 'card'+i;
-                    document.getElementById('container'+cont).appendChild(obj);
-
-                }
-                var cardsArray = [];
-                for (var i = 0; i < cards.projects.length; i++) {
-                    var mod = (i%3)+1;
-                    cardsArray.push(new newCard(i, mod));
-                }
-                let savedHeights = [];
-
-                for (var i = 0; i < cards.projects.length; i++) {
-                    savedHeights.push(document.getElementById("maincontainer").getElementsByClassName("card")[i].style.height);
-                }
-
-                function search(){
-                    var search = document.getElementById("search");
-                    var filter = search.value.toUpperCase();
-                    var cont = document.getElementById("maincontainer");
-                    var searchCards = cont.getElementsByClassName("card");
-                    var type = document.getElementById("filter").value;
-                    let contHeight;
-                    for (let i = 0; i < searchCards.length; i++) {
-                        var a = searchCards[i].getElementsByClassName(type)[0];
-                        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                            // searchCards[i].style.display = "block";
-                            setTimeout(function(){
-                                searchCards[i].style.opacity = "1";
-                                searchCards[i].style.height = savedHeights[i];
-                                searchCards[i].style.margin = "5px";
-                                searchCards[i].getElementsByClassName("title")[0].style.margin = '20px';
-                                searchCards[i].getElementsByClassName("date")[0].style.margin = '20px';
-                                searchCards[i].getElementsByClassName("desc")[0].style.margin = '20px';
-                                searchCards[i].style.pointerEvents = "auto";
-                            }, 1);
-
-                        } else {
-                            searchCards[i].style.opacity = "0";
-                            searchCards[i].style.height = "0px";
-                            searchCards[i].style.margin = "0px";
-                            searchCards[i].style.pointerEvents = "none";
-                            searchCards[i].getElementsByClassName("title")[0].style.margin = '0px';
-                            searchCards[i].getElementsByClassName("date")[0].style.margin = '0px';
-                            searchCards[i].getElementsByClassName("desc")[0].style.margin = '0px';
-                            // save heights to array; add the css property that doesnt allow interactin
-
-                            setTimeout(function(){
-                                // searchCards[i].style.display = "none";
-                            }, 375);
+                obj.style.backgroundImage = bgimage;
+                obj.onclick = function(){    
+                    if(onMobile == true){
+                        clickCount[obj.id] += 1;
+                        if(lastClicked != obj.id){
+                            clickCount[lastClicked] = 0;   
+                        }
+                        lastClicked = obj.id;
+                        if(clickCount[obj.id] == 2){
+                            window.open(cards.projects[index].link, '_blank');
+                            clickCount[obj.id] = 0;
                         }
                     }
+                    else{
+                        window.open(cards.projects[index].link, '_blank');
+                    }
+                };
 
-                }
-                function luhscroll(el){
-                    if(el.scrollTop+window.innerHeight < el.scrollHeight && !el.matches(':hover')){
-                        el.scrollTo(0, el.scrollTop+1);
+                obj.addEventListener('mouseover', () => {
+                    obj.style.transform = "scale(0.955)";
+                    obj.style.outlineOffset = "10px";
+                    obj.style.outline = "2px solid white";
+                    hover.style.opacity = '1';
+                    desc.style.opacity = '1';
+                    date.style.bottom = '25%';
+                    title.style.bottom = '25%';
+                    follow.innerHTML = '↗';
+                    follow.style.width = '40px';
+                    follow.style.borderRadius = '10px'
+                    follow.style.border = '3px solid rgba(255, 255, 255, 0.3)';
+                });
+                obj.addEventListener('touchstart', () => {
+                    obj.style.transform = "scale(0.955)";
+                    obj.style.outlineOffset = "10px";
+                    obj.style.outline = "2px solid white";
+                    hover.style.opacity = '1';
+                    desc.style.opacity = '1';
+                    date.style.bottom = '25%';
+                    title.style.bottom = '25%';
+                    follow.innerHTML = '↗';
+                    follow.style.width = '40px';
+                    follow.style.borderRadius = '10px'
+                    follow.style.border = '3px solid rgba(255, 255, 255, 0.3)';
+                });
+                obj.addEventListener('mouseout', () => {
+                    obj.style.transform = "scale(1)";
+                    obj.style.outlineOffset = "0px";
+                    obj.style.outline = "none";
+                    hover.style.opacity = '0';
+                    desc.style.opacity = '0';
+                    date.style.bottom = '0';
+                    title.style.bottom = '0';
+                    follow.innerHTML = '';
+                    follow.style.width = '35px';
+                    follow.style.borderRadius = '50%';
+                    follow.style.border = '1px solid rgba(255, 255, 255, 0.3)';
+                });
+                obj.addEventListener('touchend', () => {
+                    obj.style.transform = "scale(1)";
+                    obj.style.outlineOffset = "0px";
+                    obj.style.outline = "none";
+                    hover.style.opacity = '0';
+                    desc.style.opacity = '0';
+                    date.style.bottom = '0';
+                    title.style.bottom = '0';
+                    follow.innerHTML = '';
+                    follow.style.width = '35px';
+                    follow.style.borderRadius = '50%';
+                    follow.style.border = '1px solid rgba(255, 255, 255, 0.3)';
+                });
+                let cardId = 'card'+index;
+                obj.id = cardId;
+                clickCount[cardId] = 0;
+                obj.appendChild(hover);
+                obj.appendChild(title);
+                obj.appendChild(date);
+                obj.appendChild(desc);
+                // let newObj = obj.cloneNode(true);
+                // document.getElementById('mobile-container').appendChild(newObj);
+                document.getElementById('container'+cont).appendChild(obj);
+
+            }
+            var cardsArray = [];
+            for (var i = 0; i < cards.projects.length; i++) {
+                var mod = (i%3)+1;
+                cardsArray.push(new newCard(i, mod));
+            }
+            let savedHeights = [];
+
+            for (var i = 0; i < cards.projects.length; i++) {
+                savedHeights.push(document.getElementById("maincontainer").getElementsByClassName("card")[i].style.height);
+            }
+
+            function search(){
+                var search = document.getElementById("search");
+                var filter = search.value.toUpperCase();
+                var cont = document.getElementById("maincontainer");
+                var searchCards = cont.getElementsByClassName("card");
+                var type = document.getElementById("filter").value;
+                let contHeight;
+                for (let i = 0; i < searchCards.length; i++) {
+                    var a = searchCards[i].getElementsByClassName(type)[0];
+                    if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        // searchCards[i].style.display = "block";
+                        setTimeout(function(){
+                            searchCards[i].style.opacity = "1";
+                            searchCards[i].style.height = savedHeights[i];
+                            searchCards[i].style.margin = "5px";
+                            searchCards[i].getElementsByClassName("title")[0].style.margin = '20px';
+                            searchCards[i].getElementsByClassName("date")[0].style.margin = '20px';
+                            searchCards[i].getElementsByClassName("desc")[0].style.margin = '20px';
+                            searchCards[i].style.pointerEvents = "auto";
+                        }, 1);
+
+                    } else {
+                        searchCards[i].style.opacity = "0";
+                        searchCards[i].style.height = "0px";
+                        searchCards[i].style.margin = "0px";
+                        searchCards[i].style.pointerEvents = "none";
+                        searchCards[i].getElementsByClassName("title")[0].style.margin = '0px';
+                        searchCards[i].getElementsByClassName("date")[0].style.margin = '0px';
+                        searchCards[i].getElementsByClassName("desc")[0].style.margin = '0px';
+                        // save heights to array; add the css property that doesnt allow interacting
+
+                        setTimeout(function(){
+                            // searchCards[i].style.display = "none";
+                        }, 375);
                     }
                 }
-                setTimeout(function(){
-                    setInterval(luhscroll, random(50,150,0), document.getElementById('container1'));
-                    setInterval(luhscroll, random(50,150,0), document.getElementById('container2'));
-                    setInterval(luhscroll, random(50,150,0), document.getElementById('container3'));
-                }, 1000);
-                const positionElement = (e)=> {
-                    const mouseY = e.clientY;
-                    const mouseX = e.clientX;
-                    follow.style.transform = `translate3d(${mouseX-17}px, ${mouseY-35}px, 0)`;
-                }
-                setTimeout(function(){
-                    document.getElementById('loader').style.opacity = '0';
-                }, 750);
 
-                setTimeout(function(){
-                    document.getElementById('loader').style.display = 'none';
-                }, 1500);
-                window.addEventListener('mousemove', positionElement)
-            </script>
+            }
+            function luhscroll(el){
+                if(el.scrollTop+window.innerHeight < el.scrollHeight && !el.matches(':hover')){
+                    el.scrollTo(0, el.scrollTop+1);
+                }
+            }
+            setTimeout(function(){
+                setInterval(luhscroll, random(50,150,0), document.getElementById('container1'));
+                setInterval(luhscroll, random(50,150,0), document.getElementById('container2'));
+                setInterval(luhscroll, random(50,150,0), document.getElementById('container3'));
+            }, 1000);
+            const positionElement = (e)=> {
+                const mouseY = e.clientY;
+                const mouseX = e.clientX;
+                follow.style.transform = `translate3d(${mouseX-17}px, ${mouseY-35}px, 0)`;
+            }
+            setTimeout(function(){
+                document.getElementById('loader').style.opacity = '0';
+            }, 750);
+
+            setTimeout(function(){
+                document.getElementById('loader').style.display = 'none';
+            }, 1500);
+            window.addEventListener('mousemove', positionElement)
+        </script>
     </body>
 
 </html>
