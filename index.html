@@ -25,7 +25,6 @@
                 width: 100%;
                 background-image: url('assets/homepage/new-contrast.png');
                 z-index: -10;
-                /* animation: scale 25s linear infinite; */
             }
 
             a{
@@ -806,90 +805,6 @@
                 line-height: 7vh;
                 opacity: 0;
             }
-
-            /* MOBILE */
-            @media only screen and (max-width: 600px) {
-                .layer1{
-                    transform: scale(0.75) translate(-50%,-50%);
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                }
-                .layer2{
-                    transform: scale(0.5) translate(-50%,-50%);
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                }
-                .layer3{
-                    transform: scale(0.55) translate(-50%,-50%);
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                }
-                .layer4{
-                    transform: scale(0.65) translate(-50%,-50%);
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                }
-                .layer5{
-                    transform: scale(0.75) translate(-50%,-50%);
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                }
-                #circle{
-                    visibility: none;
-                }
-                /* .circle4,.circle3,.circle2,.circle1,.line{
-                z-index: -100;
-                display: none;
-                }*/
-                .menucont{
-                    font-size: 1em;
-                }
-
-                #menucont1{
-                    top: 35%;
-                    left: 75%;
-                    padding: 2vh 4em 2vh 2em; 
-                }
-                #menucont2{
-                    top: 60%;
-                    left: 80%;
-                    padding: 2vh 4em 2vh 2em; 
-                }
-                #menucont3{
-                    top: 70%;
-                    left: 55%;
-                    padding: 2vh 5em 2vh 5em; 
-                }
-                #menucont4{
-                    top: 60%;
-                    left: 30%;
-                    padding: 2vh 5em 2vh 5em; 
-                }
-                #menucont5{
-                    top: 40%;
-                    left: 20%;
-                    padding: 2vh 5em 2vh 5em; 
-                }
-                #menucont6{
-                    top: 30%;
-                    left: 40%;
-                    padding: 2vh 5em 2vh 5em; 
-                }
-                .menuobject{
-                    text-align: center;
-                }
-                .menuspecial{
-                    margin-left: 1em;
-                }
-                .texts{
-                    font-size: 1.5em;
-                }
-            }
             .info-modal {
                 display: none;
                 position: fixed;
@@ -921,6 +836,7 @@
                 letter-spacing: -0.1em;
                 animation: scaleinfo 0.5s ease-in;
                 color: #fff;
+                overflow: scroll;
             }
 
             #info-close {
@@ -935,6 +851,10 @@
                 font-optical-sizing: auto;
                 font-weight: 900;
                 text-shadow: 0px 0px 20px #555;
+                text-align: center; 
+                color: white; 
+                margin-top: 30px;
+
             }
             .info-modal-content ul{
                 margin: 40px;
@@ -973,9 +893,252 @@
                     border-radius: 16px;
                 }
             }
+            .rotate-screen{
+                background: black;
+                height: 100vh;
+                width: 100%;
+                top: 0;
+                left: 0;
+                position: absolute;
+                z-index: 100;
+                display: none;
+            }
+            .rotate-screen h1{
+                color: white;
+                position: absolute;
+                top: 50%;
+                transform: translate(0,-50%);
+                width: 100%;
+                text-align: center;
+                font-family: "Doto", sans-serif;
+            }
+            .rotate-screen i{
+                color: white;
+                opacity: 0.1;
+                font-size: 15em;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+                animation: rotatingarrow 5s ease-in-out infinite;
+            }
+            .rotate-screen-p2{
+                font-family: "Reenie Beanie", cursive;
+                color: white;
+                position: absolute;
+                top: 75%;
+                transform: translate(0,-50%);
+                width: 100%;
+                text-align: center;
+                font-size: 2em;
+            }
+            .rotate-screen-p1{
+                font-family: "Reenie Beanie", cursive;
+                color: white;
+                position: absolute;
+                top: 25%;
+                transform: translate(0,-50%);
+                width: 100%;
+                text-align: center;
+                font-size: 2em; 
+            }
+            @keyframes rotatingarrow{
+                0%{
+                    transform: translate(-50%,-50%) rotate(0deg);
+                }
+                20%{
+                    transform: translate(-50%,-50%) rotate(360deg);
+                }
+                100%{
+                    transform: translate(-50%,-50%) rotate(360deg);
+                }
+            }
+            @media only screen and (max-width: 500px) {
+                .rotate-screen{
+                    display: block;
+                }
+            }
+            @media only screen and (max-width: 1000px) {
+                /* LAYER 1 scale 0.75*/
+                .center-circle, .box, .center-circle-glow, #name{
+                    transform: translate(-50%,-50%) scale(0.75);
+                }
+                /* LAYER 2 scale 0.5*/
+                .circle1, .circle1solid{
+                    height: 175px;
+                    width: 175px;
+                }
+                .circle1{
+                    border: 3px dotted rgba(139,134,126,0.5);
+                }
+                .circle1solid{
+                    border: 3px solid rgba(139,134,126,0.5);
+                    border-color: #8b867e transparent #8b867e transparent;
+                }
+                /* LAYER 3 scale 0.55*/
+                .rotatecircle, .rotatecirclefilled{ 
+                    scale: 0.75;
+                }
+                .circle2{
+                    width: 275px;
+                    height: 275px;
+                    border: 4px dotted #8b867e;
+                }
+                .rotatecircle1cont{ 
+                    /* fixed */
+                    top: calc(50% + (250px * 2/3 * 0.55));
+                    left: calc(50% - (280px * 2/3 * 0.55));
+                    transform-origin: 138px -57px;
+                }
+                .rotatecircle2cont{
+                    /* fixed */
+                    top: calc((50% - 270px*0.55));
+                    left: calc(50%);
+                    transform-origin: 40px 188px;
+                }
+                .rotatecircle5cont{
+                    /* fixed */
+                    top: calc(50% + (180px * 2/3 * 0.55));
+                    left: calc(50% + (300px * 2/3 * 0.55));
+                    transform-origin: -70px -30px;
+                }
+                /* LAYER 4 scale 0.65*/
+                .circle3{
+                    height: 423px;
+                    width: 423px;
+                    border: 4px dotted rgba(139,134,126,0.75);
+
+                }
+                .rotatecircle3cont{
+                    /* fixed */
+                    top: calc(50% - 0px);
+                    left: calc(50% - 335px*0.65);
+                    transform-origin: 255px 35px;
+                }
+
+                .rotatecircle4cont{
+                    /* fixed */
+                    top: calc(50% - 0px);
+                    left: calc(50% + 315px*0.65);
+                    transform-origin: -165px 35px;
+                }
+
+                .rotatecircle6cont{
+                    /* fixed */
+                    top: calc(50% - 335px*0.65);
+                    left: 50%;
+                    transform-origin: 35px 255px;
+                }
+
+                .rotatecircle7cont{
+                    /* fixed */
+                    top: calc(50% + 325px*0.65);
+                    left: 50%;
+                    transform-origin: 35px -175px;
+                }
+                /* LAYER 5 scale idk */
+                .circle4{
+                    height: 700px;
+                    width: 700px;
+                }
+
+                #circle{
+                    visibility: hidden;
+                }
+
+                .menucont{
+                    font-size: 1em;
+                }
+
+                #menucont1{
+                    top: 25%;
+                    left: 75%;
+                    padding: 4vh 5em 4vh 3em; 
+                }
+                #menucont2{
+                    top: 60%;
+                    left: 80%;
+                    padding: 4vh 5em 4vh 3em; 
+                }
+                #menucont3{
+                    top: 80%;
+                    left: 55%;
+                    padding: 4vh 5em 4vh 5em; 
+                }
+                #menucont4{
+                    top: 70%;
+                    left: 30%;
+                    padding: 4vh 5em 4vh 5em; 
+                }
+                #menucont5{
+                    top: 40%;
+                    left: 20%;
+                    padding: 4vh 5em 4vh 5em; 
+                }
+                #menucont6{
+                    top: 20%;
+                    left: 40%;
+                    padding: 4vh 5em 4vh 5em; 
+                }
+                .leftstar{
+                    transform: translate(-10px,-50%);
+                    height: 20px;
+                    width: auto;
+                }
+                .menucont:hover .leftstar,.menucont:active .leftstar{
+                    transform: translate(-20px,-50%);
+                }
+                .rightstar{
+                    transform: translate(-10px,-50%);
+                    height: 20px;
+                    width: auto;
+                }
+                .menucont:hover .rightstar,.menucont:active .rightstar {
+                    transform: translate(0px,-50%);
+                }
+
+                .menuobject{
+                    text-align: center;
+                }
+                .menuspecial{
+                    margin-left: 1em;
+                }
+                .texts{
+                    font-size: 1.75em;
+                }
+                .graphic{
+                    scale: 0.55;
+                }
+                .info-modal-content{
+                    width: 50vw;
+                }
+                .info-modal-content h1{
+                    font-size: 2rem;
+                    margin-top: 10px;
+                }
+                #info-close {
+                    margin: 10px;
+                }
+                .info-modal-content ul{
+                    margin: 20px;
+                    text-shadow: 0px 0px 20px #555;
+                    list-style-type: circle;
+                }
+                .info-modal-content li{
+                    margin-bottom: 15px;
+                    font-size: 1.25rem;
+                }
+
+            }     
         </style>
     </head>
     <body>
+        <div class='rotate-screen'>
+            <p class='rotate-screen-p1'>please</p>
+            <h1>ROTATE<br>YOUR<br>DEVICE</h1>
+            <p class='rotate-screen-p2'>for the best experience</p>
+            <i class="fa fa-rotate-right"></i>
+        </div>
         <div class='bgcontainer'></div>
 
         <div class='container'>
@@ -990,7 +1153,6 @@
                 <span><em id='days'></em> days coding</span>
                 <span id='date'></span>
             </div>
-            <!-- <div class='menu'><i class="fa fa-bars icon"></i></div> -->
             <div id='alert'>0 planets destroyed</div>
             <div class='layer1'>
                 <div class='main-circle' onclick='showName()'>
@@ -1064,12 +1226,12 @@
         <div id="info-modal" class="info-modal">
             <div class="info-modal-content">
                 <span id="info-close">&times;</span>
-                <h1 style='text-align: center; color: white; margin-top: 30px;'>What is this?</h1>
+                <h1>What is this?</h1>
                 <ul>
                     <li>My name is Neil Daniel. </li>
-                    <li>I'm a sophomore in high school, and this is my portfolio website.</li>
+                    <li>I'm a junior in high school, and this is my portfolio website.</li>
                     <li>I've been coding since 5th grade.</li>
-                    <li>Most of my important projects are gonna be listed under the projects page</li>
+                    <li>Important projects are listed under the projects page</li>
                 </ul>
             </div>
 
@@ -1123,6 +1285,18 @@
         </div>
 
         <script>
+            let onMobile = false;
+            function checkMobile(){
+                if(window.innerWidth >= 1000){
+                    onMobile = false;
+                }
+                else{
+                    onMobile = true;
+                }
+            }
+            checkMobile();
+            window.addEventListener('resize', checkMobile);
+
             document.getElementById("info").onclick = function() {
                 document.getElementById("info-modal").style.display = "block";
             }
@@ -1192,9 +1366,15 @@
                     document.getElementById("modal").style.display = "block";
                     document.getElementById('menucontbtn').style.animation = 'none';
                     document.getElementById('menu').style.animation = 'none';
-                    document.getElementById('menucontbtn').style.zIndex = '10'
-                    document.getElementById("menucontbtn").style.top = '40px';
-                    document.getElementById("menucontbtn").style.left = window.innerWidth-40 + 'px';
+                    document.getElementById('menucontbtn').style.zIndex = '10';
+                    if(onMobile == true){
+                        document.getElementById("menucontbtn").style.top = '10px';
+                        document.getElementById("menucontbtn").style.left = window.innerWidth-40 + 'px';
+                    }
+                    else{
+                        document.getElementById("menucontbtn").style.top = '40px';
+                        document.getElementById("menucontbtn").style.left = window.innerWidth-40 + 'px';
+                    }
                     document.getElementById("menucontbtn").style.transform = 'translate(-100%,-0%)';
                     document.getElementById("menuanti").style.animation = 'none';
                     document.getElementById('menuicon').classList.remove('fa-bars')
@@ -1214,8 +1394,15 @@
                 else{
                     document.getElementById("circle").style.display = "block";
                     document.getElementById("modal-container").style.opacity = '0';
-                    menutop = (window.innerHeight*0.5+167-45)+'px';
-                    menuleft = (window.innerWidth*0.5+167+45)+'px';
+                    if(onMobile == true){
+                        menutop = (window.innerHeight*0.5+35)+'px';
+                        menuleft = (window.innerWidth*0.5+115)+'px';
+                        document.getElementById("menucontbtn").style.transformOrigin = '-80px -5px';
+                    }
+                    else{
+                        menutop = (window.innerHeight*0.5+167-45)+'px';
+                        menuleft = (window.innerWidth*0.5+167+45)+'px';
+                    }
                     document.getElementById("modal-content").style.opacity = '0';
                     document.getElementById("menucontbtn").style.top = menutop;
                     document.getElementById("menucontbtn").style.left = menuleft;
@@ -1224,7 +1411,7 @@
                     document.getElementById('menu').style.animationDirection = 'reverse';
                     document.getElementById("menucontbtn").style.transform = 'translate(-50%,-50%)';
                     document.getElementById("menuanti").style.animation = 'rotate 16s linear infinite';
-                    document.getElementById('menuicon').classList.add('fa-bars')
+                    document.getElementById('menuicon').classList.add('fa-bars');
                     document.getElementById('menuicon').classList.remove('fa-close');
                     document.getElementById('particles').querySelectorAll('div').forEach(div => {
                         div.style.zIndex = '0';
@@ -1252,7 +1439,12 @@
                     document.getElementById('center-circle-glow').style.display = 'none';
                     const elem = document.getElementById("center-circle");
                     elem.style.borderRadius = '0px';
-                    elem.style.transform = 'translate(-50%,-50%) scale(1.4,1.4)';
+                    if(onMobile == true){
+                        elem.style.transform = 'translate(-50%,-50%) scale(1,1)';
+                    }
+                    else{
+                        elem.style.transform = 'translate(-50%,-50%) scale(1.4,1.4)';
+                    }
                     setTimeout(function() {
                         document.getElementById('name').style.opacity = "1";
                     }, 200);
@@ -1262,7 +1454,12 @@
                     const elem = document.getElementById("center-circle");
                     document.getElementById('name').style.opacity = "0";
                     elem.style.borderRadius = '50%';
-                    elem.style.transform = 'translate(-50%,-50%) scale(1,1)';
+                    if(onMobile == true){
+                        elem.style.transform = 'translate(-50%,-50%) scale(0.75,0.75)';
+                    }
+                    else{
+                        elem.style.transform = 'translate(-50%,-50%) scale(1,1)';   
+                    }
                     setTimeout(function() {
                         document.getElementById('center-circle-glow').style.display = 'block';
                     }, 800);
@@ -1297,32 +1494,43 @@
                     }, 7500);
                 });
             }
+            function pauseIcon(element){
+                if(menuon == false){
+                    element.style.zIndex = '1000';
+                    element.style.animationPlayState = 'paused';
+                    element.querySelectorAll('div').forEach(div => {
+                        div.style.animationPlayState = 'paused';
+                    });
+                    element.querySelectorAll('span').forEach(span => {
+                        span.style.animationPlayState = 'paused';
+                    });
+                }
+            }
+            function runIcon(element){
+                if(menuon == false){
+                    element.style.zIndex = '1';
+                    element.style.animationPlayState = 'running';
+                    element.querySelectorAll('div').forEach(div => {
+                        div.style.animationPlayState = 'running';
+                    });
+                    element.querySelectorAll('span').forEach(span => {
+                        span.style.animationPlayState = 'running';
+                    });
+                }
+            }
             for (let i = 0; i < document.getElementsByClassName("rotatecirclecont").length; i++) {
                 let element = document.getElementsByClassName("rotatecirclecont")[i];
                 element.addEventListener('mouseover', () => {
-                    if(menuon == false){
-                        element.style.zIndex = '1000';
-                        element.style.animationPlayState = 'paused';
-                        element.querySelectorAll('div').forEach(div => {
-                            div.style.animationPlayState = 'paused';
-                        });
-                        element.querySelectorAll('span').forEach(span => {
-                            span.style.animationPlayState = 'paused';
-                        });
-                    }
+                    pauseIcon(element)
                 });
-
                 element.addEventListener('mouseout', () => {
-                    if(menuon == false){
-                        element.style.zIndex = '1';
-                        element.style.animationPlayState = 'running';
-                        element.querySelectorAll('div').forEach(div => {
-                            div.style.animationPlayState = 'running';
-                        });
-                        element.querySelectorAll('span').forEach(span => {
-                            span.style.animationPlayState = 'running';
-                        });
-                    }
+                    runIcon(element)
+                });
+                element.addEventListener('touchstart', () => {
+                    pauseIcon(element)
+                });
+                element.addEventListener('touchend', () => {
+                    runIcon(element)
                 });
             }
 
