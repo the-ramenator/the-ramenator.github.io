@@ -1,3 +1,17 @@
+<!-- 
+===FOR MOBILE===
+1. Set circle boundaries to be less far apart (since the height is a bigger porportion of the width)
+2. Remove auto scrolling
+3. Add buttons to slide to next item
+4. Reduce font size
+
+===IN GENERAL===
+1. Bold or completely blacken the area of the big circle that the small circles become active in
+2. Set it such that hovering on any of the active timeline elements pauses the whole thing bc why not
+3. Set the small "scroll/drag for timeline" to be visible at all times
+4. Lighter background color
+5. Maybe new effect?
+-->
 <!DOCTYPE html>
 <html>
 
@@ -14,6 +28,10 @@
             rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap" rel="stylesheet">
         <style>
+            :root {
+                --black: rgba(15,15,15,1);
+            }
+
             * {
                 margin: 0;
                 padding: 0;
@@ -28,7 +46,7 @@
                 overflow: hidden;
                 width: 100vw;
                 height: 100vh;
-                background: black;
+                background: var(--black);
                 user-select: none;
             }
             #timelineContainer{
@@ -37,7 +55,7 @@
                 position: absolute;
                 overflow: hidden;
                 user-select: none;
-                background: black;
+                background: var(--black);
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -72,7 +90,7 @@
                 justify-content: center;
                 align-items: center;
                 animation: spin 6s cubic-bezier(0.42, 1, 0.58, 0) infinite;
-                outline: 10px solid black;
+                outline: 10px solid var(--black);
                 cursor: pointer;
                 z-index: 100;
             }
@@ -112,7 +130,7 @@
                 animation: rainbow 2s linear infinite;
                 z-index: 100;
                 outline: none;
-                box-shadow: 0px 0px 30px black;
+                box-shadow: 0px 0px 30px var(--black);
                 outline: 10px solid #D94F34;
             }
 
@@ -192,7 +210,7 @@
                 /* border: 2px solid white; */
                 font-family: "Doto", sans-serif;
                 font-weight: 900;
-                box-shadow: 0px -10px 30px black;
+                box-shadow: 0px -10px 30px var(--black);
                 z-index: 15;
                 animation: bounceTitleDate 10s ease-in-out infinite;
 
@@ -215,7 +233,7 @@
                 transform: translate(-100%,-50%);
                 text-align: right;
                 width: 25%;
-                box-shadow: 0px 10px 30px black;
+                box-shadow: 0px 10px 30px var(--black);
                 z-index: 15;
                 font-family: "Inconsolata", monospace;
                 animation: bounceDesc 10s ease-in-out infinite;
@@ -231,7 +249,7 @@
                 left: 50.5%;
                 transform: translate(0%,-50%);
                 text-align: center;
-                box-shadow: 0px 10px 30px black;
+                /* box-shadow: 0px 0px 30px white;  */
                 z-index: 100;
                 cursor: pointer;
                 animation: bounceImg 10s ease-in-out infinite;
@@ -580,6 +598,13 @@
                     opacity: 1
                 }
             }
+            #bigCircleBlocker{
+                position: absolute;
+                transform: translate(-50%,-50%);
+                background: rgba(15,15,15,0.75);
+                border-radius: 25px;
+                box-shadow: 0px 0px 50px var(--black);
+            }
         </style>
     </head>
     <body>
@@ -614,6 +639,7 @@
             <div id='timelineContainer'>
                 <div class="timeline-orbit" id='timelineOrbit'></div>
             </div>
+            <div id='bigCircleBlocker'></div>
             <div id='infoCont'>
                 <h1 id='activeTitle'></h1>
                 <h2 id='activeDate'></h2>
@@ -815,6 +841,8 @@
                     }
                 ]
             }
+            let leftActiveBound = 0.4;
+            let rightActiveBound = 0.6;
             const orbit = document.querySelector('.timeline-orbit');
             for(let i = 0; i < cards.items.length; i++){
                 let dot = document.createElement('div');
@@ -888,6 +916,7 @@
                 orbit.style.top = nLower+'px';
                 orbit.style.marginLeft = -m+'px';
 
+
                 dots.forEach((dot, i) => {
                     const angle = ((i / total) * 2 * Math.PI) + virtualScroll * 0.002 + (startOffset * (Math.PI / 180));
                     const x = center + radius * Math.cos(angle) - dot.offsetWidth / 2;
@@ -906,13 +935,34 @@
                 img:   document.getElementById('dotToImg'),
                 desc:  document.getElementById('dotToDesc')
             };
+            function averageColor(imageElement) {
+                var canvas = document.createElement('canvas'), context = canvas.getContext && canvas.getContext('2d'), imgData, width, height, length, rgb = { r: 0, g: 0, b: 0 }, count = 0;
+                height = canvas.height = imageElement.naturalHeight || imageElement.offsetHeight || imageElement.height;
+                width = canvas.width = imageElement.naturalWidth || imageElement.offsetWidth || imageElement.width;
+                context.drawImage(imageElement, 0, 0);
+                imgData = context.getImageData(0, 0, width, height);
+                length = imgData.data.length;
+                for (var i = 0; i < length; i += 4) {
+                    rgb.r += imgData.data[i];
+                    rgb.g += imgData.data[i + 1];
+                    rgb.b += imgData.data[i + 2];
+                    count++;
+                }
+                rgb.r = Math.floor(rgb.r / count);
+                rgb.g = Math.floor(rgb.g / count);
+                rgb.b = Math.floor(rgb.b / count);
+                return rgb;
+            }
 
             function updateActiveDot(dot, item, centerX, centerY) {
                 activeTitleEl.textContent = item.title;
-                activeDateEl.textContent  = getFullDate(item.date);
-                activeDescEl.textContent  = item.desc;
-                activeImgEl.src           = item.img;
-
+                activeDateEl.textContent = getFullDate(item.date);
+                activeDescEl.textContent = item.desc;
+                activeImgEl.src = item.img;
+                activeImgEl.onload = function() {
+                    let rgb = averageColor(activeImgEl);
+                    activeImgEl.style.boxShadow = '0px 0px 30px rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ', 0.5)';
+                }
                 const titleBox = activeTitleEl.getBoundingClientRect();
                 const imgBox   = activeImgEl.getBoundingClientRect();
                 const descBox  = activeDescEl.getBoundingClientRect();
@@ -929,24 +979,32 @@
                 setLine(lineMap.desc,  descBox.left + descBox.width / 2, descBox.top + descBox.height);
             }
             const scrollNudge = document.getElementById('scrollNudge');
+            let lastActiveDotX = null;
             function detectActiveDot() {
                 const screenWidth = window.innerWidth;
                 const screenHeight = window.innerHeight;
                 let activeFound = false;
+
+                let bigCircleBlocker = document.getElementById('bigCircleBlocker');
+                bigCircleBlocker.style.height = '50px';
+                bigCircleBlocker.style.top = window.innerHeight*0.7+'px';
+
 
                 dots.forEach(dot => {
                     const rect = dot.getBoundingClientRect();
                     const centerX = rect.left + rect.width / 2;
                     const centerY = rect.top + rect.height / 2;
 
-                    const isActive = centerX > screenWidth * 0.4 && centerX < screenWidth * 0.6 && centerY < screenHeight;
+                    const isActive = centerX > screenWidth * leftActiveBound && centerX < screenWidth * rightActiveBound && centerY < screenHeight;
                     dot.classList.toggle('active', isActive);
+
 
                     if (isActive) {
                         activeFound = true;
                         const index = cards.items.findIndex(item => item.id == dot.id);
                         const item = cards.items[index];
                         updateActiveDot(dot, item, centerX, centerY);
+                        lastActiveDotX = centerX;
                     }
                 });
                 const infoCont = document.getElementById('infoCont');
@@ -955,10 +1013,19 @@
                     scrollNudge.style.opacity = 1;
                     infoCont.style.opacity = 0;
                     svgCont.style.opacity = 0;
+                    bigCircleBlocker.style.width = '0px';
+                    if(lastActiveDotX < window.innerWidth*0.5){
+                        bigCircleBlocker.style.left = (window.innerWidth*rightActiveBound)+'px';
+                    }
+                    else{
+                        bigCircleBlocker.style.left = (window.innerWidth*leftActiveBound)+'px';
+                    }
                 } else {
                     scrollNudge.style.opacity = 0;
                     infoCont.style.opacity = 1;
                     svgCont.style.opacity = 1;
+                    bigCircleBlocker.style.width = window.innerWidth*(rightActiveBound-leftActiveBound)+'px';
+                    bigCircleBlocker.style.left = '50%';
                 }
             }
             function random(min, max, fixed) {
