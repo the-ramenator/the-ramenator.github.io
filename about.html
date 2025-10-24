@@ -1,23 +1,16 @@
 <!-- 
 ===FOR MOBILE===
-1. Set circle boundaries to be less far apart (since the height is a bigger porportion of the width)
-2. Remove auto scrolling
-3. Add buttons to slide to next item
-4. Reduce font size
+1. Add buttons to slide to next item
 
 ===IN GENERAL===
-1. Bold or completely blacken the area of the big circle that the small circles become active in
-2. Set it such that hovering on any of the active timeline elements pauses the whole thing bc why not
-3. Set the small "scroll/drag for timeline" to be visible at all times
-4. Lighter background color
-5. Maybe new effect?
+1. Maybe new effect instead of the dots
 -->
 <!DOCTYPE html>
 <html>
 
     <head>
         <title>About</title>
-        <!-- <base href="https://the-ramenator.github.io/" /> -->
+        <base href="https://the-ramenator.github.io/" />
         <link rel="icon" type="image/png" href="assets/homepage/favicon.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -203,8 +196,8 @@
             }
             #activeTitle{
                 position: absolute;
-                top: 85%;
-                left: 50%;
+                /* top: 85%; */
+                /* left: 50%; */
                 transform: translate(-50%,-50%);
                 text-align: center;
                 /* border: 2px solid white; */
@@ -217,8 +210,8 @@
             }
             #activeDate{
                 position: absolute;
-                top: 90%;
-                left: 50%;
+                /* top: 90%; */
+                /* left: 50%; */
                 transform: translate(-50%,-50%);
                 text-align: center;
                 font-family: "Doto", sans-serif;
@@ -228,8 +221,8 @@
             }
             #activeDesc{
                 position: absolute;
-                top: 55%;
-                left: 49.5%;
+                /* top: 55%; */
+                /* left: 49.5%; */
                 transform: translate(-100%,-50%);
                 text-align: right;
                 width: 25%;
@@ -245,8 +238,8 @@
                 height: auto;
                 border-radius: 16px;
                 position: absolute;
-                top: 55%;
-                left: 50.5%;
+                /* top: 55%; */
+                /* left: 50.5%; */
                 transform: translate(0%,-50%);
                 text-align: center;
                 /* box-shadow: 0px 0px 30px white;  */
@@ -476,6 +469,21 @@
                 margin-top: 1em;
                 user-select: none;
             }
+            #titleCont span {
+                font-family: "Inconsolata", monospace;
+                position: absolute;
+                color: white;
+                width: 100%;
+                text-align: center;
+                font-size: 1em;
+                margin-top: 1em;
+                user-select: none; 
+                left: 50%;
+                transform: translate(-50%,-50%);
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+                    0 0 20px rgba(255, 255, 255, 0.6),
+                    0 0 30px rgba(255, 255, 255, 0.4);
+            }
             #scrollNudge{
                 position: absolute;
                 color: white;
@@ -605,6 +613,37 @@
                 border-radius: 25px;
                 box-shadow: 0px 0px 50px var(--black);
             }
+            @media only screen and (max-width: 450px) {
+                body:has(#titleCont:hover) #bigBoyCont {
+                    opacity: 0;
+                }
+
+                #titleCont{
+                    top: 30%;
+                    width: 80vw;
+                }           
+                #titleCont h1{
+                    font-size: 2em;
+                }
+                .home img {
+                    margin: 2em 3.5em;
+                }
+                #activeTitle{
+                    width: 90vw;
+                }
+                #activeDate{
+                    width: 90vw;
+                }
+                #activeDesc{
+                    width: 50vw;
+                }
+                #activeImg{
+                    width: 175px;
+                    height: auto;
+                }
+
+            }
+
         </style>
     </head>
     <body>
@@ -620,8 +659,8 @@
         -->
         <div id='titleCont'>
             <h1>Hi, I'm The Ramenator!</h1>
+            <span>Drag or scroll to activate the timeline...</span>
             <p id='titleDesc'>
-                <span style='font-size: 75%;'>Drag or scroll to activate the timeline...</span>
                 <br><br>
                 I've been coding since third grade, beginning web development in fifth. Since my start, I've learned a lot and been able to create some pretty cool projects. I'm currently a junior in high school, and am planning to major in CS for college. Explore the timeline below to see my progression.
             </p>
@@ -641,10 +680,10 @@
             </div>
             <div id='bigCircleBlocker'></div>
             <div id='infoCont'>
-                <h1 id='activeTitle'></h1>
-                <h2 id='activeDate'></h2>
-                <span id='activeDesc'></span>
-                <img id='activeImg'>
+                <h1 class='activeEl' id='activeTitle'></h1>
+                <h2 class='activeEl' id='activeDate'></h2>
+                <span class='activeEl' id='activeDesc'></span>
+                <img class='activeEl' id='activeImg'>
             </div>
             <div id='scrollNudge'>
                 <div class='scrollDot'></div>
@@ -716,7 +755,7 @@
                     {
                         id: 7,
                         title: "Rebrand",
-                        date: "5/24/2022",
+                        date: "5/24/2021",
                         img: "/assets/about-me-previews/5-24-2021.png",
                         desc: "Changed my brand from neildaniel00 to The Ramenator",
                     },
@@ -873,6 +912,7 @@
             let virtualScroll = 0;
             let targetScroll = 0;
 
+
             function getFullDate(dateString) {
                 const date = new Date(dateString);
                 if (isNaN(date.getTime())) {
@@ -898,32 +938,112 @@
                 const result = paddedStart.padEnd(length, char);
                 return result;
             }
+
+            function lerp(a, b, t) {
+                return a + (b - a) * t;
+            }
             function positionDots() {
-                let m = window.innerWidth;
-                let n = window.innerHeight;
-                let nLower = n*0.7;
-                let nUpper = n*0.95;
-                let h = nUpper-nLower;
-                let bounding = 2*(Math.pow((m/2),2)/(2*h)+h/2);
-                const startOffset = 277;
-                orbit.style.width = bounding+'px';
-                orbit.style.height = bounding+'px';
-                const rect = orbit.getBoundingClientRect();
-                const center = rect.width / 2;
-                const radius = rect.width / 2;
+                const m = window.innerWidth;
+                const n = window.innerHeight;
+
+                // Compute layout bounds (smoothly as before)
+                const minWidth = 450;
+                const maxWidth = 1200;
+                const t = Math.min(1, Math.max(0, (m - minWidth) / (maxWidth - minWidth)));
+
+                const nLower = lerp(n * 0.6, n * 0.7, t);
+                const nUpper = lerp(n * 0.63, n * 0.95, t);
+                const h = nUpper - nLower;
+                const bounding = 2 * ((Math.pow((m / 2), 2) / (2 * h)) + h / 2);
+
+                const orbit = document.querySelector('.timeline-orbit');
+                orbit.style.width = bounding + 'px';
+                orbit.style.height = bounding + 'px';
+                orbit.style.top = nLower + 'px';
+                orbit.style.marginLeft = -m + 'px';
+
+                const centerY = nLower + bounding / 2; // <-- the vertical center of the orbit
+                const centerX = window.innerWidth / 2; // horizontally centered
+                const radius = bounding / 2;
                 const total = dots.length;
+                const startOffset = 277;
 
-                orbit.style.top = nLower+'px';
-                orbit.style.marginLeft = -m+'px';
+                // Reposition dots
+                dots.forEach((dot, i) => {
+                    const angle = ((i / total) * 2 * Math.PI) +
+                        virtualScroll * 0.002 +
+                        (startOffset * (Math.PI / 180));
+                    const x = centerX + radius * Math.cos(angle) - dot.offsetWidth / 2;
+                    const y = centerY + radius * Math.sin(angle) - dot.offsetHeight / 2;
+                    dot.style.left = `${x}px`;
+                    dot.style.top = `${y}px`;
+                });
 
+                const title = document.getElementById('activeTitle');
+                const date  = document.getElementById('activeDate');
+                const desc  = document.getElementById('activeDesc');
+                const img   = document.getElementById('activeImg');
+
+                const verticalOffset = radius * 0.3;
+
+                title.style.top = (centerY + verticalOffset * 1.2) + 'px';
+                date.style.top  = (centerY + verticalOffset * 1.6) + 'px';
+                desc.style.top  = (centerY - verticalOffset) + 'px';
+                img.style.top   = (centerY - verticalOffset) + 'px';
+
+                title.style.left = '50%';
+                date.style.left  = '50%';
+                desc.style.left  = '49.5%';
+                img.style.left   = '50.5%';
+            }
+            let nLower;
+            let nUpper;
+            function positionDots() {
+                const m = window.innerWidth;
+                const n = window.innerHeight;
+                const minWidth = 400;
+                const maxWidth = 1200;
+                const t = Math.min(1, Math.max(0, (m - minWidth) / (maxWidth - minWidth)));
+                nLower = lerp(n * 0.7, n * 0.7, t);
+                nUpper = lerp(n * 0.72, n * 0.95, t);
+
+                const h = nUpper - nLower;
+                const bounding = 2 * ((Math.pow((m / 2), 2) / (2 * h)) + h / 2);
+
+                const orbit = document.querySelector('.timeline-orbit');
+                orbit.style.width = bounding + 'px';
+                orbit.style.height = bounding + 'px';
+                orbit.style.top = nLower + 'px';
+                orbit.style.marginLeft = -m + 'px';
+
+                const center = bounding / 2;
+                const radius = bounding / 2;
+                const total = dots.length;
+                const startOffset = 277;
 
                 dots.forEach((dot, i) => {
-                    const angle = ((i / total) * 2 * Math.PI) + virtualScroll * 0.002 + (startOffset * (Math.PI / 180));
+                    const angle = ((i / total) * 2 * Math.PI) +
+                        virtualScroll * 0.002 +
+                        (startOffset * (Math.PI / 180));
                     const x = center + radius * Math.cos(angle) - dot.offsetWidth / 2;
                     const y = center + radius * Math.sin(angle) - dot.offsetHeight / 2;
                     dot.style.left = `${x}px`;
                     dot.style.top = `${y}px`;
                 });
+                // offsets relative to orbit center
+                // const verticalOffset = (1/radius)*120000; // tweak for aesthetic spacing
+
+                activeTitleEl.style.top = (nLower + n*0.15) + 'px'; /*verticalOffset*/
+                activeDateEl.style.top  = (nLower + n*0.2) + 'px';
+                activeDescEl.style.top  = (nLower - n*0.15) + 'px';
+                activeImgEl.style.top   = (nLower - n*0.15) + 'px';
+
+                // ensure horizontal alignment still works
+                activeTitleEl.style.left = '50%';
+                activeDateEl.style.left  = '50%';
+                activeDescEl.style.left  = '49.5%';
+                activeImgEl.style.left   = '50.5%';
+
             }
             const activeTitleEl = document.getElementById('activeTitle');
             const activeDateEl = document.getElementById('activeDate');
@@ -964,8 +1084,8 @@
                     activeImgEl.style.boxShadow = '0px 0px 30px rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ', 0.5)';
                 }
                 const titleBox = activeTitleEl.getBoundingClientRect();
-                const imgBox   = activeImgEl.getBoundingClientRect();
-                const descBox  = activeDescEl.getBoundingClientRect();
+                const imgBox = activeImgEl.getBoundingClientRect();
+                const descBox = activeDescEl.getBoundingClientRect();
                 const setLine = (line, x2, y2) => {
                     line.setAttribute("x1", centerX);
                     line.setAttribute("y1", centerY);
@@ -979,53 +1099,65 @@
                 setLine(lineMap.desc,  descBox.left + descBox.width / 2, descBox.top + descBox.height);
             }
             const scrollNudge = document.getElementById('scrollNudge');
-            let lastActiveDotX = null;
+            let prevActiveIndex = null;
+            let currentActiveIndex = null;
+
             function detectActiveDot() {
                 const screenWidth = window.innerWidth;
                 const screenHeight = window.innerHeight;
                 let activeFound = false;
+                let activeDotIndex = null;
 
                 let bigCircleBlocker = document.getElementById('bigCircleBlocker');
                 bigCircleBlocker.style.height = '50px';
-                bigCircleBlocker.style.top = window.innerHeight*0.7+'px';
+                bigCircleBlocker.style.top =  nLower + 'px';
 
-
-                dots.forEach(dot => {
+                dots.forEach((dot, i) => {
                     const rect = dot.getBoundingClientRect();
                     const centerX = rect.left + rect.width / 2;
                     const centerY = rect.top + rect.height / 2;
 
-                    const isActive = centerX > screenWidth * leftActiveBound && centerX < screenWidth * rightActiveBound && centerY < screenHeight;
+                    const isActive = centerX > screenWidth * leftActiveBound &&
+                        centerX < screenWidth * rightActiveBound &&
+                        centerY < screenHeight;
+
                     dot.classList.toggle('active', isActive);
-
-
                     if (isActive) {
                         activeFound = true;
-                        const index = cards.items.findIndex(item => item.id == dot.id);
-                        const item = cards.items[index];
+                        activeDotIndex = i;
+                        const item = cards.items[i];
                         updateActiveDot(dot, item, centerX, centerY);
                         lastActiveDotX = centerX;
                     }
                 });
+
+                if (activeDotIndex !== currentActiveIndex) {
+                    prevActiveIndex = currentActiveIndex;
+                    currentActiveIndex = activeDotIndex;
+                    if (activeDotIndex === null && prevActiveIndex !== null) {
+                        const prevDotRect = dots[prevActiveIndex].getBoundingClientRect();
+                        const prevDotX = prevDotRect.left + prevDotRect.width / 2;
+                        const side = prevDotX > screenWidth / 2 ? rightActiveBound : leftActiveBound;
+                        bigCircleBlocker.style.left = (screenWidth * side) + 'px';
+                        bigCircleBlocker.style.width = '0px';
+                    }
+
+                    if (activeDotIndex !== null) {
+                        bigCircleBlocker.style.left = '50%';
+                        bigCircleBlocker.style.width =
+                            screenWidth * (rightActiveBound - leftActiveBound) + 'px';
+                    }
+                }
                 const infoCont = document.getElementById('infoCont');
                 const svgCont = document.getElementById('svgCont');
                 if (!activeFound) {
                     scrollNudge.style.opacity = 1;
                     infoCont.style.opacity = 0;
                     svgCont.style.opacity = 0;
-                    bigCircleBlocker.style.width = '0px';
-                    if(lastActiveDotX < window.innerWidth*0.5){
-                        bigCircleBlocker.style.left = (window.innerWidth*rightActiveBound)+'px';
-                    }
-                    else{
-                        bigCircleBlocker.style.left = (window.innerWidth*leftActiveBound)+'px';
-                    }
                 } else {
                     scrollNudge.style.opacity = 0;
                     infoCont.style.opacity = 1;
                     svgCont.style.opacity = 1;
-                    bigCircleBlocker.style.width = window.innerWidth*(rightActiveBound-leftActiveBound)+'px';
-                    bigCircleBlocker.style.left = '50%';
                 }
             }
             function random(min, max, fixed) {
@@ -1094,7 +1226,22 @@
                 touchStartY = e.touches[0].clientY;
             }, { passive: false });
             */
+            let activeElements = document.querySelectorAll('.activeEl');
 
+            activeElements.forEach(item => {
+                item.addEventListener('mouseover', event => {
+                    isPaused = true;
+                });
+                item.addEventListener('mouseout', () => {
+                    isPaused = false;
+                });
+                item.addEventListener('touchstart', (e) => {
+                    isPaused = true;
+                });
+                item.addEventListener('touchend', (e) => {
+                    isPaused = false;
+                });
+            });
             window.addEventListener('resize', function(){
                 positionDots();
                 document.getElementById('particles').innerHTML = '';
