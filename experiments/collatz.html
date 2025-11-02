@@ -1,11 +1,8 @@
-<!--
-EFFECT IDEA: Concentric blobs w/ rings fading in and out
--->
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
-        <base href="https://the-ramenator.github.io/" />
+        <!-- <base href="https://the-ramenator.github.io/" /> -->
         <link rel="icon" type="image/png" href="assets/homepage/favicon.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -147,12 +144,12 @@ EFFECT IDEA: Concentric blobs w/ rings fading in and out
                 align-items: center
             }
             #n{
-                transition: 0s;
+                transition: 0.1s;
                 background: transparent;
                 border-top: none;
                 border-left: none;
                 border-right: none;
-                border-bottom: none;
+                border-bottom: 1px solid white;
                 color: white;
                 font-size: 5em;
                 margin-right: 0.5em;
@@ -233,21 +230,27 @@ EFFECT IDEA: Concentric blobs w/ rings fading in and out
                 display: none;
             }
             #leftBorder{
-                background: linear-gradient(90deg,rgba(30, 30, 30, 1) 0%, rgba(30, 30, 30, 0) 100%);
+                background-blend-mode: overlay;
+                background-image:
+                    linear-gradient(90deg, rgba(30, 30, 30, 1) 0%, rgba(30, 30, 30, 1) 30%, rgba(30, 30, 30, 0) 100%),
+                    url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=");
                 width: 20%;
                 height: 10em;
                 position: absolute;
                 top: 50%;
-                left: 35%;
+                left: 34%;
                 transform: translate(-50%,-50%);
             }
             #rightBorder{
-                background: linear-gradient(270deg,rgba(30, 30, 30, 1) 0%, rgba(30, 30, 30, 0) 100%);
+                background-blend-mode: overlay;
+                background-image:
+                    linear-gradient(270deg, rgba(30, 30, 30, 1) 0%, rgba(30, 30, 30, 1) 30%, rgba(30, 30, 30, 0) 100%),
+                    url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=");
                 width: 20%;
                 height: 10em;
                 position: absolute;
                 top: 50%;
-                left: 65%;
+                left: 66%;
                 transform: translate(-50%,-50%);
             }
             #valCont span{
@@ -376,6 +379,53 @@ EFFECT IDEA: Concentric blobs w/ rings fading in and out
                 cursor: pointer;
             }
 
+
+
+            .blobGroup {
+                position: absolute;
+                transform: translate(-50%, -50%);
+            }
+
+            .blob {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border-radius: 50%;
+                background: transparent;
+                border: 2px solid rgba(255,255,255,0.6);
+                opacity: 0.5;
+            }
+
+            /* Blob Animations */
+            .blob1 { animation: morph1 8s ease-in-out infinite; }
+            .blob2 { animation: morph2 10s ease-in-out infinite; }
+            .blob3 { animation: morph3 12s ease-in-out infinite; }
+            .blob4 { animation: morph4 14s ease-in-out infinite; }
+            .blob5 { animation: morph5 16s ease-in-out infinite; }
+
+            /* Morph Variants */
+            @keyframes morph1 {
+                0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+                50% { border-radius: 40% 60% 70% 30% / 50% 60% 40% 70%; }
+            }
+            @keyframes morph2 {
+                0%, 100% { border-radius: 70% 30% 50% 50% / 40% 60% 60% 40%; }
+                50% { border-radius: 50% 50% 30% 70% / 60% 40% 70% 30%; }
+            }
+            @keyframes morph3 {
+                0%, 100% { border-radius: 55% 45% 65% 35% / 40% 50% 60% 50%; }
+                50% { border-radius: 45% 55% 35% 65% / 60% 40% 50% 60%; }
+            }
+            @keyframes morph4 {
+                0%, 100% { border-radius: 68% 32% 42% 58% / 48% 52% 58% 42%; }
+                50% { border-radius: 38% 62% 62% 38% / 68% 32% 42% 58%; }
+            }
+            @keyframes morph5 {
+                0%, 100% { border-radius: 64% 36% 52% 48% / 38% 72% 28% 62%; }
+                50% { border-radius: 46% 54% 64% 36% / 62% 38% 72% 28%; }
+            }
+
         </style>
     </head>
     <body>
@@ -384,7 +434,7 @@ EFFECT IDEA: Concentric blobs w/ rings fading in and out
         <div id="infoModal" class="modal">
 
             <div class="modal-content">
-      <span class="close">&times;</span>
+                <span class="close">&times;</span>
                 <h1 style='color: #FFA3A3;'>What's the Collatz Conjecture?</h1>
                 <ul>
                     <li>Take any number N</li>
@@ -443,7 +493,45 @@ EFFECT IDEA: Concentric blobs w/ rings fading in and out
                 </div>
             </div>
         </div>
-    <script>
+        <div class="blobs">
+            <div class="blobGroup blob1Cont" style="top:10%; left:35%;">
+                <div class="blob blob1" style="width:220px; height:220px;"></div>
+                <div class="blob blob1" style="width:170px; height:170px;"></div>
+                <div class="blob blob1" style="width:120px; height:120px;"></div>
+                <div class="blob blob1" style="width:80px; height:80px;"></div>
+            </div>
+
+            <div class="blobGroup blob2Cont" style="top:85%; left:80%;">
+                <div class="blob blob2" style="width:160px; height:160px;"></div>
+                <div class="blob blob2" style="width:120px; height:120px;"></div>
+                <div class="blob blob2" style="width:90px; height:90px;"></div>
+                <div class="blob blob2" style="width:60px; height:60px;"></div>
+            </div>
+
+            <div class="blobGroup blob3Cont" style="top:30%; left:85%;">
+                <div class="blob blob3" style="width:260px; height:260px;"></div>
+                <div class="blob blob3" style="width:210px; height:210px;"></div>
+                <div class="blob blob3" style="width:150px; height:150px;"></div>
+                <div class="blob blob3" style="width:100px; height:100px;"></div>
+            </div>
+
+            <div class="blobGroup blob4Cont" style="top:80%; left:15%;">
+                <div class="blob blob4" style="width:200px; height:200px;"></div>
+                <div class="blob blob4" style="width:150px; height:150px;"></div>
+                <div class="blob blob4" style="width:100px; height:100px;"></div>
+                <div class="blob blob4" style="width:60px; height:60px;"></div>
+            </div>
+
+            <div class="blobGroup blob5Cont" style="top:30%; left:2%;">
+                <div class="blob blob5" style="width:180px; height:180px;"></div>
+                <div class="blob blob5" style="width:130px; height:130px;"></div>
+                <div class="blob blob5" style="width:90px; height:90px;"></div>
+                <div class="blob blob5" style="width:50px; height:50px;"></div>
+            </div>
+        </div>
+
+
+        <script>
             function random(min,max){
                 return (Math.random()*(max-min)+min).toFixed(0);
             }
@@ -593,6 +681,7 @@ EFFECT IDEA: Concentric blobs w/ rings fading in and out
                             else{
                                 didSkip = false;
                                 counter = list.length;
+                                runCounter.innerText = "Terms: "+counter;
                                 const scrollTotal = scrollAmounts.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
                                 valContContainer.scrollBy({
                                     left: scrollTotal,
