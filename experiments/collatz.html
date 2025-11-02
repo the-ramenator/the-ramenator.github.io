@@ -221,7 +221,7 @@
                 transform: translate(-50%,-50%);
                 font-family: var(--mono);
                 font-size: 5em;
-                width: 50%;
+                width: 75%;
                 height: 2em;
                 overflow: scroll;
                 scrollbar-width: none;
@@ -238,7 +238,7 @@
                 height: 10em;
                 position: absolute;
                 top: 50%;
-                left: 34%;
+                left: 20%;
                 transform: translate(-50%,-50%);
             }
             #rightBorder{
@@ -250,7 +250,7 @@
                 height: 10em;
                 position: absolute;
                 top: 50%;
-                left: 66%;
+                left: 80%;
                 transform: translate(-50%,-50%);
             }
             #valCont span{
@@ -694,52 +694,62 @@
                             scoreSpan.style.position = 'absolute';
                             scoreSpan.style.right = '3em';
                             scoreSpan.style.top = '5em';
+                            scoreSpan.style.transition = '2s';
                             scoreSpan.classList.add('scorespan');
                             scoreSpan.style.opacity = 0;
                             document.getElementById('runCont').append(scoreSpan);
                             scoreSpan.style.opacity = 1;
-
+                            let youPicked = document.getElementById('youPicked');
                             clearInterval(interval);
                             if(choseOver && bound < list.length){
                                 score++;
                                 scoreSpan.style.color = "#C3FFAB";
                                 scoreSpan.innerHTML = "+1";
+                                youPicked.style.color = "#C3FFAB";
+                                youPicked.innerHTML = "You were correct";
                             }
                             else if(choseOver == false && bound > list.length){
                                 score++;
                                 scoreSpan.style.color = "#C3FFAB";
                                 scoreSpan.innerHTML = "+1";
+                                youPicked.style.color = "#C3FFAB";
+                                youPicked.innerHTML = "You were correct";
                             }
                             else if(bound == list.length){
                                 score++;
                                 scoreSpan.style.color = "#C3FFAB";
                                 scoreSpan.innerHTML = "+1";
+                                youPicked.style.color = "#C3FFAB";
+                                youPicked.innerHTML = "You were correct";
                             }
                             else{
                                 score--;
                                 scoreSpan.style.color = "#FFA3A3";
                                 scoreSpan.innerHTML = "-1";
+                                youPicked.style.color = "#FFA3A3";
+                                youPicked.innerHTML = "You were incorrect";
                             }
                             localStorage.setItem('collatzScore',score);
                             setTimeout(function(){
                                 scoreSpan.style.opacity = 0;
-                                scoreSpan.style.transform = 'translate(0,-2em)';
+                                scoreSpan.style.transform = 'translate(0,-3em)';
                             },300);
                             setTimeout(function(){
                                 document.getElementById('score').innerText = 'Score: '+score;
                                 scoreSpan.remove();
-                            },500);
+                            },2000);
                             setTimeout(function(){
                                 document.getElementById('baseCont').style.display = 'block';
                                 document.getElementById('baseCont').style.opacity = 1;
                                 document.getElementById('runCont').style.opacity = 0;
-                            },2500);
+                            },3000);
                             setTimeout(function(){
                                 document.getElementById('runCont').style.display = 'none';
                                 valCont.innerHTML = '';
+                                youPicked.style.color = "#FFF";
                                 valCont.style.transform = 'translate(0,0)';
                                 createCollatz(random(4,1000));
-                            },3000);
+                            },3500);
 
                         }
                     }, 500);
