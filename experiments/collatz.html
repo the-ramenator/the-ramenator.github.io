@@ -8,7 +8,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&family=Doto:wght@100..900&family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
-
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <title>Collatz Conjecture Over Under</title>
         <style>
             :root{
@@ -287,13 +287,19 @@
                 font-family: var(--mono);
                 font-size: 2em;
             }
-
             #infoBtn{
-                color: var(--green);
+                font-size: 2em;
                 margin: 2em;
+            }
+            #graphBtn{
+                font-size: 1.75em;
+                margin: 2.25em;
+                z-index: 100;
+            }
+            #infoBtn, #graphBtn{
+                color: var(--green);
                 width: 50px;
                 height: 50px;
-                font-size: 2em;
                 border: 3px solid var(--green);
                 border-radius: 50%;
                 position: absolute;
@@ -301,13 +307,13 @@
                 left: 0;
                 cursor: pointer;
             }
-            #infoBtn i{
+            #infoBtn i, #graphBtn i{
                 position: absolute;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%,-50%);
             }
-            #infoBtn:hover{
+            #infoBtn:hover, #graphBtn:hover{
                 color: var(--greenDark);
                 border: 3px solid var(--greenDark);
             }
@@ -425,11 +431,22 @@
                 0%, 100% { border-radius: 64% 36% 52% 48% / 38% 72% 28% 62%; }
                 50% { border-radius: 46% 54% 64% 36% / 62% 38% 72% 28%; }
             }
-
+            #graphCont{
+                width: 50%; 
+                height: 40%;
+                position: absolute;
+                top: 55%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            canvas{
+            }
         </style>
     </head>
     <body>
-        <div id="infoBtn"><i class="fa-solid fa-info"></i></div>
 
         <div id="infoModal" class="modal">
 
@@ -437,7 +454,7 @@
                 <span class="close">&times;</span>
                 <h1 style='color: #FFA3A3;'>What's the Collatz Conjecture?</h1>
                 <ul>
-                    <li>Take any number N</li>
+                    <li>Take any positive integer N</li>
                     <li>If N is even, divide by 2</li>
                     <li>If N is odd, multiply by 3 and add 1. </li>
                 </ul>
@@ -455,6 +472,7 @@
 
         <span id='score'>Score: 0</span>
         <div id='baseCont'>
+            <div id="infoBtn"><i class="fa-solid fa-info"></i></div>
             <div id='introCont'>
                 <span class='title'>Collatz Conjecture</span>
             </div>
@@ -474,22 +492,31 @@
             </div>
         </div>
         <div id='runCont'>
+            <div id="graphBtn"><i class="fa-solid fa-chart-simple"></i></div>  
+            <!-- <i class="fa-solid fa-square-poll-vertical"></i> -->
+            <!-- <i class="fa-solid fa-list"></i> -->
             <span id='runCounter'>Terms: 0</span>
-            <div id='valContContainer'>
-                <div id='valCont'></div>
+            <div id='numberCont'>
+                <div id='valContContainer'>
+                    <div id='valCont'></div>
+                </div>
+                <div id='leftBorder'></div>
+                <div id='rightBorder'></div>
             </div>
-            <div id='leftBorder'></div>
-            <div id='rightBorder'></div>
+            <div id='graphCont'>
+                <canvas id="myChart"></canvas>
+            </div>
+
             <span id='youPicked'></span>
             <span id='skip'><i class="fa-solid fa-forward"></i></span>
             <div class='key'>
                 <div class='greenBoxCont'>
                     <div class='greenBox'></div>
-                    n/2
+                    3n+1
                 </div>
                 <div class='redBoxCont'>
                     <div class='redBox'></div>
-                    3n+1
+                    n/2
                 </div>
             </div>
         </div>
@@ -549,6 +576,81 @@
                 }
                 return list;
             }
+            // Initial data
+            const data = {
+                labels: [], // time or sample number
+                datasets: [{
+                    label: '',
+                    data: [],
+                    borderColor: '#1E1E1E',
+                    borderWidth: 2,
+                    tension: 0.1,
+                    segment: {
+                        borderColor: ctx => {
+                            const current = ctx.p0.parsed.y;
+                            const next = ctx.p1.parsed.y;
+                            return next >= current ? '#C3FFAB' : '#FFA3A3';
+                        }
+                    },
+                    pointBackgroundColor: 'white',
+                    fill: false,
+                }]
+            };
+
+            const config = {
+                type: 'line',
+                data,
+                options: {
+                    animation: {
+                        duration: 500, // transition speed in ms
+                        easing: 'easeOutQuart', // easing function
+                    },
+                    plugins: {
+                        legend: {
+                            labels: { color: 'white' } // legend text color
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: 'white' }, // X-axis tick labels
+                            grid: { color: 'rgba(255,255,255,0.2)' } // X grid lines
+                        },
+                        y: {
+                            ticks: { color: 'white' }, // Y-axis tick labels
+                            grid: { color: 'rgba(255,255,255,0.2)' }, // Y grid lines
+                            title: { color: 'white' } // Y-axis title ("Value")
+                        }
+                    }
+
+                }
+            };
+            const myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+            );
+            var graphBtn = document.getElementById("graphBtn");
+            let graphOn = false;
+            let numberCont = document.getElementById('numberCont');
+            let graphCont = document.getElementById('graphCont');
+            graphBtn.addEventListener('click', function(){
+                if(graphOn){
+                    graphOn = false;
+                    graphCont.style.opacity = 0;
+                    setTimeout(function(){
+                        numberCont.style.opacity = 1;
+                    },500);
+                    graphBtn.innerHTML = '<i class="fa-solid fa-chart-simple"></i>';
+                } 
+                else{
+                    graphOn = true;
+                    numberCont.style.opacity = 0;
+                    setTimeout(function(){
+                        graphCont.style.opacity = 1;
+                    },500);
+                    graphBtn.innerHTML = '<i class="fa-solid fa-list"></i>';
+                }
+            });
+
             let values = [];
             let overUnderBound = 0;
             function createCollatz(n){
@@ -574,7 +676,7 @@
                 oldInputValue = document.getElementById('n').value;
             });
             document.getElementById('n').addEventListener('blur', function(){
-                if(this.value == '' || this.value == 0){
+                if(this.value == '' || this.value < 2 || this.value%1 != 0){
                     createCollatz(random(4,1000));
                 }
                 else if(oldInputValue != document.getElementById('n').value){
@@ -583,10 +685,6 @@
             });
             document.getElementById('n').addEventListener('input', function(event) {
                 this.style.width = this.value.length + "ch";
-                if (event.key === 'Enter' && oldInputValue != this.value) {
-                    oldInputValue = this.value;
-                    createCollatz(oldInputValue);
-                }
             });
 
             let score;
@@ -615,6 +713,8 @@
                 let counter = 0;
                 let runCounter = document.getElementById('runCounter');
                 const valCont = document.getElementById('valCont');
+                graphOn = true;
+                graphBtn.click();
                 let scrollAmounts = [];
                 document.getElementById('baseCont').style.opacity = 0;
                 document.getElementById('runCont').style.display = 'block';
@@ -656,11 +756,9 @@
 
 
                 setTimeout(function(){
-                    console.log(list.length);
                     let interval = setInterval(function(){
                         if(counter < list.length){
                             if(!didSkip){
-                                console.log(list[counter]);
                                 runCounter.innerText = "Terms: "+counter;
                                 if(counter > 0){
                                     valContContainer.scrollBy({
@@ -668,14 +766,10 @@
                                         behavior: 'smooth'
                                     });
                                 }
-                                /*if(list[counter] == 1){
-                                setTimeout(function(){
-                                    valContContainer.scrollBy({
-                                        left: 300,
-                                        behavior: 'smooth'
-                                    });
-                                },1000);
-                            }*/
+
+                                data.labels.push(counter);
+                                data.datasets[0].data.push(list[counter]);
+                                myChart.update();
                                 counter ++;
                             }
                             else{
@@ -687,6 +781,14 @@
                                     left: scrollTotal,
                                     behavior: 'smooth'
                                 });
+                                let dataList = [];
+                                for (let i = 1; i <= list.length; i++) {
+                                    dataList.push(i);
+                                }
+                                data.labels = dataList;
+                                data.datasets[0].data = list;
+                                myChart.update();
+                                counter ++;
                             }
                         }
                         else{
@@ -694,7 +796,7 @@
                             scoreSpan.style.position = 'absolute';
                             scoreSpan.style.right = '3em';
                             scoreSpan.style.top = '5em';
-                            scoreSpan.style.transition = '2s';
+                            scoreSpan.style.transition = '1s';
                             scoreSpan.classList.add('scorespan');
                             scoreSpan.style.opacity = 0;
                             document.getElementById('runCont').append(scoreSpan);
@@ -737,7 +839,7 @@
                             setTimeout(function(){
                                 document.getElementById('score').innerText = 'Score: '+score;
                                 scoreSpan.remove();
-                            },2000);
+                            },1000);
                             setTimeout(function(){
                                 document.getElementById('baseCont').style.display = 'block';
                                 document.getElementById('baseCont').style.opacity = 1;
@@ -749,6 +851,9 @@
                                 youPicked.style.color = "#FFF";
                                 valCont.style.transform = 'translate(0,0)';
                                 createCollatz(random(4,1000));
+                                data.labels = [];
+                                data.datasets[0].data = [];
+                                myChart.update();
                             },3500);
 
                         }
@@ -769,7 +874,6 @@
                     modal.style.display = "none";
                 }
             }
-
         </script>
         <script src="https://kit.fontawesome.com/ba992eac8c.js" crossorigin="anonymous"></script>
     </body>
