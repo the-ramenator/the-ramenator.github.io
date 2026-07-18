@@ -1,0 +1,283 @@
+<!-- To do:
+ 1. fix hanging notes
+ 2. Fix volume on notes 
+ 5. Audio support
+ 6. Cool visuals like that one desmos vid w/ just cool sine waves
+
+
+ Settings flow:
+in between midi & building chords:
+- set bass boost
+- volume scalars for individual tracks
+- # octaves up/down (calc min/max from high/lowest note midis)
+- colors maybe
+
+Sidebar content:
+
+Disabled Options:
+Colors
+Bass Boost
+Octave
+Colors
+
+Info:
+- show fps 
+- note counter
+
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Midi 2 Desmos</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,100..900;1,100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://www.desmos.com/api/v1.13/calculator.js?apiKey=f28bfbc8543945a9921a62d1ccd99640"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="modal">
+      <div id="modal-content">
+        <span id="close">&times;</span>
+        <div id="modal-header">
+          <div class="modal-header-circle"></div>
+          <h2 id="modal-header-text">Modal Header</h2>
+        </div>
+        <div id="modal-body">
+          <p>Some text in the Modal Body</p>
+          <p>Some other text...</p>
+        </div>
+        <!--
+        <div id="modal-footer">
+          <h3 id="modal-footer-text">Modal Footer</h3>
+        </div>
+        -->
+      </div>
+    </div>
+
+    <div id="uploadContainer" class="container">
+      <div class="nav">
+        <span id="nav-title">Midi-2-Desmos</span>
+        <span></span>
+        <!-- Blank for spacing -->
+        <span id="nav-mode">Graph</span>
+        <span id="nav-help">Help</span>
+        <span class="nav-other-projects"
+          ><a href="https://the-ramenator.github.io/projects"
+            >Other Projects</a
+          ></span
+        >
+      </div>
+      <div class="options">
+        <h1 class="options-title">Project</h1>
+        <h1 id="options-subtitle">Open a MIDI File</h1>
+        <span class="options-version">v1.0</span>
+        <div class="options-divider"></div>
+        <div class="upload-content">
+          <!--   <h1 class="options-library-title">Library</h1>
+          <div class="local-library"></div>
+          <div class="options-divider"></div>-->
+          <h1 class="options-examples-title">Examples</h1>
+          <div class="examples-library">
+            <div class="file-container" data-filepath="samples/aria_math.mid">
+              <i class="fa-solid fa-music"></i>
+              <span>Aria Math — C418</span>
+            </div>
+            <div
+              class="file-container"
+              data-filepath="samples/borodin_string_quartet_no_2_mvt_3.mid"
+            >
+              <i class="fa-solid fa-music"></i>
+              <span>String Quartet No. 2 (Mvt 3) — Borodin</span>
+            </div>
+            <div class="file-container" data-filepath="samples/erlkonig.mid">
+              <i class="fa-solid fa-music"></i>
+              <span>Erlkonig — Schubert</span>
+            </div>
+            <div
+              class="file-container"
+              data-filepath="samples/from_the_start.mid"
+            >
+              <i class="fa-solid fa-music"></i>
+              <span>From the Start — Laufey</span>
+            </div>
+            <div
+              class="file-container"
+              data-filepath="samples/great_fairy_fountain.mid"
+            >
+              <i class="fa-solid fa-music"></i>
+              <span>Great Fairy Fountain — Koji Kondo (Zelda)</span>
+            </div>
+            <div class="file-container" data-filepath="samples/in_the_pool.mid">
+              <i class="fa-solid fa-music"></i>
+              <span>In the Pool — Kensuke Ushio (Chainsaw Man)</span>
+            </div>
+            <div
+              class="file-container"
+              data-filepath="samples/meaningful_love.mid"
+            >
+              <i class="fa-solid fa-music"></i>
+              <span>Meaningful Love — Silo and Steven Cranberry</span>
+            </div>
+            <div
+              class="file-container"
+              data-filepath="samples/merry_go_round_of_life.mid"
+            >
+              <i class="fa-solid fa-music"></i>
+              <span
+                >Merry Go Round of Life — Joe Hisaishi (Howl's Moving
+                Castle)</span
+              >
+            </div>
+            <div
+              class="file-container"
+              data-filepath="samples/mice_on_venus.mid"
+            >
+              <i class="fa-solid fa-music"></i>
+              <span>Mice on Venus — C418</span>
+            </div>
+            <div class="file-container" data-filepath="samples/ms_magic.mid">
+              <i class="fa-solid fa-music"></i>
+              <span>Mrs. Magic — Strawberry Guy</span>
+            </div>
+            <div
+              class="file-container"
+              data-filepath="samples/passacaglia_handel.mid"
+            >
+              <i class="fa-solid fa-music"></i>
+              <span>Passacaglia — Handel</span>
+            </div>
+            <div
+              class="file-container"
+              data-filepath="samples/rachmaninoff_piano_concerto_no_2_mvt_2.mid"
+            >
+              <i class="fa-solid fa-music"></i>
+              <span>Piano Concerto No. 2 (Mvt 2) — Rachmaninoff</span>
+            </div>
+            <div
+              class="file-container"
+              data-filepath="samples/reanimate_violin_thing.mid"
+            >
+              <i class="fa-solid fa-music"></i>
+              <span>Reanimate — Warak</span>
+            </div>
+            <div
+              class="file-container"
+              data-filepath="samples/scherzo_tarantelle.mid"
+            >
+              <i class="fa-solid fa-music"></i>
+              <span>Scherzo Tarantelle — Wieniawski</span>
+            </div>
+            <div
+              class="file-container"
+              data-filepath="samples/shostakovich_string_quartet_no_8_mvt_2.mid"
+            >
+              <i class="fa-solid fa-music"></i>
+              <span>String Quartet No. 8 (Mvt 2) — Shostakovich</span>
+            </div>
+            <div
+              class="file-container"
+              data-filepath="samples/somewhere_in_nevada.mid"
+            >
+              <i class="fa-solid fa-music"></i>
+              <span>Nevada — Vicetone</span>
+            </div>
+            <div class="file-container" data-filepath="samples/the_moldau.mid">
+              <i class="fa-solid fa-music"></i>
+              <span>The Moldau — Smetana</span>
+            </div>
+            <div
+              class="file-container"
+              data-filepath="samples/wieniawski_violin_concerto_1_mvt_1.mid"
+            >
+              <i class="fa-solid fa-music"></i>
+              <span>Violin Concerto No. 1 (Mvt 1) — Wieniawksi</span>
+            </div>
+            <div
+              class="file-container"
+              data-filepath="samples/ysaye_violin_sonata_3.mid"
+            >
+              <i class="fa-solid fa-music"></i>
+              <span>Violin Sonata No. 3 — Ysaye</span>
+            </div>
+          </div>
+        </div>
+        <div class="graph-content">
+          <h1 id="options-text">Export Options</h1>
+          <div class="export-options-container">
+            <div class="export-btns">
+              <button id="copyBtn">Copy JSON</button>
+              <button id="downloadBtn">Download JSON</button><br />
+            </div>
+            <button id="screenshotBtn">Screenshot</button>
+            <a
+              href='javascript:(function(){const data=prompt("Paste your Desmos graph JSON data here:");if(data){try{Calc.setState(JSON.parse(data));}catch(e){alert("Invalid data string!");}}})();'
+              style="cursor: move"
+              ><button>Drag Bookmarklet</button></a
+            ><br />
+          </div>
+          <div class="options-divider"></div>
+          <h1 id="options-text">Settings</h1>
+
+          <div class="rangeContainer">
+            <label for="currentSpeed">Speed %</label>
+            <input
+              type="number"
+              id="currentSpeed"
+              min="1"
+              max="200"
+              value="100"
+            />
+            <input
+              type="range"
+              id="currentSpeedRange"
+              min="1"
+              max="200"
+              value="100"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div id="upload-div" class="upload-content">
+          <h1 class="upload-midi-title">MIDI-2-Desmos</h1>
+          <h2 class="upload-midi-subtitle">
+            Upload a MIDI File to transform it into a Desmos Graph
+          </h2>
+          <label id="drop-zone">
+            <i class="drop-zone-file-upload fa-solid fa-file-arrow-up"></i>
+            <span class="drop-zone-title">Drag and drop .mid file</span>
+            <button class="regular">
+              <i class="fa-solid fa-magnifying-glass"></i> &nbsp;Browse Files
+            </button>
+            <input type="file" id="midi-upload" accept=".mid" />
+          </label>
+          <div class="recents">
+            <span class="recents-title">Recent activity</span>
+            <span id="recents-clear">
+              <i class="fa-solid fa-eraser"></i> Clear Recents</span
+            >
+            <div id="recent-cards"></div>
+          </div>
+        </div>
+        <div class="graph-content">
+          <div id="calculator"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- instead of separating divs why not just put them all in the container and then toggle -->
+    <script
+      src="https://kit.fontawesome.com/ba992eac8c.js"
+      crossorigin="anonymous"
+    ></script>
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
