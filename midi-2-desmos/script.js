@@ -247,6 +247,55 @@ document.getElementById("screenshotBtn").addEventListener("click", () => {
   document.body.removeChild(link);
 });
 
+const currentOctaveRange = document.getElementById("octaveRange");
+const currentOctave = document.getElementById("octave");
+
+function handleOctaveChange(newValue) {
+  let value = parseFloat(newValue);
+  if (value < -3) {
+    value = -3;
+  } else if (value > 3) {
+    value = 3;
+  }
+  currentOctaveRange.value = value;
+  currentOctave.value = value;
+
+  // updateSpeed(value);
+}
+currentOctaveRange.addEventListener("input", (e) =>
+  handleOctaveChange(e.target.value),
+);
+currentOctave.addEventListener("change", (e) =>
+  handleOctaveChange(e.target.value),
+);
+
+const bassBoost = document.getElementById("bassboost");
+const bassBoostRange = document.getElementById("bassboostRange");
+
+function handleBassBoost(newValue) {
+  let value = parseFloat(newValue);
+  if (value < 0) {
+    value = 0;
+  } else if (value > 200) {
+    value = 200;
+  }
+  bassBoostRange.value = value;
+  bassBoost.value = value;
+
+  if (!calculator || !elt) return;
+  calculator.setExpression({
+    id: "bassboost",
+    latex: `b_{oost} = ${value} \\cdot 0.01`,
+  });
+}
+bassBoostRange.addEventListener("input", (e) =>
+  handleBassBoost(e.target.value),
+);
+bassBoost.addEventListener("change", (e) => handleBassBoost(e.target.value));
+
+const currentSpeedRange = document.getElementById("currentSpeedRange");
+const currentSpeed = document.getElementById("currentSpeed");
+
 function handleSpeedChange(newValue) {
   let value = parseFloat(newValue) || 100;
   const currentMin = parseFloat(currentSpeedRange.min) || 1;
@@ -304,6 +353,12 @@ function showGraphContent() {
 
 function showUploadContent() {
   document.getElementById("nav-mode").innerHTML = "Graph";
+
+  if (calculator) {
+    calculator.updateSettings({
+      muted: true,
+    });
+  }
 
   const uploadContent = document.getElementsByClassName("upload-content");
   Object.values(uploadContent).forEach((item) => {
@@ -436,7 +491,7 @@ function setupCalculator() {
     latex: `t = 0`,
   });
 }
-// Add 'async' to the function signature
+
 async function readMidi(file) {
   const reader = new FileReader();
 
@@ -636,15 +691,13 @@ function createDesmosLines(chords) {
       const bValue =
         line.lastMidi === null ? note.midi : note.midi - line.lastMidi;
 
-      const LOW_NOTE_BOOST = 0.1;
-      const velocity = note.velocity ?? 1; // ToneJS gives 0–1
-      const lowBoost = 1 + LOW_NOTE_BOOST * Math.max(0, (60 - note.midi) / 60);
-
+      const velocity = note.velocity * 0.5 ?? 1; // ToneJS gives 0–1
+      const lowBoost = 1 + Math.max(0, (60 - note.midi) / 60);
       const frequency = freakyScaleNumber * Math.pow(2, (note.midi - 69) / 12);
 
       const maxGain = Math.min(10, 660 / frequency);
 
-      const gain = 1; //Math.min(maxGain, velocity * lowBoost);
+      const gain = +Math.min(maxGain, velocity * lowBoost).toFixed(2);
       line.terms.push([bValue, cValue]);
       line.gains.push([gain, cValue]);
 
@@ -663,11 +716,27 @@ function createDesmosLines(chords) {
       line.gains.push([0, cValue]);
     }
   }
+  const pickerContainer = document.getElementById("color-picker");
 
   for (let i = 0; i < lines.length; i += 1) {
     const bValues = lines[i].terms.map((sublist) => sublist[0]);
     const cValues = lines[i].terms.map((sublist) => sublist[1]);
     const gValues = lines[i].gains.map((x) => x[0]);
+
+    //color pickers
+    const lineColor = getColor();
+    const picker = document.createElement("input");
+    picker.setAttribute("type", "color");
+    picker.dataset.line = i + 1;
+    picker.value = lineColor;
+    picker.addEventListener("change", () => {
+      if (!calculator || !elt) return;
+      calculator.setExpression({
+        id: `line_${i + 1}`,
+        color: picker.value,
+      });
+    });
+    pickerContainer.append(picker);
 
     expressions.push({
       id: `folder_line_${i + 1}`,
@@ -680,7 +749,7 @@ function createDesmosLines(chords) {
     expressions.push({
       id: `line_${i + 1}`,
       latex: `a_{${i + 1}}\\left(x\\right) = \\sum_{i=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[i\\right]:b_{${i + 1}}\\left[i\\right],0\\right\\}`,
-      color: getColor(),
+      color: lineColor,
       lineWidth: 1.5,
       lineStyle: "SOLID",
     });
@@ -707,8 +776,8 @@ function createDesmosLines(chords) {
     });
     expressions.push({
       id: `tone_${i + 1}`,
-      //   latex: `\\operatorname{tone}\\left(d_{${i + 1}}, 1\\right)`,
-      latex: `\\operatorname{tone}\\left(d_{${i + 1}},v_{${i + 1}}\\left(t\\right)\\right)`,
+      // latex: `\\operatorname{tone}\\left(d_{${i + 1}}\\right)`,
+      latex: `\\operatorname{tone}\\left(d_{${i + 1}}, b_{oost} \\cdot v_{${i + 1}}\\left(t\\right)\\right)`,
     });
   }
   calculator.setExpressions([
@@ -739,6 +808,15 @@ function createDesmosLines(chords) {
       color: "#000000",
     },
     {
+      id: `bassboost`,
+      latex: `b_{oost} = 25 \\cdot 0.01`,
+      sliderBounds: {
+        min: 0,
+        max: 200,
+        step: "0.1",
+      },
+    },
+    {
       id: `timedisplay`,
       latex: `t_{imedisplay} = \\operatorname{round}\\left(\\frac{t}{${timeScale}},1\\right)`,
     },
@@ -767,7 +845,12 @@ function createDesmosLines(chords) {
       hidden: false,
     });*/
 
-  const settingIds = ["playbackLine", "timedisplay", "playbackPoint"];
+  const settingIds = [
+    "playbackLine",
+    "timedisplay",
+    "playbackPoint",
+    "bassboost",
+  ];
 
   const settingsState = calculator.getState();
   settingIds.forEach((id) => {
@@ -811,6 +894,7 @@ function createDesmosLines(chords) {
   const state = calculator.getState();
 
   for (let i = 0; i < lines.length; i += 1) {
+    //folders
     const exprIds = [
       `line_${i + 1}`,
       `gain_${i + 1}`,
