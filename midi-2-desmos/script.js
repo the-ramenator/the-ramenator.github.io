@@ -276,8 +276,8 @@ function handleBassBoost(newValue) {
   let value = parseFloat(newValue);
   if (value < 0) {
     value = 0;
-  } else if (value > 200) {
-    value = 200;
+  } else if (value > 10) {
+    value = 10;
   }
   bassBoostRange.value = value;
   bassBoost.value = value;
@@ -285,7 +285,7 @@ function handleBassBoost(newValue) {
   if (!calculator || !elt) return;
   calculator.setExpression({
     id: "bassboost",
-    latex: `b_{oost} = ${value} \\cdot 0.01`,
+    latex: `b_{oost} = ${value}`,
   });
 }
 bassBoostRange.addEventListener("input", (e) =>
@@ -615,6 +615,7 @@ function createDesmosLines(chords) {
 
             line.terms.push([-line.lastMidi, cValue]);
             line.gains.push([0, Math.round(cValue * 100) / 100]);
+            line.pitches.push([line.lastMidi, cValue]);
 
             line.lastMidi = null;
             line.currentNoteId = null;
@@ -637,6 +638,7 @@ function createDesmosLines(chords) {
           availableTime: -Infinity,
           terms: [],
           gains: [],
+          pitches: [],
           active: false,
           currentNoteId: null,
         });
@@ -675,6 +677,7 @@ function createDesmosLines(chords) {
           availableTime: -Infinity,
           terms: [],
           gains: [],
+          pitches: [],
           active: false,
           currentNoteId: null,
         });
@@ -691,15 +694,15 @@ function createDesmosLines(chords) {
       const bValue =
         line.lastMidi === null ? note.midi : note.midi - line.lastMidi;
 
-      const velocity = note.velocity * 0.5 ?? 1; // ToneJS gives 0–1
-      const lowBoost = 1 + Math.max(0, (60 - note.midi) / 60);
+      const velocity = note.velocity ?? 1;
       const frequency = freakyScaleNumber * Math.pow(2, (note.midi - 69) / 12);
 
       const maxGain = Math.min(10, 660 / frequency);
 
-      const gain = +Math.min(maxGain, velocity * lowBoost).toFixed(2);
+      const gain = +Math.min(maxGain, velocity).toFixed(2);
       line.terms.push([bValue, cValue]);
       line.gains.push([gain, cValue]);
+      line.pitches.push([note.midi, cValue]);
 
       line.lastMidi = note.midi;
       line.availableTime = event.time + note.duration;
@@ -713,15 +716,18 @@ function createDesmosLines(chords) {
       const cValue = 1 + Math.round((lastTime * timeScale + 1) * 1000) / 1000;
 
       line.terms.push([-line.lastMidi, cValue]);
+      line.terms.push([-line.lastMidi, cValue]);
       line.gains.push([0, cValue]);
+      line.pitches.push([line.lastMidi, cValue]);
     }
   }
   const pickerContainer = document.getElementById("color-picker");
 
   for (let i = 0; i < lines.length; i += 1) {
-    const bValues = lines[i].terms.map((sublist) => sublist[0]);
-    const cValues = lines[i].terms.map((sublist) => sublist[1]);
+    const bValues = lines[i].terms.map((x) => x[0]);
+    const cValues = lines[i].terms.map((x) => x[1]);
     const gValues = lines[i].gains.map((x) => x[0]);
+    const pValues = lines[i].pitches.map((x) => x[0]);
 
     //color pickers
     const lineColor = getColor();
@@ -755,7 +761,8 @@ function createDesmosLines(chords) {
     });
     expressions.push({
       id: `gain_${i + 1}`,
-      latex: `v_{${i + 1}}(x)=\\sum_{i=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[i\\right]:g_{${i + 1}}\\left[i\\right],0\\right\\}`,
+      // latex: `v_{${i + 1}}(x)=\\sum_{i=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[i\\right]:g_{${i + 1}}\\left[i\\right],0\\right\\}`,
+      latex: `v_{${i + 1}}(x)=\\sum_{i=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[i\\right]:g_{${i + 1}}\\left[i\\right]\\left(0.1 + b_{oost} \\cdot \\max\\left(0,\\frac{60-p_{${i + 1}}\\left[i\\right]}{120}\\right)\\right),0\\right\\}`,
       hidden: true,
     });
     expressions.push({
@@ -771,13 +778,17 @@ function createDesmosLines(chords) {
       latex: `g_{${i + 1}}=\\left[${gValues.join(",")}\\right]`,
     });
     expressions.push({
+      id: `p_list_${i + 1}`,
+      latex: `p_{${i + 1}}=\\left[${pValues.join(",")}\\right]`,
+    });
+    expressions.push({
       id: `line_case_${i + 1}`,
       latex: `d_{${i + 1}} = ${freakyScaleNumber}\\cdot2^{\\frac{a_{${i + 1}}\\left(t\\right)}{12}}`,
     });
     expressions.push({
       id: `tone_${i + 1}`,
       // latex: `\\operatorname{tone}\\left(d_{${i + 1}}\\right)`,
-      latex: `\\operatorname{tone}\\left(d_{${i + 1}}, b_{oost} \\cdot v_{${i + 1}}\\left(t\\right)\\right)`,
+      latex: `\\operatorname{tone}\\left(d_{${i + 1}}, v_{${i + 1}}\\left(t\\right)\\right)`,
     });
   }
   calculator.setExpressions([
@@ -809,10 +820,10 @@ function createDesmosLines(chords) {
     },
     {
       id: `bassboost`,
-      latex: `b_{oost} = 25 \\cdot 0.01`,
+      latex: `b_{oost} = 0`,
       sliderBounds: {
         min: 0,
-        max: 200,
+        max: 5,
         step: "0.1",
       },
     },
@@ -901,6 +912,7 @@ function createDesmosLines(chords) {
       `g_list_${i + 1}`,
       `b_list_${i + 1}`,
       `c_list_${i + 1}`,
+      `p_list_${i + 1}`,
       `line_case_${i + 1}`,
       `tone_${i + 1}`,
     ];
