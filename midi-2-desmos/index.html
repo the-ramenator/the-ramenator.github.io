@@ -1,31 +1,9 @@
 <!-- To do:
  1. fix hanging notes
- 2. Fix volume on notes 
+ 2. fix bass boosting?????
  5. Audio support
- 6. Cool visuals like that one desmos vid w/ just cool sine waves
  7. Fix the weird bug where calc size gets reset (probably in the showgraphcontent/showupload content the size is lost or sumn idk)
- 8. add visuals to the file drop ui like waves or dots in the bg idk
  9. pass settings & colors into localstorage
-
- Settings flow:
-in between midi & building chords:
-- set bass boost
-- volume scalars for individual tracks
-- # octaves up/down (calc min/max from high/lowest note midis)
-- colors maybe
-
-Sidebar content:
-
-Options: 
-Colors
-Bass Boost
-Octave
-Colors
-
-Info:
-- show fps 
-- note counter
-
 -->
 <!doctype html>
 <html lang="en">
@@ -80,7 +58,9 @@ Info:
       <div class="options">
         <h1 class="options-title">Project</h1>
         <h1 id="options-subtitle">Open a MIDI File</h1>
-        <span class="options-version">v1.1</span>
+        <button id="uploadNewMidi" class="regular">Upload Midi</button>
+
+        <span class="options-version">v1.2</span>
         <div class="options-divider"></div>
         <div class="upload-content">
           <!--   <h1 class="options-library-title">Library</h1>
@@ -129,6 +109,10 @@ Info:
               <i class="fa-solid fa-music"></i>
               <span>In the Pool — Kensuke Ushio (Chainsaw Man)</span>
             </div>
+            <div class="file-container" data-filepath="samples/libertango.mid">
+              <i class="fa-solid fa-music"></i>
+              <span>Libertango — Astor Piazzolla</span>
+            </div>
             <div
               class="file-container"
               data-filepath="samples/meaningful_love.mid"
@@ -159,6 +143,13 @@ Info:
             </div>
             <div
               class="file-container"
+              data-filepath="samples/pasilyo_sunkissed_lola.mid"
+            >
+              <i class="fa-solid fa-music"></i>
+              <span>Pasilyo — Sunkissed Lola</span>
+            </div>
+            <div
+              class="file-container"
               data-filepath="samples/passacaglia_handel.mid"
             >
               <i class="fa-solid fa-music"></i>
@@ -177,6 +168,13 @@ Info:
             >
               <i class="fa-solid fa-music"></i>
               <span>Reanimate — Warak</span>
+            </div>
+            <div
+              class="file-container"
+              data-filepath="samples/runaway_kanye_west.mid"
+            >
+              <i class="fa-solid fa-music"></i>
+              <span>Runaway — Kanye West</span>
             </div>
             <div
               class="file-container"
@@ -220,7 +218,25 @@ Info:
           </div>
         </div>
         <div class="graph-content">
-          <h1 id="options-text">Export Options</h1>
+          <h1 id="options-text">
+            <i class="fa-solid fa-circle-info"></i>&nbsp;Stats
+          </h1>
+          <div class="stats-container">
+            <div class="stat">
+              <span class="stat-title">FPS</span><br />
+              <span class="stat-value" id="fps">60</span>
+            </div>
+            <div class="stat">
+              <span class="stat-title">Note Count</span><br />
+              <span class="stat-value" id="noteCount">0</span>
+            </div>
+          </div>
+
+          <div class="options-divider"></div>
+
+          <h1 id="options-text">
+            <i class="fa-solid fa-file-export"></i>&nbsp;Export Options
+          </h1>
           <div class="export-options-container">
             <div class="export-btns">
               <button id="copyBtn">Copy JSON</button>
@@ -234,8 +250,13 @@ Info:
             ><br />
           </div>
           <div class="options-divider"></div>
-          <h1 id="options-text">Settings</h1>
-
+          <h1 id="options-text">
+            <i class="fa-solid fa-gear"></i>&nbsp;Settings
+          </h1>
+          <div class="rangeContainer" style="margin-bottom: 30px">
+            <label for="disableVisuals">Disable Visuals</label>
+            <input type="checkbox" id="disableVisuals" />
+          </div>
           <div class="rangeContainer">
             <label for="currentSpeed">Speed %</label>
             <input
@@ -255,8 +276,8 @@ Info:
           </div>
           <div class="rangeContainer">
             <label for="octave">Transpose Octave</label>
-            <input type="number" id="octave" min="-3" max="3" value="0" />
-            <input type="range" id="octaveRange" min="-3" max="3" value="0" />
+            <input type="number" id="octave" min="-4" max="4" value="0" />
+            <input type="range" id="octaveRange" min="-4" max="4" value="0" />
           </div>
 
           <div class="rangeContainer">
@@ -270,17 +291,24 @@ Info:
               value="0"
             />
           </div>
-          <label for="currentSpeed">Color Picker</label>
+          <label for="currentSpeed"
+            ><i class="fa-solid fa-volume-high"></i>&nbsp;Volume Channels</label
+          >
+          <div id="volume-sliders"></div>
+
+          <label for="currentSpeed"
+            ><i class="fa-solid fa-palette"></i>&nbsp;Color Picker</label
+          >
           <div id="color-picker"></div>
         </div>
       </div>
       <div class="content">
         <div id="upload-div" class="upload-content">
           <div id="upload-background"></div>
-          <div class="upload-left-grad"></div>
+          <!-- <div class="upload-left-grad"></div>
           <div class="upload-right-grad"></div>
           <div class="upload-top-grad"></div>
-          <div class="upload-bottom-grad"></div>
+          <div class="upload-bottom-grad"></div> -->
 
           <h1 class="upload-midi-title">MIDI-2-Desmos</h1>
           <h2 class="upload-midi-subtitle">

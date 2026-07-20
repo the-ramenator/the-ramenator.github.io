@@ -53,6 +53,11 @@ function dropHandler(ev) {
   setupCalculator();
   readMidi(file);
 }
+
+document.getElementById("uploadNewMidi").addEventListener("click", () => {
+  fileInput.click();
+});
+
 const fileInput = document.getElementById("midi-upload");
 fileInput.addEventListener("change", (e) => {
   const file = e.target.files[0];
@@ -247,95 +252,109 @@ document.getElementById("screenshotBtn").addEventListener("click", () => {
   document.body.removeChild(link);
 });
 
-const currentOctaveRange = document.getElementById("octaveRange");
-const currentOctave = document.getElementById("octave");
+const disableVisuals = document.getElementById("disableVisuals");
+disableVisuals.addEventListener("change", () => {
+  const currentState = calculator.getState();
+  currentState.expressions.list.forEach((expr) => {
+    if (expr.id && expr.id.startsWith("line_")) {
+      if (disableVisuals.checked) {
+        expr.hidden = true;
+      } else {
+        expr.hidden = false;
+      }
+    }
+  });
+  calculator.setState(currentState);
+});
 
-function handleOctaveChange(newValue) {
-  let value = parseFloat(newValue);
-  if (value < -3) {
-    value = -3;
-  } else if (value > 3) {
-    value = 3;
-  }
-  currentOctaveRange.value = value;
-  currentOctave.value = value;
-
-  // updateSpeed(value);
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
 }
-currentOctaveRange.addEventListener("input", (e) =>
-  handleOctaveChange(e.target.value),
-);
-currentOctave.addEventListener("change", (e) =>
-  handleOctaveChange(e.target.value),
-);
 
-const bassBoost = document.getElementById("bassboost");
-const bassBoostRange = document.getElementById("bassboostRange");
+function bindControl({
+  input,
+  range,
+  min,
+  max,
+  defaultValue = min,
+  allowExpandMax = false,
+  update,
+}) {
+  function handle(newValue) {
+    let value = parseFloat(newValue);
 
-function handleBassBoost(newValue) {
-  let value = parseFloat(newValue);
-  if (value < 0) {
-    value = 0;
-  } else if (value > 10) {
-    value = 10;
+    if (Number.isNaN(value)) {
+      value = defaultValue;
+    }
+
+    value = clamp(value, min, max);
+
+    if (allowExpandMax) {
+      const currentMax = parseFloat(range.max) || max;
+
+      if (value > currentMax) {
+        range.max = value;
+        input.max = value;
+      }
+    }
+
+    range.value = value;
+    input.value = value;
+    update(value);
   }
-  bassBoostRange.value = value;
-  bassBoost.value = value;
 
+  range.addEventListener("input", (e) => handle(e.target.value));
+  input.addEventListener("change", (e) => handle(e.target.value));
+
+  return handle;
+}
+
+function updateExpression(id, latex) {
   if (!calculator || !elt) return;
-  calculator.setExpression({
-    id: "bassboost",
-    latex: `b_{oost} = ${value}`,
-  });
-}
-bassBoostRange.addEventListener("input", (e) =>
-  handleBassBoost(e.target.value),
-);
-bassBoost.addEventListener("change", (e) => handleBassBoost(e.target.value));
 
-const currentSpeedRange = document.getElementById("currentSpeedRange");
-const currentSpeed = document.getElementById("currentSpeed");
-
-function handleSpeedChange(newValue) {
-  let value = parseFloat(newValue) || 100;
-  const currentMin = parseFloat(currentSpeedRange.min) || 1;
-  const currentMax = parseFloat(currentSpeedRange.max) || 200;
-
-  if (value > 1000) value = 1000;
-  if (value < 1) value = 1;
-
-  if (value > currentMax) {
-    currentSpeedRange.max = value;
-    currentSpeed.max = value;
-  } else if (value < currentMin) {
-    value = currentMin;
-  }
-
-  currentSpeedRange.value = value;
-  currentSpeed.value = value;
-
-  updateSpeed(value);
+  calculator.setExpression({ id, latex });
 }
 
-currentSpeedRange.addEventListener("input", (e) =>
-  handleSpeedChange(e.target.value),
-);
-currentSpeed.addEventListener("change", (e) =>
-  handleSpeedChange(e.target.value),
-);
+const handleOctaveChange = bindControl({
+  input: document.getElementById("octave"),
+  range: document.getElementById("octaveRange"),
+  min: -4,
+  max: 4,
+  defaultValue: 0,
+  update(value) {
+    updateExpression("octave", `o_{ctave} = ${value}`);
+  },
+});
 
-function updateSpeed(percentageOfOriginal) {
-  if (!originalAnimationPeriod) return;
-  percentageOfOriginal = Math.max(1, Math.min(1000, percentageOfOriginal));
-  const animationPeriod =
-    originalAnimationPeriod / (percentageOfOriginal / 100);
+const handleBassBoost = bindControl({
+  input: document.getElementById("bassboost"),
+  range: document.getElementById("bassboostRange"),
+  min: 0,
+  max: 10,
+  defaultValue: 0,
+  update(value) {
+    updateExpression("bassboost", `b_{oost} = ${value}`);
+  },
+});
 
-  calculator.controller.dispatch({
-    id: "t",
-    type: "set-slider-animationperiod",
-    animationPeriod,
-  });
-}
+const handleSpeedChange = bindControl({
+  input: document.getElementById("currentSpeed"),
+  range: document.getElementById("currentSpeedRange"),
+  min: 1,
+  max: 1000,
+  defaultValue: 100,
+  allowExpandMax: true,
+  update(value) {
+    if (!originalAnimationPeriod) return;
+
+    calculator.controller.dispatch({
+      id: "t",
+      type: "set-slider-animationperiod",
+      animationPeriod: originalAnimationPeriod / (value / 100),
+    });
+  },
+});
+
 function showGraphContent() {
   document.getElementById("nav-mode").innerHTML = "Upload";
   resizeGraph();
@@ -510,6 +529,8 @@ async function readMidi(file) {
         size: (file.size / 1024).toFixed(1) + "kb",
         lastOpened: Date.now(),
         source: target.result,
+        settings: {},
+        colors: [],
       });
 
       localStorage.setItem(file.name, fileData);
@@ -520,8 +541,6 @@ async function readMidi(file) {
         catalog.push(file.name);
         localStorage.setItem("midi_file_catalog", JSON.stringify(catalog));
       }
-
-      console.log(`Successfully saved ${file.name}`);
     } catch (e) {
       console.error("Storage limit exceeded", e);
     }
@@ -531,9 +550,11 @@ async function readMidi(file) {
     const midi = new Midi(arrayBuffer);
 
     const groups = new Map();
-
+    let totalNotes = 0;
     for (const track of midi.tracks) {
       if (!track.notes?.length) continue;
+
+      totalNotes += track.notes.length;
 
       for (const note of track.notes) {
         // Note ON
@@ -558,6 +579,8 @@ async function readMidi(file) {
         });
       }
     }
+
+    document.getElementById("noteCount").innerText = totalNotes;
 
     const chords = [...groups.entries()]
       .sort((a, b) => a[0] - b[0])
@@ -722,6 +745,7 @@ function createDesmosLines(chords) {
     }
   }
   const pickerContainer = document.getElementById("color-picker");
+  const volumeSliders = document.getElementById("volume-sliders");
 
   for (let i = 0; i < lines.length; i += 1) {
     const bValues = lines[i].terms.map((x) => x[0]);
@@ -729,14 +753,62 @@ function createDesmosLines(chords) {
     const gValues = lines[i].gains.map((x) => x[0]);
     const pValues = lines[i].pitches.map((x) => x[0]);
 
-    //color pickers
     const lineColor = getColor();
+
+    //volume sliders
+    const volumeContainer = document.createElement("div");
+    volumeContainer.classList.add("volume-container");
+    const label = document.createElement("label");
+    label.innerText = i + 1;
+    const volumeRange = document.createElement("input");
+    volumeRange.setAttribute("type", "range");
+    volumeRange.setAttribute("id", `volumeRange${i + 1}`);
+    volumeRange.setAttribute("min", 0);
+    volumeRange.setAttribute("max", 200);
+    volumeRange.setAttribute("value", 100);
+
+    const volumeText = document.createElement("input");
+    volumeText.setAttribute("type", "number");
+    volumeText.setAttribute("id", `volumeInput${i + 1}`);
+    volumeText.setAttribute("min", 0);
+    volumeText.setAttribute("max", 200);
+    volumeText.setAttribute("value", 100);
+
+    volumeRange.style.setProperty("--volumeLineColor", lineColor);
+
+    volumeContainer.append(label);
+    volumeContainer.append(volumeRange);
+    volumeContainer.append(volumeText);
+
+    const volumeDivider = document.createElement("div");
+    volumeDivider.classList.add("volume-divider");
+
+    volumeSliders.append(volumeContainer);
+    if (i + 1 != lines.length) volumeSliders.append(volumeDivider);
+
+    const volumeSlider = bindControl({
+      input: volumeText,
+      range: volumeRange,
+      min: 0,
+      max: 200,
+      defaultValue: 100,
+      update(value) {
+        updateExpression(
+          `volume${i + 1}`,
+          `v_{olume${i + 1}} = ${value / 100}`,
+        );
+      },
+    });
+
+    //color pickers
     const picker = document.createElement("input");
     picker.setAttribute("type", "color");
     picker.dataset.line = i + 1;
     picker.value = lineColor;
     picker.addEventListener("change", () => {
       if (!calculator || !elt) return;
+      volumeRange.style.setProperty("--volumeLineColor", picker.value);
+
       calculator.setExpression({
         id: `line_${i + 1}`,
         color: picker.value,
@@ -758,6 +830,10 @@ function createDesmosLines(chords) {
       color: lineColor,
       lineWidth: 1.5,
       lineStyle: "SOLID",
+    });
+    expressions.push({
+      id: `volume${i + 1}`,
+      latex: `v_{olume${i + 1}} = 1`,
     });
     expressions.push({
       id: `gain_${i + 1}`,
@@ -783,12 +859,12 @@ function createDesmosLines(chords) {
     });
     expressions.push({
       id: `line_case_${i + 1}`,
-      latex: `d_{${i + 1}} = ${freakyScaleNumber}\\cdot2^{\\frac{a_{${i + 1}}\\left(t\\right)}{12}}`,
+      latex: `d_{${i + 1}} = ${freakyScaleNumber}\\cdot2^{\\frac{12 \\cdot o_{ctave} + a_{${i + 1}} \\left(t\\right)}{12}}`,
     });
     expressions.push({
       id: `tone_${i + 1}`,
       // latex: `\\operatorname{tone}\\left(d_{${i + 1}}\\right)`,
-      latex: `\\operatorname{tone}\\left(d_{${i + 1}}, v_{${i + 1}}\\left(t\\right)\\right)`,
+      latex: `\\operatorname{tone}\\left(d_{${i + 1}}, v_{olume${i + 1}} \\cdot v_{${i + 1}}\\left(t\\right)\\right)`,
     });
   }
   calculator.setExpressions([
@@ -824,7 +900,16 @@ function createDesmosLines(chords) {
       sliderBounds: {
         min: 0,
         max: 5,
-        step: "0.1",
+        step: "1",
+      },
+    },
+    {
+      id: `octave`,
+      latex: `o_{ctave} = 0`,
+      sliderBounds: {
+        min: -3,
+        max: 3,
+        step: "1",
       },
     },
     {
@@ -861,6 +946,7 @@ function createDesmosLines(chords) {
     "timedisplay",
     "playbackPoint",
     "bassboost",
+    "octave",
   ];
 
   const settingsState = calculator.getState();
@@ -913,6 +999,7 @@ function createDesmosLines(chords) {
       `b_list_${i + 1}`,
       `c_list_${i + 1}`,
       `p_list_${i + 1}`,
+      `volume${i + 1}`,
       `line_case_${i + 1}`,
       `tone_${i + 1}`,
     ];
@@ -961,10 +1048,33 @@ function createDesmosLines(chords) {
   });
 }
 
+const frameTimes = [];
+let currentFps = 0;
+
+let lastUpdate = 0;
+
+function measureFPS() {
+  window.requestAnimationFrame(() => {
+    const now = performance.now();
+    while (frameTimes.length > 0 && frameTimes[0] <= now - 1000) {
+      frameTimes.shift();
+    }
+    frameTimes.push(now);
+    currentFps = frameTimes.length;
+
+    if (now - lastUpdate >= 500) {
+      document.getElementById("fps").innerText = currentFps;
+      lastUpdate = now;
+    }
+    measureFPS();
+  });
+}
+
 window.addEventListener("resize", () => {
   resizeGraph();
 });
 
 window.addEventListener("load", () => {
   resizeGraph();
+  measureFPS();
 });
