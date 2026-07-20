@@ -2,8 +2,6 @@
  1. fix hanging notes
  2. fix bass boosting?????
  5. Audio support
- 7. Fix the weird bug where calc size gets reset (probably in the showgraphcontent/showupload content the size is lost or sumn idk)
- 9. pass settings & colors into localstorage
 -->
 <!doctype html>
 <html lang="en">
@@ -60,7 +58,7 @@
         <h1 id="options-subtitle">Open a MIDI File</h1>
         <button id="uploadNewMidi" class="regular">Upload Midi</button>
 
-        <span class="options-version">v1.2</span>
+        <span class="options-version">v1.2.1</span>
         <div class="options-divider"></div>
         <div class="upload-content">
           <!--   <h1 class="options-library-title">Library</h1>
@@ -252,6 +250,7 @@
           <div class="options-divider"></div>
           <h1 id="options-text">
             <i class="fa-solid fa-gear"></i>&nbsp;Settings
+            <span id="reset-settings">Reset</span>
           </h1>
           <div class="rangeContainer" style="margin-bottom: 30px">
             <label for="disableVisuals">Disable Visuals</label>
@@ -299,7 +298,7 @@
           <label for="currentSpeed"
             ><i class="fa-solid fa-palette"></i>&nbsp;Color Picker</label
           >
-          <div id="color-picker"></div>
+          <div id="color-pickers"></div>
         </div>
       </div>
       <div class="content">

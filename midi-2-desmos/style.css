@@ -448,16 +448,20 @@ button.regular:hover {
   letter-spacing: 2px;
   font-size: 0.75em;
 }
-#recents-clear {
+#recents-clear,
+#reset-settings {
   color: #9eb2ba;
   text-transform: uppercase;
   font-family: var(--mono);
   letter-spacing: 2px;
-  font-size: 0.75em;
+  font-size: 0.9em;
   float: right;
+  margin-right: 5%;
+  line-height: 25px;
   cursor: pointer;
 }
-#recents-clear:hover {
+#recents-clear:hover,
+#reset-settings:hover {
   color: #fff;
 }
 
@@ -662,7 +666,7 @@ label {
   font-size: 0.75em;
 }
 
-#color-picker {
+#color-pickers {
   margin-top: 20px;
   margin-bottom: 20px;
   margin-left: 2.5%;
@@ -698,7 +702,7 @@ input[type="color"]:hover {
   outline-offset: 4px;
 }
 
-#color-picker input[type="color"]::before {
+#color-pickers input[type="color"]::before {
   content: attr(data-line);
   position: absolute;
   /* bottom: 100%; */
@@ -718,7 +722,7 @@ input[type="color"]:hover {
   align-items: center; /* Centers vertically */
 }
 
-#color-picker input[type="color"]:hover::before {
+#color-pickers input[type="color"]:hover::before {
   transform: translate(0%, 0%);
 }
 

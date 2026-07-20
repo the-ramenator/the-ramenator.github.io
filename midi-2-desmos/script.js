@@ -178,6 +178,9 @@ Object.values(document.getElementsByClassName("file-container")).forEach(
 
 //End UI
 
+let currentSettings = {};
+let defaultColors = [];
+let currentFileName;
 const elt = document.getElementById("calculator");
 
 const calculator = Desmos.GraphingCalculator(elt, {
@@ -186,20 +189,16 @@ const calculator = Desmos.GraphingCalculator(elt, {
   // accentColor: "#00f0ff",
 });
 let originalAnimationPeriod = 0;
-const colors = Array.from(
-  { length: 100 },
-  () =>
-    `#${Math.floor(Math.random() * 0x1000000)
-      .toString(16)
-      .padStart(6, "0")
-      .toUpperCase()}`,
-);
+
 let nextColorIndex = 0;
 const freakyScaleNumber = 8.17579891564;
 const getTime = (note) => note.time ?? note.ticks ?? 0;
 
 function getColor() {
-  return nextColorIndex >= colors.length ? "#000000" : colors[nextColorIndex++];
+  return `#${Math.floor(Math.random() * 0x1000000)
+    .toString(16)
+    .padStart(6, "0")
+    .toUpperCase()}`;
 }
 
 function copyGraphToClipboard() {
@@ -265,6 +264,7 @@ disableVisuals.addEventListener("change", () => {
     }
   });
   calculator.setState(currentState);
+  saveSettings();
 });
 
 function clamp(value, min, max) {
@@ -301,6 +301,7 @@ function bindControl({
     range.value = value;
     input.value = value;
     update(value);
+    saveSettings();
   }
 
   range.addEventListener("input", (e) => handle(e.target.value));
@@ -416,6 +417,7 @@ document.getElementById("recents-clear").addEventListener("click", () => {
   savedFiles.forEach((file) => {
     localStorage.removeItem(file.name);
   });
+  localStorage.removeItem("midi_file_catalog");
   document.getElementById("recent-cards").innerHTML = "";
 });
 
@@ -511,6 +513,123 @@ function setupCalculator() {
   });
 }
 
+function setDefaultSettings() {
+  document.getElementById("disableVisuals").checked = false;
+  document.getElementById("currentSpeed").value = 100;
+  document.getElementById("octave").value = 0;
+  document.getElementById("bassboost").value = 0;
+
+  document.querySelectorAll(".volume-slider").forEach((slider) => {
+    slider.value = 100;
+    slider.dispatchEvent(new Event("change", { bubbles: true }));
+  });
+
+  document.querySelectorAll(".color-picker").forEach((picker, index) => {
+    picker.value = defaultColors[index];
+    picker.dispatchEvent(new Event("change", { bubbles: true }));
+  });
+
+  document
+    .getElementById("disableVisuals")
+    .dispatchEvent(new Event("change", { bubbles: true }));
+  document
+    .getElementById("currentSpeed")
+    .dispatchEvent(new Event("change", { bubbles: true }));
+  document
+    .getElementById("octave")
+    .dispatchEvent(new Event("change", { bubbles: true }));
+  document
+    .getElementById("bassboost")
+    .dispatchEvent(new Event("change", { bubbles: true }));
+
+  currentSettings = getSettings();
+  saveSettings();
+}
+
+document
+  .getElementById("reset-settings")
+  .addEventListener("click", setDefaultSettings);
+
+function getSettings() {
+  if (!elt || !calculator) return;
+  const colors = Array.from(document.querySelectorAll(".color-picker")).map(
+    (input) => input.value,
+  );
+
+  const volumes = Array.from(document.querySelectorAll(".volume-slider")).map(
+    (input) => input.value,
+  );
+  const settings = {
+    disableVisuals: document.getElementById("disableVisuals").checked,
+    speed: document.getElementById("currentSpeed").value,
+    octave: document.getElementById("octave").value,
+    bassBoost: document.getElementById("bassboost").value,
+    colors,
+    volumes,
+  };
+  return settings;
+}
+
+function saveSettings() {
+  if (!currentFileName) return;
+
+  const file = JSON.parse(localStorage.getItem(currentFileName));
+  if (!file) return;
+
+  file.settings = getSettings();
+
+  localStorage.setItem(currentFileName, JSON.stringify(file));
+
+  currentSettings = file.settings;
+}
+
+function loadSettings() {
+  if (!currentFileName) return;
+
+  const file = JSON.parse(localStorage.getItem(currentFileName));
+  if (!file?.settings) return;
+
+  const settings = file.settings;
+
+  document.getElementById("disableVisuals").checked = settings.disableVisuals;
+
+  document.getElementById("currentSpeed").value = settings.speed;
+
+  document.getElementById("octave").value = settings.octave;
+
+  document.getElementById("bassboost").value = settings.bassBoost;
+
+  document.querySelectorAll(".volume-slider").forEach((slider, i) => {
+    if (settings.volumes?.[i] != null) {
+      slider.value = settings.volumes[i];
+      slider.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+  });
+
+  document.querySelectorAll(".color-picker").forEach((picker, i) => {
+    if (settings.colors?.[i]) {
+      picker.value = settings.colors[i];
+      picker.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+  });
+
+  document
+    .getElementById("disableVisuals")
+    .dispatchEvent(new Event("change", { bubbles: true }));
+
+  document
+    .getElementById("currentSpeed")
+    .dispatchEvent(new Event("change", { bubbles: true }));
+
+  document
+    .getElementById("octave")
+    .dispatchEvent(new Event("change", { bubbles: true }));
+
+  document
+    .getElementById("bassboost")
+    .dispatchEvent(new Event("change", { bubbles: true }));
+}
+
 async function readMidi(file) {
   const reader = new FileReader();
 
@@ -523,14 +642,16 @@ async function readMidi(file) {
     document.getElementById("options-subtitle").innerHTML =
       fileName + " • " + (file.size / 1024).toFixed(1) + "kb";
 
+    currentFileName = file.name;
     try {
+      const existing = JSON.parse(localStorage.getItem(file.name)) ?? {};
+
       const fileData = JSON.stringify({
         name: file.name,
         size: (file.size / 1024).toFixed(1) + "kb",
         lastOpened: Date.now(),
         source: target.result,
-        settings: {},
-        colors: [],
+        settings: existing.settings ?? null,
       });
 
       localStorage.setItem(file.name, fileData);
@@ -744,8 +865,10 @@ function createDesmosLines(chords) {
       line.pitches.push([line.lastMidi, cValue]);
     }
   }
-  const pickerContainer = document.getElementById("color-picker");
+  const pickerContainer = document.getElementById("color-pickers");
   const volumeSliders = document.getElementById("volume-sliders");
+  volumeSliders.innerHTML = ``;
+  defaultColors = [];
 
   for (let i = 0; i < lines.length; i += 1) {
     const bValues = lines[i].terms.map((x) => x[0]);
@@ -754,12 +877,14 @@ function createDesmosLines(chords) {
     const pValues = lines[i].pitches.map((x) => x[0]);
 
     const lineColor = getColor();
+    defaultColors.push(lineColor);
 
     //volume sliders
     const volumeContainer = document.createElement("div");
     volumeContainer.classList.add("volume-container");
     const label = document.createElement("label");
     label.innerText = i + 1;
+    label.setAttribute("for", `volumeRange${i + 1}`);
     const volumeRange = document.createElement("input");
     volumeRange.setAttribute("type", "range");
     volumeRange.setAttribute("id", `volumeRange${i + 1}`);
@@ -770,6 +895,7 @@ function createDesmosLines(chords) {
     const volumeText = document.createElement("input");
     volumeText.setAttribute("type", "number");
     volumeText.setAttribute("id", `volumeInput${i + 1}`);
+    volumeText.classList.add("volume-slider");
     volumeText.setAttribute("min", 0);
     volumeText.setAttribute("max", 200);
     volumeText.setAttribute("value", 100);
@@ -803,6 +929,7 @@ function createDesmosLines(chords) {
     //color pickers
     const picker = document.createElement("input");
     picker.setAttribute("type", "color");
+    picker.classList.add("color-picker");
     picker.dataset.line = i + 1;
     picker.value = lineColor;
     picker.addEventListener("change", () => {
@@ -813,6 +940,8 @@ function createDesmosLines(chords) {
         id: `line_${i + 1}`,
         color: picker.value,
       });
+
+      saveSettings();
     });
     pickerContainer.append(picker);
 
@@ -955,7 +1084,7 @@ function createDesmosLines(chords) {
 
     if (!expr) {
       console.warn(`Expression not found: ${id}`);
-      return; // Skip to the next ID if this one doesn't exist
+      return;
     }
 
     expr.folderId = "settings";
@@ -966,6 +1095,7 @@ function createDesmosLines(chords) {
       settingsFolder.collapsed = true;
     }
   });
+  // console.log(state.graph.viewport);
   calculator.setState(settingsState);
 
   expressions.push({
@@ -1025,7 +1155,7 @@ function createDesmosLines(chords) {
       expr.folderId = folderId;
     });
   }
-
+  // console.log(state.graph.viewport);
   calculator.setState(state);
   originalAnimationPeriod = lastTime * 1000;
 
@@ -1046,6 +1176,9 @@ function createDesmosLines(chords) {
     bottom: -1,
     top: 130, //highest midi note is 128
   });
+
+  loadSettings();
+  currentSettings = getSettings();
 }
 
 const frameTimes = [];
