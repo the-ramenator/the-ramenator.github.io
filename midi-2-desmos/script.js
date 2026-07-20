@@ -496,11 +496,16 @@ function resizeGraph() {
   elt.style.width = rect.width + "px";
   elt.style.height = rect.height + "px";
 
+  const bounds = calculator.graphpaperBounds.mathCoordinates;
+
+  const width = bounds.right - bounds.left;
+  const height = bounds.top - bounds.bottom;
+
   calculator.setMathBounds({
     left: -1,
-    right: 1000,
+    right: -1 + width,
     bottom: -1,
-    top: 130, //highest midi note is 128
+    top: -1 + height,
   });
 }
 
@@ -1203,8 +1208,14 @@ function measureFPS() {
   });
 }
 
+let resizeTimeout;
+
 window.addEventListener("resize", () => {
-  resizeGraph();
+  clearTimeout(resizeTimeout);
+
+  resizeTimeout = setTimeout(() => {
+    resizeGraph();
+  }, 250);
 });
 
 window.addEventListener("load", () => {
