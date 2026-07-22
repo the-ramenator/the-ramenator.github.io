@@ -1,6 +1,3 @@
-<!-- To do:
- 2. fix bass boosting?????
--->
 <!doctype html>
 <html lang="en">
   <head>
@@ -61,7 +58,7 @@
         <h1 id="options-subtitle">Open a MIDI File</h1>
         <button id="uploadNewMidi" class="regular">Upload Midi</button>
 
-        <span class="options-version">v1.3</span>
+        <span class="options-version">v1.4.1</span>
         <div class="options-divider"></div>
         <div class="upload-content">
           <!--   <h1 class="options-library-title">Library</h1>
@@ -69,25 +66,11 @@
           <div class="options-divider"></div>-->
           <h1 class="options-examples-title">Examples</h1>
           <div class="examples-library">
-            <div
-              class="file-container"
-              data-filepath="samples/animation_warrior_theme.mid"
-            >
-              <i class="fa-solid fa-music"></i>
-              <span>Animation Warrior Theme — NightHawk22</span>
-            </div>
-
             <div class="file-container" data-filepath="samples/aria_math.mid">
               <i class="fa-solid fa-music"></i>
               <span>Aria Math — C418</span>
             </div>
-            <div
-              class="file-container"
-              data-filepath="samples/borodin_string_quartet_no_2_mvt_3.mid"
-            >
-              <i class="fa-solid fa-music"></i>
-              <span>String Quartet No. 2 (Mvt 3) — Borodin</span>
-            </div>
+
             <div
               class="file-container"
               data-filepath="samples/clair_de_lune_debussy.mid"
@@ -95,16 +78,20 @@
               <i class="fa-solid fa-music"></i>
               <span>Clair de Lune — Debussy</span>
             </div>
-            <div class="file-container" data-filepath="samples/erlkonig.mid">
-              <i class="fa-solid fa-music"></i>
-              <span>Erlkonig — Schubert</span>
-            </div>
+
             <div
               class="file-container"
               data-filepath="samples/from_the_start.mid"
             >
               <i class="fa-solid fa-music"></i>
               <span>From the Start — Laufey</span>
+            </div>
+            <div
+              class="file-container"
+              data-filepath="samples/golden_hour_JVKE.mid"
+            >
+              <i class="fa-solid fa-music"></i>
+              <span>Golden Hour — JVKE</span>
             </div>
             <div
               class="file-container"
@@ -120,6 +107,13 @@
             <div class="file-container" data-filepath="samples/libertango.mid">
               <i class="fa-solid fa-music"></i>
               <span>Libertango — Astor Piazzolla</span>
+            </div>
+            <div
+              class="file-container"
+              data-filepath="samples/lovers_rock_tv_girl.mid"
+            >
+              <i class="fa-solid fa-music"></i>
+              <span>Lovers Rock — TV Girl</span>
             </div>
             <div
               class="file-container"
@@ -145,44 +139,13 @@
               <i class="fa-solid fa-music"></i>
               <span>Mice on Venus — C418</span>
             </div>
-            <div class="file-container" data-filepath="samples/ms_magic.mid">
-              <i class="fa-solid fa-music"></i>
-              <span>Mrs. Magic — Strawberry Guy</span>
-            </div>
+
             <div
               class="file-container"
-              data-filepath="samples/pasilyo_sunkissed_lola.mid"
+              data-filepath="samples/sibelius_vln_concerto_no_1_mvt_1.mid"
             >
               <i class="fa-solid fa-music"></i>
-              <span>Pasilyo — Sunkissed Lola</span>
-            </div>
-            <div
-              class="file-container"
-              data-filepath="samples/passacaglia_handel.mid"
-            >
-              <i class="fa-solid fa-music"></i>
-              <span>Passacaglia — Handel</span>
-            </div>
-            <div
-              class="file-container"
-              data-filepath="samples/rachmaninoff_piano_concerto_no_2_mvt_2.mid"
-            >
-              <i class="fa-solid fa-music"></i>
-              <span>Piano Concerto No. 2 (Mvt 2) — Rachmaninoff</span>
-            </div>
-            <div
-              class="file-container"
-              data-filepath="samples/reanimate_violin_thing.mid"
-            >
-              <i class="fa-solid fa-music"></i>
-              <span>Reanimate — Warak</span>
-            </div>
-            <div
-              class="file-container"
-              data-filepath="samples/runaway_kanye_west.mid"
-            >
-              <i class="fa-solid fa-music"></i>
-              <span>Runaway — Kanye West</span>
+              <span>Violin Concerto No. 1 — Sibelius</span>
             </div>
             <div
               class="file-container"
@@ -193,17 +156,17 @@
             </div>
             <div
               class="file-container"
-              data-filepath="samples/shostakovich_string_quartet_no_8_mvt_2.mid"
-            >
-              <i class="fa-solid fa-music"></i>
-              <span>String Quartet No. 8 (Mvt 2) — Shostakovich</span>
-            </div>
-            <div
-              class="file-container"
               data-filepath="samples/somewhere_in_nevada.mid"
             >
               <i class="fa-solid fa-music"></i>
               <span>Nevada — Vicetone</span>
+            </div>
+            <div
+              class="file-container"
+              data-filepath="samples/take_on_me_aha.mid"
+            >
+              <i class="fa-solid fa-music"></i>
+              <span>Take on Me — A-ha</span>
             </div>
             <div class="file-container" data-filepath="samples/the_moldau.mid">
               <i class="fa-solid fa-music"></i>
@@ -211,17 +174,17 @@
             </div>
             <div
               class="file-container"
+              data-filepath="samples/viva_la_vida_coldplay.mid"
+            >
+              <i class="fa-solid fa-music"></i>
+              <span>Viva la Vida — Coldplay</span>
+            </div>
+            <div
+              class="file-container"
               data-filepath="samples/wieniawski_violin_concerto_1_mvt_1.mid"
             >
               <i class="fa-solid fa-music"></i>
               <span>Violin Concerto No. 1 (Mvt 1) — Wieniawksi</span>
-            </div>
-            <div
-              class="file-container"
-              data-filepath="samples/ysaye_violin_sonata_3.mid"
-            >
-              <i class="fa-solid fa-music"></i>
-              <span>Violin Sonata No. 3 — Ysaye</span>
             </div>
           </div>
         </div>

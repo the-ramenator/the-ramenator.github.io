@@ -5,7 +5,7 @@ import { Midi } from "https://esm.sh/@tonejs/midi";
 const dropZone = document.getElementById("drop-zone");
 
 dropZone.addEventListener("click", () => {
-  document.getElementById("midi-upload").click(); // Triggers the file upload dialog
+  document.getElementById("midi-upload").click();
 });
 
 dropZone.addEventListener("drop", dropHandler);
@@ -683,7 +683,6 @@ async function readMidi(file) {
       totalNotes += track.notes.length;
 
       for (const note of track.notes) {
-        // Note ON
         const start = note.ticks;
         if (!groups.has(start)) groups.set(start, []);
         const id = crypto.randomUUID();
@@ -694,7 +693,6 @@ async function readMidi(file) {
           noteId: id,
           time: getTime(note),
         });
-        // Note OFF
         const end = note.ticks + note.durationTicks;
         if (!groups.has(end)) groups.set(end, []);
         groups.get(end).push({
@@ -745,7 +743,6 @@ function createDesmosLines(chords) {
 
     const assigned = new Array(lines.length).fill(false);
 
-    // OFF events first
     chord.sort((a, b) => {
       if (a.type === b.type) return 0;
       return a.type === "off" ? -1 : 1;
@@ -767,10 +764,12 @@ function createDesmosLines(chords) {
                 1000;
 
             line.terms.push([-line.lastMidi, cValue]);
-            line.gains.push([0, Math.round(cValue * 100) / 100]);
+            line.gains.push([-line.lastGain, Math.round(cValue * 100) / 100]);
+
             line.pitches.push([line.lastMidi, cValue]);
 
             line.lastMidi = null;
+            line.lastGain = null;
             line.currentNoteId = null;
             line.active = false;
 
@@ -796,6 +795,7 @@ function createDesmosLines(chords) {
       while (lines.length < activeOnEvents) {
         lines.push({
           lastMidi: null,
+          lastGain: null,
           availableTime: -Infinity,
           terms: [],
           gains: [],
@@ -836,6 +836,7 @@ function createDesmosLines(chords) {
 
         lines.push({
           lastMidi: null,
+          lastGain: null,
           availableTime: -Infinity,
           terms: [],
           gains: [],
@@ -859,15 +860,17 @@ function createDesmosLines(chords) {
 
       const velocity = note.velocity ?? 1;
       const frequency = freakyScaleNumber * Math.pow(2, (note.midi - 69) / 12);
-
       const maxGain = Math.min(10, 660 / frequency);
-
       const gain = +Math.min(maxGain, velocity).toFixed(2);
+
+      const gValue = line.lastGain === null ? gain : gain - line.lastGain;
+
       line.terms.push([bValue, cValue]);
-      line.gains.push([gain, cValue]);
+      line.gains.push([gValue, cValue]);
       line.pitches.push([note.midi, cValue]);
 
       line.lastMidi = note.midi;
+      line.lastGain = gain;
       line.availableTime = event.time + note.duration;
       line.active = true;
       line.currentNoteId = event.noteId;
@@ -879,8 +882,7 @@ function createDesmosLines(chords) {
       const cValue = 1 + Math.round((lastTime * timeScale + 1) * 1000) / 1000;
 
       line.terms.push([-line.lastMidi, cValue]);
-      line.terms.push([-line.lastMidi, cValue]);
-      line.gains.push([0, cValue]);
+      line.gains.push([-line.lastGain, cValue]);
       line.pitches.push([line.lastMidi, cValue]);
     }
   }
@@ -992,7 +994,9 @@ function createDesmosLines(chords) {
       // latex: `v_{${i + 1}}(x)=\\sum_{i=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[i\\right]:g_{${i + 1}}\\left[i\\right],0\\right\\}`,
       // latex: `v_{${i + 1}}(x)=\\sum_{i=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[i\\right]:g_{${i + 1}}\\left[i\\right]\\left(0.1 + b_{oost} \\cdot \\max\\left(0,\\frac{60-p_{${i + 1}}\\left[i\\right]}{120}\\right)\\right),0\\right\\}`,
       // latex: `v_{${i + 1}}(x)=\\sum_{i=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[i\\right]:g_{${i + 1}}\\left[i\\right]\\left( 2^{\\max\\left(0, b_{oost}\\cdot\\frac{60-p_{${i + 1}}\\left[i\\right]}{24}\\right)} \\right),0\\right\\}`,
-      latex: `v_{${i + 1}}\\left(x\\right)=\\sum_{i=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[i\\right]:g_{${i + 1}}\\left[i\\right]\\cdot\\left\\{p_{${i + 1}}\\left[i\\right]<52:b_{oost}\\cdot\\frac{660}{8.17579891564\\cdot2^{\\frac{p_{${i + 1}}\\left[i\\right]-69}{12}}},1\\right\\},0\\right\\}`,
+      // latex: `v_{${i + 1}}\\left(x\\right)=\\sum_{i=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[i\\right]:g_{${i + 1}}\\left[i\\right]\\cdot\\left\\{p_{${i + 1}}\\left[i\\right]<52:b_{oost}\\cdot\\frac{660}{${freakyScaleNumber}\\cdot2^{\\frac{p_{${i + 1}}\\left[i\\right]-69}{12}}},1\\right\\},0\\right\\}`,
+      // latex: `v_{${i + 1}}(x)=\\sum_{j=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[j\\right]:g_{${i + 1}}\\left[j\\right]\\cdot\\left\\{p_{${i + 1}}\\left[j\\right]<52:b_{oost}\\cdot\\frac{660}{${freakyScaleNumber}\\cdot2^{\\frac{p_{${i + 1}}\\left[j\\right]-69}{12}}},1\\right\\},0\\right\\}`,
+      latex: `v_{${i + 1}}(x)=\\sum_{j=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[j\\right]:\\left\\{p_{${i + 1}}\\left[j\\right]<52:\\min\\left(10,g_{${i + 1}}\\left[j\\right]\\cdot b_{oost}\\right),g_{${i + 1}}\\left[j\\right]\\right\\},0\\right\\}`,
       hidden: true,
     });
     expressions.push({
@@ -1193,13 +1197,13 @@ function createDesmosLines(chords) {
   calculator.controller.dispatch({
     id: "t",
     type: "set-slider-loopmode",
-    loopMode: "LOOP_FORWARD", // Alternatives: LOOP_FORWARD_REVERSE, PLAY_ONCE, PLAY_FOREVER
+    loopMode: "LOOP_FORWARD", // LOOP_FORWARD_REVERSE, PLAY_ONCE, PLAY_FOREVER
   });
   calculator.setMathBounds({
     left: -1,
     right: Math.round(lastTime * timeScale) * 1.25,
     bottom: -1,
-    top: 130, //highest midi note is 128
+    top: 130,
   });
 
   loadSettings();
