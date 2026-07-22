@@ -1,13 +1,18 @@
 <!-- To do:
- 1. fix hanging notes
  2. fix bass boosting?????
- 5. Audio support
 -->
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="Transform .midi files into audible Desmos graphs"
+    />
+    <meta name="author" content="The Ramenator" />
+
     <title>Midi 2 Desmos</title>
     <link rel="icon" type="image/png" href="favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -48,9 +53,7 @@
         <span id="nav-mode">Graph</span>
         <span id="nav-help">Help</span>
         <span class="nav-other-projects"
-          ><a href="https://the-ramenator.github.io/projects"
-            >Other Projects</a
-          ></span
+          ><a href="/projects.html">Other Projects</a></span
         >
       </div>
       <div class="options">
@@ -58,7 +61,7 @@
         <h1 id="options-subtitle">Open a MIDI File</h1>
         <button id="uploadNewMidi" class="regular">Upload Midi</button>
 
-        <span class="options-version">v1.2.2</span>
+        <span class="options-version">v1.3</span>
         <div class="options-divider"></div>
         <div class="upload-content">
           <!--   <h1 class="options-library-title">Library</h1>
@@ -297,12 +300,12 @@
               value="0"
             />
           </div>
-          <label for="currentSpeed"
+          <label for="volumeChannels"
             ><i class="fa-solid fa-volume-high"></i>&nbsp;Volume Channels</label
           >
           <div id="volume-sliders"></div>
 
-          <label for="currentSpeed"
+          <label for="colorPicker"
             ><i class="fa-solid fa-palette"></i>&nbsp;Color Picker</label
           >
           <div id="color-pickers"></div>

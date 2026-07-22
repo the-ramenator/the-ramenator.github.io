@@ -760,6 +760,12 @@ input[type="color"]::-moz-color-swatch {
   -webkit-appearance: none;
 }
 
+.rangeContainer input[type="number"]:focus,
+.volume-container input[type="number"]:focus {
+  border-bottom: var(--p) 3px solid;
+  outline: none;
+}
+
 .export-options-container {
   width: 90%;
   position: relative;

@@ -729,9 +729,9 @@ function createDesmosLines(chords) {
     const chord = chords[i];
     if (!chord?.length) continue;
 
-    const time = getTime(chord[0]);
+    const time = chord[0].time;
     if (i > 0) {
-      const previousTime = getTime(chords[i - 1][0]);
+      const previousTime = chords[i - 1][0].time;
       const delta = time - previousTime;
       if (delta > 0 && delta < minDelta) minDelta = delta;
     }
@@ -755,8 +755,12 @@ function createDesmosLines(chords) {
       if (event.type === "off") {
         const note = event.note;
 
+        let found = false;
+
         for (const line of lines) {
           if (line.active && line.currentNoteId === event.noteId) {
+            found = true;
+
             const cValue =
               1 +
               Math.round((event.time * timeScale + Number.EPSILON) * 1000) /
@@ -774,6 +778,14 @@ function createDesmosLines(chords) {
           }
         }
 
+        if (!found) {
+          console.warn(
+            "OFF event couldn't find matching line",
+            event.note.midi,
+            event.noteId,
+            event.time,
+          );
+        }
         continue;
       }
 
@@ -791,8 +803,9 @@ function createDesmosLines(chords) {
           active: false,
           currentNoteId: null,
         });
-        assigned.length = lines.length;
-        assigned.fill(false);
+        while (assigned.length < lines.length) {
+          assigned.push(false);
+        }
       }
 
       let bestIndex = -1;
@@ -805,7 +818,7 @@ function createDesmosLines(chords) {
 
         const line = lines[i];
 
-        if (line.active) continue;
+        if (line.active && line.availableTime > event.time) continue;
 
         let dist;
 
@@ -831,8 +844,9 @@ function createDesmosLines(chords) {
           currentNoteId: null,
         });
 
-        assigned.length = lines.length;
-        assigned.fill(false);
+        while (assigned.length < lines.length) {
+          assigned.push(false);
+        }
       }
 
       const line = lines[bestIndex];
@@ -889,7 +903,7 @@ function createDesmosLines(chords) {
     volumeContainer.classList.add("volume-container");
     const label = document.createElement("label");
     label.innerText = i + 1;
-    label.setAttribute("for", `volumeRange${i + 1}`);
+    label.setAttribute("for", `volumeInput${i + 1}`);
     const volumeRange = document.createElement("input");
     volumeRange.setAttribute("type", "range");
     volumeRange.setAttribute("id", `volumeRange${i + 1}`);
@@ -968,11 +982,17 @@ function createDesmosLines(chords) {
     expressions.push({
       id: `volume${i + 1}`,
       latex: `v_{olume${i + 1}} = 1`,
+      sliderBounds: {
+        min: 0,
+        max: 1,
+      },
     });
     expressions.push({
       id: `gain_${i + 1}`,
       // latex: `v_{${i + 1}}(x)=\\sum_{i=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[i\\right]:g_{${i + 1}}\\left[i\\right],0\\right\\}`,
-      latex: `v_{${i + 1}}(x)=\\sum_{i=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[i\\right]:g_{${i + 1}}\\left[i\\right]\\left(0.1 + b_{oost} \\cdot \\max\\left(0,\\frac{60-p_{${i + 1}}\\left[i\\right]}{120}\\right)\\right),0\\right\\}`,
+      // latex: `v_{${i + 1}}(x)=\\sum_{i=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[i\\right]:g_{${i + 1}}\\left[i\\right]\\left(0.1 + b_{oost} \\cdot \\max\\left(0,\\frac{60-p_{${i + 1}}\\left[i\\right]}{120}\\right)\\right),0\\right\\}`,
+      // latex: `v_{${i + 1}}(x)=\\sum_{i=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[i\\right]:g_{${i + 1}}\\left[i\\right]\\left( 2^{\\max\\left(0, b_{oost}\\cdot\\frac{60-p_{${i + 1}}\\left[i\\right]}{24}\\right)} \\right),0\\right\\}`,
+      latex: `v_{${i + 1}}\\left(x\\right)=\\sum_{i=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[i\\right]:g_{${i + 1}}\\left[i\\right]\\cdot\\left\\{p_{${i + 1}}\\left[i\\right]<52:b_{oost}\\cdot\\frac{660}{8.17579891564\\cdot2^{\\frac{p_{${i + 1}}\\left[i\\right]-69}{12}}},1\\right\\},0\\right\\}`,
       hidden: true,
     });
     expressions.push({
