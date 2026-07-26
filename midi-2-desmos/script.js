@@ -976,7 +976,8 @@ function createDesmosLines(chords) {
 
     expressions.push({
       id: `line_${i + 1}`,
-      latex: `a_{${i + 1}}\\left(x\\right) = \\sum_{i=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[i\\right]:b_{${i + 1}}\\left[i\\right],0\\right\\}`,
+      // latex: `a_{${i + 1}}\\left(x\\right) = \\sum_{i=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[i\\right]:b_{${i + 1}}\\left[i\\right],0\\right\\}`,
+      latex: `a_{${i + 1}}\\left(x\\right)=\\left\\{x\\ge c_{${i + 1}}:b_{${i + 1}},0\\right\\}.\\operatorname{total}`,
       color: lineColor,
       lineWidth: 1.5,
       lineStyle: "SOLID",
@@ -991,12 +992,8 @@ function createDesmosLines(chords) {
     });
     expressions.push({
       id: `gain_${i + 1}`,
-      // latex: `v_{${i + 1}}(x)=\\sum_{i=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[i\\right]:g_{${i + 1}}\\left[i\\right],0\\right\\}`,
-      // latex: `v_{${i + 1}}(x)=\\sum_{i=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[i\\right]:g_{${i + 1}}\\left[i\\right]\\left(0.1 + b_{oost} \\cdot \\max\\left(0,\\frac{60-p_{${i + 1}}\\left[i\\right]}{120}\\right)\\right),0\\right\\}`,
-      // latex: `v_{${i + 1}}(x)=\\sum_{i=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[i\\right]:g_{${i + 1}}\\left[i\\right]\\left( 2^{\\max\\left(0, b_{oost}\\cdot\\frac{60-p_{${i + 1}}\\left[i\\right]}{24}\\right)} \\right),0\\right\\}`,
-      // latex: `v_{${i + 1}}\\left(x\\right)=\\sum_{i=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[i\\right]:g_{${i + 1}}\\left[i\\right]\\cdot\\left\\{p_{${i + 1}}\\left[i\\right]<52:b_{oost}\\cdot\\frac{660}{${freakyScaleNumber}\\cdot2^{\\frac{p_{${i + 1}}\\left[i\\right]-69}{12}}},1\\right\\},0\\right\\}`,
-      // latex: `v_{${i + 1}}(x)=\\sum_{j=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[j\\right]:g_{${i + 1}}\\left[j\\right]\\cdot\\left\\{p_{${i + 1}}\\left[j\\right]<52:b_{oost}\\cdot\\frac{660}{${freakyScaleNumber}\\cdot2^{\\frac{p_{${i + 1}}\\left[j\\right]-69}{12}}},1\\right\\},0\\right\\}`,
-      latex: `v_{${i + 1}}(x)=\\sum_{j=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[j\\right]:\\left\\{p_{${i + 1}}\\left[j\\right]<52:\\min\\left(10,g_{${i + 1}}\\left[j\\right]\\cdot b_{oost}\\right),g_{${i + 1}}\\left[j\\right]\\right\\},0\\right\\}`,
+      // latex: `v_{${i + 1}}(x)=\\sum_{j=1}^{${cValues.length}}\\left\\{x\\ge c_{${i + 1}}\\left[j\\right]:\\left\\{p_{${i + 1}}\\left[j\\right]<52:\\min\\left(10,g_{${i + 1}}\\left[j\\right]\\cdot b_{oost}\\right),g_{${i + 1}}\\left[j\\right]\\right\\},0\\right\\}`,
+      latex: `v_{${i + 1}}(x)=\\left\\{x\\ge c_{${i + 1}}:\\left\\{p_{${i + 1}}<52:\\min\\left(10,g_{${i + 1}}\\cdot b_{oost}\\right),g_{${i + 1}}\\right\\},0\\right\\}.\\operatorname{total}`,
       hidden: true,
     });
     expressions.push({
