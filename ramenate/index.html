@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<!-- https://github.com/antimatter15/whammy -->
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Ramenate</title>
+  <link rel="icon" type="image/png" href="https://cdn1.iconfinder.com/data/icons/cursor-pointers/24/9-512.png" />
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2/dist/sweetalert2.min.js"></script>
+  <script src='/whammy.js' defer></script>
+  <script src="/script.js" defer></script>
+  <script src="/style.js" defer></script>
+</head>
+
+<!-- <body>
+  <span class="material-symbols-outlined right_arrow">chevron_right</span>
+  <span class="material-symbols-outlined left_arrow">chevron_left</span> -->
+<div class="right">
+  <canvas id="canvas"></canvas>
+  <img id='play'>
+</div>
+
+<div class="top">
+
+  <div class="logo"><strong><b>Ramenate</b></strong></div>
+
+  <!-- About -->
+  <button id="ABtn" class="modalBtn">About</button>
+  <div id="AModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        <h2>About</h2>
+      </div>
+      <p>Ramenate is a free open source HTML5 online animation software application with limited functionality and
+        incomprehensible code. <br><br>I got the idea for this a few years ago, when I was 10 and couldn't write a
+        single line of code. I was really inspired by people like Alan Becker, and wanted to create my own animations.
+        Problem was, I was a broke 10-year old, and couldn't figure out how to get animation programs to work on a
+        chromebook. Years later, the idea of an online animator popped into my head, and well here we
+        are.<br><br>Ramenate was made by <a href="https://the-ramenator.github.io/">The Ramenator</a>, and you can find
+        the source by pressing <code>Ctrl+U</code>. <br><br>I want to give a special thanks to <a
+          href="https://sheeptester.github.io/">Sean (from Sheeptester)</a> for his amazing code and descriptions that I
+        borrowed.</p>
+    </div>
+  </div>
+
+  <!-- Help -->
+  <button id="HBtn" class="modalBtn">Help</button>
+  <div id="HModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        <h2>Help</h2>
+      </div>
+      <p>Just your daily reminder that exporting doesn't work and probably never will. Until then, just draw random
+        stuff and see what happens.<br>Here's what each of the buttons do.</p>
+      <ul>
+        <li>Black box: color picker. click on it to pick a new color</li>
+        <li>1st text box: FPS chooser. choose how fast you want your animation to be played/exported (to be made)</li>
+        <li>2nd text box: Line Thickness. Choose how thick you want your drawing line to be.</li>
+        <li>Download: Export the animation <b>(WIP)</b></li>
+        <li>Back button: Undo</li>
+        <li>Mop: Clear drawing area</li>
+        <li>Plus: Add the frame you were just drawing on to the list</li>
+        <li>Play: view the animation</li>
+        <li>Save: save an edited frame. edit a frame by pressing on it on the bottom bar. your current drawing area will
+          be overtaken by the frame you clicked on.</li>
+        <li>Trash can with lines: delete an edited frame. Click on a frame on the bottom bar. Click this button to
+          delete it.</li>
+        <li>Trash can with an x: Delete everything. All your frames. All your drawings. Everything.</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- Keyboard Shortcuts -->
+  <button id="KBtn" class="modalBtn">Keyboard Shortcuts</button>
+  <div id="KModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        <h2>Keyboard Shortcuts</h2>
+      </div>
+      <p>Exactly what it says. Keyboard shortcuts because I'm lazy. Some of these don't work because browsers have
+        decided that their keyboard shortcuts are better than mine. I'll get around to updating these some time soon.
+      </p>
+      <span>Add current frame</span><br><code>ctrl+a</code><br><br>
+      <span>Play Animation</span><br><code>enter</code><br><br>
+      <span>Clear canvas</span><br><code>ctrl+x</code><br><br>
+      <span>Save edited frame</span><br><code>ctrl+s</code><br><br>
+      <span>Delete edited frame</span><br><code>ctrl+d</code><br><br>
+    </div>
+  </div>
+</div>
+
+
+<div class="left">
+  <div id="options">
+    <input type="color" oninput="stroke_color = this.value" placeholder="Color"><br>
+    <input type="number" id='framerate' value='24' placeholder="FPS">
+    <input type="number" oninput="stroke_width = this.value" value='5' placeholder="Thickness">
+    <span onclick="finishAnimation()" class="material-symbols-outlined">file_download</span>
+  </div>
+  <div id="actions">
+    <span onclick="Restore()" class="material-symbols-outlined">Undo</span>
+    <span onclick="Clear()" class="material-symbols-outlined">Mop</span>
+    <span onclick="drawFrame()" class="material-symbols-outlined">Add_Circle</span>
+    <span onclick="play()" id='play-btn' class="material-symbols-outlined">Play_Circle</span>
+    <span onclick='saveEditedFrame()' id='save-edited-frame-btn' class="material-symbols-outlined">Save</span>
+    <span onclick='deleteEditedFrame()' id='delete-edited-frame-btn' class="material-symbols-outlined">Delete</span>
+    <span onclick="fullClear()" class="material-symbols-outlined">delete_forever</span>
+
+  </div>
+</div>
+
+<video id='e' style='z-index: -100; position: absolute; top: 0; left: 0;'></video>
+<div id="bottom">
+  <p class="frameCount">Frame Count: <span id="frameCount">0</span></p>
+  <div id="framesOuter">
+    <div id="frames"></div>
+  </div>
+</div>
+<script defer>
+  function downloadURI(uri, name) {
+    var link = document.createElement("a");
+    link.download = name;
+    link.href = uri;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    link.remove();
+  }
+  var url;
+  function exportAnimation() {
+    let frames = JSON.parse(localStorage.getItem('frames'));
+    var encoder = new Whammy.Video(1);
+    for (let i = 0; i < frames.length; i++) {
+      encoder.add(frames[i]);
+      console.log("1", encoder);
+    }
+    encoder.compile(false, function (output) {
+      url = (window.webkitURL || window.URL).createObjectURL(output);
+    });
+    document.getElementById('e').src = url;
+    downloadURI(url, 'export.webm');
+  }
+  function finishAnimation() {
+    Swal.fire({
+      title: 'Do you wish to download your animation?',
+      html: `<h3 style='margin: 0;color: red;'>Warning:</h3><p>This feature will <b>not</b> work on Chrome. I don't have other browsers, so I can't tell you if they work or not there. <br>Signs that your browser hates this websites are:</p><ul><li>Nothing happens if you click the download button</li><li>You can't play the video once you've downloaded it</li><li>The entire page just crashes</li></ul`,
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: 'Download',
+      denyButtonText: `Never Mind`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        exportAnimation();
+        Swal.fire({
+          title: 'Download Complete!',
+          html: '<p>Your animation has been downloaded! If the download does not start, click <a href="' + url + '" download="export.webm">here</a>!</p>',
+          icon: 'success',
+        })
+      } else if (result.isDenied) {
+        // Do nothing
+        console.log('User denied animation download')
+      }
+    })
+  }
+</script>
+</body>
+
+</html>

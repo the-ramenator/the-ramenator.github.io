@@ -1,0 +1,210 @@
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}
+html, body {
+  height: 100%;
+  width: 100%;
+/*   background:#253137; */
+  background: #171719;
+  overflow: hidden;
+  margin: 0;
+  font-family: 'Raleway', sans-serif;
+  color: #fff;
+}
+.frame{
+/*       border: 2px solid;
+  border-radius: 0.5rem; */
+  width: auto;
+      display: inline;
+height: 10vh;
+}
+.frameImg{
+  height: 10vh;
+  width: auto;
+  margin: 1vh;
+}
+.frameSpan{
+  font-size: auto;
+  width: auto;
+  height: auto;
+}
+#frames {
+    position: absolute;
+    height: 16vh;
+    top: 4vh;
+      white-space: nowrap;
+}
+
+
+#bottom {
+  position: absolute;
+  bottom: 0;
+  height: 20vh;
+  overflow: hidden;
+  width: 100%;
+  background: #41464e;
+}
+#framesOuter{
+  position: absolute;
+  left: 10%;
+  width: 80%;
+  height: 18vh;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+.left{
+  position: fixed;
+  height: 96vh;
+  top: 4vh;
+  width: 10%;
+  background: #292C31;
+}
+.left span{
+  background: transparent;
+  border: 0;
+  color: #fff;
+  font-size: 3rem;
+  margin-left: 1vh;
+}
+
+.left span, .left input{
+  margin-top: 0.5vh;
+  margin-left: 2.5vw;
+  cursor: pointer;
+}
+
+.left span:disabled{
+  color: #6b6b6b;
+}
+.left span:hover{
+  color: #ababab;
+}
+
+.top{
+  background: #353941;
+  height: 4vh;
+}
+canvas{
+  position: absolute;
+  right: 0;
+}
+#play{
+  position: absolute;
+  right: 0;
+  top: 4vh;
+  z-index: 9999;
+/*   border: 2px solid black; */
+}
+
+input[type=number]{
+  width: 3vw;
+}
+
+.right_arrow{
+  color: white;
+  position: absolute;
+  z-index: 9999;
+}
+.left_arrow{
+  color: white;
+  z-index: 9999;
+  position: absolute;
+}
+
+input[type="color"] {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  height: 4em;
+  padding: 0;
+  width: 4em;
+  left: 1em;
+}
+.logo{
+  color: #87C9C3;
+  font-weight: 800;
+  font-size: 16px;
+  display: inline-block;
+  margin-left: 1vw;
+  margin-top: 0.5vh;
+}
+
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+
+  background-color: #253137;
+  margin: auto;
+  padding: 10px;
+  border: 0px solid #888;
+  color: #fff;
+  width: 50%;
+}
+
+/* The Close Button */
+.close {
+  color: #fff;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #aaa;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modalBtn{
+  background: transparent;
+  border: none;
+  font: inherit;
+  color: #fff;
+  height: 4vh;
+}
+
+.modalBtn:hover{
+  background: #324149;
+}
+
+.modal-header {
+  margin: 0;
+  background-color: /*#1B2327*/transparent;
+  color: white;
+}
+code {
+  background-color: #1F292E;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.frameCount{
+  position: absolute;
+  top: 7vh;
+  left: 1vw;
+  font-size: 10px;
+}
