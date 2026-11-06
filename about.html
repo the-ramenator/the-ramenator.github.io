@@ -5,1216 +5,1309 @@
 ===IN GENERAL===
 1. Maybe new effect instead of the dots
 -->
-<!DOCTYPE html>
+<!doctype html>
 <html>
+  <head>
+    <title>About</title>
+    <!-- <base href="https://the-ramenator.github.io/" /> -->
+    <link rel="icon" type="image/png" href="assets/homepage/favicon.png" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/ba992eac8c.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Doto:wght,ROND@100..900,48&family=Reenie+Beanie&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --black: rgba(15, 15, 15, 1);
+      }
 
-    <head>
-        <title>About</title>
-        <!-- <base href="https://the-ramenator.github.io/" /> -->
-        <link rel="icon" type="image/png" href="assets/homepage/favicon.png" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script src="https://kit.fontawesome.com/ba992eac8c.js" crossorigin="anonymous"></script>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Doto:wght,ROND@100..900,48&family=Reenie+Beanie&display=swap"
-            rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap" rel="stylesheet">
-        <style>
-            :root {
-                --black: rgba(15,15,15,1);
-            }
+      * {
+        margin: 0;
+        padding: 0;
+        transition: 0.75s;
+      }
 
-            * {
-                margin: 0;
-                padding: 0;
-                transition: 0.75s;
-            }
+      html,
+      body {
+        overscroll-behavior-x: none;
+      }
 
-            html,body{
-                overscroll-behavior-x: none;
-            }
+      body {
+        overflow: hidden;
+        width: 100vw;
+        height: 100vh;
+        background: var(--black);
+        user-select: none;
+      }
+      #timelineContainer {
+        height: 200vw;
+        width: 200vw;
+        position: absolute;
+        overflow: hidden;
+        user-select: none;
+        background: var(--black);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .timeline-orbit {
+        position: absolute;
+        border-radius: 50%;
+        border: none;
+      }
 
-            body {
-                overflow: hidden;
-                width: 100vw;
-                height: 100vh;
-                background: var(--black);
-                user-select: none;
-            }
-            #timelineContainer{
-                height: 200vw;
-                width: 200vw;
-                position: absolute;
-                overflow: hidden;
-                user-select: none;
-                background: var(--black);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-            .timeline-orbit {
-                position: absolute;
-                border-radius: 50%;
-                border: none;
-            }
+      .timeline-orbit::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border: 2px dashed #999;
+        border-radius: 50%;
+        box-sizing: border-box;
+        pointer-events: none;
+        animation: spin 100s linear infinite;
+        animation-direction: reverse;
+      }
 
-            .timeline-orbit::before {
-                content: "";
-                position: absolute;
-                inset: 0;
-                border: 2px dashed #999;
-                border-radius: 50%;
-                box-sizing: border-box;
-                pointer-events: none;
-                animation: spin 100s linear infinite;
-                animation-direction: reverse;
-            }
+      .timeline-dot {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: gray;
+        transition:
+          transform 0.3s ease,
+          background 0.3s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: spin 6s cubic-bezier(0.42, 1, 0.58, 0) infinite;
+        outline: 10px solid var(--black);
+        cursor: pointer;
+        z-index: 100;
+      }
 
+      /* Rainbow animation when active */
+      @keyframes rainbow {
+        0% {
+          background: #ff5d3d;
+          outline: 10px solid #d94f34;
+          transform: scale(1);
+        }
+        25% {
+          background: #7eff3d;
+          outline: 10px solid #6bd934;
+          transform: scale(0.97);
+        }
+        50% {
+          background: #3ddfff;
+          outline: 10px solid #34bdd9;
+          transform: scale(1.05);
+        }
+        75% {
+          background: #be3dff;
+          outline: 10px solid #a234d9;
+          transform: scale(0.97);
+        }
+        100% {
+          background: #ff5d3d;
+          outline: 10px solid #d94f34;
+          transform: scale(1);
+        }
+      }
 
-            .timeline-dot {
-                position: absolute;
-                width: 30px;
-                height: 30px;
-                border-radius: 50%;
-                background: gray;
-                transition: transform 0.3s ease, background 0.3s ease;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                animation: spin 6s cubic-bezier(0.42, 1, 0.58, 0) infinite;
-                outline: 10px solid var(--black);
-                cursor: pointer;
-                z-index: 100;
-            }
+      .timeline-dot.active {
+        /* transform: scale(1.5); */
+        animation: rainbow 2s linear infinite;
+        z-index: 100;
+        outline: none;
+        box-shadow: 0px 0px 30px var(--black);
+        outline: 10px solid #d94f34;
+      }
 
-            /* Rainbow animation when active */
-            @keyframes rainbow {
-                0% { 
-                    background: #FF5D3D;
-                    outline: 10px solid #D94F34;
-                    transform: scale(1);
-                }
-                25%{ 
-                    background: #7EFF3D;
-                    outline: 10px solid #6BD934;
-                    transform: scale(0.97);
+      .timeline-dot.active .dot-text {
+        opacity: 0;
+        transition: 0s;
+      }
 
-                }
-                50%{ 
-                    background: #3DDFFF;
-                    outline: 10px solid #34BDD9;
-                    transform: scale(1.05);
-                }
-                75% { 
-                    background: #BE3DFF; 
-                    outline: 10px solid #A234D9;
-                    transform: scale(0.97);
-                }
-                100%{
-                    background: #FF5D3D;
-                    outline: 10px solid #D94F34;
-                    transform: scale(1);
-                }
-            }
+      .timeline-dot span {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform-origin: 0 40px; /* radius */
+        font-size: 13px;
+        font-family: sans-serif;
+        color: white;
+        text-shadow: 0px 0px 5px white;
+      }
+      .dot-text {
+        transform: translate(0%, -100%);
+        height: 40px;
+      }
 
-            .timeline-dot.active {
-                /* transform: scale(1.5); */
-                animation: rainbow 2s linear infinite;
-                z-index: 100;
-                outline: none;
-                box-shadow: 0px 0px 30px var(--black);
-                outline: 10px solid #D94F34;
-            }
+      .redline1 {
+        height: 100vh;
+        width: 1px;
+        position: absolute;
+        left: 30%;
+        background: red;
+        z-index: 100;
+      }
+      .redline2 {
+        height: 100vh;
+        width: 1px;
+        position: absolute;
+        left: 70%;
+        background: red;
+        z-index: 100;
+      }
+      .redline3 {
+        height: 1px;
+        width: 100%;
+        position: absolute;
+        top: 95%;
+        left: 0%;
+        background: red;
+        z-index: 100;
+      }
+      .redline4 {
+        height: 100vh;
+        width: 1px;
+        position: absolute;
+        left: 50%;
+        background: red;
+        z-index: 100;
+      }
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      #infoCont {
+        color: white;
+      }
+      svg {
+        position: absolute;
+      }
+      #svgCont {
+        transition: 0.1s;
+      }
+      #activeTitle {
+        position: absolute;
+        /* top: 85%; */
+        /* left: 50%; */
+        transform: translate(-50%, -50%);
+        text-align: center;
+        /* border: 2px solid white; */
+        font-family: "Doto", sans-serif;
+        font-weight: 900;
+        box-shadow: 0px -10px 30px var(--black);
+        z-index: 15;
+        animation: bounceTitleDate 10s ease-in-out infinite;
+      }
+      #activeDate {
+        position: absolute;
+        /* top: 90%; */
+        /* left: 50%; */
+        transform: translate(-50%, -50%);
+        text-align: center;
+        font-family: "Doto", sans-serif;
+        font-weight: 500;
+        animation: bounceTitleDate 10s ease-in-out infinite;
+        animation-delay: 1.25s;
+      }
+      #activeDesc {
+        position: absolute;
+        /* top: 55%; */
+        /* left: 49.5%; */
+        transform: translate(-100%, -50%);
+        text-align: right;
+        width: 25%;
+        box-shadow: 0px 10px 30px var(--black);
+        z-index: 15;
+        font-family: "Inconsolata", monospace;
+        animation: bounceDesc 10s ease-in-out infinite;
+        animation-delay: 3.75s;
+      }
+      #activeImg {
+        width: 200px;
+        height: auto;
+        border-radius: 16px;
+        position: absolute;
+        /* top: 55%; */
+        /* left: 50.5%; */
+        transform: translate(0%, -50%);
+        text-align: center;
+        /* box-shadow: 0px 0px 30px white;  */
+        z-index: 100;
+        cursor: pointer;
+        animation: bounceImg 10s ease-in-out infinite;
+        animation-delay: 2.5s;
+      }
 
-
-            .timeline-dot.active .dot-text {
-                opacity: 0;
-                transition: 0s;
-            }
-
-            .timeline-dot span {
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                transform-origin: 0 40px; /* radius */
-                font-size: 13px;
-                font-family: sans-serif;
-                color: white;
-                text-shadow: 0px 0px 5px white;
-            }
-            .dot-text{
-                transform: translate(0%,-100%);
-                height: 40px;
-            }
-
-            .redline1{
-                height: 100vh;
-                width: 1px;
-                position: absolute;
-                left: 30%;
-                background: red;
-                z-index: 100;
-            }
-            .redline2{
-                height: 100vh;
-                width: 1px;
-                position: absolute;
-                left: 70%;
-                background: red;
-                z-index: 100;
-            }
-            .redline3{
-                height: 1px;
-                width: 100%;
-                position: absolute;
-                top: 95%;
-                left: 0%;
-                background: red;
-                z-index: 100;
-            }
-            .redline4{
-                height: 100vh;
-                width: 1px;
-                position: absolute;
-                left: 50%;
-                background: red;
-                z-index: 100;
-            }
-            @keyframes spin {
-                from { transform: rotate(0deg); }
-                to { transform: rotate(360deg); }
-            }
-            #infoCont{
-                color: white;
-            }
-            svg{
-                position: absolute;
-            }
-            #svgCont{
-                transition: 0.1s;
-            }
-            #activeTitle{
-                position: absolute;
-                /* top: 85%; */
-                /* left: 50%; */
-                transform: translate(-50%,-50%);
-                text-align: center;
-                /* border: 2px solid white; */
-                font-family: "Doto", sans-serif;
-                font-weight: 900;
-                box-shadow: 0px -10px 30px var(--black);
-                z-index: 15;
-                animation: bounceTitleDate 10s ease-in-out infinite;
-
-            }
-            #activeDate{
-                position: absolute;
-                /* top: 90%; */
-                /* left: 50%; */
-                transform: translate(-50%,-50%);
-                text-align: center;
-                font-family: "Doto", sans-serif;
-                font-weight: 500;
-                animation: bounceTitleDate 10s ease-in-out infinite;
-                animation-delay: 1.25s;
-            }
-            #activeDesc{
-                position: absolute;
-                /* top: 55%; */
-                /* left: 49.5%; */
-                transform: translate(-100%,-50%);
-                text-align: right;
-                width: 25%;
-                box-shadow: 0px 10px 30px var(--black);
-                z-index: 15;
-                font-family: "Inconsolata", monospace;
-                animation: bounceDesc 10s ease-in-out infinite;
-                animation-delay: 3.75s;
-
-            }
-            #activeImg{
-                width: 200px;
-                height: auto;
-                border-radius: 16px;
-                position: absolute;
-                /* top: 55%; */
-                /* left: 50.5%; */
-                transform: translate(0%,-50%);
-                text-align: center;
-                /* box-shadow: 0px 0px 30px white;  */
-                z-index: 100;
-                cursor: pointer;
-                animation: bounceImg 10s ease-in-out infinite;
-                animation-delay: 2.5s;
-            }
-
-            @keyframes bounceTitleDate {
-                0%{
-                    transform: translate(-50%,-50%);
-                }
-                25%{
-                    transform: translate(-50%, -100%);
-                }
-                50%{
-                    transform: translate(-50%,-50%);
-                }
-                75%{
-                    transform: translate(-50%, -100%);
-                }
-                100%{
-                    transform: translate(-50%,-50%);
-                }
-            }
-            @keyframes bounceImg {
-                0%{
-                    transform: translate(0%,-50%);
-                }
-                25%{
-                    transform: translate(0%, -75%);
-                }
-                50%{
-                    transform: translate(0%,-50%);
-                }
-                75%{
-                    transform: translate(0%, -75%);
-                }
-                100%{
-                    transform: translate(0%,-50%);
-                }
-            }
-            @keyframes bounceDesc {
-                0%{
-                    transform: translate(-100%,-50%);
-                }
-                25%{
-                    transform: translate(-100%, -100%);
-                }
-                50%{
-                    transform: translate(-100%,-50%);
-                }
-                75%{
-                    transform: translate(-100%, -100%);
-                }
-                100%{
-                    transform: translate(-100%,-50%);
-                }
-            }
-            #overlay{
-                /* background: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0) 90%, rgba(0,0,0,1) 100%);
+      @keyframes bounceTitleDate {
+        0% {
+          transform: translate(-50%, -50%);
+        }
+        25% {
+          transform: translate(-50%, -100%);
+        }
+        50% {
+          transform: translate(-50%, -50%);
+        }
+        75% {
+          transform: translate(-50%, -100%);
+        }
+        100% {
+          transform: translate(-50%, -50%);
+        }
+      }
+      @keyframes bounceImg {
+        0% {
+          transform: translate(0%, -50%);
+        }
+        25% {
+          transform: translate(0%, -75%);
+        }
+        50% {
+          transform: translate(0%, -50%);
+        }
+        75% {
+          transform: translate(0%, -75%);
+        }
+        100% {
+          transform: translate(0%, -50%);
+        }
+      }
+      @keyframes bounceDesc {
+        0% {
+          transform: translate(-100%, -50%);
+        }
+        25% {
+          transform: translate(-100%, -100%);
+        }
+        50% {
+          transform: translate(-100%, -50%);
+        }
+        75% {
+          transform: translate(-100%, -100%);
+        }
+        100% {
+          transform: translate(-100%, -50%);
+        }
+      }
+      #overlay {
+        /* background: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0) 90%, rgba(0,0,0,1) 100%);
                 background-color: transparent; 
                 position: absolute;
                 height: 100vh;
                 width: 100%;
                 margin: 0;
                 z-index: 100;*/
-            } 
-            .particle {
-                position: absolute !important;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.5);
-                box-shadow: 0px 0px 25px #000;
-                z-index: 1;
-            }
-            #particles{
-                position: absolute;
-            }
-            @keyframes animParticle1 {
-                0% {
-                    transform: translate(0, 0);
-                }
+      }
+      .particle {
+        position: absolute !important;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        box-shadow: 0px 0px 25px #000;
+        z-index: 1;
+      }
+      #particles {
+        position: absolute;
+      }
+      @keyframes animParticle1 {
+        0% {
+          transform: translate(0, 0);
+        }
 
-                50% {
-                    transform: translate(-200px, -200px);
-                }
+        50% {
+          transform: translate(-200px, -200px);
+        }
 
-                100% {
-                    transform: translate(0, 0);
-                }
-            }
+        100% {
+          transform: translate(0, 0);
+        }
+      }
 
-            @keyframes animParticle2 {
-                0% {
-                    transform: translate(0, 0);
-                }
+      @keyframes animParticle2 {
+        0% {
+          transform: translate(0, 0);
+        }
 
-                50% {
-                    transform: translate(200px, -200px);
-                }
+        50% {
+          transform: translate(200px, -200px);
+        }
 
-                100% {
-                    transform: translate(0, 0);
-                }
-            }
+        100% {
+          transform: translate(0, 0);
+        }
+      }
 
-            @keyframes animParticle3 {
-                0% {
-                    transform: translate(0, 0);
-                }
+      @keyframes animParticle3 {
+        0% {
+          transform: translate(0, 0);
+        }
 
-                50% {
-                    transform: translate(-200px, 200px);
-                }
+        50% {
+          transform: translate(-200px, 200px);
+        }
 
-                100% {
-                    transform: translate(0, 0);
-                }
-            }
+        100% {
+          transform: translate(0, 0);
+        }
+      }
 
-            @keyframes animParticle4 {
-                0% {
-                    transform: translate(0, 0);
-                }
+      @keyframes animParticle4 {
+        0% {
+          transform: translate(0, 0);
+        }
 
-                50% {
-                    transform: translate(200px, 200px);
-                }
+        50% {
+          transform: translate(200px, 200px);
+        }
 
-                100% {
-                    transform: translate(0, 0);
-                }
-            }
-            #titleCont{
-                position: absolute;
-                color: white;
-                top: 25%;
-                left: 50%;
-                transform: translate(-50%,-50%);
-                /* border: 2px solid white; */
-                z-index: 200;
-                opacity: 0.75;
-                text-select: none;
-                cursor: default;
-                overflow: visible;
-            }
-            #titleCont:hover{
-                opacity: 1;
-                text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
-                    0 0 20px rgba(255, 255, 255, 0.6),
-                    0 0 30px rgba(255, 255, 255, 0.4);
-            }
+        100% {
+          transform: translate(0, 0);
+        }
+      }
+      #titleCont {
+        position: absolute;
+        color: white;
+        top: 25%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        /* border: 2px solid white; */
+        z-index: 200;
+        opacity: 0.75;
+        text-select: none;
+        cursor: default;
+        overflow: visible;
+      }
+      #titleCont:hover {
+        opacity: 1;
+        text-shadow:
+          0 0 10px rgba(255, 255, 255, 0.8),
+          0 0 20px rgba(255, 255, 255, 0.6),
+          0 0 30px rgba(255, 255, 255, 0.4);
+      }
 
-            body:has(#titleCont:hover) #bigBoyCont {
-                opacity: 0.5;
-            }
-            body:has(#titleCont:hover) #titleCont p {
-                opacity: 1;
-            }
-            @keyframes flicker {
-                0% {
-                    opacity: 0.8;
-                }
-                5% {
-                    opacity: 0.9;
-                }
-                10% {
-                    opacity: 0.95;
-                }
-                15% {
-                    opacity: 0.85;
-                }
-                25% {
-                    opacity: 0.95;
-                }
-                30% {
-                    opacity: 1;
-                }
-                35% {
-                    opacity: 0.7;
-                }
-                40% {
-                    opacity: 0.8;
-                }
-                45% {
-                    opacity: 0.9;
-                }
-                60% {
-                    opacity: 1;
-                }
-                70% {
-                    opacity: 0.85;
-                }
-                80% {
-                    opacity: 0.95;
-                }
-                90% {
-                    opacity: 0.8;
-                }
-                100% {
-                    opacity: 1;
-                }
+      body:has(#titleCont:hover) #bigBoyCont {
+        opacity: 0.5;
+      }
+      body:has(#titleCont:hover) #titleCont p {
+        opacity: 1;
+      }
+      @keyframes flicker {
+        0% {
+          opacity: 0.8;
+        }
+        5% {
+          opacity: 0.9;
+        }
+        10% {
+          opacity: 0.95;
+        }
+        15% {
+          opacity: 0.85;
+        }
+        25% {
+          opacity: 0.95;
+        }
+        30% {
+          opacity: 1;
+        }
+        35% {
+          opacity: 0.7;
+        }
+        40% {
+          opacity: 0.8;
+        }
+        45% {
+          opacity: 0.9;
+        }
+        60% {
+          opacity: 1;
+        }
+        70% {
+          opacity: 0.85;
+        }
+        80% {
+          opacity: 0.95;
+        }
+        90% {
+          opacity: 0.8;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
 
-            }
+      #titleCont h1 {
+        font-family: "Doto", sans-serif;
+        font-weight: 900;
+        position: relative;
+        color: white;
+        width: 100%;
+        text-align: center;
+        font-size: 3em;
+        animation: flicker 2s linear infinite;
+        cursor: pointer;
+        user-select: none;
+      }
+      #titleCont p {
+        font-family: "Inconsolata", monospace;
+        position: relative;
+        color: white;
+        width: 100%;
+        text-align: center;
+        font-size: 1.25em;
+        opacity: 0;
+        margin-top: 1em;
+        user-select: none;
+      }
+      #titleCont span {
+        font-family: "Inconsolata", monospace;
+        position: absolute;
+        color: white;
+        width: 100%;
+        text-align: center;
+        font-size: 1em;
+        margin-top: 1em;
+        user-select: none;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-shadow:
+          0 0 10px rgba(255, 255, 255, 0.8),
+          0 0 20px rgba(255, 255, 255, 0.6),
+          0 0 30px rgba(255, 255, 255, 0.4);
+      }
+      #scrollNudge {
+        position: absolute;
+        color: white;
+        z-index: 10;
+        width: 20px;
+        height: 35px;
+        border: 1px solid white;
+        border-radius: 15px;
+        top: 90%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation: scrollJump 3s infinite ease-in-out;
+      }
+      #scrollNudge .scrollDot {
+        margin: 8px auto;
+        width: 2px;
+        height: 2px;
+        border-radius: 4px;
+        background: #fff;
+        border: 1px solid transparent;
+        animation: scrollDot 3s infinite linear;
+      }
+      @keyframes scrollDot {
+        0% {
+          opacity: 1;
+          transform: translateY(0);
+        }
 
-            #titleCont h1{
-                font-family: "Doto", sans-serif;
-                font-weight: 900;
-                position: relative;
-                color: white;
-                width: 100%;
-                text-align: center;
-                font-size: 3em;
-                animation: flicker 2s linear infinite;
-                cursor: pointer;
-                user-select: none;
-            }
-            #titleCont p{
-                font-family: "Inconsolata", monospace;
-                position: relative;
-                color: white;
-                width: 100%;
-                text-align: center;
-                font-size: 1.25em;
-                opacity: 0;
-                margin-top: 1em;
-                user-select: none;
-            }
-            #titleCont span {
-                font-family: "Inconsolata", monospace;
-                position: absolute;
-                color: white;
-                width: 100%;
-                text-align: center;
-                font-size: 1em;
-                margin-top: 1em;
-                user-select: none; 
-                left: 50%;
-                transform: translate(-50%,-50%);
-                text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
-                    0 0 20px rgba(255, 255, 255, 0.6),
-                    0 0 30px rgba(255, 255, 255, 0.4);
-            }
-            #scrollNudge{
-                position: absolute;
-                color: white;
-                z-index: 10;
-                width: 20px;
-                height: 35px;
-                border: 1px solid white;
-                border-radius: 15px;
-                top: 90%;
-                left: 50%;
-                transform: translate(-50%,-50%);
-                animation: scrollJump 3s infinite ease-in-out;
-            }
-            #scrollNudge .scrollDot{
-                margin: 8px auto;
-                width: 2px;
-                height: 2px;
-                border-radius: 4px;
-                background: #FFF;
-                border: 1px solid transparent;
-                animation: scrollDot 3s infinite linear;
-            }
-            @keyframes scrollDot {
-                0% {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
+        80% {
+          opacity: 0;
+          transform: translateY(15px);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(15px);
+        }
+      }
+      @keyframes scrollJump {
+        0% {
+          transform: translate(-50%, -50%);
+        }
 
-                80% {
-                    opacity: 0;
-                    transform: translateY(15px);
-                }
-                100% {
-                    opacity: 0;
-                    transform: translateY(15px);
-                }
-            }
-            @keyframes scrollJump {
-                0% {
-                    transform: translate(-50%,-50%);
-                }
+        50% {
+          transform: translate(-50%, 0%);
+        }
+        100% {
+          transform: translate(-50%, -50%);
+        }
+      }
+      .home img {
+        top: 0%;
+        left: 0%;
+        margin: 8vh 7vw;
+        z-index: 101;
+        position: absolute;
+        transform: translate(-50%, -15%);
+        height: 70px;
+        width: auto;
+        box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.5);
+      }
 
-                50% {
-                    transform: translate(-50%,0%);
-                }
-                100% {
-                    transform: translate(-50%,-50%);
-                }
-            }
-            .home img {
-                top: 0%;
-                left: 0%;
-                margin: 8vh 7vw;
-                z-index: 101;
-                position: absolute;
-                transform: translate(-50%, -15%);
-                height: 70px;
-                width: auto;
-                box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.5);
-            }
+      .home img:hover {
+        filter: hue-rotate(360deg) brightness(100%) contrast(150%);
+      }
+      /* The Modal (background) */
+      .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 200; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
+        cursor: pointer;
+        transition: 0.4s;
+      }
 
-            .home img:hover {
-                filter: hue-rotate(360deg) brightness(100%) contrast(150%);
-            }
-            /* The Modal (background) */
-            .modal {
-                display: none; /* Hidden by default */
-                position: fixed; /* Stay in place */
-                z-index: 200; /* Sit on top */
-                left: 0;
-                top: 0;
-                width: 100%; /* Full width */
-                height: 100%; /* Full height */
-                overflow: auto; /* Enable scroll if needed */
-                background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
-                cursor: pointer; 
-                transition: 0.4s;
-            }
+      /* Modal Content/Box */
+      .modal-content {
+        cursor: default;
+      }
 
-            /* Modal Content/Box */
-            .modal-content {
-                cursor: default;
-            }
+      #modalImg {
+        width: 80%;
+        height: auto;
+        border-radius: 20px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      /* The Close Button */
+      .close {
+        color: #aaa;
+        position: absolute;
+        top: 1em;
+        right: 1em;
+        font-size: 42px;
+        font-weight: bold;
+        z-index: 201;
+      }
 
-            #modalImg{
-                width: 80%;
-                height: auto;
-                border-radius: 20px;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%,-50%);
-            }
-            /* The Close Button */
-            .close {
-                color: #aaa;
-                position: absolute;
-                top: 1em;
-                right: 1em;
-                font-size: 42px;
-                font-weight: bold;
-                z-index: 201;
-            }
+      .close:hover,
+      .close:focus {
+        color: white;
+        text-decoration: none;
+        cursor: pointer;
+        text-shadow: 0 0 5px black;
+      }
+      .animate-opacity {
+        animation: opac 0.6s;
+      }
+      @keyframes opac {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      #bigCircleBlocker {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        background: rgba(15, 15, 15, 0.75);
+        border-radius: 25px;
+        box-shadow: 0px 0px 50px var(--black);
+      }
+      @media only screen and (max-width: 450px) {
+        body:has(#titleCont:hover) #bigBoyCont {
+          opacity: 0;
+        }
 
-            .close:hover,
-            .close:focus {
-                color: white;
-                text-decoration: none;
-                cursor: pointer;
-                text-shadow: 0 0 5px black;
-            }
-            .animate-opacity{
-                animation: opac 0.6s;
-            }
-            @keyframes opac{
-                from{
-                    opacity: 0
-                } 
-                to{
-                    opacity: 1
-                }
-            }
-            #bigCircleBlocker{
-                position: absolute;
-                transform: translate(-50%,-50%);
-                background: rgba(15,15,15,0.75);
-                border-radius: 25px;
-                box-shadow: 0px 0px 50px var(--black);
-            }
-            @media only screen and (max-width: 450px) {
-                body:has(#titleCont:hover) #bigBoyCont {
-                    opacity: 0;
-                }
+        #titleCont {
+          top: 30%;
+          width: 80vw;
+        }
+        #titleCont h1 {
+          font-size: 2em;
+        }
+        .home img {
+          margin: 2em 3.5em;
+        }
+        #activeTitle {
+          width: 90vw;
+        }
+        #activeDate {
+          width: 90vw;
+        }
+        #activeDesc {
+          width: 50vw;
+        }
+        #activeImg {
+          width: 175px;
+          height: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="home" href="/"><img src="/assets/homepage/favicon.png" /></a>
 
-                #titleCont{
-                    top: 30%;
-                    width: 80vw;
-                }           
-                #titleCont h1{
-                    font-size: 2em;
-                }
-                .home img {
-                    margin: 2em 3.5em;
-                }
-                #activeTitle{
-                    width: 90vw;
-                }
-                #activeDate{
-                    width: 90vw;
-                }
-                #activeDesc{
-                    width: 50vw;
-                }
-                #activeImg{
-                    width: 175px;
-                    height: auto;
-                }
-
-            }
-
-        </style>
-    </head>
-    <body>
-        <a class='home' href='/'><img src='/assets/homepage/favicon.png'></a>
-
-        <div id='overlay'></div>
-        <div id='particles'></div>
-        <!--
+    <div id="overlay"></div>
+    <div id="particles"></div>
+    <!--
         <div class='redline1'></div>
         <div class='redline2'></div>
         <div class='redline3'></div>
         <div class='redline4'></div>
         -->
-        <div id='titleCont'>
-            <h1>Hi, I'm The Ramenator!</h1>
-            <span>Drag or scroll to activate the timeline...</span>
-            <p id='titleDesc'>
-                <br><br>
-                I've been coding since third grade, beginning web development in fifth. Since my start, I've learned a lot and been able to create some pretty cool projects. I'm currently a junior in high school, and am planning to major in CS for college. Explore the timeline below to see my progression.
-            </p>
-        </div>
-        <div id="myModal" class="modal">
+    <div id="titleCont">
+      <h1>Hi, I'm Neil Daniel!</h1>
+      <span>Drag or scroll to activate the timeline...</span>
+      <p id="titleDesc">
+        <br /><br />
+        I've been coding since third grade, beginning web development in fifth.
+        Since my start, I've learned a lot and been able to create some pretty
+        cool projects. I'm currently a senior in high school, and am planning to
+        major in CS for college. Explore the timeline below to see my
+        progression.
+      </p>
+    </div>
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <img id="modalImg" />
+      </div>
+    </div>
 
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <img id='modalImg'>
-            </div>
+    <div id="bigBoyCont">
+      <div id="timelineContainer">
+        <div class="timeline-orbit" id="timelineOrbit"></div>
+      </div>
+      <div id="bigCircleBlocker"></div>
+      <div id="infoCont">
+        <h1 class="activeEl" id="activeTitle"></h1>
+        <h2 class="activeEl" id="activeDate"></h2>
+        <span class="activeEl" id="activeDesc"></span>
+        <img class="activeEl" id="activeImg" />
+      </div>
+      <div id="scrollNudge">
+        <div class="scrollDot"></div>
+      </div>
+      <div id="svgCont">
+        <svg width="0" height="0">
+          <line
+            id="dotToTitle"
+            stroke-dasharray="5,7"
+            x1="0"
+            y1="0"
+            x2="0"
+            y2="0"
+            stroke="white"
+          />
+        </svg>
+        <svg width="0" height="0">
+          <line
+            id="dotToDesc"
+            stroke-dasharray="5,7"
+            x1="0"
+            y1="0"
+            x2="0"
+            y2="0"
+            stroke="white"
+          />
+        </svg>
+        <svg width="0" height="0">
+          <line
+            id="dotToImg"
+            stroke-dasharray="5,7"
+            x1="0"
+            y1="0"
+            x2="0"
+            y2="0"
+            stroke="white"
+          />
+        </svg>
+      </div>
+    </div>
+    <script>
+      const cards = {
+        items: [
+          {
+            id: 0,
+            title: "Raspberry Pi",
+            date: "6/18/2018",
+            img: "/assets/about-me-previews/6-18-2018.png",
+            desc: "Set up a Raspberry Pi 3 and made some simple python programs on it. This was my first real experience with programming.",
+          },
+          {
+            id: 1,
+            title: "Volume Calculator",
+            date: "9/1/2020",
+            img: "/assets/about-me-previews/9-1-2020.png",
+            desc: "Made a volume/area calculator using Javascript and HTML inputs. This was my first real experience with web languages and jQuery.",
+          },
+          {
+            id: 2,
+            title: "First Portfolio Design",
+            date: "12/4/2020",
+            img: "/assets/about-me-previews/12-4-2020.png",
+            desc: "Designed a basic website for myself hosted on Github pages. This was the very first time I tried making a portfolio website.",
+          },
+          {
+            id: 3,
+            title: "Clicker Game",
+            date: "12/5/2020",
+            img: "/assets/about-me-previews/12-5-2020.png",
+            desc: "Made a clicker game complete with saving (and a secret password). This was my first interaction with more complex JS functions like localStorage and setInterval.",
+          },
+          {
+            id: 4,
+            title: "Homepage redesign",
+            date: "4/1/2021",
+            img: "/assets/about-me-previews/4-1-2021.png",
+            desc: "Decided that the blue/green gradient wasn't aesthetically pleasing, so I reworked the homepage for better visibility.",
+          },
+          {
+            id: 5,
+            title: "Happy Birthday Machine",
+            date: "4/6/2021",
+            img: "/assets/about-me-previews/4-6-2021.png",
+            desc: "Part of a larger project w/ Bowswa. The goal was to have ~5 randomized CSS cakes with personalized birthday messages (first working version pushed 5/30/2021)",
+          },
+          {
+            id: 6,
+            title: "Platformer 11",
+            date: "5/2/2021",
+            img: "/assets/about-me-previews/5-2-2021.png",
+            desc: "Started work on my first real platformer, forking the base from Kyle Shanks. By May of 2022, I had added up to 20 levels and heavily expanded the mechanics.",
+          },
+          {
+            id: 7,
+            title: "Rebrand",
+            date: "5/24/2021",
+            img: "/assets/about-me-previews/5-24-2021.png",
+            desc: "Changed my brand from neildaniel00 to The Ramenator",
+          },
+          {
+            id: 8,
+            title: "Bowswa Redesign",
+            date: "6/18/2021",
+            img: "/assets/about-me-previews/6-18-2021.png",
+            desc: "Reworked Bowswa’s old site with new CSS. Redid the homepage, apps and games, and datapacks pages",
+          },
+          {
+            id: 9,
+            title: "Daniel Hale Williams",
+            date: "2/17/2022",
+            img: "/assets/about-me-previews/2-17-2022.png",
+            desc: "Made a short text game based on the life of heart surgeon Daniel Hale Williams. This was my first interaction with JS objects.",
+          },
+          {
+            id: 10,
+            title: "WebChat",
+            date: "3/6/2022",
+            img: "/assets/about-me-previews/3-6-2022.png",
+            desc: "Worked on a chatroom forked from 7ih on replit. This was my first time experimenting with Node.js",
+          },
+          {
+            id: 11,
+            title: "Andrims Admin Central",
+            date: "7/27/2022",
+            img: "/assets/about-me-previews/7-27-2022 (1).png",
+            desc: "Created a dashboard for a potential company I was apart of (Andrims)",
+          },
+          {
+            id: 12,
+            title: "Andrims Homepage",
+            date: "7/27/2022",
+            img: "/assets/about-me-previews/7-27-2022.png",
+            desc: "Client landing for Andrims. Ended up making a fully finished homepage (complete with light/dark mode theme switching), and a half finished about page.",
+          },
+          {
+            id: 13,
+            title: "GD Account Redesign",
+            date: "2/19/2023",
+            img: "/assets/about-me-previews/2-19-2023.png",
+            desc: "Redesigned the web login page of Robtop’s Geometry Dash with CSS for fun.",
+          },
+          {
+            id: 14,
+            title: "Ramenate",
+            date: "9/4/2023",
+            img: "/assets/about-me-previews/9-4-2023.png",
+            desc: "Made a web-based animation software complete w/ frame rate customization and pen size/color",
+          },
+          {
+            id: 15,
+            title: "Cherry Bomb CSS",
+            date: "6/12/2024",
+            img: "/assets/about-me-previews/6-12-2024.png",
+            desc: "Cherry blossom themed CSS experiment, mainly focusing on image warping & aesthetic composition",
+          },
+          {
+            id: 16,
+            title: "Grade Calculator",
+            date: "9/2/2024",
+            img: "/assets/about-me-previews/9-2-2024.png",
+            desc: "Created an aesthetic grade calculator based off infinite campus weights. Experimented with a mobile layout (unfinished), and glassmorphism.",
+          },
+          {
+            id: 17,
+            title: "Desmos Extractor",
+            date: "1/2/2025",
+            img: "/assets/about-me-previews/1-2-2025.png",
+            desc: "Built a tool to take screenshots and videos of desmos graphs using the desmos API.",
+          },
+          {
+            id: 18,
+            title: "Pnut’s Little Adventure",
+            date: "3/1/2025",
+            img: "/assets/about-me-previews/3-1-2025.png",
+            desc: "Built a web-based platformer using phaser.js and Tiled. Won first place at the Georgia Student Technology Competition.",
+          },
+          {
+            id: 19,
+            title: "Homepage Redesign",
+            date: "4/12/2025",
+            img: "/assets/about-me-previews/4-12-2025.png",
+            desc: "Completely overhauled the homepage site, basing the redesign off of a Geometry Dash level I liked.",
+          },
+          {
+            id: 20,
+            title: "Audio Overlay",
+            date: "6/11/2025",
+            img: "/assets/about-me-previews/6-11-2025.png",
+            desc: "Built a tool to overlay multiple pieces of audio w/ wavesurfer.js. The original project was meant to be an entire audio manipulation interface. It is currently a work in progress.",
+          },
+          {
+            id: 21,
+            title: "Music Grader",
+            date: "6/24/2025",
+            img: "/assets/about-me-previews/6-24-2025.png",
+            desc: "Built a tool to analyze pitch against a set of notes (later adapted to any midi file) as part of an app to adapt an accompaniment track to a soloist part (specifically for a violin concerto I was playing).",
+          },
+          {
+            id: 22,
+            title: "Chamathon Grader",
+            date: "8/30/2025",
+            img: "/assets/about-me-previews/8-30-2025.png",
+            desc: "Built a fully hosted node.js app w/ firebase and Google Cloud Vision to scan & grade tests at my high school’s annual math competition",
+          },
+          {
+            id: 23,
+            title: "Graphic Design",
+            date: "9/1/2025",
+            img: "/assets/about-me-previews/9-1-2025.png",
+            desc: "Remaking a design from graphic designer davidmomodu.psd with CSS (currently unfinished)",
+          },
+          {
+            id: 24,
+            title: "Sound to Desmos",
+            date: "9/30/2025",
+            img: "/assets/about-me-previews/9-30-2025.png",
+            desc: "Built an app to transform an audio file into an audible Desmos graph.",
+          },
+        ],
+      };
+      let leftActiveBound = 0.4;
+      let rightActiveBound = 0.6;
+      const orbit = document.querySelector(".timeline-orbit");
+      for (let i = 0; i < cards.items.length; i++) {
+        let dot = document.createElement("div");
+        dot.id = cards.items[i].id;
+        dot.classList.add("timeline-dot");
+        let textDiv = document.createElement("div");
+        textDiv.classList.add("dot-text");
+        let text = cards.items[i].date;
+        text = centerString(text, 20, ".");
+        const degStep = 360 / text.length;
+        for (let j = 0; j < text.length; j++) {
+          const span = document.createElement("span");
+          span.textContent = text[j];
+          span.style.transform = `rotate(${j * degStep}deg)`;
+          textDiv.appendChild(span);
+        }
+        dot.appendChild(textDiv);
+        document.getElementById("timelineOrbit").append(dot);
+        dot.addEventListener("mouseover", () => {
+          isPaused = true;
+        });
 
-        </div>
+        dot.addEventListener("mouseout", () => {
+          isPaused = false;
+        });
+      }
+      const dots = document.querySelectorAll(".timeline-dot");
+      let virtualScroll = 0;
+      let targetScroll = 0;
 
-        <div id='bigBoyCont'>
-            <div id='timelineContainer'>
-                <div class="timeline-orbit" id='timelineOrbit'></div>
-            </div>
-            <div id='bigCircleBlocker'></div>
-            <div id='infoCont'>
-                <h1 class='activeEl' id='activeTitle'></h1>
-                <h2 class='activeEl' id='activeDate'></h2>
-                <span class='activeEl' id='activeDesc'></span>
-                <img class='activeEl' id='activeImg'>
-            </div>
-            <div id='scrollNudge'>
-                <div class='scrollDot'></div>
-            </div>
-            <div id='svgCont'>
-                <svg width="0" height="0">
-                    <line id='dotToTitle' stroke-dasharray="5,7" x1="0" y1="0" x2="0" y2="0" stroke="white" />
-                </svg>
-                <svg width="0" height="0">
-                    <line id='dotToDesc' stroke-dasharray="5,7" x1="0" y1="0" x2="0" y2="0" stroke="white" />
-                </svg>
-                <svg width="0" height="0">
-                    <line id='dotToImg' stroke-dasharray="5,7" x1="0" y1="0" x2="0" y2="0" stroke="white" />
-                </svg>
-            </div>
-        </div>
-        <script>
-            const cards = {
-                items: [
-                    {
-                        id: 0,
-                        title: "Raspberry Pi",
-                        date: "6/18/2018",
-                        img: "/assets/about-me-previews/6-18-2018.png",
-                        desc: "Set up a Raspberry Pi 3 and made some simple python programs on it. This was my first real experience with programming.",
-                    },
-                    {
-                        id: 1,
-                        title: "Volume Calculator",
-                        date: "9/1/2020",
-                        img: "/assets/about-me-previews/9-1-2020.png",
-                        desc: "Made a volume/area calculator using Javascript and HTML inputs. This was my first real experience with web languages and jQuery.",
-                    },
-                    {
-                        id: 2,
-                        title: "First Portfolio Design",
-                        date: "12/4/2020",
-                        img: "/assets/about-me-previews/12-4-2020.png",
-                        desc: "Designed a basic website for myself hosted on Github pages. This was the very first time I tried making a portfolio website.",
-                    },
-                    {
-                        id: 3,
-                        title: "Clicker Game",
-                        date: "12/5/2020",
-                        img: "/assets/about-me-previews/12-5-2020.png",
-                        desc: "Made a clicker game complete with saving (and a secret password). This was my first interaction with more complex JS functions like localStorage and setInterval.",
-                    },
-                    {
-                        id: 4,
-                        title: "Homepage redesign",
-                        date: "4/1/2021",
-                        img: "/assets/about-me-previews/4-1-2021.png",
-                        desc: "Decided that the blue/green gradient wasn't aesthetically pleasing, so I reworked the homepage for better visibility.",
-                    },
-                    {
-                        id: 5,
-                        title: "Happy Birthday Machine",
-                        date: "4/6/2021",
-                        img: "/assets/about-me-previews/4-6-2021.png",
-                        desc: "Part of a larger project w/ Bowswa. The goal was to have ~5 randomized CSS cakes with personalized birthday messages (first working version pushed 5/30/2021)",
-                    },
-                    {
-                        id: 6,
-                        title: "Platformer 11",
-                        date: "5/2/2021",
-                        img: "/assets/about-me-previews/5-2-2021.png",
-                        desc: "Started work on my first real platformer, forking the base from Kyle Shanks. By May of 2022, I had added up to 20 levels and heavily expanded the mechanics.",
-                    },
-                    {
-                        id: 7,
-                        title: "Rebrand",
-                        date: "5/24/2021",
-                        img: "/assets/about-me-previews/5-24-2021.png",
-                        desc: "Changed my brand from neildaniel00 to The Ramenator",
-                    },
-                    {
-                        id: 8,
-                        title: "Bowswa Redesign",
-                        date: "6/18/2021",
-                        img: "/assets/about-me-previews/6-18-2021.png",
-                        desc: "Reworked Bowswa’s old site with new CSS. Redid the homepage, apps and games, and datapacks pages",
-                    },
-                    {
-                        id: 9,
-                        title: "Daniel Hale Williams",
-                        date: "2/17/2022",
-                        img: "/assets/about-me-previews/2-17-2022.png",
-                        desc: "Made a short text game based on the life of heart surgeon Daniel Hale Williams. This was my first interaction with JS objects.",
-                    },
-                    {
-                        id: 10,
-                        title: "WebChat",
-                        date: "3/6/2022",
-                        img: "/assets/about-me-previews/3-6-2022.png",
-                        desc: "Worked on a chatroom forked from 7ih on replit. This was my first time experimenting with Node.js",
-                    },
-                    {
-                        id: 11,
-                        title: "Andrims Admin Central",
-                        date: "7/27/2022",
-                        img: "/assets/about-me-previews/7-27-2022 (1).png",
-                        desc: "Created a dashboard for a potential company I was apart of (Andrims)",
-                    },
-                    {
-                        id: 12,
-                        title: "Andrims Homepage",
-                        date: "7/27/2022",
-                        img: "/assets/about-me-previews/7-27-2022.png",
-                        desc: "Client landing for Andrims. Ended up making a fully finished homepage (complete with light/dark mode theme switching), and a half finished about page.",
-                    },
-                    {
-                        id: 13,
-                        title: "GD Account Redesign",
-                        date: "2/19/2023",
-                        img: "/assets/about-me-previews/2-19-2023.png",
-                        desc: "Redesigned the web login page of Robtop’s Geometry Dash with CSS for fun.",
-                    },
-                    {
-                        id: 14,
-                        title: "Ramenate",
-                        date: "9/4/2023",
-                        img: "/assets/about-me-previews/9-4-2023.png",
-                        desc: "Made a web-based animation software complete w/ frame rate customization and pen size/color",
-                    },
-                    {
-                        id: 15,
-                        title: "Cherry Bomb CSS",
-                        date: "6/12/2024",
-                        img: "/assets/about-me-previews/6-12-2024.png",
-                        desc: "Cherry blossom themed CSS experiment, mainly focusing on image warping & aesthetic composition",
-                    },
-                    {
-                        id: 16,
-                        title: "Grade Calculator",
-                        date: "9/2/2024",
-                        img: "/assets/about-me-previews/9-2-2024.png",
-                        desc: "Created an aesthetic grade calculator based off infinite campus weights. Experimented with a mobile layout (unfinished), and glassmorphism.",
-                    },
-                    {
-                        id: 17,
-                        title: "Desmos Extractor",
-                        date: "1/2/2025",
-                        img: "/assets/about-me-previews/1-2-2025.png",
-                        desc: "Built a tool to take screenshots and videos of desmos graphs using the desmos API.",
-                    },
-                    {
-                        id: 18,
-                        title: "Pnut’s Little Adventure",
-                        date: "3/1/2025",
-                        img: "/assets/about-me-previews/3-1-2025.png",
-                        desc: "Built a web-based platformer using phaser.js and Tiled. Won first place at the Georgia Student Technology Competition.",
-                    },
-                    {
-                        id: 19,
-                        title: "Homepage Redesign",
-                        date: "4/12/2025",
-                        img: "/assets/about-me-previews/4-12-2025.png",
-                        desc: "Completely overhauled the homepage site, basing the redesign off of a Geometry Dash level I liked.",
-                    },
-                    {
-                        id: 20,
-                        title: "Audio Overlay",
-                        date: "6/11/2025",
-                        img: "/assets/about-me-previews/6-11-2025.png",
-                        desc: "Built a tool to overlay multiple pieces of audio w/ wavesurfer.js. The original project was meant to be an entire audio manipulation interface. It is currently a work in progress.",
-                    },
-                    {
-                        id: 21,
-                        title: "Music Grader",
-                        date: "6/24/2025",
-                        img: "/assets/about-me-previews/6-24-2025.png",
-                        desc: "Built a tool to analyze pitch against a set of notes (later adapted to any midi file) as part of an app to adapt an accompaniment track to a soloist part (specifically for a violin concerto I was playing).",
-                    },
-                    {
-                        id: 22,
-                        title: "Chamathon Grader",
-                        date: "8/30/2025",
-                        img: "/assets/about-me-previews/8-30-2025.png",
-                        desc: "Built a fully hosted node.js app w/ firebase and Google Cloud Vision to scan & grade tests at my high school’s annual math competition",
-                    },
-                    {
-                        id: 23,
-                        title: "Graphic Design",
-                        date: "9/1/2025",
-                        img: "/assets/about-me-previews/9-1-2025.png",
-                        desc: "Remaking a design from graphic designer davidmomodu.psd with CSS (currently unfinished)",
-                    },
-                    {
-                        id: 24,
-                        title: "Sound to Desmos",
-                        date: "9/30/2025",
-                        img: "/assets/about-me-previews/9-30-2025.png",
-                        desc: "Built an app to transform an audio file into an audible Desmos graph.",
-                    }
-                ]
-            }
-            let leftActiveBound = 0.4;
-            let rightActiveBound = 0.6;
-            const orbit = document.querySelector('.timeline-orbit');
-            for(let i = 0; i < cards.items.length; i++){
-                let dot = document.createElement('div');
-                dot.id = cards.items[i].id;
-                dot.classList.add('timeline-dot');
-                let textDiv = document.createElement('div');
-                textDiv.classList.add('dot-text');
-                let text = cards.items[i].date;
-                text = centerString(text, 20, '.');
-                const degStep = 360 / text.length;
-                for (let j = 0; j < text.length; j++) {
-                    const span = document.createElement("span");
-                    span.textContent = text[j];
-                    span.style.transform = `rotate(${j * degStep}deg)`;
-                    textDiv.appendChild(span);
-                }
-                dot.appendChild(textDiv);
-                document.getElementById('timelineOrbit').append(dot);
-                dot.addEventListener('mouseover', () => {
-                    isPaused = true;
-                });
+      function getFullDate(dateString) {
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) {
+          return "Invalid Date";
+        }
+        const monthNames = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+        const day = date.getDate();
+        const month = monthNames[date.getMonth()];
+        const year = date.getFullYear();
+        return `${month} ${day}, ${year}`;
+      }
+      function centerString(str, length, char) {
+        if (str.length >= length) {
+          return str;
+        }
+        const totalPadding = length - str.length;
+        const padStartLength = Math.floor(totalPadding / 2);
+        const padEndLength = totalPadding - padStartLength;
+        const paddedStart = str.padStart(str.length + padStartLength, char);
+        const result = paddedStart.padEnd(length, char);
+        return result;
+      }
 
-                dot.addEventListener('mouseout', () => {
-                    isPaused = false;
-                });
-            }
-            const dots = document.querySelectorAll('.timeline-dot');
-            let virtualScroll = 0;
-            let targetScroll = 0;
+      function lerp(a, b, t) {
+        return a + (b - a) * t;
+      }
+      function positionDots() {
+        const m = window.innerWidth;
+        const n = window.innerHeight;
 
+        // Compute layout bounds (smoothly as before)
+        const minWidth = 450;
+        const maxWidth = 1200;
+        const t = Math.min(
+          1,
+          Math.max(0, (m - minWidth) / (maxWidth - minWidth)),
+        );
 
-            function getFullDate(dateString) {
-                const date = new Date(dateString);
-                if (isNaN(date.getTime())) {
-                    return "Invalid Date";
-                }
-                const monthNames = [
-                    "January", "February", "March", "April", "May", "June",
-                    "July", "August", "September", "October", "November", "December"
-                ];
-                const day = date.getDate();
-                const month = monthNames[date.getMonth()];
-                const year = date.getFullYear();
-                return `${month} ${day}, ${year}`;
-            }
-            function centerString(str, length, char) {
-                if (str.length >= length) {
-                    return str;
-                }
-                const totalPadding = length - str.length;
-                const padStartLength = Math.floor(totalPadding / 2);
-                const padEndLength = totalPadding - padStartLength;
-                const paddedStart = str.padStart(str.length + padStartLength, char);
-                const result = paddedStart.padEnd(length, char);
-                return result;
-            }
+        const nLower = lerp(n * 0.6, n * 0.7, t);
+        const nUpper = lerp(n * 0.63, n * 0.95, t);
+        const h = nUpper - nLower;
+        const bounding = 2 * (Math.pow(m / 2, 2) / (2 * h) + h / 2);
 
-            function lerp(a, b, t) {
-                return a + (b - a) * t;
-            }
-            function positionDots() {
-                const m = window.innerWidth;
-                const n = window.innerHeight;
+        const orbit = document.querySelector(".timeline-orbit");
+        orbit.style.width = bounding + "px";
+        orbit.style.height = bounding + "px";
+        orbit.style.top = nLower + "px";
+        orbit.style.marginLeft = -m + "px";
 
-                // Compute layout bounds (smoothly as before)
-                const minWidth = 450;
-                const maxWidth = 1200;
-                const t = Math.min(1, Math.max(0, (m - minWidth) / (maxWidth - minWidth)));
+        const centerY = nLower + bounding / 2; // <-- the vertical center of the orbit
+        const centerX = window.innerWidth / 2; // horizontally centered
+        const radius = bounding / 2;
+        const total = dots.length;
+        const startOffset = 277;
 
-                const nLower = lerp(n * 0.6, n * 0.7, t);
-                const nUpper = lerp(n * 0.63, n * 0.95, t);
-                const h = nUpper - nLower;
-                const bounding = 2 * ((Math.pow((m / 2), 2) / (2 * h)) + h / 2);
+        // Reposition dots
+        dots.forEach((dot, i) => {
+          const angle =
+            (i / total) * 2 * Math.PI +
+            virtualScroll * 0.002 +
+            startOffset * (Math.PI / 180);
+          const x = centerX + radius * Math.cos(angle) - dot.offsetWidth / 2;
+          const y = centerY + radius * Math.sin(angle) - dot.offsetHeight / 2;
+          dot.style.left = `${x}px`;
+          dot.style.top = `${y}px`;
+        });
 
-                const orbit = document.querySelector('.timeline-orbit');
-                orbit.style.width = bounding + 'px';
-                orbit.style.height = bounding + 'px';
-                orbit.style.top = nLower + 'px';
-                orbit.style.marginLeft = -m + 'px';
+        const title = document.getElementById("activeTitle");
+        const date = document.getElementById("activeDate");
+        const desc = document.getElementById("activeDesc");
+        const img = document.getElementById("activeImg");
 
-                const centerY = nLower + bounding / 2; // <-- the vertical center of the orbit
-                const centerX = window.innerWidth / 2; // horizontally centered
-                const radius = bounding / 2;
-                const total = dots.length;
-                const startOffset = 277;
+        const verticalOffset = radius * 0.3;
 
-                // Reposition dots
-                dots.forEach((dot, i) => {
-                    const angle = ((i / total) * 2 * Math.PI) +
-                        virtualScroll * 0.002 +
-                        (startOffset * (Math.PI / 180));
-                    const x = centerX + radius * Math.cos(angle) - dot.offsetWidth / 2;
-                    const y = centerY + radius * Math.sin(angle) - dot.offsetHeight / 2;
-                    dot.style.left = `${x}px`;
-                    dot.style.top = `${y}px`;
-                });
+        title.style.top = centerY + verticalOffset * 1.2 + "px";
+        date.style.top = centerY + verticalOffset * 1.6 + "px";
+        desc.style.top = centerY - verticalOffset + "px";
+        img.style.top = centerY - verticalOffset + "px";
 
-                const title = document.getElementById('activeTitle');
-                const date  = document.getElementById('activeDate');
-                const desc  = document.getElementById('activeDesc');
-                const img   = document.getElementById('activeImg');
+        title.style.left = "50%";
+        date.style.left = "50%";
+        desc.style.left = "49.5%";
+        img.style.left = "50.5%";
+      }
+      let nLower;
+      let nUpper;
+      function positionDots() {
+        const m = window.innerWidth;
+        const n = window.innerHeight;
+        const minWidth = 400;
+        const maxWidth = 1200;
+        const t = Math.min(
+          1,
+          Math.max(0, (m - minWidth) / (maxWidth - minWidth)),
+        );
+        nLower = lerp(n * 0.7, n * 0.7, t);
+        nUpper = lerp(n * 0.72, n * 0.95, t);
 
-                const verticalOffset = radius * 0.3;
+        const h = nUpper - nLower;
+        const bounding = 2 * (Math.pow(m / 2, 2) / (2 * h) + h / 2);
 
-                title.style.top = (centerY + verticalOffset * 1.2) + 'px';
-                date.style.top  = (centerY + verticalOffset * 1.6) + 'px';
-                desc.style.top  = (centerY - verticalOffset) + 'px';
-                img.style.top   = (centerY - verticalOffset) + 'px';
+        const orbit = document.querySelector(".timeline-orbit");
+        orbit.style.width = bounding + "px";
+        orbit.style.height = bounding + "px";
+        orbit.style.top = nLower + "px";
+        orbit.style.marginLeft = -m + "px";
 
-                title.style.left = '50%';
-                date.style.left  = '50%';
-                desc.style.left  = '49.5%';
-                img.style.left   = '50.5%';
-            }
-            let nLower;
-            let nUpper;
-            function positionDots() {
-                const m = window.innerWidth;
-                const n = window.innerHeight;
-                const minWidth = 400;
-                const maxWidth = 1200;
-                const t = Math.min(1, Math.max(0, (m - minWidth) / (maxWidth - minWidth)));
-                nLower = lerp(n * 0.7, n * 0.7, t);
-                nUpper = lerp(n * 0.72, n * 0.95, t);
+        const center = bounding / 2;
+        const radius = bounding / 2;
+        const total = dots.length;
+        const startOffset = 277;
 
-                const h = nUpper - nLower;
-                const bounding = 2 * ((Math.pow((m / 2), 2) / (2 * h)) + h / 2);
+        dots.forEach((dot, i) => {
+          const angle =
+            (i / total) * 2 * Math.PI +
+            virtualScroll * 0.002 +
+            startOffset * (Math.PI / 180);
+          const x = center + radius * Math.cos(angle) - dot.offsetWidth / 2;
+          const y = center + radius * Math.sin(angle) - dot.offsetHeight / 2;
+          dot.style.left = `${x}px`;
+          dot.style.top = `${y}px`;
+        });
+        // offsets relative to orbit center
+        // const verticalOffset = (1/radius)*120000; // tweak for aesthetic spacing
 
-                const orbit = document.querySelector('.timeline-orbit');
-                orbit.style.width = bounding + 'px';
-                orbit.style.height = bounding + 'px';
-                orbit.style.top = nLower + 'px';
-                orbit.style.marginLeft = -m + 'px';
+        activeTitleEl.style.top = nLower + n * 0.15 + "px"; /*verticalOffset*/
+        activeDateEl.style.top = nLower + n * 0.2 + "px";
+        activeDescEl.style.top = nLower - n * 0.15 + "px";
+        activeImgEl.style.top = nLower - n * 0.15 + "px";
 
-                const center = bounding / 2;
-                const radius = bounding / 2;
-                const total = dots.length;
-                const startOffset = 277;
+        // ensure horizontal alignment still works
+        activeTitleEl.style.left = "50%";
+        activeDateEl.style.left = "50%";
+        activeDescEl.style.left = "49.5%";
+        activeImgEl.style.left = "50.5%";
+      }
+      const activeTitleEl = document.getElementById("activeTitle");
+      const activeDateEl = document.getElementById("activeDate");
+      const activeDescEl = document.getElementById("activeDesc");
+      const activeImgEl = document.getElementById("activeImg");
 
-                dots.forEach((dot, i) => {
-                    const angle = ((i / total) * 2 * Math.PI) +
-                        virtualScroll * 0.002 +
-                        (startOffset * (Math.PI / 180));
-                    const x = center + radius * Math.cos(angle) - dot.offsetWidth / 2;
-                    const y = center + radius * Math.sin(angle) - dot.offsetHeight / 2;
-                    dot.style.left = `${x}px`;
-                    dot.style.top = `${y}px`;
-                });
-                // offsets relative to orbit center
-                // const verticalOffset = (1/radius)*120000; // tweak for aesthetic spacing
+      const lineMap = {
+        title: document.getElementById("dotToTitle"),
+        img: document.getElementById("dotToImg"),
+        desc: document.getElementById("dotToDesc"),
+      };
+      function averageColor(imageElement) {
+        var canvas = document.createElement("canvas"),
+          context = canvas.getContext && canvas.getContext("2d"),
+          imgData,
+          width,
+          height,
+          length,
+          rgb = { r: 0, g: 0, b: 0 },
+          count = 0;
+        height = canvas.height =
+          imageElement.naturalHeight ||
+          imageElement.offsetHeight ||
+          imageElement.height;
+        width = canvas.width =
+          imageElement.naturalWidth ||
+          imageElement.offsetWidth ||
+          imageElement.width;
+        context.drawImage(imageElement, 0, 0);
+        imgData = context.getImageData(0, 0, width, height);
+        length = imgData.data.length;
+        for (var i = 0; i < length; i += 4) {
+          rgb.r += imgData.data[i];
+          rgb.g += imgData.data[i + 1];
+          rgb.b += imgData.data[i + 2];
+          count++;
+        }
+        rgb.r = Math.floor(rgb.r / count);
+        rgb.g = Math.floor(rgb.g / count);
+        rgb.b = Math.floor(rgb.b / count);
+        return rgb;
+      }
 
-                activeTitleEl.style.top = (nLower + n*0.15) + 'px'; /*verticalOffset*/
-                activeDateEl.style.top  = (nLower + n*0.2) + 'px';
-                activeDescEl.style.top  = (nLower - n*0.15) + 'px';
-                activeImgEl.style.top   = (nLower - n*0.15) + 'px';
+      function updateActiveDot(dot, item, centerX, centerY) {
+        activeTitleEl.textContent = item.title;
+        activeDateEl.textContent = getFullDate(item.date);
+        activeDescEl.textContent = item.desc;
+        activeImgEl.src = item.img;
+        activeImgEl.onload = function () {
+          let rgb = averageColor(activeImgEl);
+          activeImgEl.style.boxShadow =
+            "0px 0px 30px rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + ", 0.5)";
+        };
+        const titleBox = activeTitleEl.getBoundingClientRect();
+        const imgBox = activeImgEl.getBoundingClientRect();
+        const descBox = activeDescEl.getBoundingClientRect();
+        const setLine = (line, x2, y2) => {
+          line.setAttribute("x1", centerX);
+          line.setAttribute("y1", centerY);
+          line.setAttribute("x2", x2);
+          line.setAttribute("y2", y2);
+        };
 
-                // ensure horizontal alignment still works
-                activeTitleEl.style.left = '50%';
-                activeDateEl.style.left  = '50%';
-                activeDescEl.style.left  = '49.5%';
-                activeImgEl.style.left   = '50.5%';
+        // Update connecting lines
+        setLine(
+          lineMap.title,
+          titleBox.left + titleBox.width / 2,
+          titleBox.top,
+        );
+        setLine(
+          lineMap.img,
+          imgBox.left + imgBox.width / 2,
+          imgBox.top + imgBox.height,
+        );
+        setLine(
+          lineMap.desc,
+          descBox.left + descBox.width / 2,
+          descBox.top + descBox.height,
+        );
+      }
+      const scrollNudge = document.getElementById("scrollNudge");
+      let prevActiveIndex = null;
+      let currentActiveIndex = null;
 
-            }
-            const activeTitleEl = document.getElementById('activeTitle');
-            const activeDateEl = document.getElementById('activeDate');
-            const activeDescEl = document.getElementById('activeDesc');
-            const activeImgEl = document.getElementById('activeImg');
+      function detectActiveDot() {
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+        let activeFound = false;
+        let activeDotIndex = null;
 
-            const lineMap = {
-                title: document.getElementById('dotToTitle'),
-                img:   document.getElementById('dotToImg'),
-                desc:  document.getElementById('dotToDesc')
-            };
-            function averageColor(imageElement) {
-                var canvas = document.createElement('canvas'), context = canvas.getContext && canvas.getContext('2d'), imgData, width, height, length, rgb = { r: 0, g: 0, b: 0 }, count = 0;
-                height = canvas.height = imageElement.naturalHeight || imageElement.offsetHeight || imageElement.height;
-                width = canvas.width = imageElement.naturalWidth || imageElement.offsetWidth || imageElement.width;
-                context.drawImage(imageElement, 0, 0);
-                imgData = context.getImageData(0, 0, width, height);
-                length = imgData.data.length;
-                for (var i = 0; i < length; i += 4) {
-                    rgb.r += imgData.data[i];
-                    rgb.g += imgData.data[i + 1];
-                    rgb.b += imgData.data[i + 2];
-                    count++;
-                }
-                rgb.r = Math.floor(rgb.r / count);
-                rgb.g = Math.floor(rgb.g / count);
-                rgb.b = Math.floor(rgb.b / count);
-                return rgb;
-            }
+        let bigCircleBlocker = document.getElementById("bigCircleBlocker");
+        bigCircleBlocker.style.height = "50px";
+        bigCircleBlocker.style.top = nLower + "px";
 
-            function updateActiveDot(dot, item, centerX, centerY) {
-                activeTitleEl.textContent = item.title;
-                activeDateEl.textContent = getFullDate(item.date);
-                activeDescEl.textContent = item.desc;
-                activeImgEl.src = item.img;
-                activeImgEl.onload = function() {
-                    let rgb = averageColor(activeImgEl);
-                    activeImgEl.style.boxShadow = '0px 0px 30px rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ', 0.5)';
-                }
-                const titleBox = activeTitleEl.getBoundingClientRect();
-                const imgBox = activeImgEl.getBoundingClientRect();
-                const descBox = activeDescEl.getBoundingClientRect();
-                const setLine = (line, x2, y2) => {
-                    line.setAttribute("x1", centerX);
-                    line.setAttribute("y1", centerY);
-                    line.setAttribute("x2", x2);
-                    line.setAttribute("y2", y2);
-                };
+        dots.forEach((dot, i) => {
+          const rect = dot.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
 
-                // Update connecting lines
-                setLine(lineMap.title, titleBox.left + titleBox.width / 2, titleBox.top);
-                setLine(lineMap.img,   imgBox.left + imgBox.width / 2,   imgBox.top + imgBox.height);
-                setLine(lineMap.desc,  descBox.left + descBox.width / 2, descBox.top + descBox.height);
-            }
-            const scrollNudge = document.getElementById('scrollNudge');
-            let prevActiveIndex = null;
-            let currentActiveIndex = null;
+          const isActive =
+            centerX > screenWidth * leftActiveBound &&
+            centerX < screenWidth * rightActiveBound &&
+            centerY < screenHeight;
 
-            function detectActiveDot() {
-                const screenWidth = window.innerWidth;
-                const screenHeight = window.innerHeight;
-                let activeFound = false;
-                let activeDotIndex = null;
+          dot.classList.toggle("active", isActive);
+          if (isActive) {
+            activeFound = true;
+            activeDotIndex = i;
+            const item = cards.items[i];
+            updateActiveDot(dot, item, centerX, centerY);
+            lastActiveDotX = centerX;
+          }
+        });
 
-                let bigCircleBlocker = document.getElementById('bigCircleBlocker');
-                bigCircleBlocker.style.height = '50px';
-                bigCircleBlocker.style.top =  nLower + 'px';
+        if (activeDotIndex !== currentActiveIndex) {
+          prevActiveIndex = currentActiveIndex;
+          currentActiveIndex = activeDotIndex;
+          if (activeDotIndex === null && prevActiveIndex !== null) {
+            const prevDotRect = dots[prevActiveIndex].getBoundingClientRect();
+            const prevDotX = prevDotRect.left + prevDotRect.width / 2;
+            const side =
+              prevDotX > screenWidth / 2 ? rightActiveBound : leftActiveBound;
+            bigCircleBlocker.style.left = screenWidth * side + "px";
+            bigCircleBlocker.style.width = "0px";
+          }
 
-                dots.forEach((dot, i) => {
-                    const rect = dot.getBoundingClientRect();
-                    const centerX = rect.left + rect.width / 2;
-                    const centerY = rect.top + rect.height / 2;
+          if (activeDotIndex !== null) {
+            bigCircleBlocker.style.left = "50%";
+            bigCircleBlocker.style.width =
+              screenWidth * (rightActiveBound - leftActiveBound) + "px";
+          }
+        }
+        const infoCont = document.getElementById("infoCont");
+        const svgCont = document.getElementById("svgCont");
+        if (!activeFound) {
+          scrollNudge.style.opacity = 1;
+          infoCont.style.opacity = 0;
+          svgCont.style.opacity = 0;
+        } else {
+          scrollNudge.style.opacity = 0;
+          infoCont.style.opacity = 1;
+          svgCont.style.opacity = 1;
+        }
+      }
+      function random(min, max, fixed) {
+        return (Math.random() * (max - min) + min).toFixed(fixed);
+      }
+      function newParticle() {
+        this.obj = document.createElement("div");
+        this.obj.classList.add("particle");
+        this.obj.style.top = window.innerHeight * Math.random() + "px";
+        this.obj.style.left = window.innerWidth * Math.random() + "px";
+        this.obj.style.animation =
+          "animParticle" +
+          random(1, 4, 0) +
+          " " +
+          random(20, 50, 0) +
+          "s linear infinite";
+        //this.obj.style.animationDelay = random(0, 2, 2) + 's';
+        var dim = random(1, 4, 0);
+        this.obj.style.height = dim + "px";
+        this.obj.style.width = dim + "px";
+        document.getElementById("particles").appendChild(this.obj);
+      }
+      var dot = [];
+      for (var i = 0; i < random(50, 100, 0); i++) {
+        dot.push(new newParticle());
+      }
+      document.getElementById("titleDesc").style.opacity = 1;
+      setTimeout(function () {
+        document.getElementById("titleDesc").style.opacity = null;
+      }, 3000);
+      let isPaused = false;
+      document.getElementById("titleCont").addEventListener("mouseover", () => {
+        isPaused = true;
+      });
 
-                    const isActive = centerX > screenWidth * leftActiveBound &&
-                        centerX < screenWidth * rightActiveBound &&
-                        centerY < screenHeight;
+      document.getElementById("titleCont").addEventListener("mouseout", () => {
+        isPaused = false;
+      });
 
-                    dot.classList.toggle('active', isActive);
-                    if (isActive) {
-                        activeFound = true;
-                        activeDotIndex = i;
-                        const item = cards.items[i];
-                        updateActiveDot(dot, item, centerX, centerY);
-                        lastActiveDotX = centerX;
-                    }
-                });
+      function update() {
+        virtualScroll += (targetScroll - virtualScroll) * 0.1;
+        positionDots();
+        detectActiveDot();
+        document.body.querySelectorAll("svg").forEach((svg) => {
+          svg.setAttribute("width", window.innerWidth);
+          svg.setAttribute("height", window.innerHeight);
+        });
+        requestAnimationFrame(update);
+      }
 
-                if (activeDotIndex !== currentActiveIndex) {
-                    prevActiveIndex = currentActiveIndex;
-                    currentActiveIndex = activeDotIndex;
-                    if (activeDotIndex === null && prevActiveIndex !== null) {
-                        const prevDotRect = dots[prevActiveIndex].getBoundingClientRect();
-                        const prevDotX = prevDotRect.left + prevDotRect.width / 2;
-                        const side = prevDotX > screenWidth / 2 ? rightActiveBound : leftActiveBound;
-                        bigCircleBlocker.style.left = (screenWidth * side) + 'px';
-                        bigCircleBlocker.style.width = '0px';
-                    }
+      window.addEventListener(
+        "wheel",
+        (e) => {
+          e.preventDefault();
+          targetScroll += -1 * (e.deltaY / 2);
+        },
+        { passive: false },
+      );
 
-                    if (activeDotIndex !== null) {
-                        bigCircleBlocker.style.left = '50%';
-                        bigCircleBlocker.style.width =
-                            screenWidth * (rightActiveBound - leftActiveBound) + 'px';
-                    }
-                }
-                const infoCont = document.getElementById('infoCont');
-                const svgCont = document.getElementById('svgCont');
-                if (!activeFound) {
-                    scrollNudge.style.opacity = 1;
-                    infoCont.style.opacity = 0;
-                    svgCont.style.opacity = 0;
-                } else {
-                    scrollNudge.style.opacity = 0;
-                    infoCont.style.opacity = 1;
-                    svgCont.style.opacity = 1;
-                }
-            }
-            function random(min, max, fixed) {
-                return (Math.random() * (max - min) + min).toFixed(fixed);
-            }
-            function newParticle() {
-                this.obj = document.createElement("div");
-                this.obj.classList.add("particle");
-                this.obj.style.top = (window.innerHeight * Math.random()) + 'px';
-                this.obj.style.left = (window.innerWidth * Math.random()) + 'px';
-                this.obj.style.animation = "animParticle" + random(1, 4, 0) + " " + random(20, 50, 0) + "s linear infinite";
-                //this.obj.style.animationDelay = random(0, 2, 2) + 's';
-                var dim = random(1, 4, 0);
-                this.obj.style.height = dim + 'px';
-                this.obj.style.width = dim + 'px';
-                document.getElementById('particles').appendChild(this.obj);
-            }
-            var dot = [];
-            for (var i = 0; i < random(50, 100, 0); i++) {
-                dot.push(new newParticle());
-            }
-            document.getElementById('titleDesc').style.opacity = 1;
-            setTimeout(function(){
-                document.getElementById('titleDesc').style.opacity = null;
-            },3000);
-            let isPaused = false;
-            document.getElementById('titleCont').addEventListener('mouseover', () => {
-                isPaused = true;
-            });
+      const autoScroll = setInterval(function () {
+        if (!isPaused) {
+          targetScroll -= 2;
+        }
+      }, 100);
 
-            document.getElementById('titleCont').addEventListener('mouseout', () => {
-                isPaused = false;
-            });
-
-            function update() {
-                virtualScroll += (targetScroll - virtualScroll) * 0.1;
-                positionDots();
-                detectActiveDot();
-                document.body.querySelectorAll('svg').forEach(svg => {
-                    svg.setAttribute("width", window.innerWidth);
-                    svg.setAttribute("height", window.innerHeight);
-                });
-                requestAnimationFrame(update);
-            }
-
-            window.addEventListener('wheel', (e) => {
-                e.preventDefault();
-                targetScroll += -1*(e.deltaY/2);
-            }, { passive: false });
-
-            const autoScroll = setInterval(function(){
-                if (!isPaused) {
-                    targetScroll -= 2;
-                }
-            }, 100);
-
-            /* let touchStartY = 0;
+      /* let touchStartY = 0;
             
             !!!==SCRAPPING THIS IN FAVOR OF DRAG ON MOBILE==!!!
             
@@ -1226,142 +1319,142 @@
                 touchStartY = e.touches[0].clientY;
             }, { passive: false });
             */
-            let activeElements = document.querySelectorAll('.activeEl');
+      let activeElements = document.querySelectorAll(".activeEl");
 
-            activeElements.forEach(item => {
-                item.addEventListener('mouseover', event => {
-                    isPaused = true;
-                });
-                item.addEventListener('mouseout', () => {
-                    isPaused = false;
-                });
-                item.addEventListener('touchstart', (e) => {
-                    isPaused = true;
-                });
-                item.addEventListener('touchend', (e) => {
-                    isPaused = false;
-                });
-            });
-            window.addEventListener('resize', function(){
-                positionDots();
-                document.getElementById('particles').innerHTML = '';
-                dot = [];
-                for (var i = 0; i < random(50, 100, 0); i++) {
-                    dot.push(new newParticle());
-                }
+      activeElements.forEach((item) => {
+        item.addEventListener("mouseover", (event) => {
+          isPaused = true;
+        });
+        item.addEventListener("mouseout", () => {
+          isPaused = false;
+        });
+        item.addEventListener("touchstart", (e) => {
+          isPaused = true;
+        });
+        item.addEventListener("touchend", (e) => {
+          isPaused = false;
+        });
+      });
+      window.addEventListener("resize", function () {
+        positionDots();
+        document.getElementById("particles").innerHTML = "";
+        dot = [];
+        for (var i = 0; i < random(50, 100, 0); i++) {
+          dot.push(new newParticle());
+        }
+      });
 
-            });
+      let isDragging = false;
+      let lastX = 0;
+      let velocity = 0;
+      let momentum = 0;
 
-            let isDragging = false;
-            let lastX = 0;
-            let velocity = 0;
-            let momentum = 0;
+      window.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        lastX = e.clientX;
+        velocity = 0;
+        isPaused = true;
+        document.body.style.cursor = "grabbing";
+      });
 
-            window.addEventListener('mousedown', (e) => {
-                isDragging = true;
-                lastX = e.clientX;
-                velocity = 0;
-                isPaused = true;
-                document.body.style.cursor = 'grabbing';
+      window.addEventListener("mousemove", (e) => {
+        if (isDragging) {
+          const deltaX = e.clientX - lastX;
+          targetScroll += deltaX * 0.5;
+          velocity = deltaX;
+          lastX = e.clientX;
+        }
+      });
 
-            });
+      window.addEventListener("mouseup", () => {
+        isDragging = false;
+        isPaused = false;
+        document.body.style.cursor = "default";
+        momentum = velocity * 10;
+      });
 
-            window.addEventListener('mousemove', (e) => {
-                if (isDragging) {
-                    const deltaX = e.clientX - lastX;
-                    targetScroll += deltaX * 0.5;
-                    velocity = deltaX;
-                    lastX = e.clientX;
-                }
-            });
+      window.addEventListener("mouseleave", () => {
+        isDragging = false;
+        isPaused = false;
+      });
 
-            window.addEventListener('mouseup', () => {
-                isDragging = false;
-                isPaused = false;
-                document.body.style.cursor = 'default';
-                momentum = velocity * 10;
-            });
+      window.addEventListener("touchstart", (e) => {
+        isDragging = true;
+        lastX = e.touches[0].clientX;
+        velocity = 0;
+        isPaused = true;
+      });
 
-            window.addEventListener('mouseleave', () => {
-                isDragging = false;
-                isPaused = false;
-            });
+      window.addEventListener(
+        "touchmove",
+        (e) => {
+          if (isDragging) {
+            const deltaX = e.touches[0].clientX - lastX;
+            targetScroll += deltaX * 0.5;
+            velocity = deltaX;
+            lastX = e.touches[0].clientX;
+          }
+        },
+        { passive: false },
+      );
 
-            window.addEventListener('touchstart', (e) => {
-                isDragging = true;
-                lastX = e.touches[0].clientX;
-                velocity = 0;
-                isPaused = true;
-            });
+      window.addEventListener("touchend", () => {
+        isDragging = false;
+        isPaused = false;
+        momentum = velocity * 10;
+      });
 
-            window.addEventListener('touchmove', (e) => {
-                if (isDragging) {
-                    const deltaX = e.touches[0].clientX - lastX;
-                    targetScroll += deltaX * 0.5;
-                    velocity = deltaX;
-                    lastX = e.touches[0].clientX;
-                }
-            }, { passive: false });
+      const originalUpdate = update;
+      update = function customUpdate() {
+        if (!isDragging && Math.abs(momentum) > 0.1) {
+          targetScroll += momentum * 0.1;
+          momentum *= 0.5;
+        }
 
-            window.addEventListener('touchend', () => {
-                isDragging = false;
-                isPaused = false;
-                momentum = velocity * 10;
-            });
+        virtualScroll += (targetScroll - virtualScroll) * 0.1;
+        positionDots();
+        detectActiveDot();
+        document.body.querySelectorAll("svg").forEach((svg) => {
+          svg.setAttribute("width", window.innerWidth);
+          svg.setAttribute("height", window.innerHeight);
+        });
+        requestAnimationFrame(customUpdate);
+      };
 
-            const originalUpdate = update;
-            update = function customUpdate() {
-                if (!isDragging && Math.abs(momentum) > 0.1) {
-                    targetScroll += momentum * 0.1;
-                    momentum *= 0.5;
-                }
+      var modal = document.getElementById("myModal");
+      var btn = document.getElementById("activeImg");
+      var span = document.getElementsByClassName("close")[0];
+      btn.onclick = function () {
+        modal.style.display = "block";
+        document.getElementById("modalImg").src = btn.src;
+        isPaused = true;
+        modal.classList.add("animate-opacity");
+      };
+      span.onclick = function () {
+        isPaused = false;
+        modal.style.opacity = 0;
+        setTimeout(function () {
+          modal.classList.remove("animate-opacity");
+          modal.style.display = "none";
+          modal.style.opacity = null;
+        }, 400);
+      };
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          isPaused = false;
+          modal.style.opacity = 0;
+          setTimeout(function () {
+            modal.classList.remove("animate-opacity");
+            modal.style.display = "none";
+            modal.style.opacity = null;
+          }, 400);
+        }
+      };
 
-                virtualScroll += (targetScroll - virtualScroll) * 0.1;
-                positionDots();
-                detectActiveDot();
-                document.body.querySelectorAll('svg').forEach(svg => {
-                    svg.setAttribute("width", window.innerWidth);
-                    svg.setAttribute("height", window.innerHeight);
-                });
-                requestAnimationFrame(customUpdate);
-            };
-
-            var modal = document.getElementById("myModal");
-            var btn = document.getElementById("activeImg");
-            var span = document.getElementsByClassName("close")[0];
-            btn.onclick = function() {
-                modal.style.display = "block";
-                document.getElementById('modalImg').src = btn.src;
-                isPaused = true;
-                modal.classList.add('animate-opacity');
-            }
-            span.onclick = function() {
-                isPaused = false;
-                modal.style.opacity = 0;
-                setTimeout(function(){
-                    modal.classList.remove('animate-opacity');    
-                    modal.style.display = "none";
-                    modal.style.opacity = null;
-                }, 400);
-            }
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    isPaused = false;
-                    modal.style.opacity = 0;
-                    setTimeout(function(){
-                        modal.classList.remove('animate-opacity');    
-                        modal.style.display = "none";
-                        modal.style.opacity = null;
-                    }, 400);
-
-                }
-            }
-
-            window.addEventListener('load', () => {
-                positionDots();
-                update();
-            });
-        </script>
-
-    </body>
+      window.addEventListener("load", () => {
+        positionDots();
+        update();
+      });
+    </script>
+  </body>
 </html>
